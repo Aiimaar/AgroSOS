@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import UserCRUD from './components/user-crud/user-crud';
 
 function App() {
   const [data, setData] = useState({ plots: [] });
@@ -156,6 +157,9 @@ function App() {
           ))}
         </tbody>
       </table>
+      <div className="user-crud">
+            <UserCRUD />
+        </div>
     </div>
   );
 }
