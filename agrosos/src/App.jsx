@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SensorsCrud from "./components/sensors-crud/sensors-crud";
+import UserCRUD from "./components/user-crud/user-crud";
 
 function App() {
   const [data, setData] = useState({ plots: [] });
@@ -164,9 +165,14 @@ function App() {
           ))}
         </tbody>
       </table>
+
       <h1>Gestión de Datos Agrícolas</h1>
       <div className="sensorsCrud">
         <SensorsCrud />
+      </div>
+
+      <div className="user-crud">
+        <UserCRUD />
       </div>
     </div>
   );

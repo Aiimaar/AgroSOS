@@ -7,8 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//Plots
-
+// Plots
 app.get("/api/plots", (req, res) => {
   db.query("SELECT * FROM plots", (error, results) => {
     if (error) {
@@ -67,12 +66,69 @@ app.delete("/api/plots/:id", (req, res) => {
   });
 });
 
-//Sensors
+// Users
+app.get("/users", (req, res) => {
+  const query = "SELECT id, name, role, email FROM users";
+  db.query(query, (error, results) => {
+    if (error) {
+      console.error("Error al obtener los usuarios:", error);
+      res.status(500).send("Error al obtener los usuarios");
+    } else {
+      res.json(results);
+    }
+  });
+});
 
+app.post("/users", (req, res) => {
+  const { name, email, role } = req.body;
+  db.query(
+    "INSERT INTO users (name, email, role) VALUES (?, ?, ?)",
+    [name, email, role],
+    (error, results) => {
+      if (error) {
+        console.error("Error al añadir el usuario:", error);
+        res.status(500).send("Error al añadir el usuario");
+      } else {
+        res.status(201).json({ id: results.insertId, name, email, role });
+      }
+    }
+  );
+});
+
+app.put("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, email, role } = req.body;
+  db.query(
+    "UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?",
+    [name, email, role, id],
+    (error) => {
+      if (error) {
+        console.error("Error al actualizar el usuario:", error);
+        res.status(500).send("Error al actualizar el usuario");
+      } else {
+        res.json({ id, name, email, role });
+      }
+    }
+  );
+});
+
+app.delete("/users/:id", (req, res) => {
+  const { id } = req.params;
+  db.query("DELETE FROM users WHERE id = ?", [id], (error) => {
+    if (error) {
+      console.error("Error al eliminar el usuario:", error);
+      res.status(500).send("Error al eliminar el usuario");
+    } else {
+      res.status(204).send();
+    }
+  });
+});
+
+// Sensors
 app.get("/api/sensors", (req, res) => {
   db.query("SELECT * FROM sensors", (error, results) => {
     if (error) {
-      console.error('Error executing query:', error);
+      console.error("Error ejecutando consulta:", error);
       res.status(500).send(error);
     } else {
       res.json(results);
@@ -87,7 +143,7 @@ app.post("/api/sensors", (req, res) => {
     [type, value, date, plot_id],
     (error, results) => {
       if (error) {
-        console.error('Error executing query:', error);
+        console.error("Error ejecutando consulta:", error);
         res.status(500).send(error);
       } else {
         res.status(201).json({ id: results.insertId, type, value, date, plot_id });
@@ -104,7 +160,7 @@ app.put("/api/sensors/:id", (req, res) => {
     [type, value, date, plot_id, id],
     (error) => {
       if (error) {
-        console.error('Error executing query:', error);
+        console.error("Error ejecutando consulta:", error);
         res.status(500).send(error);
       } else {
         res.json({ id, type, value, date, plot_id });
@@ -115,28 +171,12 @@ app.put("/api/sensors/:id", (req, res) => {
 
 app.delete("/api/sensors/:id", (req, res) => {
   const { id } = req.params;
-  db.query(
-    "DELETE FROM sensors WHERE id = ?",
-    [id],
-    (error) => {
-      if (error) {
-        console.error('Error executing query:', error);
-        res.status(500).send("Error al eliminar el sensor: " + error);
-      } else {
-        res.json({ message: `Sensor con ID ${id} eliminado.` });
-      }
-    }
-  );
-});
-
-// Ruta de parcelas
-app.get("/api/plots", (req, res) => {
-  db.query("SELECT * FROM plots", (error, results) => {
+  db.query("DELETE FROM sensors WHERE id = ?", [id], (error) => {
     if (error) {
-      console.error('Error executing query:', error);
-      res.status(500).send(error);
+      console.error("Error ejecutando consulta:", error);
+      res.status(500).send("Error al eliminar el sensor: " + error);
     } else {
-      res.json(results);
+      res.json({ message: `Sensor con ID ${id} eliminado.` });
     }
   });
 });
@@ -145,4 +185,3 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-
