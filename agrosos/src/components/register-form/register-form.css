@@ -1,34 +1,72 @@
 /* register-form.css */
+
+/* Estilos generales para todo el contenido */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+/* Estilos específicos para el formulario */
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Limita el tamaño máximo del formulario */
+  width: 100%;
+}
+
+/* Estilos de los campos de entrada y el botón */
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Media query para pantallas de ordenador de 1920px */
+@media (min-width: 1920px) {
+  body, html {
+    justify-content: center; /* Centra el formulario vertical y horizontal */
     align-items: center;
-    gap: 15px;
-    padding: 20px;
-    background-color: #f3f4f6;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: auto;
+    padding-top: 0;
   }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
+
+  form {
+    width: 400px; /* Limita el tamaño del formulario */
   }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+}
+
+/* Media query para pantallas grandes pero más pequeñas que 1920px */
+@media (min-width: 1024px) and (max-width: 1919px) {
+  body, html {
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    padding-top: 0;
   }
-  
-  button:hover {
-    background-color: #45a049;
+
+  form {
+    width: 400px; /* Mantiene el tamaño máximo */
   }
-  
+}
