@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SensorsCrud from "./components/sensors-crud/sensors-crud";
 import UserCRUD from "./components/user-crud/user-crud";
+import RegisterForm from "./components/register-form/register-form.jsx";
 
 function App() {
   const [data, setData] = useState({ plots: [] });
@@ -10,10 +11,32 @@ function App() {
   const [editingPlot, setEditingPlot] = useState(null);
   const [editingPlotName, setEditingPlotName] = useState("");
   const [editingPlotSize, setEditingPlotSize] = useState("");
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  // Agregar la función handleAddPlot aquí
+  const handleAddPlot = () => {
+    const newPlot = {
+      name: newPlotName,
+      size: newPlotSize,
+    };
+
+    axios
+      .post("http://localhost:3000/api/plots", newPlot)
+      .then((response) => {
+        setData((prevData) => ({
+          plots: [...prevData.plots, response.data],
+        }));
+        setNewPlotName("");  // Limpiar el campo de nombre
+        setNewPlotSize("");  // Limpiar el campo de tamaño
+      })
+      .catch((error) => console.error("Error al añadir parcela:", error));
+  };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isRegistered) {
+      fetchData();
+    }
+  }, [isRegistered]);
 
   const fetchData = () => {
     axios
@@ -22,73 +45,13 @@ function App() {
       .catch((error) => console.error("Error:", error));
   };
 
-  const handleAddPlot = () => {
-    if (!newPlotName || !newPlotSize) return;
-    fetch("http://localhost:3000/api/plots", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: newPlotName, size: newPlotSize }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error adding plot");
-        }
-        return response.json();
-      })
-      .then(() => {
-        setNewPlotName("");
-        setNewPlotSize("");
-        fetchData();
-      })
-      .catch((error) => console.error("Error:", error));
+  const handleRegistrationComplete = () => {
+    setIsRegistered(true);
   };
 
-  const handleUpdatePlot = (id) => {
-    if (!editingPlotName || !editingPlotSize) return;
-    fetch(`http://localhost:3000/api/plots/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: editingPlotName, size: editingPlotSize }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error updating plot");
-        }
-        return response.json();
-      })
-      .then(() => {
-        setEditingPlot(null);
-        setEditingPlotName("");
-        setEditingPlotSize("");
-        fetchData();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
-  const handleDeletePlot = (id) => {
-    fetch(`http://localhost:3000/api/plots/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error deleting plot");
-        }
-        fetchData();
-      })
-      .catch((error) => console.error("Error:", error));
-  };
-
-  const handleEditClick = (plot) => {
-    setEditingPlot(plot.id);
-    setEditingPlotName(plot.name);
-    setEditingPlotSize(plot.size);
-  };
+  if (!isRegistered) {
+    return <RegisterForm onRegister={handleRegistrationComplete} />;
+  }
 
   return (
     <div>

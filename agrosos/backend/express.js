@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import db from "./db.js";
+import bcrypt, { hash } from "bcrypt";
 
 const app = express();
 
@@ -80,19 +81,27 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-  const { name, email, role, password } = req.body;
-  db.query(
-    "INSERT INTO users (name, email, role, password) VALUES (?, ?, ?, ?)",
-    [name, email, role, password],
-    (error, results) => {
-      if (error) {
-        console.error("Error al añadir el usuario:", error);
-        res.status(500).send("Error al añadir el usuario");
-      } else {
-        res.status(201).json({ id: results.insertId, name, email, role, password });
-      }
+  const { name, role, email, password } = req.body;
+
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) {
+      console.error("Error al hashear la contraseña:", err);
+      return res.status(500).send("Error al registrar el usuario");
     }
-  );
+
+    db.query(
+      "INSERT INTO users (name, role, email, password) VALUES (?, ?, ?, ?)",
+      [name, role, email, hashedPassword],
+      (error, results) => {
+        if (error) {
+          console.error("Error al añadir el usuario:", error);
+          res.status(500).send("Error al añadir el usuario");
+        } else {
+          res.status(201).json({ id: results.insertId, name, role, email, hashedPassword });
+        }
+      }
+    );
+  });
 });
 
 app.put("/users/:id", (req, res) => {
@@ -185,3 +194,19 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
+
+app.post("/users", async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    // Hashear la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Guardar el usuario con la contraseña hasheada en la base de datos
+    // Suponiendo que tienes una función saveUser para guardar los datos
+    await saveUser({ name, email, password: hashedPassword });
+
+    res.status(201).json({ message: "Usuario registrado exitosamente" });
+  } catch (error) {
+    res.status(500).json({ error: "Error registrando usuario" });
+  }});
