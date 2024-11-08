@@ -83,7 +83,6 @@ function SensorsCrud() {
 
   return (
     <div>
-      <h1>Datos de Sensores Agrícolas</h1>
       <h2>Añadir Sensor</h2>
       <input
         type="text"

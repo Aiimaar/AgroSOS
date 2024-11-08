@@ -166,7 +166,6 @@ function App() {
         </tbody>
       </table>
 
-      <h1>Gestión de Datos Agrícolas</h1>
       <div className="sensorsCrud">
         <SensorsCrud />
       </div>

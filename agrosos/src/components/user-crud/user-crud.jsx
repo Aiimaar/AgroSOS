@@ -21,6 +21,7 @@ const UserCRUD = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("FormData:", formData);
         if (editId) {
             await axios.put(`http://localhost:3000/users/${editId}`, formData);
             setEditId(null);

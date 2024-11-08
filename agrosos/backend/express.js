@@ -80,16 +80,16 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-  const { name, email, role } = req.body;
+  const { name, email, role, password } = req.body;
   db.query(
-    "INSERT INTO users (name, email, role) VALUES (?, ?, ?)",
-    [name, email, role],
+    "INSERT INTO users (name, email, role, password) VALUES (?, ?, ?, ?)",
+    [name, email, role, password],
     (error, results) => {
       if (error) {
         console.error("Error al añadir el usuario:", error);
         res.status(500).send("Error al añadir el usuario");
       } else {
-        res.status(201).json({ id: results.insertId, name, email, role });
+        res.status(201).json({ id: results.insertId, name, email, role, password });
       }
     }
   );
