@@ -13,7 +13,6 @@ function App() {
   const [editingPlotSize, setEditingPlotSize] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
 
-  // Agregar la función handleAddPlot aquí
   const handleAddPlot = () => {
     const newPlot = {
       name: newPlotName,
@@ -26,8 +25,8 @@ function App() {
         setData((prevData) => ({
           plots: [...prevData.plots, response.data],
         }));
-        setNewPlotName("");  // Limpiar el campo de nombre
-        setNewPlotSize("");  // Limpiar el campo de tamaño
+        setNewPlotName("");
+        setNewPlotSize("");
       })
       .catch((error) => console.error("Error al añadir parcela:", error));
   };
