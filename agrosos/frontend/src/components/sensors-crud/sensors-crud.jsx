@@ -21,7 +21,7 @@ function SensorsCrud() {
     axios
       .get('http://localhost:3000/api/sensors')
       .then((response) => {
-        console.log("Datos recibidos de la API:", response.data); // Asegúrate de que esto se muestre con datos válidos
+        console.log("Datos recibidos de la API:", response.data);
         setData({ sensors: response.data });
       })
       .catch((error) => console.error("Error al obtener los datos:", error));

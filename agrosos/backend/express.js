@@ -1,33 +1,36 @@
 import express from 'express';
 import cors from 'cors';
 import sequelize from './db.js';
-import * as plotController from './controllers/plotController.js';
-import * as userController from './controllers/userController.js';
-import * as sensorController from './controllers/sensorController.js';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+import plotsRoutes from './routes/plotsRoutes.js';
+import usersRoutes from './routes/usersRoutes.js';
+import sensorsRoutes from './routes/sensorsRoutes.js';
+import authRoutes from './routes/authRoutes.js'
+import dotenv from 'dotenv';
+
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'uploads')));
+dotenv.config();
 
 sequelize.sync();
 
-// Rutas para Plots usando el controlador
-app.get("/api/plots", plotController.getPlots);
-app.post("/api/plots", plotController.createPlot);
-app.put("/api/plots/:id", plotController.updatePlot);
-app.delete("/api/plots/:id", plotController.deletePlot);
+// Plot routes
+app.use("/api/plots", plotsRoutes);
 
-// Rutas para Usuarios
-app.get("/users", userController.getUsers);
-app.post("/users", userController.createUser);
-app.put("/users/:id", userController.updateUser);
-app.delete("/users/:id", userController.deleteUser);
+// User routes
+app.use("/api/users", usersRoutes);
 
-// Rutas para Sensors
-app.get("/api/sensors", sensorController.getSensors);
-app.post("/api/sensors", sensorController.createSensor);
-app.put("/api/sensors/:id", sensorController.updateSensor);
-app.delete("/api/sensors/:id", sensorController.deleteSensor);
+// Auth routes
+app.use("/api/auth", authRoutes);
+
+// Sensor routes
+app.use("/api/sensors", sensorsRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {

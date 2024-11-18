@@ -11,21 +11,33 @@ export const getPlots = async (req, res) => {
 };
 
 export const createPlot = async (req, res) => {
-  const { name, size } = req.body;
+  const { name, size, temperature, humidity } = req.body;
+  const image = req.file ? req.file.filename : null;
+
+  if (!name || !size) {
+    return res.status(400).json({ error: 'Nombre y tamaño son obligatorios' });
+  }
+
   try {
-    const plot = await Plot.create({ name, size });
+    const plot = await Plot.create({ name, size, image, temperature, humidity });
     res.status(201).json(plot);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };
 
 export const updatePlot = async (req, res) => {
   const { id } = req.params;
-  const { name, size } = req.body;
+  const { name, size, temperature, humidity } = req.body;
+  const image = req.file ? req.file.filename : undefined;
+
   try {
-    await Plot.update({ name, size }, { where: { id } });
-    res.json({ id, name, size });
+    const updateData = { name, size, temperature, humidity };
+    if (image) updateData.image = image;
+
+    await Plot.update(updateData, { where: { id } });
+    res.json({ id, name, size, image, temperature, humidity });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

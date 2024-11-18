@@ -10,8 +10,20 @@ const Plot = sequelize.define('Plot', {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  image: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  temperature: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  humidity: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
 }, {
-    timestamps: false,
+  timestamps: false,
 });
 
 export default Plot;

@@ -13,7 +13,7 @@ export const getUsers = async (req, res) => {
   export const createUser = async (req, res) => {
     const { name, role, email, password } = req.body;
     try {
-      const hashedPassword = await bcrypt.hash(password, 10); // Encripta la contraseña
+      const hashedPassword = await bcrypt.hash(password, 10);
       const user = await User.create({ name, role, email, password: hashedPassword });
       res.status(201).json(user);
     } catch (error) {

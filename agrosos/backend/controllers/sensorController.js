@@ -2,6 +2,7 @@ import Sensor from '../models/sensor.js';
 
 // Obtener todos los sensores
 export const getSensors = async (req, res) => {
+  console.log("getSensors")
   try {
     const sensors = await Sensor.findAll();
     res.json(sensors);

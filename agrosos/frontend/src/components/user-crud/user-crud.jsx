@@ -11,7 +11,7 @@ const UserCRUD = () => {
     }, []);
 
     const fetchUsers = async () => {
-        const response = await axios.get('http://localhost:3000/users');
+        const response = await axios.get('http://localhost:3000/api/users');
         setUsers(response.data);
     };
 
@@ -23,10 +23,10 @@ const UserCRUD = () => {
         e.preventDefault();
         console.log("FormData:", formData);
         if (editId) {
-            await axios.put(`http://localhost:3000/users/${editId}`, formData);
+            await axios.put(`http://localhost:3000/api/users/${editId}`, formData);
             setEditId(null);
         } else {
-            await axios.post('http://localhost:3000/users', formData);
+            await axios.post('http://localhost:3000/api/users', formData);
         }
         // Restablecer el formulario
         setFormData({ name: '', role: '', email: '', password: '' });
@@ -39,7 +39,7 @@ const UserCRUD = () => {
     };
 
     const handleDelete = async (id) => {
-        await axios.delete(`http://localhost:3000/users/${id}`);
+        await axios.delete(`http://localhost:3000/api/users/${id}`);
         fetchUsers();
     };
 

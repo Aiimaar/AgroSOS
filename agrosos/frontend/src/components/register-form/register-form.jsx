@@ -17,13 +17,13 @@ const RegisterForm = ({ onRegister }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/users", {
+      const response = await axios.post("http://localhost:3000/api/users", {
         name,
         email,
         password,
         role,
       });
-      onRegister();
+      // onRegister();
     } catch (error) {
       alert("Error al registrar usuario");
       console.error(error);

@@ -1,0 +1,113 @@
+body, html{
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.welcome{
+  margin-top: 110px;
+  margin-left: 20px;
+}
+
+.plot-list{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.plot-list-container {
+  padding: auto;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+}
+
+.plot-card {
+  position: relative;
+  width: 320px;
+  height: 160px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.plot-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.terrain-name {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  color: white;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  border-radius: 8px;
+}
+
+.card-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #333;
+}
+
+.delete-button {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  gap: 5px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 5px 10px;
+  border-radius: 15px;
+}
