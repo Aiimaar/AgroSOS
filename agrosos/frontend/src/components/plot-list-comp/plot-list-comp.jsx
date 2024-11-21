@@ -1,39 +1,60 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./plot-list-comp.css";
 
 function PlotListComp() {
   const [plots, setPlots] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const [editingPlot, setEditingPlot] = useState(null);
   const [editingPlotName, setEditingPlotName] = useState("");
   const [editingPlotSize, setEditingPlotSize] = useState("");
   const [editingPlotImage, setEditingPlotImage] = useState(null);
   const [editingPlotTemperature, setEditingPlotTemperature] = useState("");
   const [editingPlotHumidity, setEditingPlotHumidity] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const fetchData = () => {
-    axios
-      .get("http://localhost:3000/api/plots")
-      .then((response) => setPlots(response.data))
-      .catch((error) => console.error("Error:", error));
+  const fetchData = async () => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const response = await axios.get("http://localhost:3000/api/plots", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setPlots(response.data);
+    } catch (error) {
+      console.error("Error al obtener la lista de terrenos:", error);
+      setErrorMessage("Error al cargar los terrenos. Verifica tu sesión.");
+    }
   };
 
-  const handleDeletePlot = (plotId) => {
-    axios
-      .delete(`http://localhost:3000/api/plots/${plotId}`)
-      .then(() => {
-        setPlots(plots.filter((plot) => plot.id !== plotId));
-      })
-      .catch((error) => {
-        console.error(
-          "Error al eliminar parcela:",
-          error.response ? error.response.data : error.message
-        );
+  const handleDeletePlot = async (plotId) => {
+    const token = localStorage.getItem("authToken");
+
+    try {
+      await axios.delete(`http://localhost:3000/api/plots/${plotId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+      setPlots(plots.filter((plot) => plot.id !== plotId));
+    } catch (error) {
+      console.error(
+        "Error al eliminar parcela:",
+        error.response ? error.response.data : error.message
+      );
+    }
   };
 
   const handleEditClick = (plot) => {
@@ -45,7 +66,8 @@ function PlotListComp() {
     setEditingPlotHumidity(plot.humidity);
   };
 
-  const handleUpdatePlot = (plotId) => {
+  const handleUpdatePlot = async (plotId) => {
+    const token = localStorage.getItem("authToken");
     const updatedPlot = {
       name: editingPlotName,
       size: editingPlotSize,
@@ -54,20 +76,26 @@ function PlotListComp() {
       image: editingPlotImage,
     };
 
-    axios
-      .put(`http://localhost:3000/api/plots/${plotId}`, updatedPlot)
-      .then((response) => {
-        setPlots(
-          plots.map((plot) => (plot.id === plotId ? response.data : plot))
-        );
-        setEditingPlot(null);
-      })
-      .catch((error) =>
-        console.error(
-          "Error al actualizar parcela:",
-          error.response ? error.response.data : error.message
-        )
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/api/plots/${plotId}`,
+        updatedPlot,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+      setPlots(
+        plots.map((plot) => (plot.id === plotId ? response.data : plot))
+      );
+      setEditingPlot(null);
+    } catch (error) {
+      console.error(
+        "Error al actualizar parcela:",
+        error.response ? error.response.data : error.message
+      );
+    }
   };
 
   const handleImageChange = (e) => {
@@ -77,9 +105,10 @@ function PlotListComp() {
   return (
     <>
       <div className="welcome">
-        <h3>Buenos dias!</h3>
+        <h3>Buenos días!</h3>
       </div>
       <div className="plot-list-container">
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <div className="plot-list">
           {plots.map((plot) => (
             <div key={plot.id} className="plot-card">

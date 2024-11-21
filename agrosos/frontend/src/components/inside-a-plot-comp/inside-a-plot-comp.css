@@ -1,0 +1,138 @@
+/* inside-a-plot-comp.css */
+.plot-details {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f6f2;
+  }
+  
+  .crops-section,
+  .evolution-section,
+  .climate-section,
+  .actions-section,
+  .tasks-section {
+    background-color: #F8F2EE;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .crops-section h3,
+  .evolution-section h3,
+  .climate-section h3,
+  .actions-section h3,
+  .tasks-section h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .crops {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .crops img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .evolution-section .chart-placeholder {
+    height: 150px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+  }
+  
+  .climate-section .climate-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .climate-stats p {
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+    color: #444;
+  }
+  
+  .climate-stats p span {
+    font-size: 12px;
+    color: #888;
+  }
+  
+  .actions-section button {
+    width: 48%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 16px;
+    background-color: #43a047;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  
+  .actions-section button:hover {
+    opacity: 0.9;
+  }
+  
+  .actions-section {
+    display: flex;
+    justify-content: space-between;
+    background-color: #F8F2EE;
+  }
+  
+  .tasks-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+  }
+  
+  .tasks-section li {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .tasks-section li::after {
+    content: '✔️';
+    color: #43a047;
+  }
+  
+  .tasks-section input {
+    width: calc(100% - 90px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  .tasks-section button {
+    padding: 10px 20px;
+    background-color: #43a047;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tasks-section button:hover {
+    background-color: #388e3c;
+  }
+  

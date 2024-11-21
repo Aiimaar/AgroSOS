@@ -1,68 +1,95 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./register-form.css";
 
 const RegisterForm = ({ onRegister }) => {
   const [name, setName] = useState("");
+  const [role, setRole] = useState("Farmer");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("Farmer");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      setErrorMessage("Las contraseñas no coinciden.");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/api/users", {
+      const response = await axios.post("http://localhost:3000/api/auth/register", {
         name,
+        role,
         email,
         password,
-        role,
       });
-      // onRegister();
+
+      const { token } = response.data;
+      localStorage.setItem("authToken", token);
+
+      setErrorMessage("");
+      setSuccessMessage("¡Registro exitoso!");
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+
+      if (typeof onRegister === "function") {
+        onRegister();
+      }
+
+      navigate("/login");
     } catch (error) {
-      alert("Error al registrar usuario");
-      console.error(error);
+      console.error("Error al registrar:", error);
+      setErrorMessage("Error al registrar. Revisa los datos e inténtalo de nuevo.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Nombre"
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Correo electrónico"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Contraseña"
-      />
-      <input
-        type="password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        placeholder="Confirmar contraseña"
-      />
-      <select value={role} onChange={(e) => setRole(e.target.value)}>
-        <option value="Farmer">Farmer</option>
-        <option value="Technician">Technician</option>
-        <option value="Admin">Admin</option>
-      </select>
-      <button type="submit">Crear cuenta</button>
-    </form>
+    <div className="register-form-container">
+      <form onSubmit={handleSubmit} className="register-form">
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Nombre"
+          required
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Correo electrónico"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Contraseña"
+          required
+        />
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Confirmar contraseña"
+          required
+        />
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        <button type="submit" className="submit-button">
+          Crear cuenta
+        </button>
+      </form>
+    </div>
   );
 };
 

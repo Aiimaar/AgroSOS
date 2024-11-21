@@ -21,18 +21,40 @@ export const register = async (req, res) => {
 };
 
 // Iniciar sesión de usuario
-export const login = (req, res) => {
+export const login = async (req, res) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Basic ")) {
+    return res.status(401).json({ message: "Encabezado de autorización faltante o inválido" });
+  }
+
+  const base64Credentials = authHeader.split(" ")[1];
+  const decodedCredentials = Buffer.from(base64Credentials, "base64").toString("ascii");
+  const [email, password] = decodedCredentials.split(":");
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "Credenciales faltantes" });
+  }
+
   try {
-    const user = req.user; // Usuario ya autenticado por authenticateBasic
+    const user = await User.findOne({ where: { email } });
 
-    const token = jwt.sign(
-      { id: user.id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
 
-    res.json({ message: 'Inicio de sesión exitoso', token });
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Credenciales inválidas" });
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+    res.json({ token, userId: user.id });
   } catch (error) {
-    res.status(500).json({ message: 'Error al iniciar sesión', error });
+    console.error("Error en login:", error);
+    res.status(500).json({ message: "Error en el servidor" });
   }
 };
+

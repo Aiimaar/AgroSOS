@@ -1,25 +1,17 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
 
-const User = sequelize.define('User', {
+const Crop = sequelize.define('Crop', {
   name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  role: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
   },
-  password: {
+  harvest_time: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  profile_image: {
+  crop_image: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -27,4 +19,4 @@ const User = sequelize.define('User', {
     timestamps: false,
 });
 
-export default User;
+export default Crop;

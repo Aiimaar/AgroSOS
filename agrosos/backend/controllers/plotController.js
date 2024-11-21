@@ -1,5 +1,6 @@
 import Plot from '../models/plot.js';
 import Sensor from '../models/sensor.js';
+import Crop from '../models/crop.js';
 
 export const getPlots = async (req, res) => {
   try {

@@ -1,15 +1,19 @@
 import jwt from 'jsonwebtoken';
 
 export const authenticateToken = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1]; // Formato: "Bearer <token>"
-  
-  if (!token) return res.status(401).json({ message: 'Acceso denegado' });
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // "Bearer <token>"
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Token inválido' });
-    req.user = user;
+  if (!token) {
+    return res.status(401).json({ error: "Token no proporcionado." });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // Decodificar token para obtener el userId
     next();
-  });
+  } catch (err) {
+    console.error("Error al autenticar token:", err);
+    res.status(403).json({ error: "Token inválido." });
+  }
 };
-
-// authorization: Bearer añsldkjfñlasdjfñljasdfñljasñldfkjñlasf
