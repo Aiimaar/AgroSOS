@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/login";
 import Register from "./pages/register/Register";
 import CreatePlot from "./pages/create-plot/CreatePlot";
 import Crops from "./pages/crops/crops";
 import CropsDetails from "./pages/crops-details/CropsDetails";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import Advices from "./pages/advices/Advices";
+import SoilManagement from "./pages/soil-management/SoilManagement";
+import CropManagement from "./pages/crop-management/CropManagement";
+import SustainabilityAndEnvironmentanagement from "./pages/sustainability-and-environment/SustainabilityAndEnvironment";
+import EfficiencyEnergy from "./pages/efficiency-energy/EfficiencyEnergy";
 
 function App() {
   return (
@@ -19,6 +22,11 @@ function App() {
         <Route path="/create-plot" element={<CreatePlot />} />
         <Route path="/crops" element={<Crops />} />
         <Route path="/crops-details" element={<CropsDetails />} />
+        <Route path="/advices" element={<Advices />} />
+        <Route path="/soil-management" element={<SoilManagement />} />
+        <Route path="/crop-management" element={<CropManagement />} />
+        <Route path="/sustainability-and-enviroment" element={<SustainabilityAndEnvironmentanagement />} />
+        <Route path="/efficiency-energy" element={<EfficiencyEnergy />} />
       </Routes>
     </BrowserRouter>
   )
