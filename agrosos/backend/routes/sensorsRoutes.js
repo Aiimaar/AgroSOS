@@ -5,7 +5,7 @@ import { authenticateToken } from '../middleware/authenticateToken.js';
 const router = express.Router();
 
 router.get("/", authenticateToken, sensorController.getSensors);
-router.post("/", authenticateToken, sensorController.createSensor);
+router.post("/", authenticateToken, sensorController.createSensor);  // Esta ruta debe ser correcta
 router.put("/:id", authenticateToken, sensorController.updateSensor);
 router.delete("/:id", authenticateToken, sensorController.deleteSensor);
 

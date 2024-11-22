@@ -1,0 +1,71 @@
+#sensor-enla-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+  }
+  
+  .enla-title {
+    margin-top: 2em;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .linked-sensors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .sensor-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .sensor-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .sensor-item p {
+    margin: 0;
+    font-size: 13px;
+    color: #555;
+  }
+  
+  .sensor-item strong {
+    color: #333;
+  }
+  
+  .remove-sensor-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000000;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .remove-sensor-btn:hover {
+    background-color: #222222;
+  }
+  
+  .no-sensors-message {
+    text-align: center;
+    font-size: 16px;
+    color: #999;
+    margin-top: 20px;
+  }
+  

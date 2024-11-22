@@ -1,0 +1,31 @@
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.main-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 55vh;
+}
+
+.p-container {
+  color: grey;
+  font-size: 20px;
+  margin: 0;
+}
+
+.plusCircleOutlined {
+  width: 30vw;
+}
