@@ -13,27 +13,30 @@ import ActuadorEnla from "./pages/actuator-enla/ActuatorEnla";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddActuator from "./pages/add-actuator/AddActuator";
 import { SensorProvider } from "./context/SensorContext";
+import { ActuatorProvider } from "./context/ActuatorContext";
 
 function App() {
   return (
-    <SensorProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/plot-list" element={<PlotList />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/create-plot" element={<CreatePlot />} />
-          <Route path="/create-plots" element={<CreatePlots />} />
-          <Route path="/terms-conditions" element={<TermsConditions />} />
-          <Route path="/sensors" element={<Sensors />} />
-          <Route path="/add-sensor" element={<AddSensor />} />
-          <Route path="/sensor-enla" element={<SensorEnla />} />
-          <Route path="/actuators" element={<Actuators />} />
-          <Route path="/actuator-enla" element={<ActuadorEnla />} />
-          <Route path="/add-actuator" element={<AddActuator />} />
-        </Routes>
-      </BrowserRouter>
-    </SensorProvider>
+    <ActuatorProvider>
+      <SensorProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/plot-list" element={<PlotList />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/create-plot" element={<CreatePlot />} />
+            <Route path="/create-plots" element={<CreatePlots />} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/sensors" element={<Sensors />} />
+            <Route path="/add-sensor" element={<AddSensor />} />
+            <Route path="/sensor-enla" element={<SensorEnla />} />
+            <Route path="/actuators" element={<Actuators />} />
+            <Route path="/actuator-enla" element={<ActuadorEnla />} />
+            <Route path="/add-actuator/:actuatorName" element={<AddActuator />} />  
+          </Routes>
+        </BrowserRouter>
+      </SensorProvider>
+    </ActuatorProvider>
   );
 }
 

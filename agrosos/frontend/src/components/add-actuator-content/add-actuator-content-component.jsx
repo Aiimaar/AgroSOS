@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import "./add-actuator-content-component.css";
 import lock from "./icon_lock_locked_.png";
+import { useActuators } from "../../context/ActuatorContext";
 
 function AddActuatorContentComponent() {
+  const { actuatorName } = useParams();
+  const decodedActuatorName = decodeURIComponent(actuatorName);
+  const { addActuator } = useActuators();
   const [actuatorCode, setActuatorCode] = useState("");
   const [errors, setErrors] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -23,7 +28,8 @@ function AddActuatorContentComponent() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      setSuccessMessage(`Actuador con código "${actuatorCode}" enlazado correctamente.`);
+      addActuator(decodedActuatorName, actuatorCode);
+      setSuccessMessage(`Actuador ${decodedActuatorName} con código "${actuatorCode}" enlazado correctamente.`);
       setActuatorCode("");
       setTimeout(() => setSuccessMessage(""), 5000);
     }
@@ -43,7 +49,7 @@ function AddActuatorContentComponent() {
                 type="text"
                 id="actuator-name-input"
                 className="input-actuator-name"
-                value="Nombre del actuador"
+                value={decodedActuatorName || "Nombre del actuador"}
                 readOnly
               />
               <img src={lock} alt="lock" className="lock-icon" />
