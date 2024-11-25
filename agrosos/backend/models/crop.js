@@ -16,7 +16,8 @@ const Crop = sequelize.define('Crop', {
     allowNull: false,
   },
 }, {
-    timestamps: false,
+  timestamps: false,
 });
+
 
 export default Crop;

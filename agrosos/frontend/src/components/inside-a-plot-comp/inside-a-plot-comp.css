@@ -5,7 +5,11 @@
     background-color: #f9f6f2;
   }
   
-  .crops-section,
+  .crops-section {
+    margin-top: 50px;
+    padding: 15px;
+  }
+
   .evolution-section,
   .climate-section,
   .actions-section,
@@ -22,9 +26,10 @@
   .climate-section h3,
   .actions-section h3,
   .tasks-section h3 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #30590C;
   }
   
   .crops {
@@ -59,10 +64,10 @@
   }
   
   .climate-stats p {
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
     margin: 0;
-    color: #444;
+    color: #30590C;
   }
   
   .climate-stats p span {
@@ -71,9 +76,9 @@
   }
   
   .actions-section button {
-    width: 48%;
+    width: 36%;
     padding: 10px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     border: none;
     border-radius: 16px;
@@ -101,7 +106,7 @@
   }
   
   .tasks-section li {
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 5px;
     display: flex;
     align-items: center;

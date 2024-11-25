@@ -1,7 +1,7 @@
 import InsideAPlotComp from "../../components/inside-a-plot-comp/inside-a-plot-comp";
 import Header from "../../components/header/header";
 
-function PlotList(){
+function InsideAPlot(){
     return (
         <>
             <Header />
@@ -10,4 +10,5 @@ function PlotList(){
     )
 }
 
-export default PlotList;
+export default InsideAPlot;
+;
