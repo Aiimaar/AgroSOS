@@ -4,12 +4,11 @@ import "./inside-a-plot-comp.css";
 import EvolutionGraph from "./graphic-comp";
 
 const InsideAPlotComp = ({ plotId }) => {
-  const [crop, setCrop] = useState(null); // Cultivo del terreno
-  const [sensorValues, setSensorValues] = useState([]); // Inicializar como array vacío
+  const [crop, setCrop] = useState(null); 
+  const [sensorValues, setSensorValues] = useState([]); 
   const [newTask, setNewTask] = useState("");
-  const [error, setError] = useState(null); // Manejo de errores
+  const [error, setError] = useState(null);
 
-  // Obtener cultivo y valores del sensor para el terreno
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,7 +22,7 @@ const InsideAPlotComp = ({ plotId }) => {
         const sensorResponse = await axios.get(
           `http://localhost:3000/api/sensor_value/plot/36`
         );
-        console.log("Respuesta de los sensores:", sensorResponse.data); // Ver los datos recibidos
+        console.log("Respuesta de los sensores:", sensorResponse.data);
 
         // Asegurarse de que sea un array
         if (Array.isArray(sensorResponse.data)) {
@@ -33,7 +32,7 @@ const InsideAPlotComp = ({ plotId }) => {
             "Los datos de los sensores no son un array:",
             sensorResponse.data
           );
-          setSensorValues([]); // Evitar error si no es un array
+          setSensorValues([]);
         }
       } catch (error) {
         console.error("Error al obtener datos:", error);
@@ -53,6 +52,17 @@ const InsideAPlotComp = ({ plotId }) => {
     }
   };
 
+  const calculateAverage = (sensorType) => {
+    const filteredSensors = sensorValues.filter(
+      (sensor) => sensor.Sensor.type === sensorType
+    );
+    if (filteredSensors.length > 0) {
+      const sum = filteredSensors.reduce((total, sensor) => total + sensor.value, 0);
+      return sum / filteredSensors.length;
+    }
+    return null;
+  };
+
   return (
     <div className="plot-details">
       <section className="crops-section">
@@ -62,7 +72,7 @@ const InsideAPlotComp = ({ plotId }) => {
         ) : crop ? (
           <div className="crop-details">
             <img
-              src={`http://localhost:3000/uploads/${crop.crop_image}`} // Asegúrate de que este sea el puerto correcto de tu backend
+              src={`http://localhost:3000/uploads/${crop.crop_image}`}
               alt={crop.name}
               title={crop.name}
               className="crop-image"
@@ -82,30 +92,22 @@ const InsideAPlotComp = ({ plotId }) => {
         <h3>Clima</h3>
         {sensorValues.length > 0 ? (
           <div className="climate-stats">
-            {sensorValues.map((sensor) => (
-              <div key={sensor.id}>
-                {sensor.Sensor.type === "temperature" && (
-                  <p>
-                    {sensor.value}°C <span>Temperatura</span>
-                  </p>
-                )}
-                {sensor.Sensor.type === "soil_temperature" && (
-                  <p>
-                    {sensor.value}°C <span>Temperatura del terreno</span>
-                  </p>
-                )}
-                {sensor.Sensor.type === "humidity" && (
-                  <p>
-                    {sensor.value}% <span>Humedad</span>
-                  </p>
-                )}
-                {sensor.Sensor.type === "soil_humidity" && (
-                  <p>
-                    {sensor.value}% <span>Humedad del terreno</span>
-                  </p>
-                )}
-              </div>
-            ))}
+            {["temperature", "soil_temperature", "humidity", "soil_humidity"].map((sensorType) => {
+              const averageValue = calculateAverage(sensorType);
+              if (averageValue !== null) {
+                return (
+                  <div key={sensorType}>
+                    <p>
+                      {sensorType.includes("temperature")
+                        ? `${averageValue.toFixed(0)}°C`
+                        : `${averageValue.toFixed(0)}%`}{" "}
+                      <span>{getSensorLabel(sensorType)}</span>
+                    </p>
+                  </div>
+                );
+              }
+              return null;
+            })}
           </div>
         ) : (
           <p>Cargando datos de sensores...</p>
@@ -139,6 +141,21 @@ const InsideAPlotComp = ({ plotId }) => {
       </section>
     </div>
   );
+};
+
+const getSensorLabel = (sensorType) => {
+  switch (sensorType) {
+    case "temperature":
+      return "Temperatura";
+    case "soil_temperature":
+      return "Temperatura del terreno";
+    case "humidity":
+      return "Humedad";
+    case "soil_humidity":
+      return "Humedad del terreno";
+    default:
+      return "Desconocido";
+  }
 };
 
 export default InsideAPlotComp;

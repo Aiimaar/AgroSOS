@@ -1,105 +1,199 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-// Registrar los componentes de Chart.js
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend);
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const EvolutionGraph = () => {
-  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
 
-  // Datos estáticos generados de manera aleatoria
-  const hours = [0, 4, 8, 12, 16, 20, 23]; // Horas en el eje X
-  const generateRandomData = () => Math.floor(Math.random() * (40 - 10 + 1)) + 10; // Genera un valor aleatorio entre 10 y 40
+  useEffect(() => {
+    const fetchSensorData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/sensor_value/plot/36"
+        );
+        const sensorData = await response.json();
 
-  // Generar datos de temperatura, humedad y puntos óptimos
-  const temperatureData = hours.map(() => generateRandomData());
-  const humidityData = hours.map(() => generateRandomData());
-  const optimalPoints = hours.map((_, index) => (temperatureData[index] === humidityData[index] ? temperatureData[index] : null));
+        const temperatureSensors = sensorData.filter(
+          (sensor) => sensor.Sensor.type === "temperature"
+        );
+        const humiditySensors = sensorData.filter(
+          (sensor) => sensor.Sensor.type === "humidity"
+        );
 
-  // Datos para la gráfica
-  const data = {
-    labels: hours, // Usamos las horas como etiquetas en el eje X
-    datasets: [
-      {
-        label: "Temperatura",
-        data: temperatureData,
-        borderColor: "red",
-        fill: false,
-        tension: 0.1,
-      },
-      {
-        label: "Humedad",
-        data: humidityData,
-        borderColor: "blue",
-        fill: false,
-        tension: 0.1,
-      },
-      {
-        label: "Puntos Óptimos",
-        data: optimalPoints,
-        borderColor: "green",
-        pointRadius: 5,
-        pointBackgroundColor: "green",
-        fill: false,
-        tension: 0.1,
-      },
-    ],
-  };
+        const hours = [0, 4, 8, 12, 16, 20, 23];
 
-  // Opciones de la gráfica
+        const temperatureValues = new Array(hours.length).fill(null);
+        const humidityValues = new Array(hours.length).fill(null);
+        const optimalPoints = new Array(hours.length).fill(null);
+
+        const roundToNearestHour = (sensorHour) => {
+          return hours.reduce((nearest, hour) =>
+            Math.abs(sensorHour - hour) < Math.abs(sensorHour - nearest)
+              ? hour
+              : nearest
+          );
+        };
+
+        temperatureSensors.forEach((sensor) => {
+          const date = new Date(sensor.createdAt);
+          if (!isNaN(date)) {
+            const sensorHour = date.getHours();
+            const nearestHour = roundToNearestHour(sensorHour);
+            const hourIndex = hours.indexOf(nearestHour);
+            if (hourIndex !== -1) {
+              temperatureValues[hourIndex] = sensor.value;
+            }
+          }
+        });
+
+        humiditySensors.forEach((sensor) => {
+          const date = new Date(sensor.createdAt);
+          if (!isNaN(date)) {
+            const sensorHour = date.getHours();
+            const nearestHour = roundToNearestHour(sensorHour);
+            const hourIndex = hours.indexOf(nearestHour);
+            if (hourIndex !== -1) {
+              humidityValues[hourIndex] = sensor.value;
+            }
+          }
+        });
+
+        for (let i = 0; i < hours.length; i++) {
+          if (temperatureValues[i] !== null && humidityValues[i] !== null) {
+            optimalPoints[i] =
+              temperatureValues[i] === humidityValues[i]
+                ? temperatureValues[i]
+                : null;
+          }
+        }
+
+        setData({
+          labels: hours,
+          datasets: [
+            {
+              label: "Temperatura (°C)",
+              data: temperatureValues,
+              borderColor: "red",
+              pointBorderColor: "red",
+              pointBackgroundColor: "red",
+              pointStyle: "circle",
+              pointRadius: 0,
+              fill: false,
+              tension: 0.3,
+              z: 1,
+            },
+            {
+              label: "Humedad (%)",
+              data: humidityValues,
+              borderColor: "blue",
+              pointBorderColor: "blue",
+              pointBackgroundColor: "blue",
+              pointStyle: "circle",
+              pointRadius: 0,
+              fill: false,
+              tension: 0.3,
+              z: 1,
+            },
+            {
+              label: "Puntos Óptimos",
+              data: optimalPoints,
+              borderColor: "green",
+              pointBackgroundColor: "green",
+              pointBorderColor: "green",
+              pointRadius: 6,
+              fill: false,
+              showLine: false,
+              z: 2,
+            },
+          ],
+        });
+      } catch (error) {
+        console.error("Error fetching sensor data:", error);
+      }
+    };
+
+    fetchSensorData();
+  }, []);
+
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
-      title: {
-        display: true,
-        text: "Evolución de Temperatura y Humedad",
-      },
       legend: {
-        position: "top",
+        position: "bottom",
+        labels: {
+          color: "#30590C",
+          usePointStyle: true,
+          pointStyle: "circle",
+        },
       },
     },
     scales: {
       x: {
-        type: "category",
         title: {
           display: true,
-          text: "Tiempo",
+          text: "Tiempo (Horas)",
+          color: "#30590C",
         },
         grid: {
-          color: "#30590C", // Color de las líneas del eje X
+          display: false,
         },
         ticks: {
-          color: "#30590C", // Color de las etiquetas del eje X
+          color: "#30590C",
         },
       },
       y: {
-        min: 0,  // Mínimo en 0
-        max: 50, // Máximo en 50
+        min: 0,
+        max: 100,
         ticks: {
-          stepSize: 5,  // Incremento de 5 en 5
-          color: "#30590C",  // Color de las etiquetas del eje Y
-          callback: function(value) {
-            return value;  // Mostrar los valores del eje Y como están
-          }
+          stepSize: 20,
+          color: "#30590C",
         },
         title: {
           display: true,
-          text: "Valor",
+          text: "Valores",
+          color: "#30590C",
         },
         grid: {
-          color: "#30590C", // Color de las líneas del eje Y
+          display: false,
         },
       },
     },
   };
 
   return (
-    <div className="graph-container">
-      {error ? (
-        <p className="error-message">{error}</p>
-      ) : (
+    <div
+      style={{
+        width: "100%",
+        height: "300px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {data ? (
         <Line data={data} options={options} />
+      ) : (
+        <p>Loading sensor data...</p>
       )}
     </div>
   );
