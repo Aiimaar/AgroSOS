@@ -12,6 +12,7 @@ import CropManagement from "./pages/crop-management/CropManagement";
 import SustainabilityAndEnvironmentanagement from "./pages/sustainability-and-environment/SustainabilityAndEnvironment";
 import EfficiencyEnergy from "./pages/efficiency-energy/EfficiencyEnergy";
 import AdminCrud from "./pages/admin-crud/AdminCrud";
+import RulesPage from "./pages/rules-page/RulesPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/crop-management" element={<CropManagement />} />
         <Route path="/sustainability-and-enviroment" element={<SustainabilityAndEnvironmentanagement />} />
         <Route path="/efficiency-energy" element={<EfficiencyEnergy />} />
+        <Route path="/rules" element={<RulesPage />} />
 
         <Route path="/admin-crud" element={<AdminCrud />} />
       </Routes>
