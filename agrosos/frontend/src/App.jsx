@@ -19,6 +19,7 @@ import { ActuatorProvider } from "./context/ActuatorContext";
 import ExistingRules from "./pages/existing-rules/ExistingRules";
 import Temperature from "./pages/temperature/Temperature";
 import Humidity from "./pages/humidity/Humidity";
+import IrrigationFrecuency from "./pages/irrigation-frecuency/IrrigationFrecuency";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="/existing-rules" element={<ExistingRules />} />
             <Route path="/temperature" element={<Temperature />} />
             <Route path="/humidity" element={<Humidity />} />
+            <Route path="/irrigation-frecuency" element={<IrrigationFrecuency />} />
           </Routes>
         </BrowserRouter>
       </SensorProvider>
