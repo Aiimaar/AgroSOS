@@ -9,11 +9,16 @@ import Sensors from "./pages/sensors/Sensors";
 import AddSensor from "./pages/add-sensor/AddSensor";
 import SensorEnla from "./pages/sensor-enla/SensorEnla";
 import Actuators from "./pages/actuators/Actuators";
+import Accesibility from "./pages/accesibility/Accesibility";
 import ActuadorEnla from "./pages/actuator-enla/ActuatorEnla";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddActuator from "./pages/add-actuator/AddActuator";
 import { SensorProvider } from "./context/SensorContext";
+import Settings from "./pages/settings/Settings";
 import { ActuatorProvider } from "./context/ActuatorContext";
+import ExistingRules from "./pages/existing-rules/ExistingRules";
+import Temperature from "./pages/temperature/Temperature";
+import Humidity from "./pages/humidity/Humidity";
 
 function App() {
   return (
@@ -32,7 +37,12 @@ function App() {
             <Route path="/sensor-enla" element={<SensorEnla />} />
             <Route path="/actuators" element={<Actuators />} />
             <Route path="/actuator-enla" element={<ActuadorEnla />} />
-            <Route path="/add-actuator/:actuatorName" element={<AddActuator />} />  
+            <Route path="/add-actuator/:actuatorName" element={<AddActuator />} />
+            <Route path="/accesibility" element={<Accesibility />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/existing-rules" element={<ExistingRules />} />
+            <Route path="/temperature" element={<Temperature />} />
+            <Route path="/humidity" element={<Humidity />} />
           </Routes>
         </BrowserRouter>
       </SensorProvider>

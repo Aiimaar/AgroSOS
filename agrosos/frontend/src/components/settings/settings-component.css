@@ -1,0 +1,48 @@
+#container-settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.settings-arrow-container {
+    align-self: flex-start;
+    margin-top: 2em;
+    margin-left: 2em;
+}
+
+.settings-text {
+    margin-top: 1em;
+    margin-bottom: 4em;
+}
+
+.settings-p {
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.settings-subp {
+    color: green;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.settings-sub {
+    font-weight: bold;
+}
+
+.settings-noti, .settings-export, .settings-actu, .settings-help {
+    width: 20em;
+    border-bottom: 1px solid green;
+    margin-bottom: 20px;
+}
+
+.settings-ex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
