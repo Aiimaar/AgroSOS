@@ -73,6 +73,7 @@ h1 {
 .humidity-slider input[type="range"] {
     width: 100%;
     -webkit-appearance: none;
+    border-radius: 16px;
     appearance: none;
     height: 8px;
     background: #5EA71E;
