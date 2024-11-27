@@ -1,0 +1,82 @@
+/* Contenedor principal */
+.advices-page .advices-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  height: 100vh;
+  margin-top: 25%; /* Espacio desde la parte superior */
+  position: relative; /* Asegura que los elementos dentro puedan ser posicionados de forma absoluta */
+}
+
+/* Header con la flecha y el título */
+.advices-page .advices-header {
+  margin-top: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Alinea los elementos verticalmente */
+  justify-content: center; /* Centra el título */
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Botón de la flecha (más arriba de la página) */
+.advices-page .back-button {
+  background: none;
+  border: none;
+  font-size: 24px; /* Tamaño del ícono */
+  cursor: pointer;
+  color: #000; /* Color visible */
+  position: absolute; /* Posición absoluta */
+  top: 0; /* Coloca la flecha en la parte superior */
+  left: 10px; /* Espacio desde el borde izquierdo */
+  margin-top: 10px; /* Un pequeño espacio desde el borde superior */
+}
+
+/* Título */
+.advices-page .advices-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center; /* Centra la bombilla verticalmente con el texto */
+  justify-content: center;
+  flex-grow: 1;
+}
+
+/* Icono de bombilla */
+.advices-page .icon-lightbulb {
+  margin-right: 8px;
+  color: #ffa500; /* Color de la bombilla */
+}
+
+/* Tarjetas de consejos */
+.advices-page .advices-cards {
+  margin-top: 10%; /* Espacio desde el título */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+}
+
+.advices-page .advice-card {
+  background-color: #4caf50;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px 20px;
+  border-radius: 10px;
+  width: 80%; /* Ajustado para dispositivos pequeños */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.advices-page .advice-card:hover {
+  background-color: #45a049;
+  transform: translateY(-5px);
+}

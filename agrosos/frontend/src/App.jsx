@@ -1,4 +1,6 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/login";
 import Register from "./pages/register/Register";
