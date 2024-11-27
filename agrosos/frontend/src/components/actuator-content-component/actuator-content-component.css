@@ -1,0 +1,81 @@
+#container {
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  a{
+    text-decoration: none;
+  }
+  
+  .actuatorList {
+    margin-top: 3em;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5em;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid green;
+    padding-bottom: 1em;
+  }
+  
+  .list img {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+  }
+  
+  .list p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 40px;
+  }
+  
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+  }
+
+  .buttons .add{
+    margin: none;
+  }
+  
+  .buttons .quit {
+    width: 46px;
+    height: 46px;
+  }
+  
+  .enla {
+    display: flex;
+    margin-top: 2.5em;
+  }
+  
+  .enla-p {
+    color: white;
+    font-size: 15px;
+  }
+  
+  .button-enla {
+    border-radius: 30px;
+    width: 45vw;
+    border: none;
+    background-color: #5EA71E;
+    height: 5vh;
+  }
+  
