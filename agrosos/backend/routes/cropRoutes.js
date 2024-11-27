@@ -1,11 +1,14 @@
 import express from 'express';
-import * as cropController from '../controllers/cropController.js';
+import { getCrops, createCrop, getCropById, updateCrop, deleteCrop, getCropByPlotId } from '../controllers/cropController.js';
 
 const router = express.Router();
 
-router.get('/', cropController.getCrops);
-router.post('/', cropController.createCrop);
-router.put('/:id', cropController.updateCrop);
-router.delete('/:id', cropController.deleteCrop);
+// Rutas de cultivos
+router.get('/', getCrops);
+router.post('/', createCrop);
+router.get('/:id', getCropById);
+router.put('/:id', updateCrop);
+router.delete('/:id', deleteCrop);
+router.get('/plot/:plotId', getCropByPlotId)
 
 export default router;

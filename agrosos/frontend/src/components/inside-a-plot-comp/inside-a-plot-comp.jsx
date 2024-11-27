@@ -1,77 +1,121 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './inside-a-plot-comp.css'; // Asegúrate de estilizar el componente
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./inside-a-plot-comp.css";
+import EvolutionGraph from "./graphic-comp";
 
-const InsideAPlotComp = () => {
-  const [crops, setCrops] = useState([]); // Estado inicial definido como un array vacío
-  const [newTask, setNewTask] = useState('');
-  const [error, setError] = useState(null); // Manejo de errores para la API
+const InsideAPlotComp = ({ plotId }) => {
+  const [crop, setCrop] = useState(null); 
+  const [sensorValues, setSensorValues] = useState([]); 
+  const [newTask, setNewTask] = useState("");
+  const [error, setError] = useState(null);
 
-  // Obtener cultivos
   useEffect(() => {
-    const fetchCrops = async () => {
-      try {
-        const response = await axios.get('/api/crops');
-        if (Array.isArray(response.data)) {
-          setCrops(response.data);
-        } else {
-          throw new Error('La respuesta de la API no es un array');
-        }
-      } catch (error) {
-        console.error('Error al obtener cultivos:', error);
-        setError('Error al cargar los cultivos. Por favor, inténtalo de nuevo más tarde.');
-      }
-    };
-
-    fetchCrops();
+    const storedPlotId = localStorage.getItem("selectedPlotId");
+    if (storedPlotId) {
+      fetchData(storedPlotId);
+    } else {
+      setError("No se encontró un terreno seleccionado.");
+    }
   }, []);
+
+  const fetchData = async (plotId) => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    
+    try {
+      const cropResponse = await axios.get(
+        `http://localhost:3000/api/crops/plot/${plotId}`
+      );
+      setCrop(cropResponse.data);
+
+      const sensorResponse = await axios.get(
+        `http://localhost:3000/api/sensor_value/plot/${plotId}`
+      );
+      console.log("Respuesta de los sensores:", sensorResponse.data);
+
+      if (Array.isArray(sensorResponse.data)) {
+        setSensorValues(sensorResponse.data);
+      } else {
+        console.error("Los datos de los sensores no son un array:", sensorResponse.data);
+        setSensorValues([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+      setError("Error al cargar los datos. Por favor, inténtalo de nuevo más tarde.");
+    }
+  };
 
   const handleAddTask = () => {
     if (newTask.trim()) {
-      console.log('Nueva tarea añadida:', newTask);
-      setNewTask('');
+      console.log("Nueva tarea añadida:", newTask);
+      setNewTask("");
     }
+  };
+
+  const calculateAverage = (sensorType) => {
+    const filteredSensors = sensorValues.filter(
+      (sensor) => sensor.Sensor.type === sensorType
+    );
+    if (filteredSensors.length > 0) {
+      const sum = filteredSensors.reduce((total, sensor) => total + sensor.value, 0);
+      return sum / filteredSensors.length;
+    }
+    return null;
   };
 
   return (
     <div className="plot-details">
       <section className="crops-section">
-        <h3>Cultivos en el terreno</h3>
+        <h3>Cultivo en el terreno</h3>
         {error ? (
           <p className="error-message">{error}</p>
-        ) : (
-          <div className="crops">
-            {Array.isArray(crops) && crops.length > 0 ? (
-              crops.map(crop => (
-                <img
-                  key={crop.id}
-                  src={`/uploads/${crop.crop_image}`}
-                  alt={crop.name}
-                  title={crop.name}
-                  className="crop-image"
-                />
-              ))
-            ) : (
-              <p className="no-crops">No hay cultivos registrados.</p>
-            )}
+        ) : crop ? (
+          <div className="crop-details">
+            <img
+              src={`http://localhost:3000/uploads/${crop.crop_image}`}
+              alt={crop.name}
+              title={crop.name}
+              className="crop-image"
+            />
           </div>
+        ) : (
+          <p className="no-crops">No hay cultivo registrado en este terreno.</p>
         )}
       </section>
 
       <section className="evolution-section">
         <h3>Evolución Temperatura / Humedad</h3>
-        {/* Aquí iría un componente de gráfico */}
-        <div className="chart-placeholder">[Gráfico]</div>
+        <EvolutionGraph plotId={plotId} />
       </section>
 
       <section className="climate-section">
         <h3>Clima</h3>
-        <div className="climate-stats">
-          <p>25°C <span>Temperatura</span></p>
-          <p>28°C <span>Temperatura del terreno</span></p>
-          <p>34% <span>Humedad</span></p>
-          <p>56% <span>Humedad del terreno</span></p>
-        </div>
+        {sensorValues.length > 0 ? (
+          <div className="climate-stats">
+            {["temperature", "soil_temperature", "humidity", "soil_humidity"].map((sensorType) => {
+              const averageValue = calculateAverage(sensorType);
+              if (averageValue !== null) {
+                return (
+                  <div key={sensorType}>
+                    <p>
+                      {sensorType.includes("temperature")
+                        ? `${averageValue.toFixed(0)}°C`
+                        : `${averageValue.toFixed(0)}%`}{" "}
+                      <span>{getSensorLabel(sensorType)}</span>
+                    </p>
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
+        ) : (
+          <p>No hay sensores registrados.</p>
+        )}
       </section>
 
       <section className="actions-section">
@@ -92,13 +136,30 @@ const InsideAPlotComp = () => {
             type="text"
             value={newTask}
             placeholder="Añadir tarea completada..."
-            onChange={e => setNewTask(e.target.value)}
+            onChange={(e) => setNewTask(e.target.value)}
           />
-          <button onClick={handleAddTask} className="add-task-button">Añadir</button>
+          <button onClick={handleAddTask} className="add-task-button">
+            Añadir
+          </button>
         </div>
       </section>
     </div>
   );
+};
+
+const getSensorLabel = (sensorType) => {
+  switch (sensorType) {
+    case "temperature":
+      return "Temperatura";
+    case "soil_temperature":
+      return "Temperatura del terreno";
+    case "humidity":
+      return "Humedad";
+    case "soil_humidity":
+      return "Humedad del terreno";
+    default:
+      return "Desconocido";
+  }
 };
 
 export default InsideAPlotComp;

@@ -1,17 +1,17 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
 
-const Crop = sequelize.define('Crop', {
-  name: {
+const Actuator = sequelize.define('Actuator', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  type: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
-  harvest_time: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  crop_image: {
+  code: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -19,5 +19,4 @@ const Crop = sequelize.define('Crop', {
   timestamps: false,
 });
 
-
-export default Crop;
+export default Actuator;

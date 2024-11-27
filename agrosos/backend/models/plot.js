@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
 
+// Definir el modelo Plot
 const Plot = sequelize.define('Plot', {
   name: {
     type: DataTypes.STRING,
@@ -11,18 +12,18 @@ const Plot = sequelize.define('Plot', {
     allowNull: false,
   },
   image: {
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING,
     allowNull: true,
-  },
-  temperature: {
-    type: DataTypes.FLOAT,
+  }, 
+  crop_id: { // Definimos crop_id como clave foránea
+    type: DataTypes.INTEGER,
     allowNull: true,
+    references: {
+      model: 'Crops', // Nombre de la tabla asociada
+      key: 'id',
+    },
   },
-  humidity: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
-  },
-}, {
+  }, {
   timestamps: false,
 });
 

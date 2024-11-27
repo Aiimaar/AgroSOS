@@ -1,5 +1,7 @@
-import User from '../models/user.js';
+import models from '../models/index.js';
 import bcrypt from 'bcrypt';
+
+const { User } = models;
 
 export const getUsers = async (req, res) => {
     try {
@@ -43,12 +45,12 @@ export const getUsers = async (req, res) => {
           plain: true  // Devuelve un solo registro
         }
       );
-  
+        
       if (!updatedUser[1]) {
         return res.status(404).json({ message: "Usuario no encontrado" });
       }
   
-      const user = updatedUser[1];  // El usuario actualizado
+      const user = await User.findByPk(userId);  // El usuario actualizado
       res.status(200).json({
         id: user.id,
         name: user.name,

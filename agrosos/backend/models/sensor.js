@@ -14,7 +14,6 @@ const Sensor = sequelize.define('Sensor', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  
 }, {
     timestamps: false,
 });

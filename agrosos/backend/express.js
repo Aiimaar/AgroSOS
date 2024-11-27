@@ -8,7 +8,10 @@ import usersRoutes from './routes/usersRoutes.js';
 import sensorsRoutes from './routes/sensorsRoutes.js';
 import authRoutes from './routes/authRoutes.js'
 import cropRoutes from './routes/cropRoutes.js'
+import sensorValueRoutes from './routes/sensorValueRoutes.js'
 import dotenv from 'dotenv';
+import actuatorRoutes from './routes/actuatorRoutes.js';
+import sensorActuatorRoutes from './routes/sensorActuatorRoutes.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -38,11 +41,21 @@ app.use("/api/auth", authRoutes);
 // Sensor routes
 app.use("/api/sensors", sensorsRoutes);
 
-// Sensor routes
+// Crop routes
 app.use("/api/crops", cropRoutes);
+
+// Sensor Value routes
+app.use("/api/sensor_value", sensorValueRoutes)
 
 //Servir archivos estáticos desde la carpeta /uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Actuators routes
+app.use('/api/actuators', actuatorRoutes);
+
+// Sensor Actuator routes
+app.use('/api/sensor_actuator', sensorActuatorRoutes);
+
 
 const PORT = 3000;
 app.listen(PORT, () => {

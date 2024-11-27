@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.js';
+import models from '../models/index.js';
+
+const { User } = models;
 
 // Registrar un nuevo usuario
 export const register = async (req, res) => {
