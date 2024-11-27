@@ -1,0 +1,48 @@
+#actuator-enla-container {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+}
+
+.enla-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.linked-actuators-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.linked-actuators-list li {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.delete-button {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #ff4c4c;
+}
+
+.quit-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}

@@ -1,0 +1,33 @@
+#existing-rules-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.existing-rules-arrow-container{
+    align-self: flex-start;
+    margin-left: 2em;
+    margin-top: 2em;
+}
+
+.existing-rules-text{
+    margin-top: 1em;
+    margin-bottom: 7em;
+}
+
+.existing-rules-p{
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.existing-rules-add{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.existing-rules-add-img{
+    width: 25vw;
+}

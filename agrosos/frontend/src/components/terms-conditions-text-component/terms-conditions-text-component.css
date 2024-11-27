@@ -1,0 +1,35 @@
+#containerr {
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+  margin: 2em auto;
+  text-align: justify;
+}
+
+.arrow{
+    width: 20px;
+    margin-bottom: 1.5em;
+}
+
+.terms {
+  color: #000000;
+  font-size: 23px;
+  margin-bottom: 1em;
+}
+
+#containerr .section {
+  margin-bottom: 1em;
+}
+
+#containerr .section-number {
+  font-weight: bold;
+  color: #000000;
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+#containerr p {
+  color: black;
+  margin-bottom: 2em;
+  text-align: justify;
+}

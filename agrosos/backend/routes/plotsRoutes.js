@@ -15,9 +15,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get("/", authenticateToken, plotController.getPlots);
-router.post("/", authenticateToken, upload.single('image'), plotController.createPlot);
-router.put("/:id", authenticateToken, upload.single('image'), plotController.updatePlot);
-router.delete("/:id", authenticateToken, plotController.deletePlot);
+router.get("/", plotController.getPlots);
+router.post("/", upload.single('image'), plotController.createPlot);
+router.put("/:id", upload.single('image'), plotController.updatePlot);
+router.delete("/:id", plotController.deletePlot);
 
 export default router;
