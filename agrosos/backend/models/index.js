@@ -5,11 +5,11 @@ import Sensor from './sensor.js';
 import SensorValue from './sensorvalue.js';
 import Plot from './plot.js';
 import Crop from './crop.js';
+import Actuator from './actuator.js';
 
 // Plot -> Crop (Un terreno tiene un único cultivo)
 Plot.belongsTo(Crop, { foreignKey: 'crop_id', as: 'crop' });
 Crop.hasOne(Plot, { foreignKey: 'crop_id' });
-
 
 // Plot -> Sensor (Un terreno tiene muchos sensores)
 Plot.hasMany(Sensor, { foreignKey: 'plot_id' });
@@ -26,6 +26,8 @@ const models = {
   SensorValue,
   Plot,
   Crop,
+  Actuator,
+  SensorActuator,
 };
 
 export default models;

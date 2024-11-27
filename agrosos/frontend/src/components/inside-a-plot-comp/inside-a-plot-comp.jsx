@@ -10,40 +10,44 @@ const InsideAPlotComp = ({ plotId }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Obtener cultivo asociado al terreno
-        const cropResponse = await axios.get(
-          `http://localhost:3000/api/crops/plot/36`
-        );
-        setCrop(cropResponse.data);
+    const storedPlotId = localStorage.getItem("selectedPlotId");
+    if (storedPlotId) {
+      fetchData(storedPlotId);
+    } else {
+      setError("No se encontró un terreno seleccionado.");
+    }
+  }, []);
 
-        // Obtener valores del sensor para el terreno
-        const sensorResponse = await axios.get(
-          `http://localhost:3000/api/sensor_value/plot/36`
-        );
-        console.log("Respuesta de los sensores:", sensorResponse.data);
+  const fetchData = async (plotId) => {
+    const token = localStorage.getItem("authToken");
 
-        // Asegurarse de que sea un array
-        if (Array.isArray(sensorResponse.data)) {
-          setSensorValues(sensorResponse.data);
-        } else {
-          console.error(
-            "Los datos de los sensores no son un array:",
-            sensorResponse.data
-          );
-          setSensorValues([]);
-        }
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-        setError(
-          "Error al cargar los datos. Por favor, inténtalo de nuevo más tarde."
-        );
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    
+    try {
+      const cropResponse = await axios.get(
+        `http://localhost:3000/api/crops/plot/${plotId}`
+      );
+      setCrop(cropResponse.data);
+
+      const sensorResponse = await axios.get(
+        `http://localhost:3000/api/sensor_value/plot/${plotId}`
+      );
+      console.log("Respuesta de los sensores:", sensorResponse.data);
+
+      if (Array.isArray(sensorResponse.data)) {
+        setSensorValues(sensorResponse.data);
+      } else {
+        console.error("Los datos de los sensores no son un array:", sensorResponse.data);
+        setSensorValues([]);
       }
-    };
-
-    fetchData();
-  }, [plotId]);
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+      setError("Error al cargar los datos. Por favor, inténtalo de nuevo más tarde.");
+    }
+  };
 
   const handleAddTask = () => {
     if (newTask.trim()) {
@@ -110,7 +114,7 @@ const InsideAPlotComp = ({ plotId }) => {
             })}
           </div>
         ) : (
-          <p>Cargando datos de sensores...</p>
+          <p>No hay sensores registrados.</p>
         )}
       </section>
 

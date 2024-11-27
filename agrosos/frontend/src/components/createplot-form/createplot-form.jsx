@@ -11,6 +11,13 @@ const CreatePlotForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const token = localStorage.getItem("authToken");
+
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {

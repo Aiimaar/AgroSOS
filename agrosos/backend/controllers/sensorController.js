@@ -14,9 +14,9 @@ export const getSensors = async (req, res) => {
 
 // Crear un nuevo sensor
 export const createSensor = async (req, res) => {
-  const { type, plot_id } = req.body;
+  const { type, plot_id, code } = req.body;
   try {
-    const newSensor = await Sensor.create({ type, plot_id });
+    const newSensor = await Sensor.create({ type, plot_id, code });
     res.status(201).json(newSensor);
   } catch (error) {
     res.status(500).json({ error: 'Error al crear el sensor' });
@@ -40,7 +40,7 @@ export const getSensorById = async (req, res) => {
 // Actualizar un sensor
 export const updateSensor = async (req, res) => {
   const { id } = req.params;
-  const { type, plot_id } = req.body;
+  const { type, plot_id, code } = req.body;
   try {
     const sensor = await Sensor.findByPk(id);
     if (!sensor) {
@@ -48,6 +48,7 @@ export const updateSensor = async (req, res) => {
     }
     sensor.type = type;
     sensor.plot_id = plot_id;
+    sensor.code = code;
     await sensor.save();
     res.json(sensor);
   } catch (error) {

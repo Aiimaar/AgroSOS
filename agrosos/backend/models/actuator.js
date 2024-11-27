@@ -1,13 +1,14 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
 
-const Sensor = sequelize.define('Sensor', {
+const Actuator = sequelize.define('Actuator', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   type: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  plot_id: {
-    type: DataTypes.INTEGER,
     allowNull: false,
   },
   code: {
@@ -15,7 +16,7 @@ const Sensor = sequelize.define('Sensor', {
     allowNull: false,
   },
 }, {
-    timestamps: false,
+  timestamps: false,
 });
 
-export default Sensor;
+export default Actuator;

@@ -27,8 +27,16 @@ const EvolutionGraph = () => {
   useEffect(() => {
     const fetchSensorData = async () => {
       try {
+        // Recuperar el plotId desde localStorage
+        const plotId = localStorage.getItem("selectedPlotId");
+
+        if (!plotId) {
+          console.error("No plot ID found in localStorage");
+          return;
+        }
+
         const response = await fetch(
-          "http://localhost:3000/api/sensor_value/plot/36"
+          `http://localhost:3000/api/sensor_value/plot/${plotId}`
         );
         const sensorData = await response.json();
 
@@ -96,10 +104,10 @@ const EvolutionGraph = () => {
               pointBorderColor: "red",
               pointBackgroundColor: "red",
               pointStyle: "circle",
-              pointRadius: 0,
+              pointRadius: 4,
               fill: false,
               tension: 0.3,
-              z: 1,
+              z: 0,
             },
             {
               label: "Humedad (%)",
@@ -108,10 +116,10 @@ const EvolutionGraph = () => {
               pointBorderColor: "blue",
               pointBackgroundColor: "blue",
               pointStyle: "circle",
-              pointRadius: 0,
-              fill: false,
+              pointRadius: 4,
+              fill: true,
               tension: 0.3,
-              z: 1,
+              z: 0,
             },
             {
               label: "Puntos Óptimos",
@@ -122,7 +130,7 @@ const EvolutionGraph = () => {
               pointRadius: 6,
               fill: false,
               showLine: false,
-              z: 2,
+              z: 1,
             },
           ],
         });
@@ -193,7 +201,7 @@ const EvolutionGraph = () => {
       {data ? (
         <Line data={data} options={options} />
       ) : (
-        <p>Loading sensor data...</p>
+        <p>No hay sensores registrados.</p>
       )}
     </div>
   );
