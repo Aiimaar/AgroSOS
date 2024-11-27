@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -13,7 +12,6 @@ import SensorEnla from "./pages/sensor-enla/SensorEnla";
 import Actuators from "./pages/actuators/Actuators";
 import Accesibility from "./pages/accesibility/Accesibility";
 import ActuadorEnla from "./pages/actuator-enla/ActuatorEnla";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserProfile from "./pages/user-profile/UserProfile";
 import InsideAPlotComp from "./components/inside-a-plot-comp/inside-a-plot-comp";
 import AddActuator from "./pages/add-actuator/AddActuator";
