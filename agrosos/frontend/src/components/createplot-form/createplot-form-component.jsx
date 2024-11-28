@@ -15,6 +15,8 @@ const CreatePlotForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const token = localStorage.getItem("authToken");
+
   const validateForm = () => {
     if (!name) {
       setError("Nombre es obligatorio.");
@@ -75,7 +77,7 @@ const CreatePlotForm = () => {
     try {
       await axios.post("http://localhost:3000/api/plots", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       });
 
