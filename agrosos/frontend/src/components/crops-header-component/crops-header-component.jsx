@@ -1,18 +1,18 @@
-import "./sensor-header-component.css";
+import "./crops-header-component.css";
 import headerGrey from "./image.png";
 import headerGreyBold from "./image-bold.png";
 import { Link } from "react-router-dom";
 
-function SensorHeader(){
+function CropsHeaderComponent(){
     return(
         <div className="headerGrey">
         <div className="headerGreyItemContainer">
-        <Link to="/crops"><img src={headerGrey} alt="headerGrey" className="headerGreyItem" /></Link>
+        <Link to="/crops"><img src={headerGreyBold} alt="headerGrey" className="headerGreyItem" /></Link>
           <p className="header-p">Cultivo</p>
         </div>
         <div className="headerGreyItemContainer">
         <Link to="/sensors"><img
-            src={headerGreyBold}
+            src={headerGrey}
             alt="headerGreyBold"
             className="headerGreyBoldItem"
           /></Link>
@@ -26,4 +26,4 @@ function SensorHeader(){
     )
 }
 
-export default SensorHeader;
+export default CropsHeaderComponent;

@@ -44,7 +44,7 @@ const CropsListComponent = () => {
         <div className="crop-item" key={crop.id}>
           <div className="crop-content">
             <div className="crop-image-container">
-              <img src={crop.image} alt={crop.name} className="crop-list-image" />
+              <img src={crop.image} alt={crop.name} className="crop-list-comp-image" />
               <button className="info-icon">i</button>
             </div>
             <div className="crop-text">
