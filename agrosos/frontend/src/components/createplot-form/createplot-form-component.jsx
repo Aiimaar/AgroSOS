@@ -95,47 +95,47 @@ const CreatePlotForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="plot-form">
-      <h2 className="form-title">Crear Nuevo Terreno</h2>
-      {error && <p className="error-message">{error}</p>}
-      <div className="form-group">
-        <label className="form-label">Nombre del terreno*</label>
+    <form onSubmit={handleSubmit} className="create-plot-form">
+      <h2 className="create-plot-form-title">Crear Nuevo Terreno</h2>
+      {error && <p className="create-plot-error-message">{error}</p>}
+      <div className="create-plot-form-group">
+        <label className="create-plot-form-label">Nombre del terreno*</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="form-input"
+          className="create-plot-form-input"
         />
       </div>
-      <div className="form-group">
-        <label className="form-label">Dimensiones del terreno*</label>
+      <div className="create-plot-form-group">
+        <label className="create-plot-form-label">Dimensiones del terreno*</label>
         <div className="size-unit-container">
           <input
             type="number"
             value={size}
             onChange={(e) => setSize(e.target.value)}
-            className="form-input"
+            className="create-plot-form-input"
           />
           <select
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
-            className="form-select"
+            className="create-plot-form-select"
           >
             <option value="m2">m²</option>
             <option value="ha">ha</option>
           </select>
         </div>
       </div>
-      <div className="form-group">
-        <label className="form-label">Cantidad de sensores*</label>
+      <div className="create-plot-form-group">
+        <label className="create-plot-form-label">Cantidad de sensores*</label>
         <input
           type="number"
           value={temperature}
           onChange={(e) => setTemperature(e.target.value)}
-          className="form-input"
+          className="create-plot-form-input"
         />
       </div>
-      <div className="form-group checkbox-container">
+      <div className="create-plot-form-group checkbox-container">
         <label className="form-label">Sistema de riego*</label>
         <div className="checkbox-group">
           <label>
@@ -143,7 +143,7 @@ const CreatePlotForm = () => {
               type="checkbox"
               checked={irrigationSystem}
               onChange={(e) => setIrrigationSystem(e.target.checked)}
-              className="form-checkbox"
+              className="create-plot-form-checkbox"
             />
             Sí
           </label>
@@ -152,18 +152,18 @@ const CreatePlotForm = () => {
               type="checkbox"
               checked={!irrigationSystem}
               onChange={(e) => setIrrigationSystem(!e.target.checked)}
-              className="form-checkbox"
+              className="create-plot-form-checkbox"
             />
             No
           </label>
         </div>
       </div>
-      <div className="form-group">
-        <label className="form-label">Personaliza tu terreno*</label>
+      <div className="create-plot-form-group">
+        <label className="create-plot-form-label">Personaliza tu terreno*</label>
         <select
           value={imageOption}
           onChange={(e) => setImageOption(e.target.value)}
-          className="form-select"
+          className="create-plot-form-select"
         >
           <option value="upload">Subir imagen</option>
           <option value="default">Imagen predeterminada</option>
@@ -173,24 +173,24 @@ const CreatePlotForm = () => {
 
       {imageOption === "upload" && (
         <div
-          className="upload-container"
+          className="create-plot-upload-container"
           onClick={() => document.getElementById("file-input").click()}
         >
           <img src={plot} alt="Ícono de subir" />
           <p>Suba una foto</p>
-          <input id="file-input" type="file" onChange={handleImageChange} />
+          <input id="create-plot-file-input" type="file" onChange={handleImageChange} />
         </div>
       )}
 
       {imageOption === "upload" && image && (
-        <div className="image-preview-container">
+        <div className="create-plot-image-preview-container">
           <p>Vista previa de la imagen seleccionada:</p>
           <img src={image} alt="Vista previa" className="image-preview" />
         </div>
       )}
 
       {imageOption === "default" && (
-        <div className="default-image-container">
+        <div className="create-plot-default-image-container">
           <p>Se utilizará una imagen predeterminada para este terreno.</p>
           <img
             src={
@@ -202,8 +202,8 @@ const CreatePlotForm = () => {
       )}
 
       {imageOption === "solid-color" && (
-        <div className="color-picker-container">
-          <label htmlFor="color-picker">Seleccionar color:</label>
+        <div className="create-plot-color-picker-container">
+          <label htmlFor="create-plot-color-picker">Seleccionar color:</label>
           <input
             type="color"
             id="color-picker"
@@ -214,7 +214,7 @@ const CreatePlotForm = () => {
         </div>
       )}
 
-      <button type="submit" disabled={loading} className="submit-button">
+      <button type="submit" disabled={loading} className="create-plot-submit-button">
         {loading ? "Cargando..." : "Crear Terreno"}
       </button>
     </form>

@@ -27,7 +27,6 @@ const models = {
   Plot,
   Crop,
   Actuator,
-  SensorActuator,
 };
 
 export default models;

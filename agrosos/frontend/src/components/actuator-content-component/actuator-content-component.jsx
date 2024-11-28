@@ -24,13 +24,13 @@ function ActuatorContentComponent() {
   };
 
   return (
-    <div id="container">
+    <div id="actuator-container">
       <div className="actuatorList">
         {actuators.map((actuator, index) => (
           <div className="list" key={index}>
             <img src={actuator.img} alt={actuator.name} className={actuator.name.toLowerCase().replace(" ", "-")} />
             <p>{actuator.name}</p>
-            <div className="buttons">
+            <div className="actuator-buttons">
               <Link to={`/add-actuator/${actuator.name}`}>
                 <img src={add} alt="add" className="add" />
               </Link>

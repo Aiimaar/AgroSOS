@@ -7,10 +7,10 @@ import "./side-menu-comp.css";
 function SideMenuComp({ isOpen, onClose }) {
   return (
     <div className={`side-menu ${isOpen ? "open" : ""}`}>
-      <button className="close-button" onClick={onClose}>
+      <button className="side-close-button" onClick={onClose}>
         <FontAwesomeIcon icon={faTimes} size="2xl" />
       </button>
-      <ul className="menu-items">
+      <ul className="side-menu-items">
         <li>
           <Link to="/plot-list" onClick={onClose}> {/* Redirige a /plot-list */}
             <FontAwesomeIcon icon={faHome} />

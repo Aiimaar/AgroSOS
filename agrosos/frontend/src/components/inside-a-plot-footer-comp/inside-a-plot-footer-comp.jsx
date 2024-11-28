@@ -14,19 +14,19 @@ const InsideAPlotFooter = () => {
 
   return (
     <footer className="inside-a-plot-footer">
-      <button onClick={() => navigate(`/plot/${plotId}/chart`)} className="footer-button">
+      <button onClick={() => navigate(`/plot/${plotId}/chart`)} className="inside-a-plotfooter-button">
         {/* Icono de gráfico */}
         <Icon icon="akar-icons:chart-bar" width={24} height={24} />
       </button>
-      <button onClick={() => navigate(`/plot/${plotId}/weather`)} className="footer-button">
+      <button onClick={() => navigate(`/plot/${plotId}/weather`)} className="inside-a-plot-footer-button">
         {/* Icono de clima */}
         <Icon icon="twemoji:cloud" width={24} height={24} />
       </button>
-      <button onClick={() => navigate(`/plot/${plotId}/actions`)} className="footer-button">
+      <button onClick={() => navigate(`/plot/${plotId}/actions`)} className="inside-a-plot-footer-button">
         {/* Icono de acciones */}
         <Icon icon="twemoji:arrows-counterclockwise" width={24} height={24} />
       </button>
-      <button onClick={() => navigate(`/plot/${plotId}/tasks`)} className="footer-button">
+      <button onClick={() => navigate(`/plot/${plotId}/tasks`)} className="inside-a-plot-footer-button">
         {/* Icono de tarea */}
         <Icon icon="twemoji:white-check-mark" width={24} height={24} />
       </button>

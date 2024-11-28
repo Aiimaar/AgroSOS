@@ -1,11 +1,11 @@
 import HeaderImageOnly from "../../components/header-image-only/header-image-only";
-import RegisterForm from "../../components/register-form/register-form";
+import RegisterFormComp from "../../components/register-form-comp/register-form-comp";
 
 function Register(){
     return (
         <div className="create-account-page">
             <HeaderImageOnly />
-            <RegisterForm />
+            <RegisterFormComp />
         </div>
     )
 }

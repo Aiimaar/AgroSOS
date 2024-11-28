@@ -2,7 +2,7 @@ import Header from "../../components/header/header";
 import SustainabilityAndEnvironmentComponent from "../../components/sustainability-and-environment-component/sustainability-and-environment-component";
 
 
-function SustainabilityAndEnvironmentanagement() {
+function SustainabilityAndEnvironmentManagement() {
   return (
     <>
       <Header />
@@ -11,4 +11,4 @@ function SustainabilityAndEnvironmentanagement() {
   );
 }
 
-export default SustainabilityAndEnvironmentanagement;
+export default SustainabilityAndEnvironmentManagement;

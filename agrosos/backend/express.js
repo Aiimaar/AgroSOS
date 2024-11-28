@@ -11,7 +11,6 @@ import cropRoutes from './routes/cropRoutes.js'
 import sensorValueRoutes from './routes/sensorValueRoutes.js'
 import dotenv from 'dotenv';
 import actuatorRoutes from './routes/actuatorRoutes.js';
-import sensorActuatorRoutes from './routes/sensorActuatorRoutes.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -52,10 +51,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Actuators routes
 app.use('/api/actuators', actuatorRoutes);
-
-// Sensor Actuator routes
-app.use('/api/sensor_actuator', sensorActuatorRoutes);
-
 
 const PORT = 3000;
 app.listen(PORT, () => {

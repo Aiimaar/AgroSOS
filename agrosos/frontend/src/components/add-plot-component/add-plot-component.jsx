@@ -5,7 +5,7 @@ import plusCircleOutlined from "./plusCircleOutlined.png";
 
 function AddPlotComponent() {
     return (
-        <div className="container">
+        <div className="add-plot-container">
             <p className="p-container">Crear un terreno</p>
             <Link to="/create-plot" ><img src={plusCircleOutlined} alt="plusCircleOutlined" className="plusCircleOutlined"/> </Link>
         </div>

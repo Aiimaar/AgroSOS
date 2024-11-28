@@ -9,7 +9,7 @@ function CropManagementComponent() {
 
   return (
     <>
-      <button className="back-button" onClick={() => navigate("/advices")}>
+      <button className="crop-management-back-button" onClick={() => navigate("/advices")}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
 

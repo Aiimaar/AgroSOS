@@ -8,7 +8,7 @@ const HeaderImageOnly = () => {
       <img
         src={logo}
         alt="FieldFlow Logo"
-        className="header-logo"
+        className="header-image-only-logo"
       />
     </div>
   );

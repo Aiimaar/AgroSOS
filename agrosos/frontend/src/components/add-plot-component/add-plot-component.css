@@ -11,7 +11,7 @@ body {
   flex-direction: column;
 }
 
-.container {
+.add-plot-container {
   display: flex;
   flex-direction: column;
   justify-content: center;

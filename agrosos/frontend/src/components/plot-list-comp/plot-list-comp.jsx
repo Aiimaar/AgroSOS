@@ -148,11 +148,11 @@ function PlotListComp() {
 
   return (
     <>
-      <div className="welcome">
+      <div className="plot-list-welcome">
         <h3>Buenos días!</h3>
       </div>
       <div className="plot-list-container">
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <p className="plot-list-error-message">{errorMessage}</p>}
         <div className="plot-list">
           {plots.map((plot) => (
             <div key={plot.id} className="plot-card" onClick={() => handlePlotClick(plot.id)}>
@@ -163,9 +163,9 @@ function PlotListComp() {
               />
               <div className="terrain-name">{plot.name}</div>
               <div className="card-footer">
-                <div className="actions">
+                <div className="plot-list-actions">
                   <div
-                    className="button edit-button"
+                    className="plot-list-button plot-list-edit-button"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleEditPlot(plot);
@@ -174,7 +174,7 @@ function PlotListComp() {
                     &#9998;
                   </div>
                   <div
-                    className="button delete-button"
+                    className="plot-list-button plot-list-delete-button"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDeletePlot(plot.id);
@@ -183,8 +183,8 @@ function PlotListComp() {
                     &#128465;
                   </div>
                 </div>
-                <div className="info">
-                  <div className="info-item">
+                <div className="plot-list-info">
+                  <div className="plot-list-info-item">
                     <span role="img" aria-label="temperature">
                       🌡️
                     </span>
@@ -192,7 +192,7 @@ function PlotListComp() {
                       {sensorAverages[plot.id]?.temperature || "--"}°C
                     </span>
                   </div>
-                  <div className="info-item">
+                  <div className="plot-list-info-item">
                     <span role="img" aria-label="humidity">
                       💧
                     </span>
@@ -208,7 +208,7 @@ function PlotListComp() {
       </div>
 
       {editPlot && (
-        <div className="edit-modal">
+        <div className="plot-list-edit-modal">
           <h3>Editar Terreno</h3>
           <form
             onSubmit={(e) => {

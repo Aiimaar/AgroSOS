@@ -1,11 +1,11 @@
 import AddPlotComponent from "../../components/add-plot-component/add-plot-component";
 import Cultive from "../../components/cultive-component/cultive-component";
-import Header from "../../components/create-plots-header-component/create-plots-header-component";
+import HeaderImageOnly from "../../components/header-image-only/header-image-only";
 
 function AddPlot(){
     return(
         <>
-            <Header/>
+            <HeaderImageOnly />
             <AddPlotComponent />
             <Cultive />
         </>

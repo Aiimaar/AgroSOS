@@ -20,7 +20,7 @@ function Header() {
     <>
       <header className="header">
         <img src={ logo } alt="Logo Planta" className="plant-icon" />
-        <button className="menu-button" onClick={openMenu}>
+        <button className="header-menu-button" onClick={openMenu}>
           <FontAwesomeIcon icon={faBars} size="2xl" />
         </button>
       </header>

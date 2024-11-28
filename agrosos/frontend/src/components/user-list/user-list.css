@@ -1,14 +1,16 @@
 .user-list-container {
-  margin-top: 30%;
+  margin-top: 20%;
   padding: 20px;
   font-family: Arial, sans-serif;
+  background-color: #ffffff
 }
 
 .user-list-title {
+  margin-top: 10%;
   text-align: center;
 }
 
-.back-button {
+.user-list-back-button {
   background: none;
   border: none;
   font-size: 24px;
@@ -19,52 +21,54 @@
 }
 
 .user-list {
+  margin-top: 10%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.user-item {
+.user-list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-.user-details {
+.user-list-details {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.user-avatar {
+.user-list-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background-color: #ccc;
 }
 
-.user-info {
+.user-list-info {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
-.user-name {
+.user-list-name {
   font-weight: bold;
 }
 
-.user-role {
+.user-list-role {
   font-size: 14px;
   color: #555;
 }
 
-.user-actions {
+.user-list-actions {
   display: flex;
   gap: 10px;
 }
 
-.user-action-button {
+.user-list-action-button {
   background-color: #5ea71e;
   color: white;
   border: none;
@@ -73,20 +77,20 @@
   cursor: pointer;
 }
 
-.error-message {
+.user-list-error-message {
   color: red;
   font-size: 18px;
   text-align: center;
   margin-top: 20px;
 }
 
-.divider {
+.user-list-divider {
   width: 97%;
   height: 1px;
   background-color: #5ea71e;
 }
 
-.arrow-buttons {
+.user-list-arrow-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -94,7 +98,7 @@
   margin-top: 20px;
 }
 
-.arrow-button {
+.user-list-arrow-button {
   width: 40px;
   height: 40px;
   background-color: #5ea71e;
@@ -109,14 +113,13 @@
   transition: background-color 0.3s ease;
 }
 
-.arrow-button:hover {
+.user-list-arrow-button:hover {
   background-color: #4a8b15;
 }
 
-.arrow-left-hidden {
+.user-list-arrow-left-hidden {
   visibility: hidden;
 }
-
 
 .user-list-modal-overlay {
   position: fixed;
@@ -208,14 +211,3 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
-.user-list-save-button:hover {
-  background-color: #4a8b15;
-}
-
-
-/*
-
-register-from css esta comentado hay que llamar bien a las etiquetas
-
-*/

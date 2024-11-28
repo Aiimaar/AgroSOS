@@ -23,7 +23,7 @@ function ActuatorEnlaComponent() {
                 {showDeleteButton && (
                   <button
                     onClick={() => deleteActuator(actuator.id)}
-                    className="delete-button"
+                    className="delete-actuator-button"
                   >
                     Eliminar
                   </button>

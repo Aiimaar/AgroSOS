@@ -4,11 +4,11 @@ import "./crops-menu-component.css";
 const CropsMenuComponent = () => {
   return (
     <div className="crops-menu">
-      <h1 className="title">Terreno 1</h1>
-      <div className="buttons">
-        <button className="button active">Cultivo</button>
-        <button className="button">Sensores</button>
-        <button className="button">Actuadores</button>
+      <h1 className="crops-menu-title">Terreno 1</h1>
+      <div className="crops-menu-buttons">
+        <button className="crops-menu-button active">Cultivo</button>
+        <button className="crops-menu-button">Sensores</button>
+        <button className="crops-menu-button">Actuadores</button>
       </div>
     </div>
   );

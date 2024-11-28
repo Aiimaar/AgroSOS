@@ -41,8 +41,14 @@ export const SensorProvider = ({ children }) => {
   // Nueva función para obtener los sensores al cargar
   useEffect(() => {
     const fetchLinkedSensors = async () => {
+      const token = localStorage.getItem("authToken");
+
       try {
-        const response = await axios.get("http://localhost:3000/api/sensors/");
+        const response = await axios.get("http://localhost:3000/api/sensors",{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setLinkedSensors(response.data);
       } catch (error) {
         console.error("Error al obtener los sensores enlazados:", error);

@@ -2,7 +2,7 @@ import Header from "../../components/header/header";
 import UserList from "../../components/user-list/user-list";
 
 
-function AdminCrud() {
+function AdminUserCrud() {
   return (
     <>
       <Header />
@@ -12,4 +12,4 @@ function AdminCrud() {
   );
 }
 
-export default AdminCrud;
+export default AdminUserCrud;

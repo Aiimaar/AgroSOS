@@ -5,7 +5,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import CreatePlot from "./pages/create-plot/CreatePlot";
 import CreatePlots from "./pages/create-plots/CreatePlots";
-import TermsConditions from "./pages/terms-conditions/TermsCondition";
+import TermsConditionsPage from "./pages/terms-conditions-page/TermsConditionPage";
 import Sensors from "./pages/sensors/Sensors";
 import AddSensor from "./pages/add-sensor/AddSensor";
 import SensorEnla from "./pages/sensor-enla/SensorEnla";
@@ -13,7 +13,7 @@ import Actuators from "./pages/actuators/Actuators";
 import Accesibility from "./pages/accesibility/Accesibility";
 import ActuadorEnla from "./pages/actuator-enla/ActuatorEnla";
 import UserProfile from "./pages/user-profile/UserProfile";
-import InsideAPlotComp from "./components/inside-a-plot-comp/inside-a-plot-comp";
+import InsideAPlot from "./pages/inside-a-plot/InsideAPlot";
 import AddActuator from "./pages/add-actuator/AddActuator";
 import { SensorProvider } from "./context/SensorContext";
 import Settings from "./pages/settings/Settings";
@@ -22,6 +22,15 @@ import ExistingRules from "./pages/existing-rules/ExistingRules";
 import Temperature from "./pages/temperature/Temperature";
 import Humidity from "./pages/humidity/Humidity";
 import IrrigationFrecuency from "./pages/irrigation-frecuency/IrrigationFrecuency";
+import AdminUserCrud from "./pages/admin-crud/AdminCrud";
+import SustainabilityAndEnvironmentManagement from "./pages/sustainability-and-environment/SustainabilityAndEnvironment";
+import SoilManagement from "./pages/soil-management/SoilManagement";
+import Advices from "./pages/advices/Advices";
+import CropManagement from "./pages/crop-management/CropManagement";
+import EfficiencyEnergy from "./pages/efficiency-energy/EfficiencyEnergy";
+import RulesPages from "./pages/rules-page/RulesPage";
+import CropsDetails from "./pages/crops-details/CropsDetails";
+import Crops from "./pages/crops/Crops";
 
 function App() {
   return (
@@ -34,7 +43,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/create-plot" element={<CreatePlot />} />
             <Route path="/create-plots" element={<CreatePlots />} />
-            <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/terms-conditions" element={<TermsConditionsPage />} />
             <Route path="/sensors" element={<Sensors />} />
             <Route path="/add-sensor" element={<AddSensor />} />
             <Route path="/sensor-enla" element={<SensorEnla />} />
@@ -48,7 +57,16 @@ function App() {
             <Route path="/humidity" element={<Humidity />} />
             <Route path="/irrigation-frecuency" element={<IrrigationFrecuency />} />
             <Route path="/user-profile" element={<UserProfile/>} />
-            <Route path="/inside-a-plot" element={<InsideAPlotComp/>} />
+            <Route path="/inside-a-plot" element={<InsideAPlot/>} />
+            <Route path="/admin-user-crud" element={<AdminUserCrud />} />
+            <Route path="/sustainability" element={<SustainabilityAndEnvironmentManagement />} />
+            <Route path="/soil-management" element={<SoilManagement />} />
+            <Route path="/advices" element={<Advices />} />
+            <Route path="/crop-management" element={<CropManagement />} />
+            <Route path="/energy-efficiency" element={<EfficiencyEnergy />} />
+            <Route path="/rules" element={<RulesPages />} />
+            <Route path="/crop-details" element={<CropsDetails />} />
+            <Route path="/crops" element={<Crops />} />
           </Routes>
         </BrowserRouter>
       </SensorProvider>

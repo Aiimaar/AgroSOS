@@ -1,4 +1,4 @@
-#container {
+#sensor-content-container {
   width: 90vw;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@
   align-items: center;
 }
 
-.list {
+.sensor-content-list {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,14 +25,14 @@
   padding-bottom: 1em;
 }
 
-.list img {
+.sensor-content-list img {
   display: inline-block;
   margin: 0;
   padding: 0;
   vertical-align: middle;
 }
 
-.list p {
+.sensor-content-list p {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +44,7 @@
   width: 47px;
 }
 
-.buttons {
+.sensor-content-buttons {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -52,7 +52,7 @@
   gap: 1em;
 }
 
-.buttons .quit {
+.sensor-content-buttons .quit {
   width: 46px;
   height: 46px;
 }

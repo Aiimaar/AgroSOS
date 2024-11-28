@@ -38,13 +38,13 @@ function AddActuatorContentComponent() {
   return (
     <div className="container-add-actuator">
       <div className="form-add-actuator">
-        <h1 className="form-title">Enlazar actuador</h1>
+        <h1 className="actuator-form-title">Enlazar actuador</h1>
         <form className="actuator-form" onSubmit={handleSubmit}>
           <div className="form-group-actuator-name">
             <label htmlFor="actuator-name-input" className="label-actuator-name">
               Nombre del actuador
             </label>
-            <div className="input-container">
+            <div className="actuator-input-container">
               <input
                 type="text"
                 id="actuator-name-input"
@@ -73,7 +73,7 @@ function AddActuatorContentComponent() {
             Enlazar
           </button>
         </form>
-        {successMessage && <p className="success-message">{successMessage}</p>}
+        {successMessage && <p className="actuator-success-message">{successMessage}</p>}
       </div>
     </div>
   );

@@ -8,7 +8,7 @@
   margin: 3em auto;
 }
 
-.form-title {
+.sensor-form-title {
   text-align: center;
   font-size: 24px;
   color: #333;
@@ -40,7 +40,7 @@
 }
 
 
-.input-container {
+.sensor-input-container {
   position: relative;
   display: flex;
   align-items: center;
@@ -58,13 +58,13 @@
   background: none;
 }
 
-.error-message {
+.sensor-error-message {
   margin-top: 15px;
   font-size: 14px;
   color: red;
 }
 
-.success-message {
+.sensor-success-message {
   margin-top: 15px;
   text-align: center;
   font-size: 14px;

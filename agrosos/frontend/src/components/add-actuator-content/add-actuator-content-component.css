@@ -8,7 +8,7 @@
     margin: 3em auto;
   }
   
-  .form-title {
+  .actuator-form-title {
     text-align: center;
     font-size: 24px;
     color: #333;
@@ -39,7 +39,7 @@
     text-align: left;
   }
   
-  .input-container {
+  .actuator-input-container {
     position: relative;
     display: flex;
     align-items: center;

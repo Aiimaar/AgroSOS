@@ -44,10 +44,11 @@ const UserCRUD = () => {
     };
 
     return (
-        <div>
-            <h2>CRUD de Usuarios</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="user-crud-container">
+            <h2 className="user-crud-title">CRUD de Usuarios</h2>
+            <form className="user-crud-form" onSubmit={handleSubmit}>
                 <input
+                    className="user-crud-input"
                     type="text"
                     name="name"
                     placeholder="Nombre"
@@ -56,6 +57,7 @@ const UserCRUD = () => {
                     required
                 />
                 <input
+                    className="user-crud-input"
                     type="text"
                     name="role"
                     placeholder="Rol"
@@ -64,6 +66,7 @@ const UserCRUD = () => {
                     required
                 />
                 <input
+                    className="user-crud-input"
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -72,6 +75,7 @@ const UserCRUD = () => {
                     required
                 />
                 <input
+                    className="user-crud-input"
                     type="password"
                     name="password"
                     placeholder="Contraseña"
@@ -79,26 +83,38 @@ const UserCRUD = () => {
                     onChange={handleInputChange}
                     required
                 />
-                <button type="submit">{editId ? "Actualizar" : "Agregar"}</button>
+                <button className="user-crud-submit-button" type="submit">
+                    {editId ? "Actualizar" : "Agregar"}
+                </button>
             </form>
-            <table>
+            <table className="user-crud-table">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Rol</th>
-                        <th>Email</th>
-                        <th>Acciones</th>
+                        <th className="user-crud-table-header">Nombre</th>
+                        <th className="user-crud-table-header">Rol</th>
+                        <th className="user-crud-table-header">Email</th>
+                        <th className="user-crud-table-header">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.name}</td>
-                            <td>{user.role}</td>
-                            <td>{user.email}</td>
-                            <td>
-                                <button onClick={() => handleEdit(user)}>Editar</button>
-                                <button onClick={() => handleDelete(user.id)}>Eliminar</button>
+                        <tr key={user.id} className="user-crud-table-row">
+                            <td className="user-crud-table-cell">{user.name}</td>
+                            <td className="user-crud-table-cell">{user.role}</td>
+                            <td className="user-crud-table-cell">{user.email}</td>
+                            <td className="user-crud-table-cell">
+                                <button
+                                    className="user-crud-edit-button"
+                                    onClick={() => handleEdit(user)}
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    className="user-crud-delete-button"
+                                    onClick={() => handleDelete(user.id)}
+                                >
+                                    Eliminar
+                                </button>
                             </td>
                         </tr>
                     ))}

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { SensorContext } from "../../context/SensorContext";
-import SensorHeader from "../sensor-header/sensor-header-component";
+import SensorHeader from "../sensor-header-comp/sensor-header-component";
 import "./add-sensor-content-component.css";
 import lock from "./icon_lock_locked_.png";
 
@@ -40,13 +40,13 @@ function AddSensor() {
   return (
     <div className="container-add-sensor">
       <div className="form-add-sensor">
-        <h1 className="form-title">Enlazar sensor</h1>
+        <h1 className="sensor-form-title">Enlazar sensor</h1>
         <form className="sensor-form" onSubmit={handleSubmit}>
           <div className="form-group-sensor-name">
             <label htmlFor="sensor-name-input" className="label-sensor-name">
               Nombre del sensor
             </label>
-            <div className="input-container">
+            <div className="sensor-input-container">
               <input
                 type="text"
                 id="sensor-name-input"
@@ -70,7 +70,7 @@ function AddSensor() {
               onChange={(e) => setSensorCode(e.target.value)}
             />
             {/* Mostrar error debajo del campo si existe */}
-            {errors.sensorCode && <p className="error-message">{errors.sensorCode}</p>}
+            {errors.sensorCode && <p className="sensor-error-message">{errors.sensorCode}</p>}
           </div>
           <button type="submit" className="btn-enla">
             Enlazar
@@ -78,7 +78,7 @@ function AddSensor() {
         </form>
 
         {/* Mensaje de éxito */}
-        {successMessage && <p className="success-message">{successMessage}</p>}
+        {successMessage && <p className="sensor-success-message">{successMessage}</p>}
       </div>
     </div>
   );

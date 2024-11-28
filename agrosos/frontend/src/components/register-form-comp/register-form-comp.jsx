@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./register-form.css";
+import "./register-form-comp.css";
 
-const RegisterForm = ({ onRegister }) => {
+const RegisterFormComp = ({ onRegister }) => {
   const [name, setName] = useState("");
   const [role, setRole] = useState("Farmer");
   const [email, setEmail] = useState("");
@@ -54,7 +54,7 @@ const RegisterForm = ({ onRegister }) => {
 
   return (
     <div className="register-form-container">
-      <form onSubmit={handleSubmit} className="register-form">
+      <form id="register-form-form" onSubmit={handleSubmit} className="register-form">
         <input
           type="text"
           value={name}
@@ -83,9 +83,9 @@ const RegisterForm = ({ onRegister }) => {
           placeholder="Confirmar contraseña"
           required
         />
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-        {successMessage && <p className="success-message">{successMessage}</p>}
-        <button type="submit" className="submit-button">
+        {errorMessage && <p className="register-form-error-message">{errorMessage}</p>}
+        {successMessage && <p className="register-form-success-message">{successMessage}</p>}
+        <button type="submit" className="register-form-submit-button">
           Crear cuenta
         </button>
       </form>
@@ -93,4 +93,4 @@ const RegisterForm = ({ onRegister }) => {
   );
 };
 
-export default RegisterForm;
+export default RegisterFormComp;

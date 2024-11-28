@@ -4,7 +4,7 @@ import cultive from "./cultivo.png";
 
 function CultiveComponent() {
     return (
-        <div className="footer">
+        <div className="add-crop-footer">
             <img src={cultive} alt="cultive" className="cultive"/>
         </div>
     );

@@ -10,7 +10,7 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
-.title {
+.crops-menu-title {
   font-size: 1.2em; 
   margin-bottom: 20px;
   text-align: left; 
@@ -18,13 +18,13 @@ body, html {
 }
 
 
-.buttons {
+.crops-menu-buttons {
   display: flex;
   justify-content: center; 
   gap: 40px;
 }
 
-.button {
+.crops-menu-button {
   background-image: url('./images/fondo-boton.png');
   width: 100px;
   height: 50px;
@@ -39,7 +39,7 @@ body, html {
   text-align: center;
 }
 
-.button.active {
+.crops-menu-button.active {
   background-image: url('./images/fondo-boton-osc.png');
   background-size: cover;
   background-position: center;

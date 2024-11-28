@@ -22,7 +22,7 @@ const PlotListFooterComp = () => {
             </div>
 
             <div className="plot-list-config-img-container">
-                <Link to="/configuration" className="img">
+                <Link to="/settings" className="img">
                     <img src={configIcon} alt="Configuration" />
                 </Link>
             </div>

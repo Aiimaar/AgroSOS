@@ -72,7 +72,7 @@ const InsideAPlotComp = ({ plotId }) => {
       <section className="crops-section">
         <h3>Cultivo en el terreno</h3>
         {error ? (
-          <p className="error-message">{error}</p>
+          <p className="inside-a-plot-error-message">{error}</p>
         ) : crop ? (
           <div className="crop-details">
             <img
@@ -118,10 +118,10 @@ const InsideAPlotComp = ({ plotId }) => {
         )}
       </section>
 
-      <section className="actions-section">
+      <section className="inside-a-plot-actions-section">
         <h3>Acciones</h3>
-        <button className="action-button">Activar Riego</button>
-        <button className="action-button">Desactivar Riego</button>
+        <button className="inside-a-plot-action-button">Activar Riego</button>
+        <button className="inside-a-plot-action-button">Desactivar Riego</button>
       </section>
 
       <section className="tasks-section">

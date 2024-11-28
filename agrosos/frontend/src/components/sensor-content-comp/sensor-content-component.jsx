@@ -26,12 +26,12 @@ function Sensors() {
   };
 
   return (
-    <div id="container">
+    <div id="sensor-content-container">
       <div className="sensorList">
-        <div className="list">
+        <div className="sensor-content-list">
           <img src={airTemp} alt="airTemp" className="airTemp" />
           <p>Temperatura del aire</p>
-          <div className="buttons">
+          <div className="sensor-content-buttons">
             <Link to="/add-sensor" onClick={() => handleAddClick("Temperatura del aire")}>
               <img src={add} alt="add" className="add" />
             </Link>
@@ -40,10 +40,10 @@ function Sensors() {
             </Link>
           </div>
         </div>
-        <div className="list">
+        <div className="sensor-content-list">
           <img src={airHu} alt="airHu" className="airHu" />
           <p>Humedad del aire</p>
-          <div className="buttons">
+          <div className="sensor-content-buttons">
             <Link to="/add-sensor" onClick={() => handleAddClick("Humedad del aire")}>
               <img src={add} alt="add" className="add" />
             </Link>
@@ -52,10 +52,10 @@ function Sensors() {
             </Link>
           </div>
         </div>
-        <div className="list">
+        <div className="sensor-content-list">
           <img src={plotTemp} alt="plotTemp" className="plotTemp" />
           <p>Temperatura del terreno</p>
-          <div className="buttons">
+          <div className="sensor-content-buttons">
             <Link to="/add-sensor" onClick={() => handleAddClick("Temperatura del terreno")}>
               <img src={add} alt="add" className="add" />
             </Link>
@@ -64,10 +64,10 @@ function Sensors() {
             </Link>
           </div>
         </div>
-        <div className="list">
+        <div className="sensor-content-list">
           <img src={plotHu} alt="plotHu" className="plotHu" />
           <p>Humedad del terreno</p>
-          <div className="buttons">
+          <div className="sensor-content-buttons">
             <Link to="/add-sensor" onClick={() => handleAddClick("Humedad del terreno")}>
               <img src={add} alt="add" className="add" />
             </Link>
@@ -76,10 +76,10 @@ function Sensors() {
             </Link>
           </div>
         </div>
-        <div className="list">
+        <div className="sensor-content-list">
           <img src={sun} alt="sun" className="sun" />
           <p>Radiación solar</p>
-          <div className="buttons">
+          <div className="sensor-content-buttons">
             <Link to="/add-sensor" onClick={() => handleAddClick("Radiación solar")}>
               <img src={add} alt="add" className="add" />
             </Link>

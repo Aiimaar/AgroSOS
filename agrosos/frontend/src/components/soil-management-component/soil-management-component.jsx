@@ -9,7 +9,7 @@ function SoilManagementComponent() {
 
   return (
     <>
-      <button className="back-button" onClick={() => navigate("/advices")}>
+      <button className="soil-back-button" onClick={() => navigate("/advices")}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
 

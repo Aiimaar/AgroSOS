@@ -8,6 +8,7 @@ import {
   faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -19,19 +20,27 @@ const UserList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/users")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error fetching users");
-        }
-        return response.json();
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    axios
+      .get("http://localhost:3000/api/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then((data) => setUsers(data))
+      .then((response) => {
+        setUsers(response.data);
+      })
       .catch((error) => setError(error.message));
-  }, []);
+  }, [navigate]);
 
   if (error) {
-    return <div className="error-message">Error: {error}</div>;
+    return <div className="user-list-error-message">Error: {error}</div>;
   }
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -62,20 +71,14 @@ const UserList = () => {
 
   const handleSave = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:3000/api/users/${currentUser.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(currentUser),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error updating user");
-        }
-        return response.json();
+    axios
+      .put(`http://localhost:3000/api/users/${currentUser.id}`, currentUser, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .then((updatedUser) => {
+      .then((response) => {
+        const updatedUser = response.data;
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
             user.id === updatedUser.id ? updatedUser : user
@@ -87,13 +90,9 @@ const UserList = () => {
   };
 
   const handleDelete = (userId) => {
-    fetch(`http://localhost:3000/api/users/${userId}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error deleting user");
-        }
+    axios
+      .delete(`http://localhost:3000/api/users/${userId}`)
+      .then(() => {
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
       })
       .catch((error) => console.error("Error al eliminar:", error));
@@ -101,7 +100,7 @@ const UserList = () => {
 
   return (
     <div className="user-list-container">
-      <button className="back-button" onClick={() => navigate("/")}>
+      <button className="user-list-back-button" onClick={() => navigate("/")}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="user-list-title">Lista de usuarios</h1>
@@ -109,47 +108,51 @@ const UserList = () => {
       <div className="user-list">
         {currentUsers.map((user) => (
           <div key={user.id}>
-            <div className="user-item">
-              <div className="user-details">
-                <div className="user-avatar"></div>
-                <div className="user-info">
-                  <p className="user-name">{user.name}</p>
-                  <p className="user-role">{user.role}</p>
+            <div className="user-list-item">
+              <div className="user-list-details">
+                <div className="user-list-avatar"></div>
+                <div className="user-list-info">
+                  <p className="user-list-name">{user.name}</p>
+                  <p className="user-list-role">{user.role}</p>
                 </div>
               </div>
-              <div className="user-actions">
+              <div className="user-list-actions">
                 <button
-                  className="user-action-button"
+                  className="user-list-action-button"
                   onClick={() => handleEdit(user)}
                 >
                   <FontAwesomeIcon icon={faPencilAlt} />
                 </button>
                 <button
-                  className="user-action-button"
+                  className="user-list-action-button"
                   onClick={() => handleDelete(user.id)}
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </div>
             </div>
-            <div className="divider"></div>
+            <div className="user-list-divider"></div>
           </div>
         ))}
       </div>
 
-      <div className="arrow-buttons">
+      <div className="user-list-arrow-buttons">
         {currentPage > 1 ? (
-          <button className="arrow-button arrow-left" onClick={prevPage}>
+          <button
+            className="user-list-arrow-button user-list-arrow-left"
+            onClick={prevPage}
+          >
             <FontAwesomeIcon icon={faArrowLeft} />
           </button>
         ) : (
-          <div
-            style={{ width: "40px" }}
-          ></div>
+          <div style={{ width: "40px" }}></div>
         )}
 
         {indexOfLastUser < users.length && (
-          <button className="arrow-button arrow-right" onClick={nextPage}>
+          <button
+            className="user-list-arrow-button user-list-arrow-right"
+            onClick={nextPage}
+          >
             <FontAwesomeIcon icon={faArrowRight} />
           </button>
         )}

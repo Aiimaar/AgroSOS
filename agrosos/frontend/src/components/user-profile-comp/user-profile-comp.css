@@ -1,4 +1,4 @@
-.user-profile-page {
+.user-profile-comp-page {
   background-color: #ffffff;
   min-height: 90vh;
   display: flex;
@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-.user-profile-container {
+.user-profile-comp-container {
   background-color: #ffffff;
   border-radius: 15px;
   padding: 30px;
@@ -16,12 +16,12 @@
   margin: 20px;
 }
 
-.profile-photo-container {
+.user-profile-comp-photo-container {
   position: relative;
   display: inline-block;
 }
 
-.profile-photo {
+.user-profile-comp-photo {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -30,7 +30,7 @@
   display: block;
 }
 
-.edit-photo-button {
+.user-profile-comp-edit-photo-button {
   position: absolute;
   bottom: -10px;
   right: -10px;
@@ -47,37 +47,37 @@
   z-index: 2;
 }
 
-.camera-icon {
+.user-profile-comp-camera-icon {
   font-size: 20px;
 }
 
-.upload-text {
+.user-profile-comp-upload-text {
   color: #4caf50;
   font-size: 20px;
   cursor: pointer;
   text-decoration: none;
-  margin-top: 15px; /* Cambia esto según lo necesites */
+  margin-top: 15px;
   display: block;
 }
 
-.upload-text:hover {
-  color: #45a049;  /* Un verde ligeramente más oscuro cuando se pasa el mouse por encima */
+.user-profile-comp-upload-text:hover {
+  color: #45a049; /* Un verde ligeramente más oscuro cuando se pasa el mouse por encima */
 }
 
-.profile-fields {
+.user-profile-comp-fields {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.field {
+.user-profile-comp-field {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.profile-input {
+.user-profile-comp-input {
   width: 100%;
   border: none;
   border-bottom: 2px solid #4caf50;
@@ -88,11 +88,11 @@
   background: none;
 }
 
-.profile-input:focus {
+.user-profile-comp-input:focus {
   border-color: #0f726f;
 }
 
-.edit-field-button {
+.user-profile-comp-edit-field-button {
   background: none;
   border: none;
   position: absolute;
@@ -102,7 +102,7 @@
   color: #666;
 }
 
-.logout-button {
+.user-profile-comp-logout-button {
   background-color: #4caf50;
   color: white;
   padding: 10px 20px;
@@ -114,6 +114,6 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.logout-button:hover {
+.user-profile-comp-logout-button:hover {
   background-color: #45a049;
 }

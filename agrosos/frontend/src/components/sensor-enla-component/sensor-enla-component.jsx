@@ -1,4 +1,3 @@
-// SensorEnlaComponent.js
 import React, { useContext, useState } from "react";
 import { SensorContext } from "../../context/SensorContext";
 import "./sensor-enla-component.css";
