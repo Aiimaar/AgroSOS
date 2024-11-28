@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faHome, faBell, faBook, faLightbulb } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom"; // Importar Link
+import { Link } from "react-router-dom";
 import "./side-menu-comp.css";
 
 function SideMenuComp({ isOpen, onClose }) {
@@ -12,25 +12,25 @@ function SideMenuComp({ isOpen, onClose }) {
       </button>
       <ul className="side-menu-items">
         <li>
-          <Link to="/plot-list" onClick={onClose}> {/* Redirige a /plot-list */}
+          <Link to="/plot-list" onClick={onClose}>
             <FontAwesomeIcon icon={faHome} />
             <span>Inicio</span>
           </Link>
         </li>
         <li>
-          <Link to="/notifications" onClick={onClose}> {/* Redirige a /notifications */}
+          <Link to="/notifications" onClick={onClose}>
             <FontAwesomeIcon icon={faBell} />
             <span>Notificaciones</span>
           </Link>
         </li>
         <li>
-          <Link to="/tips" onClick={onClose}> {/* Redirige a /tips */}
+          <Link to="/advices" onClick={onClose}>
             <FontAwesomeIcon icon={faLightbulb} />
             <span>Consejos</span>
           </Link>
         </li>
         <li>
-          <Link to="/terms" onClick={onClose}> {/* Redirige a /terms */}
+          <Link to="/terms-conditions" onClick={onClose}>
             <FontAwesomeIcon icon={faBook} />
             <span>Términos y condiciones</span>
           </Link>
