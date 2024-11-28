@@ -9,7 +9,7 @@ function TermsConditionText() {
 
   return (
     <div className="terms-condition-text-container">
-      <button className="terms-back-button" onClick={() => navigate("/advices")}>
+      <button className="terms-back-button" onClick={() => navigate("/")}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="terms-condition-text-title">Términos y condiciones</h1>

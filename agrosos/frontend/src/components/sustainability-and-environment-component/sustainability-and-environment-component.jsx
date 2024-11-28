@@ -10,7 +10,7 @@ function SustainabilityAndEnvironmentComponent() {
   return (
     <>
       <button className="sustainability-back-button" onClick={() => navigate("/advices")}>
-        <FontAwesomeIcon icon={faArrowLeft} />
+        <FontAwesomeIcon icon={faArrowLeft} className="back-icon" />
       </button>
       <div className="sustainability-container">
         <div className="sustainability-header">
