@@ -1,13 +1,13 @@
 import CropsListComponent from "../../components/crops-list/crops-list-component";
-import CropsMenuComponent from "../../components/crops-menu/crops-menu-component";
 import InsideAPlotFooter from "../../components/inside-a-plot-footer-comp/inside-a-plot-footer-comp"
 import Header from "../../components/header/header";
+import CropsHeaderComponent from "../../components/crops-header-component/crops-header-component";
 
 function Crops() {
   return (
     <>
       <Header />
-      <CropsMenuComponent />
+      <CropsHeaderComponent />
       <CropsListComponent />
       <InsideAPlotFooter />
     </>

@@ -8,7 +8,7 @@ function ActuatorHeaderComponent(){
         <div id="actuator-header-container">
             <div className="headerGrey">
         <div className="headerGreyItemContainer">
-          <img src={headerGrey} alt="headerGrey" className="headerGreyItem" />
+        <Link to="/crops"><img src={headerGrey} alt="headerGrey" className="headerGreyItem" /> </Link>
           <p className="header-p">Cultivo</p>
         </div>
         <div className="headerGreyItemContainer">
