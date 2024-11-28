@@ -54,7 +54,7 @@ const RegisterFormComp = ({ onRegister }) => {
 
   return (
     <div className="register-form-container">
-      <form id="register-form-form" onSubmit={handleSubmit} className="register-form">
+      <form onSubmit={handleSubmit} className="register-form">
         <input
           type="text"
           value={name}

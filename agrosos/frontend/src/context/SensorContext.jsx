@@ -22,7 +22,11 @@ export const SensorProvider = ({ children }) => {
         type: typeMapping[sensorData.name] || sensorData.name.toLowerCase(),
       };
 
-      const response = await axios.post("http://localhost:3000/api/sensors/", transformedData);
+      const response = await axios.post("http://localhost:3000/api/sensors/", transformedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setLinkedSensors([...linkedSensors, response.data]);
     } catch (error) {
       console.error("Error al agregar el sensor:", error);

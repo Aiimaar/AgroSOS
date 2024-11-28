@@ -1,25 +1,24 @@
 .side-menu {
     position: fixed;
     top: 0;
-    right: -250px; /* Oculto inicialmente */
+    right: -250px;
     width: 200px;
-    height: 25%;
+    height: 33%;
     background-color: white;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    transition: left 0.3s ease; /* Animación suave */
+    transition: left 0.3s ease;
     z-index: 1001;
     padding: 20px;
   }
   
   .side-menu.open {
-    right: 0; /* Menú visible */
+    right: 0;
   }
   
   .side-menu.closed {
-    right: -250px; /* Ocultar nuevamente */
+    right: -250px;
   }
   
-  /* Botón de cierre */
   .side-close-button {
     position: absolute;
     top: 10px;
@@ -30,20 +29,19 @@
     cursor: pointer;
   }
   
-  /* Asegura que el contenido principal no se desplace */
   body {
     overflow-x: hidden;
   }
   
   
-  .menu-items {
+  .side-menu-items {
     list-style: none;
     padding: 0;
     margin: 0;
     
   }
   
-  .menu-items li {
+  .side-menu-items li {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -51,16 +49,16 @@
     cursor: pointer;
   }
   
-  .menu-items li:hover {
+  .side-menu-items li:hover {
     background-color: #f0f0f0;
     border-radius: 5px;
   }
   
-  .menu-items li span {
+  .side-menu-items li span {
     font-size: 16px;
   }
   
-  .menu-items a {
+  .side-menu-items a {
     text-decoration: none;
     color: inherit;
     display: flex;
@@ -69,6 +67,6 @@
     padding: 10px 0;
   }
   
-  .menu-items a:hover {
+  .side-menu-items a:hover {
     color: #007bff; /* Cambiar a un color resaltado al pasar el mouse */
   }
