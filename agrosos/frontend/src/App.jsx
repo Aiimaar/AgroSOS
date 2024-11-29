@@ -1,5 +1,4 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -15,9 +14,7 @@ import ActuadorEnla from "./pages/actuator-enla/ActuatorEnla";
 import UserProfile from "./pages/user-profile/UserProfile";
 import InsideAPlot from "./pages/inside-a-plot/InsideAPlot";
 import AddActuator from "./pages/add-actuator/AddActuator";
-import { SensorProvider } from "./context/SensorContext";
 import Settings from "./pages/settings/Settings";
-import { ActuatorProvider } from "./context/ActuatorContext";
 import ExistingRules from "./pages/existing-rules/ExistingRules";
 import Temperature from "./pages/temperature/Temperature";
 import Humidity from "./pages/humidity/Humidity";
@@ -31,6 +28,9 @@ import EfficiencyEnergy from "./pages/efficiency-energy/EfficiencyEnergy";
 import RulesPages from "./pages/rules-page/RulesPage";
 import CropsDetails from "./pages/crops-details/CropsDetails";
 import Crops from "./pages/crops/Crops";
+import { SensorProvider } from "./context/SensorContext";
+import { ActuatorProvider } from "./context/ActuatorContext";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (

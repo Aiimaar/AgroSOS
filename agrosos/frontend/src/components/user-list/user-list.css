@@ -46,7 +46,15 @@
   height: 40px;
   border-radius: 50%;
   background-color: #ccc;
+  overflow: hidden; /* Asegura que la imagen no se desborde fuera del contenedor */
 }
+
+.user-avatar-img {
+  width: 100%; /* Hace que la imagen ocupe todo el espacio disponible del contenedor */
+  height: 100%; /* Hace que la imagen ocupe todo el espacio disponible del contenedor */
+  object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+}
+
 
 .user-list-info {
   display: flex;
