@@ -138,10 +138,11 @@ const UserProfileComp = () => {
       <div className="user-profile-comp-container">
         <div className="user-profile-comp-photo-container">
           <img
-            src={`http://localhost:3000/uploads/${userData.profile_image}`}
+            src={userData.profile_image || "/default-profile.png"}
             alt="profile"
             className="user-profile-comp-photo"
           />
+
           <button
             className="user-profile-comp-edit-photo-button"
             style={{
