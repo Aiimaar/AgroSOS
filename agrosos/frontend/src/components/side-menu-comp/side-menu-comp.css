@@ -4,11 +4,12 @@
     right: -250px;
     width: 200px;
     height: 33%;
-    background-color: white;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4);
     transition: left 0.3s ease;
     z-index: 1001;
     padding: 20px;
+    border-radius: 30px;
   }
   
   .side-menu.open {

@@ -27,7 +27,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-.temperature-button-equal {
+.temperature-button, .temperature-button-equal {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
     border-radius: 30px;
     padding: 11px;
@@ -37,19 +37,20 @@ h1 {
     cursor: pointer;
     background-color: #5EA71E;
     color: white;
+    transition: background-color 0.3s ease;
 }
 
 .temperature-button {
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    border-radius: 30px;
-    border: none;
     width: 15vw;
-    padding: 11px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #5EA71E;
-    color: white;
 }
+
+/* Estilo para el botón activo */
+.temperature-button.active, .temperature-button-equal.active {
+    background-color: #3C750F; /* Color más oscuro */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
+    transform: scale(1.05); /* Efecto de agrandamiento sutil */
+}
+
 
 .temperature-display {
     width: 20vw;

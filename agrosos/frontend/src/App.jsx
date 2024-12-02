@@ -31,6 +31,7 @@ import EfficiencyEnergy from "./pages/efficiency-energy/EfficiencyEnergy";
 import RulesPages from "./pages/rules-page/RulesPage";
 import CropsDetails from "./pages/crops-details/CropsDetails";
 import Crops from "./pages/crops/Crops";
+import AddRule from "./pages/add-rule/AddRule";
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
             <Route path="/rules" element={<RulesPages />} />
             <Route path="/crop-details" element={<CropsDetails />} />
             <Route path="/crops" element={<Crops />} />
+            <Route path="/add-rule" element={<AddRule />} />
           </Routes>
         </BrowserRouter>
       </SensorProvider>
