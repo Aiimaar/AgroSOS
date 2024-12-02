@@ -120,8 +120,10 @@ const InsideAPlotComp = ({ plotId }) => {
 
       <section className="inside-a-plot-actions-section">
         <h3>Acciones</h3>
+        <div className="inside-a-plot-actions-buttons-container">
         <button className="inside-a-plot-action-button">Activar Riego</button>
         <button className="inside-a-plot-action-button">Desactivar Riego</button>
+        </div>
       </section>
 
       <section className="tasks-section">
