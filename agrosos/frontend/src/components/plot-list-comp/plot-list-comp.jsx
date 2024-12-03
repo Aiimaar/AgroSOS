@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./plot-list-comp.css";
+import fondo1 from "../../components/plot-list-comp/fondo1.jpg";
+import fondo2 from "../../components/plot-list-comp/fondo2.jpg";
+import fondo3 from "../../components/plot-list-comp/fondo3.png";
+import fondo4 from "../../components/plot-list-comp/fondo4.jpg";
+import fondo5 from "../../components/plot-list-comp/fondo5.jpg";
+// Importación de FontAwesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 
 function PlotListComp() {
   const [plots, setPlots] = useState([]);
@@ -13,18 +21,19 @@ function PlotListComp() {
   const [plotToDelete, setPlotToDelete] = useState(null);
   const navigate = useNavigate();
 
+  const defaultImages = [fondo1, fondo2, fondo3, fondo4, fondo5];
+  const imageMap = {}; // Mapeo de imágenes basado en IDs de terrenos
+
   useEffect(() => {
     fetchData();
   }, []);
 
   useEffect(() => {
-    // Añadir o quitar clase global según el estado del modal
     if (showDeleteModal || editPlot) {
       document.body.classList.add("no-scroll");
     } else {
       document.body.classList.remove("no-scroll");
     }
-
     return () => {
       document.body.classList.remove("no-scroll");
     };
@@ -32,12 +41,10 @@ function PlotListComp() {
 
   const fetchData = async () => {
     const token = localStorage.getItem("authToken");
-
     if (!token) {
       navigate("/login");
       return;
     }
-
     try {
       const response = await axios.get("http://localhost:3000/api/plots", {
         headers: {
@@ -54,7 +61,6 @@ function PlotListComp() {
 
   const fetchSensorAverages = async (plots, token) => {
     const averages = {};
-
     await Promise.all(
       plots.map(async (plot) => {
         try {
@@ -66,21 +72,21 @@ function PlotListComp() {
               },
             }
           );
-
           const sensors = response.data;
           const temperatureAvg = calculateAverage(sensors, "temperature");
           const humidityAvg = calculateAverage(sensors, "humidity");
-
           averages[plot.id] = {
             temperature: temperatureAvg,
             humidity: humidityAvg,
           };
         } catch (error) {
-          console.error(`Error al obtener sensores del terreno ${plot.id}:`, error);
+          console.error(
+            `Error al obtener sensores del terreno ${plot.id}:`,
+            error
+          );
         }
       })
     );
-
     setSensorAverages(averages);
   };
 
@@ -89,15 +95,25 @@ function PlotListComp() {
       (sensor) => sensor.Sensor.type === sensorType
     );
     if (filteredSensors.length > 0) {
-      const sum = filteredSensors.reduce((total, sensor) => total + sensor.value, 0);
+      const sum = filteredSensors.reduce(
+        (total, sensor) => total + sensor.value,
+        0
+      );
       return (sum / filteredSensors.length).toFixed(0);
     }
     return "--";
   };
 
+  const assignDefaultImage = (id) => {
+    if (!imageMap[id]) {
+      const randomIndex = Object.keys(imageMap).length % defaultImages.length;
+      imageMap[id] = defaultImages[randomIndex];
+    }
+    return imageMap[id];
+  };
+
   const handleDeletePlot = async () => {
     const token = localStorage.getItem("authToken");
-
     try {
       await axios.delete(`http://localhost:3000/api/plots/${plotToDelete}`, {
         headers: {
@@ -108,8 +124,8 @@ function PlotListComp() {
       const updatedAverages = { ...sensorAverages };
       delete updatedAverages[plotToDelete];
       setSensorAverages(updatedAverages);
-      setShowDeleteModal(false); // Cerrar el modal después de eliminar
-      setPlotToDelete(null); // Limpiar el terreno a eliminar
+      setShowDeleteModal(false);
+      setPlotToDelete(null);
     } catch (error) {
       console.error(
         "Error al eliminar parcela:",
@@ -120,17 +136,17 @@ function PlotListComp() {
 
   const confirmDeletePlot = (plotId) => {
     setPlotToDelete(plotId);
-    setShowDeleteModal(true); // Mostrar el modal de confirmación
+    setShowDeleteModal(true);
   };
 
   const cancelDelete = () => {
     setShowDeleteModal(false);
-    setPlotToDelete(null); // Limpiar el terreno a eliminar
+    setPlotToDelete(null);
   };
 
   const handleEditPlot = (plot) => {
-    setEditPlot(plot); // Guardar el terreno que se está editando
-    setEditForm({ name: plot.name, size: plot.size }); // Cargar datos iniciales
+    setEditPlot(plot);
+    setEditForm({ name: plot.name, size: plot.size });
   };
 
   const handleEditFormChange = (e) => {
@@ -141,25 +157,23 @@ function PlotListComp() {
   const submitEditForm = async () => {
     const token = localStorage.getItem("authToken");
     const { id } = editPlot;
-
     try {
       const formData = new FormData();
       formData.append("name", editForm.name);
       formData.append("size", editForm.size);
-
       await axios.put(`http://localhost:3000/api/plots/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      // Actualizar la lista de terrenos
       setPlots((prevPlots) =>
         prevPlots.map((plot) =>
-          plot.id === id ? { ...plot, name: editForm.name, size: editForm.size } : plot
+          plot.id === id
+            ? { ...plot, name: editForm.name, size: editForm.size }
+            : plot
         )
       );
-      setEditPlot(null); // Cerrar el formulario
+      setEditPlot(null);
     } catch (error) {
       console.error("Error al editar el terreno:", error);
     }
@@ -172,7 +186,6 @@ function PlotListComp() {
 
   return (
     <>
-      {/* Modal de Confirmación de Eliminación */}
       {showDeleteModal && (
         <div className="modal-overlay">
           <div className="modal">
@@ -185,7 +198,6 @@ function PlotListComp() {
         </div>
       )}
 
-      {/* Modal de Edición de Terreno */}
       {editPlot && (
         <div className="modal-overlay">
           <div className="plot-list-edit-modal">
@@ -215,10 +227,7 @@ function PlotListComp() {
                 />
               </label>
               <button type="submit">Guardar</button>
-              <button
-                type="button"
-                onClick={() => setEditPlot(null)}
-              >
+              <button type="button" onClick={() => setEditPlot(null)}>
                 Cancelar
               </button>
             </form>
@@ -230,13 +239,24 @@ function PlotListComp() {
         <h3>Buenos días!</h3>
       </div>
       <div className="plot-list-container">
-        {errorMessage && <p className="plot-list-error-message">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="plot-list-error-message">{errorMessage}</p>
+        )}
         <div className="plot-list">
           {plots.map((plot) => (
-            <div key={plot.id} className="plot-card" onClick={() => handlePlotClick(plot.id)}>
+            <div
+              key={plot.id}
+              className="plot-card"
+              onClick={() => handlePlotClick(plot.id)}
+              style={{ backgroundColor: plot.color || "transparent" }}
+            >
               <img
-                src={`http://localhost:3000/${plot.image}`}
-                alt="Imagen del terreno"
+                src={
+                  plot.image
+                    ? `http://localhost:3000/${plot.image}`
+                    : assignDefaultImage(plot.id)
+                }
+                alt={`Imagen del terreno ${plot.name}`}
                 className="plot-image"
               />
               <div className="terrain-name">{plot.name}</div>
@@ -249,7 +269,7 @@ function PlotListComp() {
                       handleEditPlot(plot);
                     }}
                   >
-                    &#9998;
+                    <FontAwesomeIcon icon={faPen} />
                   </div>
                   <div
                     className="plot-list-button plot-list-delete-button"
@@ -258,7 +278,7 @@ function PlotListComp() {
                       confirmDeletePlot(plot.id);
                     }}
                   >
-                    &#128465;
+                    <FontAwesomeIcon icon={faTrash} />
                   </div>
                 </div>
                 <div className="plot-list-info">
@@ -274,9 +294,7 @@ function PlotListComp() {
                     <span role="img" aria-label="humidity">
                       💧
                     </span>
-                    <span>
-                      {sensorAverages[plot.id]?.humidity || "--"}%
-                    </span>
+                    <span>{sensorAverages[plot.id]?.humidity || "--"}%</span>
                   </div>
                 </div>
               </div>

@@ -54,13 +54,19 @@ body {
   outline: none;
 }
 
-.create-plot-submit-button {
-  width: 35vw;
-  padding: 0.8em;
+.create-plot-form-buttons {
+  display: flex;
+  justify-content: space-between; /* Para que los botones estén al extremo */
+  gap: 1em; /* Espacio entre los botones */
+  margin-top: 1em; /* Espacio superior */
+}
+
+.create-plot-submit-button,
+.create-plot-cancel-button {
+  width: 48%; /* Asegura que los botones estén al lado */
+  padding: 0.5em 1.5em; /* Reduce la altura y aumenta el ancho horizontal */
   font-size: 1em;
   font-weight: bold;
-  background-color: #5ea71e;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   color: #ffffff;
   border: none;
   border-radius: 20px;
@@ -68,9 +74,16 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.create-plot-submit-button:hover {
-  background-color: #4c8e1a;
+.create-plot-submit-button {
+  background-color: #5ea71e;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
+
+.create-plot-cancel-button {
+  background-color: #7f8679;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
 
 .create-plot-submit-button:disabled {
   background-color: #cccccc;

@@ -86,6 +86,10 @@ html {
   cursor: pointer;
 }
 
+.plot-list-button svg {
+  font-size: 13px; 
+}
+
 .plot-list-edit-button {
   background-color: #333;
 }
