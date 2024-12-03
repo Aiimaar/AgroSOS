@@ -1,18 +1,31 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { SensorContext } from "../../context/SensorContext";
 import "./sensor-enla-component.css";
+import { useNavigate } from "react-router-dom";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function SensorEnlaComponent() {
-  const { linkedSensors, removeLinkedSensor } = useContext(SensorContext);
-  const [showRemoveButtons, setShowRemoveButtons] = useState(false); // Controla la visibilidad de los botones "Eliminar"
+  const { linkedSensors, removeLinkedSensor, showRemoveButtons } = useContext(SensorContext);
 
-  const handleShowButtons = () => {
-    setShowRemoveButtons(true); // Mostrar los botones al hacer clic
+  const navigate = useNavigate();
+
+  const typeMappingInverse = {
+    "temperature": "Temperatura",
+    "humidity": "Humedad",
+    "soil_temperature": "Temperatura de terreno",
+    "soil_humidity": "Humedad del terreno"
   };
 
   return (
     <div id="sensor-enla-container">
-      <h1 className="enla-title" onClick={handleShowButtons}>
+      <button
+        className="sensor-enla-button-arrow"
+        onClick={() => navigate("/sensors")}
+      >
+        <FontAwesomeIcon icon={faArrowLeft} />
+      </button>
+      <h1 className="enla-title">
         Sensores enlazados
       </h1>
       <div className="linked-sensors-list">
@@ -20,16 +33,15 @@ function SensorEnlaComponent() {
           linkedSensors.map((sensor, index) => (
             <div key={index} className="sensor-item">
               <p>
-                <strong>Nombre:</strong> {sensor.name}
+                <strong>Nombre:</strong> {typeMappingInverse[sensor.type] || sensor.type}
               </p>
               <p>
                 <strong>Código:</strong> {sensor.code}
               </p>
-              {/* Mostrar el botón solo si "showRemoveButtons" es true */}
               {showRemoveButtons && (
                 <button
                   className="remove-sensor-btn"
-                  onClick={() => removeLinkedSensor(sensor.id)} // Se pasa el id para eliminarlo
+                  onClick={() => removeLinkedSensor(sensor.id)}
                 >
                   Eliminar
                 </button>

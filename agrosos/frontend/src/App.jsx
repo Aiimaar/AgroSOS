@@ -32,6 +32,7 @@ import AddRule from "./pages/add-rule/AddRule";
 import { SensorProvider } from "./context/SensorContext";
 import { ActuatorProvider } from "./context/ActuatorContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Notifications from "./pages/notifications/Notifications";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/plot-list" element={<PlotList />} />
+            <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/create-plot" element={<CreatePlot />} />
@@ -69,6 +71,7 @@ function App() {
             <Route path="/crop-details" element={<CropsDetails />} />
             <Route path="/crops" element={<Crops />} />
             <Route path="/add-rule" element={<AddRule />} />
+            <Route path="/notifications" element={<Notifications />} />
           </Routes>
         </BrowserRouter>
       </SensorProvider>

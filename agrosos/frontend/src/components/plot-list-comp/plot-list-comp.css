@@ -176,12 +176,12 @@ html {
 }
 
 .plot-list-edit-modal button[type="submit"] {
-  background-color: #4caf50;
+  background-color: #5EA71E;
   color: white;
 }
 
 .plot-list-edit-modal button[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #54941b;
 }
 
 .plot-list-edit-modal button[type="button"] {

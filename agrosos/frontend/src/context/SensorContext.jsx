@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react"; // Asegúrate de importar useEffect
+import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 export const SensorContext = createContext();
@@ -6,16 +6,25 @@ export const SensorContext = createContext();
 export const SensorProvider = ({ children }) => {
   const [linkedSensors, setLinkedSensors] = useState([]);
   const [selectedSensor, setSelectedSensor] = useState(null);
+  const [showRemoveButtons, setShowRemoveButtons] = useState(false); // Estado para mostrar/ocultar botones de eliminar
 
   const addLinkedSensor = async (sensorData) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      throw new Error("Token is not defined");
+    }
+
     try {
       const typeMapping = {
-        "Temperatura del aire": "temperature",
-        "Humedad del aire": "humidity",
-        "Temperatura del terreno": "soil_temperature",
+        "Temperatura": "temperature",
+        "Humedad": "humidity",
+        "Temperatura de terreno": "soil_temperature",
         "Humedad del terreno": "soil_humidity",
-        "Radiación solar": "solar_radiation",
       };
+
+      if (!sensorData.name) {
+        throw new Error("sensorData.name is not defined");
+      }
 
       const transformedData = {
         ...sensorData,
@@ -30,25 +39,34 @@ export const SensorProvider = ({ children }) => {
       setLinkedSensors([...linkedSensors, response.data]);
     } catch (error) {
       console.error("Error al agregar el sensor:", error);
+      throw error;
     }
   };
 
   const removeLinkedSensor = async (sensorId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      throw new Error("Token is not defined");
+    }
+
     try {
-      await axios.delete(`http://localhost:3000/api/sensors/${sensorId}`);
+      await axios.delete(`http://localhost:3000/api/sensors/${sensorId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setLinkedSensors(linkedSensors.filter((sensor) => sensor.id !== sensorId));
     } catch (error) {
       console.error("Error al eliminar el sensor:", error);
     }
   };
 
-  // Nueva función para obtener los sensores al cargar
   useEffect(() => {
     const fetchLinkedSensors = async () => {
       const token = localStorage.getItem("authToken");
 
       try {
-        const response = await axios.get("http://localhost:3000/api/sensors",{
+        const response = await axios.get("http://localhost:3000/api/sensors", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -71,6 +89,8 @@ export const SensorProvider = ({ children }) => {
         setSelectedSensor,
         addLinkedSensor,
         removeLinkedSensor,
+        showRemoveButtons, // Proveer el estado al contexto
+        setShowRemoveButtons, // Proveer el setter al contexto
       }}
     >
       {children}

@@ -86,6 +86,25 @@
   border-color: #006816;
 }
 
+.add-sensor-content-buttons{
+  display: flex;
+  gap: 1em;
+}
+
+.btn-back{
+  display: block;
+  width: 25vw;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 30px;
+  background-color: #5EA71E;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
 .btn-enla {
   display: block;
   width: 25vw;

@@ -11,7 +11,7 @@ function SensorHeader(){
           <p className="header-p">Cultivo</p>
         </div>
         <div className="headerGreyItemContainer">
-        <Link to="/sensors"><img
+        <Link to="/inside-a-plot"><img
             src={headerGreyBold}
             alt="headerGreyBold"
             className="headerGreyBoldItem"

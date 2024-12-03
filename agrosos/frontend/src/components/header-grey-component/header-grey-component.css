@@ -1,0 +1,30 @@
+.headerGrey {
+    margin-top: 25%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+  }
+  
+  .headerGreyItemContainer {
+    position: relative;
+    width: 100px;
+    height: auto;
+  }
+  
+  .headerGreyItem {
+    width: 100%;
+    height: auto;
+  }
+  
+  .headerGreyItemContainer p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white !important;
+    text-align: center;
+    font-size: 1rem;
+    pointer-events: none;
+  }

@@ -20,7 +20,7 @@ function ActuatorHeaderComponent(){
           <p className="header-p">Sensores</p>
         </div>
         <div className="headerGreyItemContainer">
-          <Link to="/actuators"><img src={headerGreyBold} alt="headerGrey" className="headerGreyItem" /></Link>
+          <Link to="/inside-a-plot"><img src={headerGreyBold} alt="headerGrey" className="headerGreyItem" /></Link>
           <p className="header-p">Actuadores</p>
         </div>
       </div>
