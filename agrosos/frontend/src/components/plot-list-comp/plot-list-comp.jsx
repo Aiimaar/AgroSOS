@@ -250,15 +250,25 @@ function PlotListComp() {
               onClick={() => handlePlotClick(plot.id)}
               style={{ backgroundColor: plot.color || "transparent" }}
             >
-              <img
-                src={
-                  plot.image
-                    ? `http://localhost:3000/${plot.image}`
-                    : assignDefaultImage(plot.id)
-                }
-                alt={`Imagen del terreno ${plot.name}`}
-                className="plot-image"
-              />
+              {/* Mostrar la imagen si está disponible */}
+              {plot.image ? (
+                <img
+                  src={`http://localhost:3000/${plot.image}`}
+                  alt={`Imagen del terreno ${plot.name}`}
+                  className="plot-image"
+                />
+              ) : plot.color ? (
+                // Si tiene color, solo mostrar el color de fondo sin imagen
+                <div className="plot-image" />
+              ) : (
+                // Si no tiene imagen ni color, asignar una imagen predeterminada
+                <img
+                  src={assignDefaultImage(plot.id)}
+                  alt={`Imagen predeterminada del terreno ${plot.name}`}
+                  className="plot-image"
+                />
+              )}
+
               <div className="terrain-name">{plot.name}</div>
               <div className="card-footer">
                 <div className="plot-list-actions">
