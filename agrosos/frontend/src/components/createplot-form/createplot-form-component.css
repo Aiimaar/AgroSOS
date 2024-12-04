@@ -20,7 +20,7 @@ body {
   margin: 2em auto;
   padding: 2em;
   border-radius: 20px;
-  background-color: #F0EDED;
+  background-color: #f0eded;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -70,6 +70,10 @@ body {
 
 .create-plot-submit-button:hover {
   background-color: #4c8e1a;
+}
+
+.create-plot-form-group {
+  width: 80vw;
 }
 
 .create-plot-submit-button:disabled {
@@ -193,12 +197,12 @@ p {
   text-align: center;
 }
 
-.create-plot-default-image-container img{
+.create-plot-default-image-container img {
   width: 70vw;
   height: auto;
 }
 
-.image-preview{
+.image-preview {
   margin-top: 1em;
   border-radius: 5px;
 }
@@ -215,4 +219,32 @@ p {
 .create-plot-error-message {
   color: red;
   font-weight: bold;
+}
+
+@media only screen and (min-width: 768px) {
+  .create-plot-form-group {
+    width: 40vw;
+  }
+
+  .create-plot-upload-container img {
+    width: 25vw;
+  }
+
+  .create-plot-default-image-container img {
+    width: 40vw;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .create-plot-image-preview-container{
+    width: 30vw;
+  }
+
+  .create-plot-submit-button {
+    width: 20vw;
+  }
+
+  #color-picker {
+    width: 40vw;
+  }
 }

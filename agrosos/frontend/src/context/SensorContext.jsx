@@ -1,17 +1,20 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const SensorContext = createContext();
 
 export const SensorProvider = ({ children }) => {
   const [linkedSensors, setLinkedSensors] = useState([]);
   const [selectedSensor, setSelectedSensor] = useState(null);
-  const [showRemoveButtons, setShowRemoveButtons] = useState(false); // Estado para mostrar/ocultar botones de eliminar
+  const [showRemoveButtons, setShowRemoveButtons] = useState(false);
+  const navigate = useNavigate();
 
   const addLinkedSensor = async (sensorData) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      throw new Error("Token is not defined");
+      navigate("/login");
+      return;
     }
 
     try {
@@ -46,7 +49,8 @@ export const SensorProvider = ({ children }) => {
   const removeLinkedSensor = async (sensorId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      throw new Error("Token is not defined");
+      navigate("/login");
+      return;
     }
 
     try {
@@ -62,8 +66,13 @@ export const SensorProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+
     const fetchLinkedSensors = async () => {
-      const token = localStorage.getItem("authToken");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
 
       try {
         const response = await axios.get("http://localhost:3000/api/sensors", {
@@ -73,12 +82,31 @@ export const SensorProvider = ({ children }) => {
         });
         setLinkedSensors(response.data);
       } catch (error) {
-        console.error("Error al obtener los sensores enlazados:", error);
+        if (error.response && error.response.status === 401) {
+          navigate("/login");
+        } else {
+          console.error("Error al obtener los sensores enlazados:", error);
+        }
       }
     };
 
+    // Interceptor de errores globales de Axios
+    const interceptor = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          navigate("/login");
+        }
+        return Promise.reject(error);
+      }
+    );
+
     fetchLinkedSensors();
-  }, []);
+
+    return () => {
+      axios.interceptors.response.eject(interceptor);
+    };
+  }, [navigate]);
 
   return (
     <SensorContext.Provider
@@ -89,8 +117,8 @@ export const SensorProvider = ({ children }) => {
         setSelectedSensor,
         addLinkedSensor,
         removeLinkedSensor,
-        showRemoveButtons, // Proveer el estado al contexto
-        setShowRemoveButtons, // Proveer el setter al contexto
+        showRemoveButtons,
+        setShowRemoveButtons,
       }}
     >
       {children}

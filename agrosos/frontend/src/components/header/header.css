@@ -1,33 +1,124 @@
 .header {
-    display: block;
-    display: flex;
-    gap: 255px;
-    height: 65px;
-    width: 100%;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: white;
-    top: 0;
-    position: fixed;
-    z-index: 1000;
-  }
-  
-  .plant-icon {
-    width: 50px;
-    height: 50px;
-  }
-  
+  display: flex;
+  gap: 20px;
+  height: 65px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: white;
+  top: 0;
+  position: fixed;
+  z-index: 1000;
+}
+
+.plant-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.header-menu-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+}
+
+.header-desktop-menu {
+  display: none;
+  margin-left: auto; /* Alinear a la derecha */
+}
+
+.header-desktop-menu ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-desktop-menu li {
+  margin-right: 20px;
+}
+
+.header-desktop-menu li a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  font-weight: bold; /* Texto en negrita */
+  font-size: 14px; /* Reducir tamaño del texto */
+}
+
+.header-desktop-menu li a span {
+  margin-left: 5px;
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60vw;
+  height: 40vh;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.side-menu-items {
+  list-style: none;
+  padding: 20px;
+}
+
+.side-menu-items li {
+  margin-bottom: 20px;
+}
+
+.side-menu-items li a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.side-close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) {
   .header-menu-button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: black;
+    display: none;
   }
-  
-  
+
+  .header-desktop-menu {
+    display: block;
+  }
+
+  .side-menu {
+    display: none;
+  }
+
+  .header-desktop-menu li a {
+    font-weight: bold; /* Asegurarnos de que el texto esté en negrita también aquí */
+    font-size: 14px; /* Asegurarnos de que el tamaño del texto se mantenga reducido también aquí */
+  }
+
+  .header-desktop-menu li a svg {
+    display: none; /* Ocultar iconos en resolución 768px y superiores */
+  }
+}

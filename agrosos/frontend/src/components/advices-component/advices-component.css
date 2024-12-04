@@ -33,6 +33,7 @@
   top: 0; /* Coloca la flecha en la parte superior */
   left: 10px; /* Espacio desde el borde izquierdo */
   margin-top: 10px; /* Un pequeño espacio desde el borde superior */
+  margin-left: 2em;
 }
 
 /* Título */
@@ -63,8 +64,8 @@
 }
 
 .advices-page .advice-card {
-  background-color: #4caf50;
-  color: white;
+  background-color: #5EA71E;
+  color: rgb(0, 0, 0);
   font-size: 18px;
   font-weight: bold;
   text-align: center;
@@ -79,4 +80,23 @@
 .advices-page .advice-card:hover {
   background-color: #45a049;
   transform: translateY(-5px);
+}
+
+@media only screen and (min-width: 768px) {
+  .advices-page .advices-container {
+    margin-top: 15%;
+  }
+
+  .advices-page .back-button {
+    margin-left: 4em;
+  }
+
+  .advices-page .advices-cards {
+    margin-top: 1%; /* Espacio desde el título */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 70%;
+  }
 }

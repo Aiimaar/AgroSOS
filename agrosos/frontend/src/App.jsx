@@ -1,4 +1,9 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SensorProvider } from "./context/SensorContext";
+import { ActuatorProvider } from "./context/ActuatorContext";
+
+// Importa tus páginas
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -29,21 +34,18 @@ import RulesPages from "./pages/rules-page/RulesPage";
 import CropsDetails from "./pages/crops-details/CropsDetails";
 import Crops from "./pages/crops/Crops";
 import AddRule from "./pages/add-rule/AddRule";
-import { SensorProvider } from "./context/SensorContext";
-import { ActuatorProvider } from "./context/ActuatorContext";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Notifications from "./pages/notifications/Notifications";
 
 function App() {
   return (
-    <ActuatorProvider>
+    <BrowserRouter>
       <SensorProvider>
-        <BrowserRouter>
+        <ActuatorProvider>
           <Routes>
-            <Route path="/plot-list" element={<PlotList />} />
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/plot-list" element={<PlotList />} />
             <Route path="/create-plot" element={<CreatePlot />} />
             <Route path="/create-plots" element={<CreatePlots />} />
             <Route path="/terms-conditions" element={<TermsConditionsPage />} />
@@ -52,15 +54,15 @@ function App() {
             <Route path="/sensor-enla" element={<SensorEnla />} />
             <Route path="/actuators" element={<Actuators />} />
             <Route path="/actuator-enla" element={<ActuadorEnla />} />
-            <Route path="/add-actuator/:actuatorName" element={<AddActuator />} />
+            <Route path="/add-actuator" element={<AddActuator />} />
             <Route path="/accesibility" element={<Accesibility />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/existing-rules" element={<ExistingRules />} />
             <Route path="/temperature" element={<Temperature />} />
             <Route path="/humidity" element={<Humidity />} />
             <Route path="/irrigation-frecuency" element={<IrrigationFrecuency />} />
-            <Route path="/user-profile" element={<UserProfile/>} />
-            <Route path="/inside-a-plot" element={<InsideAPlot/>} />
+            <Route path="/user-profile" element={<UserProfile />} />
+            <Route path="/inside-a-plot" element={<InsideAPlot />} />
             <Route path="/admin-user-crud" element={<AdminUserCrud />} />
             <Route path="/sustainability" element={<SustainabilityAndEnvironmentManagement />} />
             <Route path="/soil-management" element={<SoilManagement />} />
@@ -73,9 +75,9 @@ function App() {
             <Route path="/add-rule" element={<AddRule />} />
             <Route path="/notifications" element={<Notifications />} />
           </Routes>
-        </BrowserRouter>
+        </ActuatorProvider>
       </SensorProvider>
-    </ActuatorProvider>
+    </BrowserRouter>
   );
 }
 

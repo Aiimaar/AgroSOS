@@ -70,7 +70,30 @@
     outline: none;
     border-color: #006816;
   }
+
+  .add-actuator-content-component-button{
+    display: flex;
+    gap: 1em;
+  }
   
+  .btn-enla-back{
+    display: block;
+    width: 25vw;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 30px;
+    background-color: #5EA71E;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .actuator-success-message{
+    margin-top: 1em;
+  }
+
   .btn-enla-actuator {
     display: block;
     width: 25vw;
@@ -89,3 +112,18 @@
     background-color: #006816;
   }
   
+  @media only screen and (min-width: 768px) {
+    .actuator-form {
+      width: 45vw;
+    }
+
+    .btn-enla-actuator {
+      width: 15vw;
+      margin-top: 1em;
+    }
+
+    .btn-enla-back{
+      width: 15vw;
+      margin-top: 1em;
+    }
+  }

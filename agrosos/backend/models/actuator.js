@@ -1,22 +1,25 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
-const Actuator = sequelize.define('Actuator', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
+const Actuator = sequelize.define(
+  "Actuator",
+  {
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    plot_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    code: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-  type: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  code: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-}, {
-  timestamps: false,
-});
+  {
+    timestamps: false,
+  }
+);
 
 export default Actuator;

@@ -1,47 +1,98 @@
 #actuator-enla-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+  width: 90vw;
+  justify-content: center;
   padding: 20px;
-  border-radius: 8px;
+}
+
+.actuator-enla-button-arrow {
+  align-self: flex-start;
+  margin-left: 2em;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-size: 24px;
 }
 
 .enla-title {
+  margin-top: 1em;
   font-size: 24px;
+  font-weight: bold;
+  color: #333;
   margin-bottom: 20px;
+  text-align: center;
+}
+
+.linked-actuators-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.actuator-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.actuator-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.actuator-item p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.actuator-item strong {
   color: #333;
 }
 
-.linked-actuators-list ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.linked-actuators-list li {
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  background-color: #fff;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 .delete-actuator-button {
-  background-color: #ff6b6b;
-  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #3f790e;
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s;
 }
 
 .delete-actuator-button:hover {
-  background-color: #ff4c4c;
+  background-color: #222222;
 }
 
-.quit-button {
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
+.no-actuators-message {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+  margin-top: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  #actuator-enla-container {
+    width: 60vw;
+  }
+
+  .actuator-enla-button-arrow {
+    margin-top: 1em;
+  }
+
+  .delete-actuator-button {
+    margin-left: 2em;
+  }
 }

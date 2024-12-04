@@ -1,26 +1,34 @@
+import React, { useContext } from "react";
+import { ActuatorContext } from "../../context/ActuatorContext";
 import "./actuator-content-component.css";
 import vector from "./Vector.png";
-import monitoringCultivation from "./image62.png";
-import { Link, useNavigate } from "react-router-dom";
 import irrigation from "./image59.png";
 import add from "./image50.png";
 import quit from "./image51.png";
 import nutrition from "./image61.png";
-import temp from "./Group1.png";
+import vent from "./Group1.png";
+import { Link } from "react-router-dom";
 
 function ActuatorContentComponent() {
-  const navigate = useNavigate();
+  const { setSelectedActuator, setShowRemoveButtons } = useContext(ActuatorContext);
 
   const actuators = [
-    { name: "Actuador de riego", img: irrigation },
-    { name: "Actuador de temperatura", img: temp },
-    { name: "Actuador de nutrientes", img: nutrition },
-    { name: "Actuador genérico", img: vector },
-    { name: "Monitoreo de cultivos", img: monitoringCultivation },
+    { name: "Riego", img: irrigation },
+    { name: "Ventilación", img: vent },
+    { name: "Cobertura de cultivos", img: nutrition },
+    { name: "Apertura de ventanas", img: vector },
   ];
 
+  const handleAddClick = (actuatorName) => {
+    setSelectedActuator(actuatorName);
+  };
+
   const handleQuitClick = () => {
-    navigate("/actuator-enla?showDelete=true");
+    setShowRemoveButtons(true);
+  };
+
+  const handleActuatorsLinkedClick = () => {
+    setShowRemoveButtons(false);
   };
 
   return (
@@ -28,25 +36,29 @@ function ActuatorContentComponent() {
       <div className="actuatorList">
         {actuators.map((actuator, index) => (
           <div className="list" key={index}>
-            <img src={actuator.img} alt={actuator.name} className={actuator.name.toLowerCase().replace(" ", "-")} />
+            <img
+              src={actuator.img}
+              alt={actuator.name}
+              className="actuator-content-component-img"
+            />
             <p>{actuator.name}</p>
             <div className="actuator-buttons">
-              <Link to={`/add-actuator/${actuator.name}`}>
+              <Link to="/add-actuator" onClick={() => handleAddClick(actuator.name)}>
                 <img src={add} alt="add" className="add" />
               </Link>
-              <button onClick={handleQuitClick} className="quit-button">
+              <Link to="/actuator-enla?showDelete=true" onClick={handleQuitClick}>
                 <img src={quit} alt="quit" className="quit" />
-              </button>
+              </Link>
             </div>
           </div>
         ))}
       </div>
       <div className="enla">
-        <button className="button-enla">
-          <Link to="/actuator-enla">
+        <Link to="/actuator-enla" onClick={handleActuatorsLinkedClick}>
+          <button className="button-enla">
             <p className="enla-p">Actuadores enlazados</p>
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </div>
   );

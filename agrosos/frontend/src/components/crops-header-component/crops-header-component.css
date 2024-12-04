@@ -29,3 +29,10 @@
     font-size: 1rem;
     pointer-events: none;
   }
+
+  @media only screen and (min-width: 768px) {
+    .headerGrey {
+      margin-top: 15%;
+      gap: 6em;
+    }
+  }

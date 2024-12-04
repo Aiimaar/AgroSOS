@@ -39,7 +39,6 @@
   text-align: left;
 }
 
-
 .sensor-input-container {
   position: relative;
   display: flex;
@@ -86,19 +85,19 @@
   border-color: #006816;
 }
 
-.add-sensor-content-buttons{
+.add-sensor-content-buttons {
   display: flex;
   gap: 1em;
 }
 
-.btn-back{
+.btn-back {
   display: block;
   width: 25vw;
   padding: 10px;
   font-size: 16px;
   color: #fff;
   border-radius: 30px;
-  background-color: #5EA71E;
+  background-color: #5ea71e;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   border: none;
   cursor: pointer;
@@ -112,7 +111,7 @@
   font-size: 16px;
   color: #fff;
   border-radius: 30px;
-  background-color: #5EA71E;
+  background-color: #5ea71e;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   border: none;
   cursor: pointer;
@@ -121,4 +120,20 @@
 
 .btn-enla:hover {
   background-color: #006816;
+}
+
+@media only screen and (min-width: 768px) {
+  .sensor-form {
+    width: 45vw;
+  }
+
+  .btn-back {
+    margin-top: 1em;
+    width: 15vw;
+  }
+  
+  .btn-enla {
+    margin-top: 1em;
+    width: 15vw;
+  }
 }

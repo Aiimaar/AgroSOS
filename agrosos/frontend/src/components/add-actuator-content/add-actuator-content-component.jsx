@@ -1,38 +1,17 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./add-actuator-content-component.css";
 import lock from "./icon_lock_locked_.png";
 import { useActuators } from "../../context/ActuatorContext";
 
 function AddActuatorContentComponent() {
-  const { actuatorName } = useParams();
-  const decodedActuatorName = decodeURIComponent(actuatorName);
-  const { addActuator } = useActuators();
+  const { selectedActuator, addActuator, errors, tokenError, successMessage, setShowRemoveButtons } = useActuators();
   const [actuatorCode, setActuatorCode] = useState("");
-  const [errors, setErrors] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-
-  const validateForm = () => {
-    if (!actuatorCode.trim()) {
-      setErrors("Por favor, ingrese un código válido.");
-      return false;
-    }
-    if (!/^\d+$/.test(actuatorCode)) {
-      setErrors("El código debe ser un número.");
-      return false;
-    }
-    setErrors("");
-    return true;
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      addActuator(decodedActuatorName, actuatorCode);
-      setSuccessMessage(`Actuador ${decodedActuatorName} con código "${actuatorCode}" enlazado correctamente.`);
-      setActuatorCode("");
-      setTimeout(() => setSuccessMessage(""), 5000);
-    }
+    addActuator(selectedActuator, actuatorCode);
+    setActuatorCode("");
   };
 
   return (
@@ -49,7 +28,7 @@ function AddActuatorContentComponent() {
                 type="text"
                 id="actuator-name-input"
                 className="input-actuator-name"
-                value={decodedActuatorName || "Nombre del actuador"}
+                value={selectedActuator || "Nombre del actuador"}
                 readOnly
               />
               <img src={lock} alt="lock" className="lock-icon" />
@@ -68,10 +47,16 @@ function AddActuatorContentComponent() {
               onChange={(e) => setActuatorCode(e.target.value)}
             />
             {errors && <p className="error-message">{errors}</p>}
+            {tokenError && <p className="error-message">{tokenError}</p>}
           </div>
-          <button type="submit" className="btn-enla-actuator">
-            Enlazar
-          </button>
+          <div className="add-actuator-content-component-button">
+            <button type="submit" className="btn-enla-actuator">
+              Enlazar
+            </button>
+            <Link to="/actuators">
+              <button className="btn-enla-back">Volver</button>
+            </Link>
+          </div>
         </form>
         {successMessage && <p className="actuator-success-message">{successMessage}</p>}
       </div>

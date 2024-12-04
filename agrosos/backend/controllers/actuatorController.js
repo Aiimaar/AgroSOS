@@ -16,34 +16,44 @@ const actuatorController = {
   // Crear un actuador
   createActuator: async (req, res) => {
     try {
-      const { name, description } = req.body;
-      const newActuator = await Actuator.create({ name, description });
+      const { type, plot_id, code } = req.body;
+      console.log("Data received from client:", { type, plot_id, code }); // Verificación
+  
+      if (!type || !plot_id || !code) { // Agrega validación para evitar errores
+        return res.status(400).json({ error: 'Type, plot_id, and code are required' });
+      }
+  
+      const newActuator = await Actuator.create({ type, plot_id, code });
       res.status(201).json(newActuator);
     } catch (error) {
+      console.error("Error creating actuator:", error.message); // Verificación
       res.status(500).json({ error: 'Error creating actuator', details: error.message });
     }
   },
+  
 
   // Actualizar un actuador
   updateActuator: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, description } = req.body;
+      const { type, plot_id, code } = req.body;
       const actuator = await Actuator.findByPk(id);
-
+  
       if (!actuator) {
         return res.status(404).json({ error: 'Actuator not found' });
       }
-
-      actuator.name = name;
-      actuator.description = description;
+  
+      actuator.type = type;
+      actuator.plot_id = plot_id;
+      actuator.code = code;
       await actuator.save();
-
+  
       res.status(200).json(actuator);
     } catch (error) {
       res.status(500).json({ error: 'Error updating actuator', details: error.message });
     }
   },
+  
 
   // Eliminar un actuador
   deleteActuator: async (req, res) => {

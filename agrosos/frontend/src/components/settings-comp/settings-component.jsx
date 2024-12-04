@@ -11,24 +11,26 @@ function SettingsComponent() {
         </Link>
       </div>
       <h1 className="settings-text">Ajustes</h1>
-      <Link to="/notifications">
-      <div className="settings-noti">
-        <p className="settings-p">Alertas y notificaciones</p>
-      </div>
-      </Link>
-      <div className="settings-export">
-        <p className="settings-p">Exportar terrenos</p>
-        <div className="settings-ex">
-          <p className="settings-subp">CSV</p>
-          <p className="settings-sub">|</p>
-          <p className="settings-subp">Excel</p>
+      <div className="settings-container-elements">
+        <Link to="/notifications">
+          <div className="settings-noti">
+            <p className="settings-p">Alertas y notificaciones</p>
+          </div>
+        </Link>
+        <div className="settings-export">
+          <p className="settings-p">Exportar terrenos</p>
+          <div className="settings-ex">
+            <p className="settings-subp">CSV</p>
+            <p className="settings-sub">|</p>
+            <p className="settings-subp">Excel</p>
+          </div>
         </div>
-      </div>
-      <div className="settings-actu">
-        <p className="settings-p">Verificar Actualizaciones</p>
-      </div>
-      <div className="settings-help">
-        <p className="settings-p">Ayuda y soporte</p>
+        <div className="settings-actu">
+          <p className="settings-p">Verificar Actualizaciones</p>
+        </div>
+        <div className="settings-help">
+          <p className="settings-p">Ayuda y soporte</p>
+        </div>
       </div>
     </div>
   );

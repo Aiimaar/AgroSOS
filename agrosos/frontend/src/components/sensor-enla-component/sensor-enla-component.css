@@ -1,77 +1,95 @@
 #sensor-enla-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.sensor-enla-button-arrow {
+  align-self: flex-start;
+  margin-left: 2em;
+  border: none;
+  background-color: white;
+}
+
+.enla-title {
+  margin-top: 1em;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.linked-sensors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sensor-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sensor-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.sensor-item p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.sensor-item strong {
+  color: #333;
+}
+
+.remove-sensor-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #3f790e;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.remove-sensor-btn:hover {
+  background-color: #222222;
+}
+
+.no-sensors-message {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+  margin-top: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  #sensor-enla-container {
+
   }
-  
-  .sensor-enla-button-arrow {
-    align-self: flex-start;
-    margin-left: 2em;
-    border: none;
-    background-color: white;
-  }
-  
-  .enla-title {
-    margin-top: 1em;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .linked-sensors-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
+
   .sensor-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
+    gap: 4em;
   }
-  
-  .sensor-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+
+  .sensor-enla-button-arrow {
+    margin-top: 3em;
+    margin-left: 10em;
   }
-  
-  .sensor-item p {
-    margin: 0;
-    font-size: 13px;
-    color: #555;
-  }
-  
-  .sensor-item strong {
-    color: #333;
-  }
-  
-  .remove-sensor-btn {
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #3f790e;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .remove-sensor-btn:hover {
-    background-color: #222222;
-  }
-  
-  .no-sensors-message {
-    text-align: center;
-    font-size: 16px;
-    color: #999;
-    margin-top: 20px;
-  }
-  
+}

@@ -79,3 +79,26 @@
     height: 5vh;
   }
   
+  .actuator-content-component-img{
+    width: 10vw;
+    height: auto;
+  }
+
+  @media only screen and (min-width: 768px) {
+    #actuator-container {
+      width: 70vw;
+    }
+
+    .actuator-content-component-img{
+      width: 5vw;
+      height: auto;
+    }
+
+    .button-enla {
+      border-radius: 30px;
+      width: 25vw;
+      border: none;
+      background-color: #5EA71E;
+      height: 5vh;
+    }
+  }

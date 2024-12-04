@@ -1,3 +1,4 @@
+/* Base styles */
 body,
 html {
   margin: 0;
@@ -19,6 +20,7 @@ html {
   padding: auto;
   display: flex;
   margin: auto;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -176,7 +178,7 @@ html {
 }
 
 .plot-list-edit-modal button[type="submit"] {
-  background-color: #5EA71E;
+  background-color: #5ea71e;
   color: white;
 }
 
@@ -191,4 +193,48 @@ html {
 
 .plot-list-edit-modal button[type="button"]:hover {
   background-color: #bbb;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+@media only screen and (min-width: 768px) {
+  .plot-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .plot-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 45px;
+  }
+  .plot-card {
+    min-width: 250px;
+    height: 180px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-bottom: 1em;
+  }
+  .plot-list-welcome {
+    text-align: center;
+  } /* Asegurando que el icono del menú desaparezca */
+  .menu-icon {
+    display: none;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 }
