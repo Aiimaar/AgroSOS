@@ -14,11 +14,30 @@ export const getCrops = async (req, res) => {
 
 // Crear un nuevo cultivo
 export const createCrop = async (req, res) => {
-  const { name, harvest_time, crop_image } = req.body;
+  console.log("Request Body:", req.body);
+  console.log("Request Files:", req.files);
+
+  const { name, info, harvest_start_month, harvest_end_month } = req.body;
+  
+  if (!req.files || !req.files['crop_image'] || !req.files['graphic_image']) {
+    return res.status(400).json({ error: 'Imágenes faltantes' });
+  }
+
+  const cropImage = req.files['crop_image'][0].filename;
+  const graphicImage = req.files['graphic_image'][0].filename;
+
   try {
-    const newCrop = await Crop.create({ name, harvest_time, crop_image });
+    const newCrop = await Crop.create({
+      name,
+      graphic_image: graphicImage,
+      crop_image: cropImage,
+      info,
+      start_month: harvest_start_month,
+      end_month: harvest_end_month,
+    });
     res.status(201).json(newCrop);
   } catch (error) {
+    console.error('Error al crear el cultivo:', error);
     res.status(500).json({ error: 'Error al crear el cultivo' });
   }
 };
@@ -40,15 +59,21 @@ export const getCropById = async (req, res) => {
 // Actualizar un cultivo
 export const updateCrop = async (req, res) => {
   const { id } = req.params;
-  const { name, harvest_time, crop_image } = req.body;
+  const { name, info, start_month, end_month } = req.body;
+  const cropImage = req.files['crop_image']?.[0]?.filename;
+  const graphicImage = req.files['graphic_image']?.[0]?.filename;
+
   try {
     const crop = await Crop.findByPk(id);
     if (!crop) {
       return res.status(404).json({ error: 'Cultivo no encontrado' });
     }
     crop.name = name;
-    crop.harvest_time = harvest_time;
-    crop.crop_image = crop_image;
+    crop.info = info;
+    crop.start_month = start_month;
+    crop.end_month = end_month;
+    if (cropImage) crop.crop_image = cropImage;
+    if (graphicImage) crop.graphic_image = graphicImage;
     await crop.save();
     res.json(crop);
   } catch (error) {
@@ -79,7 +104,7 @@ export const getCropByPlotId = async (req, res) => {
     const plot = await Plot.findByPk(plotId, {
       include: {
         model: Crop,
-        as: 'crop', // Alias definido en la relación
+        as: 'crop',
       },
     });
 
@@ -93,6 +118,3 @@ export const getCropByPlotId = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener el cultivo', details: error.message });
   }
 };
-
-
-

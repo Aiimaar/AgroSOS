@@ -36,6 +36,7 @@ import Notifications from "./pages/notifications/Notifications";
 import SoilTemperature from "./pages/soil-temperature/SoilTemperature";
 import SoilHumidity from "./pages/soil-humidity/SoilHumdity";
 import EditRule from "./pages/edit-rule/EditRule";
+import CreateCrop from "./pages/create-crops/CreateCrops";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
             <Route path="/edit-rule/:ruleId" element={<EditRule />} />
             <Route path="/soil-temperature" element={<SoilTemperature />} />
             <Route path="/soil-humidity" element={<SoilHumidity />} />
+            <Route path="/create-crop" element={<CreateCrop />} />
           </Routes>
         </ActuatorProvider>
       </SensorProvider>

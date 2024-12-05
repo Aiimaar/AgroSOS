@@ -1,0 +1,158 @@
+
+.create-crop-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  width: 80%;
+  max-width: 400px;
+  justify-content: center;
+  align-items: center;
+  margin: 2em auto;
+  padding: 2em;
+  border-radius: 20px;
+  background-color: #f0eded;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.create-crop-form-title {
+  text-align: center;
+  font-size: 1.5em;
+  color: #333333;
+}
+
+.create-crop-form-label {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 0.5em;
+  color: #555555;
+}
+
+.create-crop-form-input,
+.create-crop-form-textarea,
+.create-crop-form-select {
+  width: 100%;
+  padding: 0.8em;
+  font-size: 1em;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  transition: border 0.3s ease;
+}
+
+.create-crop-form-input:focus,
+.create-crop-form-textarea:focus,
+.create-crop-form-select:focus {
+  border: 1px solid #5ea71e;
+  outline: none;
+}
+
+.create-crop-form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.create-crop-submit-button,
+.create-crop-cancel-button {
+  width: 48%;
+  padding: 0.5em 1.5em;
+  font-size: 1em;
+  font-weight: bold;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-crop-submit-button {
+  background-color: #5ea71e;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.create-crop-cancel-button {
+  background-color: #7f8679;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.create-crop-submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+p {
+  color: grey;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.create-crop-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  background-color: #f7f7f7;
+  color: #888888;
+  text-align: center;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.create-crop-upload-container img {
+  width: 45vw;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 0.5em;
+  opacity: 0.7;
+}
+
+.create-crop-upload-container:hover {
+  border-color: #5ea71e;
+}
+
+.create-crop-upload-container p {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+}
+
+.create-crop-upload-container input[type="file"] {
+  display: none;
+}
+
+.create-crop-default-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create-crop-default-image-container img {
+  border-radius: 8px;
+  margin-top: 1em;
+  width: 50vw;
+}
+
+.create-crop-error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
+.create-crop-success-message {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+}
+
+.create-crop-image-preview {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin-top: 1em;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
