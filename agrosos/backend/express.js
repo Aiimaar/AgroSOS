@@ -6,11 +6,13 @@ import { fileURLToPath } from 'url';
 import plotsRoutes from './routes/plotsRoutes.js';
 import usersRoutes from './routes/usersRoutes.js';
 import sensorsRoutes from './routes/sensorsRoutes.js';
-import authRoutes from './routes/authRoutes.js'
-import cropRoutes from './routes/cropRoutes.js'
-import sensorValueRoutes from './routes/sensorValueRoutes.js'
+import authRoutes from './routes/authRoutes.js';
+import cropRoutes from './routes/cropRoutes.js';
+import sensorValueRoutes from './routes/sensorValueRoutes.js';
 import dotenv from 'dotenv';
 import actuatorRoutes from './routes/actuatorRoutes.js';
+import rulesRoutes from './routes/rulesRoutes.js';
+import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';  // Nueva ruta importada
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -46,11 +48,13 @@ app.use("/api/crops", cropRoutes);
 // Sensor Value routes
 app.use("/api/sensor_value", sensorValueRoutes)
 
-//Servir archivos estáticos desde la carpeta /uploads
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 // Actuators routes
 app.use('/api/actuators', actuatorRoutes);
+
+// Rules routes
+app.use('/api/rules', rulesRoutes);
+// Irrigation Schedule routes (añadido)
+app.use("/api/irrigation_schedule", irrigationScheduleRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {

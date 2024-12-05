@@ -1,0 +1,96 @@
+.edit-rule-form-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .edit-rule-form-container h2 {
+    color: #4caf50;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .edit-rule-form-container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .edit-rule-form-container select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .edit-rule-form-container select:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+  }
+  
+  .edit-rule-form-container select option[value=""] {
+    color: #999;
+  }
+  
+  .edit-rule-form-container button:hover {
+    background-color: #45a049;
+  }
+
+  .edit-rule-conditions-button {
+    background-color: #28a745; /* Color verde */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px; /* Bordes redondeados */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-rule-conditions-button:hover {
+    background-color: #218838; /* Color verde más oscuro al pasar el ratón */
+  }
+  
+  .edit-rule-conditions button.delete-condition-button {
+    background-color: #28a745; /* Color verde */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 12px; /* Bordes redondeados */
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  /* Hover para el botón de eliminar */
+  .edit-rule-conditions button.delete-condition-button:hover {
+    background-color: #218838; /* Color verde más oscuro al pasar el ratón */
+  }
+  
+  /* Alineación del botón de eliminar a la derecha */
+  .edit-rule-conditions li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px; /* Espaciado entre las condiciones */
+  }
+  
+  /* Para mantener las condiciones de temperatura y humedad organizadas */
+  .edit-rule-conditions ul {
+    padding-left: 0;
+    list-style-type: none;
+  }

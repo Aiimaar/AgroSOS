@@ -88,6 +88,10 @@ html {
   cursor: pointer;
 }
 
+.plot-list-button svg {
+  font-size: 13px; 
+}
+
 .plot-list-edit-button {
   background-color: #333;
 }
@@ -121,10 +125,10 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #f4f4f9; /* Fondo suave */
+  background: #f4f4f9;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra más marcada */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   width: 350px;
   text-align: center;
@@ -237,4 +241,72 @@ html {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+.dark-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-actions button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-actions button:first-child {
+  background-color: red;
+  color: white;
+}
+
+.modal-actions button:last-child {
+  background-color: gray;
+  color: white;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.plot-list-error-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 5000;
+  font-size: 14px;
+  text-align: center;
+  max-width: 80%;
+}
 }

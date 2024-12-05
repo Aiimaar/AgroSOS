@@ -1,35 +1,206 @@
-#existing-rules-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    margin-top: 30%;
-}
-
-.existing-rules-arrow-container{
-    align-self: flex-start;
-    margin-left: 2em;
-    margin-top: 2px;
+/* Estilos para el contenedor principal */
+#existing-rules-container {
+    padding: 20px;
+    margin-top: 80px;
+  }
+  
+  /* Estilos para el botón de retroceso */
+  .existing-rule-back-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
     margin-bottom: 20px;
-}
-
-.existing-rules-text{
-    margin-top: 1em;
-    margin-bottom: 7em;
-}
-
-.existing-rules-p{
-    margin-bottom: 5px;
-    font-size: 16px;
-}
-
-.existing-rules-add{
+  }
+  
+  /* Estilos para el encabezado */
+  .existing-rule-header {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  
+  .existing-rule-title {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+  }
+  
+  .icon-list {
+    margin-right: 10px;
+  }
+  
+  /* Estilos para las tarjetas de reglas */
+  .existing-rule-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    justify-items: center;
+  }
+  
+  .existing-rule-card {
+    background-color: #5EA71E;
+    color: white;
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+    width: 320px;
+    position: relative;
+  }
+  
+  /* Información de la tarjeta */
+  .existing-rule-card-info p {
+    margin: 5px 0;
+    color: white;
+  }
+  
+  /* Estilos para los botones de acción */
+  .existing-rule-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    gap: 10px;
+  }
+  
+  .existing-rule-edit-button,
+  .existing-rule-delete-button {
+    background-color: white;
+    border: 1px solid #000;
+    border-radius: 20px;
+    width: 50px;
+    height: 30px;
+    padding: 10px;
+    color: #000;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover para botones de editar y eliminar */
+  .existing-rule-edit-button:hover,
+  .existing-rule-delete-button:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Estilos para los iconos dentro de los botones */
+  .existing-rule-edit-button,
+  .existing-rule-delete-button {
+    display: flex;
+    justify-content: center;
     align-items: center;
-}
+  }
+  
+  /* Enlaces y otros ajustes */
+  .existing-rule-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .existing-rule-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .existing-rule-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .existing-rule-modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .existing-rule-modal-button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid #000;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .existing-rule-modal-confirm {
+    background-color: #5EA71E;
+    color: white;
+  }
+  
+  .existing-rule-modal-cancel {
+    background-color: white;
+    color: #000;
+  }
 
-.existing-rules-add-img{
-    width: 25vw;
-}
+  .no-rules-message {
+    text-align: center;
+    margin-top: 180px;
+    justify-content: center;
+    justify-items: center;
+  }
+  
+  .no-rules-message h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .add-rule-button {
+    background-color: white;
+    color: #5EA71E;
+    font-size: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #5EA71E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .add-rule-button:hover {
+    background-color: #5EA71E;
+    color: white;
+    border-color: white;
+  }
+  
+  .add-rule-button-circle {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    color: #5EA71E;
+    font-size: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #5EA71E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .add-rule-button-circle:hover {
+    background-color: green;
+    color: white;
+    border-color: white;
+  } 
