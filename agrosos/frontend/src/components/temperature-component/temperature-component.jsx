@@ -1,3 +1,4 @@
+import { useNavigate, useLocation } from 'react-router-dom';
 import arrow from "./ArrowLeftOutlined.png";
 import "./temperature-component.css";
 import { useState } from "react";
@@ -5,6 +6,8 @@ import { useState } from "react";
 function TemperatureComponent() {
     const [temperature, setTemperature] = useState(23);
     const [comparison, setComparison] = useState("="); // Para <, =, >
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleTemperatureChange = (e) => {
         setTemperature(e.target.value);
@@ -26,8 +29,8 @@ function TemperatureComponent() {
         existingConditions.push(temperatureCondition);
         localStorage.setItem("temperatureConditions", JSON.stringify(existingConditions));
 
-        // Redirigir de vuelta al formulario
-        window.location.href = "/add-rule";
+        // Después de guardar en localStorage, navegar hacia atrás
+        navigate(-1);
     };
 
     return (

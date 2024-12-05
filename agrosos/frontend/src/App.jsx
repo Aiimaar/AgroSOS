@@ -25,13 +25,15 @@ import SoilManagement from "./pages/soil-management/SoilManagement";
 import Advices from "./pages/advices/Advices";
 import CropManagement from "./pages/crop-management/CropManagement";
 import EfficiencyEnergy from "./pages/efficiency-energy/EfficiencyEnergy";
-import RulesPages from "./pages/rules-page/RulesPage";
 import CropsDetails from "./pages/crops-details/CropsDetails";
 import Crops from "./pages/crops/Crops";
 import AddRule from "./pages/add-rule/AddRule";
 import { SensorProvider } from "./context/SensorContext";
 import { ActuatorProvider } from "./context/ActuatorContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SoilTemperature from "./pages/soil-temperature/SoilTemperature";
+import SoilHumidity from "./pages/soil-humidity/SoilHumdity";
+import EditRule from "./pages/edit-rule/EditRule";
 
 function App() {
   return (
@@ -53,7 +55,7 @@ function App() {
             <Route path="/add-actuator/:actuatorName" element={<AddActuator />} />
             <Route path="/accesibility" element={<Accesibility />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/existing-rules" element={<ExistingRules />} />
+            <Route path="/rules" element={<ExistingRules />} />
             <Route path="/temperature" element={<Temperature />} />
             <Route path="/humidity" element={<Humidity />} />
             <Route path="/irrigation-frecuency" element={<IrrigationFrecuency />} />
@@ -65,10 +67,12 @@ function App() {
             <Route path="/advices" element={<Advices />} />
             <Route path="/crop-management" element={<CropManagement />} />
             <Route path="/energy-efficiency" element={<EfficiencyEnergy />} />
-            <Route path="/rules" element={<RulesPages />} />
             <Route path="/crop-details" element={<CropsDetails />} />
             <Route path="/crops" element={<Crops />} />
             <Route path="/add-rule" element={<AddRule />} />
+            <Route path="/edit-rule/:ruleId" element={<EditRule />} />
+            <Route path="/soil-temperature" element={<SoilTemperature />} />
+            <Route path="/soil-humidity" element={<SoilHumidity />} />
           </Routes>
         </BrowserRouter>
       </SensorProvider>

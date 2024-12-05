@@ -11,6 +11,7 @@ import cropRoutes from './routes/cropRoutes.js'
 import sensorValueRoutes from './routes/sensorValueRoutes.js'
 import dotenv from 'dotenv';
 import actuatorRoutes from './routes/actuatorRoutes.js';
+import rulesRoutes from './routes/rulesRoutes.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -51,6 +52,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Actuators routes
 app.use('/api/actuators', actuatorRoutes);
+
+// Rules routes
+app.use('/api/rules', rulesRoutes)
 
 const PORT = 3000;
 app.listen(PORT, () => {

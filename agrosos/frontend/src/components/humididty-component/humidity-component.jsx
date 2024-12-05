@@ -1,34 +1,49 @@
+import { useNavigate, useLocation } from "react-router-dom";
 import arrow from "./ArrowLeftOutlined.png";
 import "./humidity-component.css";
 import { useState } from "react";
 
 function HumidityComponent() {
-  const [humidity, setHumidity] = useState(23);
-  const [comparison, setComparison] = useState("="); // Para <, =, >
+  const [value, setValue] = useState(23);
+  const [operator, setOperator] = useState("=");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleHumidityChange = (e) => {
-    setHumidity(e.target.value);
+    setValue(e.target.value);
   };
 
-  const handleComparisonChange = (newComparison) => {
-    setComparison(newComparison);
+  const handleComparisonChange = (newOperator) => {
+    setOperator(newOperator);
   };
 
   const handleApplyCondition = () => {
-    // Crear el objeto de condición de humedad
     const humidityCondition = {
-      humidity,
-      comparison,
+      type: "humidity",
+      value: parseInt(value),
+      operator,
     };
-
-    // Guardar en localStorage
-    const existingConditions = JSON.parse(localStorage.getItem("humidityConditions")) || [];
+  
+    // Recupera las condiciones actuales
+    const existingConditions =
+      JSON.parse(localStorage.getItem("humidityConditions")) || [];
+  
+    // Agrega la nueva condición
     existingConditions.push(humidityCondition);
-    localStorage.setItem("humidityConditions", JSON.stringify(existingConditions));
-
-    // Redirigir de vuelta al formulario
-    window.location.href = "/add-rule";
+    
+    // Guarda las condiciones actualizadas en el localStorage
+    localStorage.setItem(
+      "humidityConditions",
+      JSON.stringify(existingConditions)
+    );
+  
+    // Verifica el contenido del localStorage
+    console.log("Updated localStorage:", JSON.parse(localStorage.getItem("humidityConditions")));
+  
+    // Navega hacia atrás
+    navigate(-1);
   };
+  
 
   return (
     <div id="humidity-component-container">
@@ -38,33 +53,35 @@ function HumidityComponent() {
       <h1>Humedad</h1>
       <div className="humidity-controls">
         <button
-          className={`humidity-button ${comparison === "<" ? "active" : ""}`}
+          className={`humidity-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
         >
           {"<"}
         </button>
         <button
-          className={`humidity-button-equal ${comparison === "=" ? "active" : ""}`}
+          className={`humidity-button-equal ${
+            operator === "=" ? "active" : ""
+          }`}
           onClick={() => handleComparisonChange("=")}
         >
           {"="}
         </button>
         <button
-          className={`humidity-button ${comparison === ">" ? "active" : ""}`}
+          className={`humidity-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
         >
           {">"}
         </button>
       </div>
       <div className="humidity-display">
-        <span className="humidity-indicator">{humidity}%</span>
+        <span className="humidity-indicator">{value}%</span>
       </div>
       <div className="humidity-slider">
         <input
           type="range"
           min="-10"
           max="40"
-          value={humidity}
+          value={value}
           onChange={handleHumidityChange}
         />
         <div className="humidity-limits">
@@ -73,7 +90,10 @@ function HumidityComponent() {
         </div>
       </div>
       <div className="humidity-apply">
-        <button className="humidity-apply-button" onClick={handleApplyCondition}>
+        <button
+          className="humidity-apply-button"
+          onClick={handleApplyCondition}
+        >
           Aplicar condición
         </button>
       </div>
