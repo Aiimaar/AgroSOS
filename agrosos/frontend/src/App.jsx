@@ -31,6 +31,7 @@ import AddRule from "./pages/add-rule/AddRule";
 import { SensorProvider } from "./context/SensorContext";
 import { ActuatorProvider } from "./context/ActuatorContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CreateCrop from "./pages/create-crops/CreateCrops";
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
             <Route path="/crop-details" element={<CropsDetails />} />
             <Route path="/crops" element={<Crops />} />
             <Route path="/add-rule" element={<AddRule />} />
+            <Route path="/create-crop" element={<CreateCrop />} />
           </Routes>
         </BrowserRouter>
       </SensorProvider>

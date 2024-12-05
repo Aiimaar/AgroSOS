@@ -9,7 +9,7 @@ function Crops() {
       <Header />
       <CropsHeaderComponent />
       <CropsListComponent />
-      <InsideAPlotFooter />
+      {/* <InsideAPlotFooter /> */}
     </>
   );
 }

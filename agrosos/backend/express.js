@@ -11,20 +11,20 @@ import cropRoutes from './routes/cropRoutes.js';
 import sensorValueRoutes from './routes/sensorValueRoutes.js';
 import dotenv from 'dotenv';
 import actuatorRoutes from './routes/actuatorRoutes.js';
-import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';  // Nueva ruta importada
+import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const corsOptions = {
-  origin: '*', // Permitir todos los orígenes, solo para pruebas locales
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 dotenv.config();
 
 sequelize.sync();
@@ -45,12 +45,12 @@ app.use("/api/sensors", sensorsRoutes);
 app.use("/api/crops", cropRoutes);
 
 // Sensor Value routes
-app.use("/api/sensor_value", sensorValueRoutes)
+app.use("/api/sensor_value", sensorValueRoutes);
 
 // Actuators routes
 app.use('/api/actuators', actuatorRoutes);
 
-// Irrigation Schedule routes (añadido)
+// Irrigation Schedule routes
 app.use("/api/irrigation_schedule", irrigationScheduleRoutes);
 
 const PORT = 3000;
