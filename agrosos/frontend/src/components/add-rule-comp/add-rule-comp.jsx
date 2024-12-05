@@ -4,33 +4,33 @@ import axios from "axios";
 import "./add-rule-comp.css";
 
 const AddRuleComp = () => {
-  const [cropId, setCropId] = useState(localStorage.getItem("cropId") || "");
+  const [cropId, setCropId] = useState(sessionStorage.getItem("cropId") || "");
   const [crops, setCrops] = useState([]);
   const [sensorType, setSensorType] = useState(
-    localStorage.getItem("sensorType") || ""
+    sessionStorage.getItem("sensorType") || ""
   );
   const [actuatorType, setActuatorType] = useState(
-    localStorage.getItem("actuatorType") || ""
+    sessionStorage.getItem("actuatorType") || ""
   );
   const [availableActions, setAvailableActions] = useState([]);
   const [selectedAction, setSelectedAction] = useState(
-    localStorage.getItem("selectedAction") || ""
+    sessionStorage.getItem("selectedAction") || ""
   );
   const [temperatureConditions, setTemperatureConditions] = useState(
-    JSON.parse(localStorage.getItem("temperatureConditions")) || []
+    JSON.parse(sessionStorage.getItem("temperatureConditions")) || []
   );
   const [humidityConditions, setHumidityConditions] = useState(
-    JSON.parse(localStorage.getItem("humidityConditions")) || []
+    JSON.parse(sessionStorage.getItem("humidityConditions")) || []
   );
   const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(
-    JSON.parse(localStorage.getItem("soilTemperatureConditions")) || []
+    JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || []
   );
   const [soilHumidityConditions, setSoilHumidityConditions] = useState(
-    JSON.parse(localStorage.getItem("soilHumidityConditions")) || []
+    JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || []
   );
   const [ruleNumber, setRuleNumber] = useState(1); // State for rule number
   const navigate = useNavigate();
-  const technicianId = localStorage.getItem("userId");
+  const technicianId = sessionStorage.getItem("userId");
 
   const actuatorActionMap = {
     Riego: ["Activar Riego", "Desactivar Riego"],
@@ -49,29 +49,30 @@ const AddRuleComp = () => {
         alert("No se pudieron cargar los cultivos.");
       }
     };
-
+    console.log(crops);
+console.log(typeof cropId);
     fetchCrops();
   }, []);
 
   useEffect(() => {
-    // Store state in localStorage whenever it changes
-    localStorage.setItem("cropId", cropId);
-    localStorage.setItem("sensorType", sensorType);
-    localStorage.setItem("actuatorType", actuatorType);
-    localStorage.setItem("selectedAction", selectedAction);
-    localStorage.setItem(
+    // Store state in sessionStorage whenever it changes
+    sessionStorage.setItem("cropId", cropId);
+    sessionStorage.setItem("sensorType", sensorType);
+    sessionStorage.setItem("actuatorType", actuatorType);
+    sessionStorage.setItem("selectedAction", selectedAction);
+    sessionStorage.setItem(
       "temperatureConditions",
       JSON.stringify(temperatureConditions)
     );
-    localStorage.setItem(
+    sessionStorage.setItem(
       "humidityConditions",
       JSON.stringify(humidityConditions)
     );
-    localStorage.setItem(
+    sessionStorage.setItem(
       "soilTemperatureConditions",
       JSON.stringify(soilTemperatureConditions)
     );
-    localStorage.setItem(
+    sessionStorage.setItem(
       "soilHumidityConditions",
       JSON.stringify(soilHumidityConditions)
     );
@@ -126,7 +127,8 @@ const AddRuleComp = () => {
       return;
     }
 
-    const cropName = crops.find((crop) => crop.id === cropId)?.name || "Cultivo";
+    const cropName = crops.find((crop) => crop.id === Number(cropId))?.name || "Cultivo";
+    console.log(cropName)
     const ruleName = `Regla ${ruleNumber} ${cropName}`;
 
 
@@ -182,15 +184,15 @@ const AddRuleComp = () => {
       setSoilTemperatureConditions([]);
       setSoilHumidityConditions([]);
 
-      // Limpiar localStorage
-      localStorage.removeItem("cropId");
-      localStorage.removeItem("sensorType");
-      localStorage.removeItem("actuatorType");
-      localStorage.removeItem("selectedAction");
-      localStorage.removeItem("temperatureConditions");
-      localStorage.removeItem("humidityConditions");
-      localStorage.removeItem("soilTemperatureConditions");
-      localStorage.removeItem("soilHumidityConditions");
+      // Limpiar sessionStorage
+      sessionStorage.removeItem("cropId");
+      sessionStorage.removeItem("sensorType");
+      sessionStorage.removeItem("actuatorType");
+      sessionStorage.removeItem("selectedAction");
+      sessionStorage.removeItem("temperatureConditions");
+      sessionStorage.removeItem("humidityConditions");
+      sessionStorage.removeItem("soilTemperatureConditions");
+      sessionStorage.removeItem("soilHumidityConditions");
 
       alert("Regla añadida con éxito.");
     } catch (error) {
@@ -242,7 +244,7 @@ const AddRuleComp = () => {
           <ul>
             {temperatureConditions.map((cond, index) => (
               <li key={index}>
-                {cond.comparison} {cond.temperature}°C
+                {cond.operator} {cond.value}°C
                 <button className="delete-condition-button"
                   onClick={() => handleDeleteCondition("temperature", index)}
                 >
@@ -263,7 +265,7 @@ const AddRuleComp = () => {
           <ul>
             {humidityConditions.map((cond, index) => (
               <li key={index}>
-                {cond.comparison} {cond.humidity}%
+                {cond.operator} {cond.value}%
                 <button className="delete-condition-button"
                   onClick={() => handleDeleteCondition("humidity", index)}
                 >
@@ -284,7 +286,7 @@ const AddRuleComp = () => {
           <ul>
             {soilTemperatureConditions.map((cond, index) => (
               <li key={index}>
-                {cond.comparison} {cond.soilTemperature}°C
+                {cond.operator} {cond.value}°C
                 <button className="delete-condition-button"
                   onClick={() => handleDeleteCondition("soilTemperature", index)}
                 >
@@ -305,7 +307,7 @@ const AddRuleComp = () => {
           <ul>
             {soilHumidityConditions.map((cond, index) => (
               <li key={index}>
-                {cond.comparison} {cond.soilHumidity}%
+                {cond.operator} {cond.value}%
                 <button className="delete-condition-button"
                   onClick={() => handleDeleteCondition("soilHumidity", index)}
                 >

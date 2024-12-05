@@ -167,18 +167,22 @@ const EditRuleComp = () => {
       const updatedConditions = [...temperatureConditions];
       updatedConditions.splice(index, 1);
       setTemperatureConditions(updatedConditions);
+      sessionStorage.setItem("temperatureConditions", JSON.stringify(updatedConditions));
     } else if (type === "humidity") {
       const updatedConditions = [...humidityConditions];
       updatedConditions.splice(index, 1);
       setHumidityConditions(updatedConditions);
+      sessionStorage.setItem("humidityConditions", JSON.stringify(updatedConditions));
     } else if (type === "soilHumidity") {
       const updatedConditions = [...soilHumidityConditions];
       updatedConditions.splice(index, 1);
       setSoilHumidityConditions(updatedConditions);
+      sessionStorage.setItem("soilHumidityConditions", JSON.stringify(updatedConditions));
     } else if (type === "soilTemperature") {
       const updatedConditions = [...soilTemperatureConditions];
       updatedConditions.splice(index, 1);
       setSoilTemperatureConditions(updatedConditions);
+      sessionStorage.setItem("soilTemperatureConditions", JSON.stringify(updatedConditions));
     }
   };
 

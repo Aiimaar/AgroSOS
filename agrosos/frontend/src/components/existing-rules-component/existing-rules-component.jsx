@@ -137,7 +137,7 @@ function ExistingRulesComponent() {
 
   return (
     <div id="existing-rules-container">
-      <button className="existing-rule-back-button" onClick={() => navigate(-1)}>
+      <button className="existing-rule-back-button" onClick={() => navigate("/settings")}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <div className="existing-rule-header">
