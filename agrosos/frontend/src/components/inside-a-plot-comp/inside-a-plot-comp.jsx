@@ -1,21 +1,59 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./inside-a-plot-comp.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import EvolutionGraph from "./graphic-comp";
+import ReactClock from "react-clock";
+import "react-clock/dist/Clock.css";
+import { useNavigate } from "react-router-dom";
+import "./inside-a-plot-comp.css";
 
 const InsideAPlotComp = ({ plotId }) => {
-  const [crop, setCrop] = useState(null); 
-  const [sensorValues, setSensorValues] = useState([]); 
+  const navigate = useNavigate();
+  const [crop, setCrop] = useState(null);
+  const [sensorValues, setSensorValues] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
+
+  // Estado para la sección de riego
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [clockValue, setClockValue] = useState(new Date());
+  const [isClockPopupVisible, setIsClockPopupVisible] = useState(false);
+  const [manualTime, setManualTime] = useState("");
+
+  // Estado para el plotId
+  const [localPlotId, setLocalPlotId] = useState(null);
+
+  const days = [
+    { name: "Monday", label: "Lunes" },
+    { name: "Tuesday", label: "Martes" },
+    { name: "Wednesday", label: "Miércoles" },
+    { name: "Thursday", label: "Jueves" },
+    { name: "Friday", label: "Viernes" },
+    { name: "Saturday", label: "Sábado" },
+    { name: "Sunday", label: "Domingo" },
+  ];
 
   useEffect(() => {
     const storedPlotId = localStorage.getItem("selectedPlotId");
     if (storedPlotId) {
+      setLocalPlotId(storedPlotId);
       fetchData(storedPlotId);
     } else {
       setError("No se encontró un terreno seleccionado.");
     }
+
+    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (savedTasks) {
+      setTasks(savedTasks);
+    }
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
 
   const fetchData = async (plotId) => {
@@ -25,8 +63,9 @@ const InsideAPlotComp = ({ plotId }) => {
       navigate("/login");
       return;
     }
-    
+
     try {
+      console.log("Solicitando datos para el plotId:", plotId);
       const cropResponse = await axios.get(
         `http://localhost:3000/api/crops/plot/${plotId}`
       );
@@ -40,19 +79,26 @@ const InsideAPlotComp = ({ plotId }) => {
       if (Array.isArray(sensorResponse.data)) {
         setSensorValues(sensorResponse.data);
       } else {
-        console.error("Los datos de los sensores no son un array:", sensorResponse.data);
+        console.error(
+          "Los datos de los sensores no son un array:",
+          sensorResponse.data
+        );
         setSensorValues([]);
       }
     } catch (error) {
       console.error("Error al obtener datos:", error);
-      setError("Error al cargar los datos. Por favor, inténtalo de nuevo más tarde.");
+      setError(
+        "Error al cargar los datos. Por favor, inténtalo de nuevo más tarde."
+      );
     }
   };
 
   const handleAddTask = () => {
     if (newTask.trim()) {
-      console.log("Nueva tarea añadida:", newTask);
+      const updatedTasks = [...tasks, newTask];
+      setTasks(updatedTasks);
       setNewTask("");
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     }
   };
 
@@ -61,14 +107,87 @@ const InsideAPlotComp = ({ plotId }) => {
       (sensor) => sensor.Sensor.type === sensorType
     );
     if (filteredSensors.length > 0) {
-      const sum = filteredSensors.reduce((total, sensor) => total + sensor.value, 0);
+      const sum = filteredSensors.reduce(
+        (total, sensor) => total + sensor.value,
+        0
+      );
       return sum / filteredSensors.length;
     }
     return null;
   };
 
+  const handleClick = (day) => {
+    setSelectedDays((prevSelectedDays) =>
+      prevSelectedDays.includes(day)
+        ? prevSelectedDays.filter((selectedDay) => selectedDay !== day)
+        : [...prevSelectedDays, day]
+    );
+  };
+
+  const handleTimeSelect = () => {
+    const formattedTime = manualTime.includes(":")
+      ? manualTime
+      : `${manualTime}:00`; // Asegúrate de que tenga ':MM' si no tiene.
+    setSelectedTime(formattedTime);
+    setIsClockPopupVisible(false);
+  };
+
+  const handleProgramarRiego = async () => {
+    if (!localPlotId) {
+      alert("El ID del terreno no está definido.");
+      return;
+    }
+  
+    if (selectedDays.length > 0 && selectedTime) {
+      try {
+        // Asegúrate de que 'selectedDays' sea un array (no string) y 'selectedTime' esté bien formateado
+        const irrigationSchedule = {
+          plotId: localPlotId,
+          startDate: new Date().toISOString(),
+          endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString(),
+          days: selectedDays, // Debe ser un array, no un string
+          time: selectedTime,  // Asegúrate de que 'selectedTime' esté en formato 'HH:MM'
+        };
+  
+        console.log("Datos enviados al backend:", irrigationSchedule);
+  
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          alert("No tienes un token válido. Inicia sesión.");
+          return;
+        }
+  
+        const response = await axios.post(
+          "http://localhost:3000/api/irrigation_schedule",
+          irrigationSchedule,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+  
+        console.log("Programación de riego guardada:", response.data);
+        alert("Riego programado exitosamente.");
+      } catch (error) {
+        console.error("Error al guardar la programación de riego:", error);
+        alert("Hubo un error al guardar la programación de riego.");
+      }
+    } else {
+      alert("Selecciona al menos un día y una hora para programar el riego.");
+    }
+  };
+  
+
+  const handleClickOutside = (event) => {
+    if (
+      isClockPopupVisible &&
+      !event.target.closest(".clock-popup") &&
+      !event.target.closest(".irrigation-frecuency-pro")
+    ) {
+      setIsClockPopupVisible(false);
+    }
+  };
+
   return (
     <div className="plot-details">
+      {/* Sección de cultivo */}
       <section className="crops-section">
         <h3>Cultivo en el terreno</h3>
         {error ? (
@@ -96,7 +215,12 @@ const InsideAPlotComp = ({ plotId }) => {
         <h3>Clima</h3>
         {sensorValues.length > 0 ? (
           <div className="climate-stats">
-            {["temperature", "soil_temperature", "humidity", "soil_humidity"].map((sensorType) => {
+            {[
+              "temperature",
+              "soil_temperature",
+              "humidity",
+              "soil_humidity",
+            ].map((sensorType) => {
               const averageValue = calculateAverage(sensorType);
               if (averageValue !== null) {
                 return (
@@ -121,17 +245,104 @@ const InsideAPlotComp = ({ plotId }) => {
       <section className="inside-a-plot-actions-section">
         <h3>Acciones</h3>
         <div className="inside-a-plot-actions-buttons-container">
-        <button className="inside-a-plot-action-button">Activar Riego</button>
-        <button className="inside-a-plot-action-button">Desactivar Riego</button>
+          <button className="inside-a-plot-action-button">Activar Riego</button>
+          <button className="inside-a-plot-action-button">
+            Desactivar Riego
+          </button>
+        </div>
+      </section>
+
+      <section className="irrigation-frecuency-section">
+        <div id="irrigation-frecuency-component">
+          <h3 className="irrigation-frecuency-title">Frecuencia de riego</h3>
+          <p className="irrigation-frecuency-p">Días de riego</p>
+          <div className="irrigation-frecuency-calendar">
+            {days.map((day) => (
+              <div key={day.name} className="irrigation-frecuency-day">
+                <FontAwesomeIcon
+                  icon={faCalendarDays}
+                  size="2xl"
+                  className={`irrigation-frecuency-calendar-icon ${
+                    selectedDays.includes(day.name) ? "selected" : ""
+                  }`}
+                  onClick={() => handleClick(day.name)}
+                />
+                <span className="irrigation-frecuency-day-label">
+                  {day.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Selección de hora */}
+          <div className="select-time-container">
+            <button
+              className="select-time-main-button"
+              onClick={() => setIsClockPopupVisible(true)}
+            >
+              {selectedTime
+                ? `Hora seleccionada: ${selectedTime}`
+                : "Seleccionar hora"}
+            </button>
+          </div>
+
+          {/* Modal de selección de hora */}
+          {isClockPopupVisible && (
+            <div className="clock-popup" id="clock-popup">
+              <div className="clock-popup-content">
+                <ReactClock
+                  value={clockValue}
+                  onChange={(value) => {
+                    setClockValue(value);
+                    const hours = value.getHours().toString().padStart(2, "0");
+                    const minutes = value
+                      .getMinutes()
+                      .toString()
+                      .padStart(2, "0");
+                    setSelectedTime(`${hours}:${minutes}`);
+                  }}
+                  size={200}
+                  renderNumbers={true}
+                />
+                <input
+                  type="text"
+                  value={manualTime}
+                  onChange={(e) => setManualTime(e.target.value)}
+                  placeholder="HH:MM"
+                  className="manual-time-input"
+                />
+                <button
+                  className="select-time-button"
+                  onClick={handleTimeSelect}
+                >
+                  Confirmar hora
+                </button>
+                <button
+                  className="close-clock-popup-button"
+                  onClick={() => setIsClockPopupVisible(false)}
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Botón para programar riego */}
+          <button
+            className="irrigation-frecuency-pro"
+            onClick={handleProgramarRiego}
+          >
+            Programar riego
+          </button>
         </div>
       </section>
 
       <section className="tasks-section">
         <h3>Tareas</h3>
         <ul className="task-list">
-          <li>Regar</li>
-          <li>Fumigar</li>
-          <li>Podar</li>
+          {tasks.map((task, index) => (
+            <li key={index}>{task}</li> // Mapeamos las tareas guardadas
+          ))}
         </ul>
         <div className="task-input">
           <input

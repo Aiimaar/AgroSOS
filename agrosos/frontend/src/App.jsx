@@ -18,7 +18,6 @@ import Settings from "./pages/settings/Settings";
 import ExistingRules from "./pages/existing-rules/ExistingRules";
 import Temperature from "./pages/temperature/Temperature";
 import Humidity from "./pages/humidity/Humidity";
-import IrrigationFrecuency from "./pages/irrigation-frecuency/IrrigationFrecuency";
 import AdminUserCrud from "./pages/admin-crud/AdminCrud";
 import SustainabilityAndEnvironmentManagement from "./pages/sustainability-and-environment/SustainabilityAndEnvironment";
 import SoilManagement from "./pages/soil-management/SoilManagement";
@@ -56,7 +55,6 @@ function App() {
             <Route path="/existing-rules" element={<ExistingRules />} />
             <Route path="/temperature" element={<Temperature />} />
             <Route path="/humidity" element={<Humidity />} />
-            <Route path="/irrigation-frecuency" element={<IrrigationFrecuency />} />
             <Route path="/user-profile" element={<UserProfile/>} />
             <Route path="/inside-a-plot" element={<InsideAPlot/>} />
             <Route path="/admin-user-crud" element={<AdminUserCrud />} />
