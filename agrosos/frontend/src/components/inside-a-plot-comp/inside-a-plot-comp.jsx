@@ -207,170 +207,182 @@ const InsideAPlotComp = ({ plotId }) => {
         )}
       </section>
 
-      <div className="inside-a-plot-comp-left">
-        <section className="evolution-section">
-          <h3>Evolución Temperatura / Humedad</h3>
-          <EvolutionGraph plotId={plotId} />
-        </section>
-      </div>
-
-      <div className="inside-a-plot-comp-right">
-        <section className="climate-section">
-          <h3>Clima</h3>
-          {sensorValues.length > 0 ? (
-            <div className="climate-stats">
-              {[
-                "temperature",
-                "soil_temperature",
-                "humidity",
-                "soil_humidity",
-              ].map((sensorType) => {
-                const averageValue = calculateAverage(sensorType);
-                if (averageValue !== null) {
-                  return (
-                    <div key={sensorType}>
-                      <p>
-                        {sensorType.includes("temperature")
-                          ? `${averageValue.toFixed(0)}°C`
-                          : `${averageValue.toFixed(0)}%`}{" "}
-                        <span>{getSensorLabel(sensorType)}</span>
-                      </p>
-                    </div>
-                  );
-                }
-                return null;
-              })}
-            </div>
-          ) : (
-            <p>No hay sensores registrados.</p>
-          )}
-        </section>
-      </div>
-
-      <div className="inside-a-plot-comp-left">
-        <section className="inside-a-plot-actions-section">
-          <h3>Acciones</h3>
-          <div className="inside-a-plot-actions-buttons-container">
-            <button className="inside-a-plot-action-button">
-              Activar Riego
-            </button>
-            <button className="inside-a-plot-action-button">
-              Desactivar Riego
-            </button>
+      <section id="inside-a-plot-comp-global">
+        <div id="inside-a-plot-comp-left">
+          <div className="inside-a-plot-comp-left">
+            <section className="evolution-section">
+              <h3>Evolución Temperatura / Humedad</h3>
+              <EvolutionGraph plotId={plotId} />
+            </section>
           </div>
-        </section>
-      </div>
 
-      <div className="inside-a-plot-comp-right">
-        <section className="irrigation-frecuency-section">
-          <div id="irrigation-frecuency-component">
-            <h3 className="irrigation-frecuency-title">Frecuencia de riego</h3>
-            <p className="irrigation-frecuency-p">Días de riego</p>
-            <div className="irrigation-frecuency-calendar">
-              {days.map((day) => (
-                <div key={day.name} className="irrigation-frecuency-day">
-                  <FontAwesomeIcon
-                    icon={faCalendarDays}
-                    size="2xl"
-                    className={`irrigation-frecuency-calendar-icon ${
-                      selectedDays.includes(day.name) ? "selected" : ""
-                    }`}
-                    onClick={() => handleClick(day.name)}
-                  />
-                  <span className="irrigation-frecuency-day-label">
-                    {day.label}
-                  </span>
-                </div>
-              ))}
-            </div>
+          
 
-            {/* Selección de hora */}
-            <div className="select-time-container">
-              <button
-                className="select-time-main-button"
-                onClick={() => setIsClockPopupVisible(true)}
-              >
-                {selectedTime
-                  ? `Hora seleccionada: ${selectedTime}`
-                  : "Seleccionar hora"}
-              </button>
-            </div>
-
-            {/* Modal de selección de hora */}
-            {isClockPopupVisible && (
-              <div className="clock-popup" id="clock-popup">
-                <div className="clock-popup-content">
-                  <ReactClock
-                    value={clockValue}
-                    onChange={(value) => {
-                      setClockValue(value);
-                      const hours = value
-                        .getHours()
-                        .toString()
-                        .padStart(2, "0");
-                      const minutes = value
-                        .getMinutes()
-                        .toString()
-                        .padStart(2, "0");
-                      setSelectedTime(`${hours}:${minutes}`);
-                    }}
-                    size={200}
-                    renderNumbers={true}
-                  />
-                  <input
-                    type="text"
-                    value={manualTime}
-                    onChange={(e) => setManualTime(e.target.value)}
-                    placeholder="HH:MM"
-                    className="manual-time-input"
-                  />
-                  <button
-                    className="select-time-button"
-                    onClick={handleTimeSelect}
-                  >
-                    Confirmar hora
-                  </button>
-                  <button
-                    className="close-clock-popup-button"
-                    onClick={() => setIsClockPopupVisible(false)}
-                  >
-                    Cerrar
-                  </button>
-                </div>
+          <div className="inside-a-plot-comp-left">
+            <section className="tasks-section">
+              <h3>Tareas</h3>
+              <ul className="task-list">
+                {tasks.map((task, index) => (
+                  <li key={index}>{task}</li>
+                ))}
+              </ul>
+              <div className="task-input">
+                <input
+                  type="text"
+                  value={newTask}
+                  placeholder="Añadir tarea completada..."
+                  onChange={(e) => setNewTask(e.target.value)}
+                />
+                <button onClick={handleAddTask} className="add-task-button">
+                  Añadir
+                </button>
               </div>
-            )}
+            </section>
+          </div>
+        </div>
 
-            {/* Botón para programar riego */}
-            <button
-              className="irrigation-frecuency-pro"
-              onClick={handleProgramarRiego}
-            >
-              Programar riego
-            </button>
+        <div id="inside-a-plot-comp-right">
+          <div className="inside-a-plot-comp-right">
+            <section className="climate-section">
+              <h3>Clima</h3>
+              {sensorValues.length > 0 ? (
+                <div className="climate-stats">
+                  {[
+                    "temperature",
+                    "soil_temperature",
+                    "humidity",
+                    "soil_humidity",
+                  ].map((sensorType) => {
+                    const averageValue = calculateAverage(sensorType);
+                    if (averageValue !== null) {
+                      return (
+                        <div key={sensorType}>
+                          <p>
+                            {sensorType.includes("temperature")
+                              ? `${averageValue.toFixed(0)}°C`
+                              : `${averageValue.toFixed(0)}%`}{" "}
+                            <span>{getSensorLabel(sensorType)}</span>
+                          </p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              ) : (
+                <p>No hay sensores registrados.</p>
+              )}
+            </section>
           </div>
-        </section>
-      </div>
-      <div className="inside-a-plot-comp-left">
-        <section className="tasks-section">
-          <h3>Tareas</h3>
-          <ul className="task-list">
-            {tasks.map((task, index) => (
-              <li key={index}>{task}</li>
-            ))}
-          </ul>
-          <div className="task-input">
-            <input
-              type="text"
-              value={newTask}
-              placeholder="Añadir tarea completada..."
-              onChange={(e) => setNewTask(e.target.value)}
-            />
-            <button onClick={handleAddTask} className="add-task-button">
-              Añadir
-            </button>
+
+          <div className="inside-a-plot-comp-right">
+            <section className="irrigation-frecuency-section">
+              <div id="irrigation-frecuency-component">
+                <h3 className="irrigation-frecuency-title">
+                  Frecuencia de riego
+                </h3>
+                <p className="irrigation-frecuency-p">Días de riego</p>
+                <div className="irrigation-frecuency-calendar">
+                  {days.map((day) => (
+                    <div key={day.name} className="irrigation-frecuency-day">
+                      <FontAwesomeIcon
+                        icon={faCalendarDays}
+                        size="2xl"
+                        className={`irrigation-frecuency-calendar-icon ${
+                          selectedDays.includes(day.name) ? "selected" : ""
+                        }`}
+                        onClick={() => handleClick(day.name)}
+                      />
+                      <span className="irrigation-frecuency-day-label">
+                        {day.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Selección de hora */}
+                <div className="select-time-container">
+                  <button
+                    className="select-time-main-button"
+                    onClick={() => setIsClockPopupVisible(true)}
+                  >
+                    {selectedTime
+                      ? `Hora seleccionada: ${selectedTime}`
+                      : "Seleccionar hora"}
+                  </button>
+                </div>
+
+                {/* Modal de selección de hora */}
+                {isClockPopupVisible && (
+                  <div className="clock-popup" id="clock-popup">
+                    <div className="clock-popup-content">
+                      <ReactClock
+                        value={clockValue}
+                        onChange={(value) => {
+                          setClockValue(value);
+                          const hours = value
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0");
+                          const minutes = value
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0");
+                          setSelectedTime(`${hours}:${minutes}`);
+                        }}
+                        size={200}
+                        renderNumbers={true}
+                      />
+                      <input
+                        type="text"
+                        value={manualTime}
+                        onChange={(e) => setManualTime(e.target.value)}
+                        placeholder="HH:MM"
+                        className="manual-time-input"
+                      />
+                      <button
+                        className="select-time-button"
+                        onClick={handleTimeSelect}
+                      >
+                        Confirmar hora
+                      </button>
+                      <button
+                        className="close-clock-popup-button"
+                        onClick={() => setIsClockPopupVisible(false)}
+                      >
+                        Cerrar
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Botón para programar riego */}
+                <button
+                  className="irrigation-frecuency-pro"
+                  onClick={handleProgramarRiego}
+                >
+                  Programar riego
+                </button>
+              </div>
+            </section>
           </div>
-        </section>
-      </div>
+
+          <div className="inside-a-plot-comp-left">
+            <section className="inside-a-plot-actions-section">
+              <h3>Acciones</h3>
+              <div className="inside-a-plot-actions-buttons-container">
+                <button className="inside-a-plot-action-button">
+                  Activar Riego
+                </button>
+                <button className="inside-a-plot-action-button">
+                  Desactivar Riego
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };

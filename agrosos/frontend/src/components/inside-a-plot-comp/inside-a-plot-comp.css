@@ -399,17 +399,17 @@
     gap: 10px;
   }
 
-  .inside-a-plot-comp-left{
+  /* .inside-a-plot-comp-left {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-  }
+  } 
 
-  .inside-a-plot-comp-right{
+  .inside-a-plot-comp-right {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-  }
+  }*/
 
   .evolution-section,
   .irrigation-frecuency-section,
@@ -419,7 +419,7 @@
     margin-bottom: 20px;
   }
 
-  .climate-section{
+  .climate-section {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -435,7 +435,7 @@
     max-width: 40vw;
   }
 
-  .evolution-section{
+  .evolution-section {
     width: 40vw;
   }
 
@@ -444,7 +444,7 @@
     margin-bottom: 20px;
   }
 
-  .inside-a-plot-actions-section{
+  .inside-a-plot-actions-section {
     width: 40vw;
   }
 
@@ -459,6 +459,16 @@
     height: auto;
     object-fit: contain;
   }
+
+  #inside-a-plot-comp-global {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1em;
+  }
+
+  /* #inside-a-plot-comp-global>div {
+    width: 40%;
+  } */
 }
-
-
