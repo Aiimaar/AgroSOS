@@ -4,29 +4,30 @@ import "./soil-temperature-component.css";
 import { useState } from "react";
 
 function SoilTemperatureComponent() {
-  const [soilTemperature, setSoilTemperature] = useState(23);
-  const [comparison, setComparison] = useState("=");
+  const [value, setValue] = useState(23);
+  const [operator, setOperator] = useState("=");
   const navigate = useNavigate();
 
   const handleSoilTemperatureChange = (e) => {
-    setSoilTemperature(e.target.value);
+    setValue(e.target.value);
   };
 
   const handleComparisonChange = (newComparison) => {
-    setComparison(newComparison);
+    setOperator(newComparison);
   };
 
   const handleApplyCondition = () => {
     const soilTemperatureCondition = {
-      soilTemperature,
-      comparison,
+      type: "soilTemperature",
+      value: parseInt(value),
+      operator,
     };
 
-    // Guardar en localStorage
+    // Guardar en sessionStorage
     const existingConditions =
-      JSON.parse(localStorage.getItem("soilTemperatureConditions")) || [];
+      JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || [];
     existingConditions.push(soilTemperatureCondition);
-    localStorage.setItem(
+    sessionStorage.setItem(
       "soilTemperatureConditions",
       JSON.stringify(existingConditions)
     );
@@ -41,35 +42,35 @@ function SoilTemperatureComponent() {
       <h1>Temperatura del Terreno</h1>
       <div className="soil-temperature-controls">
         <button
-          className={`soil-temperature-button ${comparison === "<" ? "active" : ""}`}
+          className={`soil-temperature-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
         >
           {"<"}
         </button>
         <button
           className={`temperature-button-equal ${
-            comparison === "=" ? "active" : ""
+            operator === "=" ? "active" : ""
           }`}
           onClick={() => handleComparisonChange("=")}
         >
           {"="}
         </button>
         <button
-          className={`temperature-button ${comparison === ">" ? "active" : ""}`}
+          className={`temperature-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
         >
           {">"}
         </button>
       </div>
       <div className="soil-temperature-display">
-        <span className="soil-temperature-indicator">{soilTemperature}%</span>
+        <span className="soil-temperature-indicator">{value}%</span>
       </div>
       <div className="soil-temperature-slider">
         <input
           type="range"
           min="-10"
           max="40"
-          value={soilTemperature}
+          value={value}
           onChange={handleSoilTemperatureChange}
         />
         <div className="soil-temperature-limits">

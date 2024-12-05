@@ -14,22 +14,27 @@ const EditRuleComp = () => {
   const [availableActions, setAvailableActions] = useState([]);
   const [selectedAction, setSelectedAction] = useState("");
   const [temperatureConditions, setTemperatureConditions] = useState(() => {
-    const storedConditions = localStorage.getItem("temperatureConditions");
+    const storedConditions = sessionStorage.getItem("temperatureConditions");
     return storedConditions ? JSON.parse(storedConditions) : [];
   });
-  
+
   const [humidityConditions, setHumidityConditions] = useState(() => {
-    const storedConditions = localStorage.getItem("humidityConditions");
+    console.log("USE ESTATE");
+    const storedConditions = sessionStorage.getItem("humidityConditions");
     return storedConditions ? JSON.parse(storedConditions) : [];
   });
-  
-  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(() => {
-    const storedConditions = localStorage.getItem("soilTemperatureConditions");
-    return storedConditions ? JSON.parse(storedConditions) : [];
-  });
-  
+
+  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(
+    () => {
+      const storedConditions = sessionStorage.getItem(
+        "soilTemperatureConditions"
+      );
+      return storedConditions ? JSON.parse(storedConditions) : [];
+    }
+  );
+
   const [soilHumidityConditions, setSoilHumidityConditions] = useState(() => {
-    const storedConditions = localStorage.getItem("soilHumidityConditions");
+    const storedConditions = sessionStorage.getItem("soilHumidityConditions");
     return storedConditions ? JSON.parse(storedConditions) : [];
   });
 
@@ -45,7 +50,7 @@ const EditRuleComp = () => {
   };
 
   useEffect(() => {
-    console.log("Humidity conditions from localStorage:", JSON.parse(localStorage.getItem("humidityConditions")));
+    console.log("Humidity conditions from sessionStorage:", humidityConditions);
   }, []);
 
   useEffect(() => {
@@ -75,26 +80,39 @@ const EditRuleComp = () => {
         setAvailableActions(
           actuatorActionMap[andConditions.actuators?.[0]?.type] || []
         );
-        setTemperatureConditions(
-          andConditions.conditions?.filter(
+        setTemperatureConditions(() => {
+          const temp = sessionStorage.getItem("temperatureConditions");
+          return temp
+          ? JSON.parse(sessionStorage.getItem("temperatureConditions"))
+          : andConditions.conditions?.filter(
             (cond) => cond.type === "temperature"
           ) || []
-        );
-        setHumidityConditions(
-          andConditions.conditions?.filter(
-            (cond) => cond.type === "humidity"
-          ) || []
-        );
-        setSoilTemperatureConditions(
-          andConditions.conditions?.filter(
+        });
+
+        setHumidityConditions(() => {
+          const hum = sessionStorage.getItem("humidityConditions");
+          return hum
+            ? JSON.parse(sessionStorage.getItem("humidityConditions"))
+            : andConditions.conditions?.filter(
+                (cond) => cond.type === "humidity"
+              ) || [];
+        });
+        setSoilTemperatureConditions(() => {
+          const sTemp = sessionStorage.getItem("soilTemperatureConditions");
+          return sTemp
+          ? JSON.parse(sessionStorage.getItem("soilTemperatureConditions"))
+          :andConditions.conditions?.filter(
             (cond) => cond.type === "soilTemperature"
           ) || []
-        );
-        setSoilHumidityConditions(
-          andConditions.conditions?.filter(
+        });
+        setSoilHumidityConditions(() => {
+          const sHum = sessionStorage.getItem("soilHumidityConditions");
+          return sHum
+          ? JSON.parse(sessionStorage.getItem("soilHumidityConditions"))
+          : andConditions.conditions?.filter(
             (cond) => cond.type === "soilHumidity"
           ) || []
-        );
+        });
       } catch (error) {
         console.error("Error fetching rule:", error);
       }
@@ -105,24 +123,24 @@ const EditRuleComp = () => {
   }, [ruleId]);
 
   // useEffect(() => {
-  //   // Store state in localStorage whenever it changes
-  //   localStorage.setItem("cropId", cropId);
-  //   localStorage.setItem("sensorType", sensorType);
-  //   localStorage.setItem("actuatorType", actuatorType);
-  //   localStorage.setItem("selectedAction", selectedAction);
-  //   localStorage.setItem(
+  //   // Store state in sessionStorage whenever it changes
+  //   sessionStorage.setItem("cropId", cropId);
+  //   sessionStorage.setItem("sensorType", sensorType);
+  //   sessionStorage.setItem("actuatorType", actuatorType);
+  //   sessionStorage.setItem("selectedAction", selectedAction);
+  //   sessionStorage.setItem(
   //     "temperatureConditions",
   //     JSON.stringify(temperatureConditions)
   //   );
-  //   localStorage.setItem(
+  //   sessionStorage.setItem(
   //     "humidityConditions",
   //     JSON.stringify(humidityConditions)
   //   );
-  //   localStorage.setItem(
+  //   sessionStorage.setItem(
   //     "soilTemperatureConditions",
   //     JSON.stringify(soilTemperatureConditions)
   //   );
-  //   localStorage.setItem(
+  //   sessionStorage.setItem(
   //     "soilHumidityConditions",
   //     JSON.stringify(soilHumidityConditions)
   //   );
@@ -136,15 +154,6 @@ const EditRuleComp = () => {
   //   soilTemperatureConditions,
   //   soilHumidityConditions,
   // ]);
-
-  useEffect(() => {
-    const storedConditions = localStorage.getItem("humidityConditions");
-    if (storedConditions) {
-      setHumidityConditions(JSON.parse(storedConditions)); // Parse y set al estado
-    } else {
-      setHumidityConditions([]); // Por defecto vacío
-    }
-  }, []);
 
   const handleActuatorChange = (e) => {
     const selectedActuator = e.target.value;
@@ -239,7 +248,7 @@ const EditRuleComp = () => {
           <ul>
             {temperatureConditions.map((cond, index) => (
               <li key={index}>
-                {cond.comparison} {cond.temperature}°C
+                {cond.operator} {cond.value}°C
                 <button
                   className="delete-condition-button"
                   onClick={() => handleDeleteCondition("temperature", index)}
@@ -263,17 +272,16 @@ const EditRuleComp = () => {
           <h3>Condiciones de Humedad</h3>
           <ul>
             {humidityConditions.map((cond, index) => {
-              console.log("Rendering condition:", cond);
               return (
-              <li key={index}>
-                {cond.operator} {cond.value}%
-                <button
-                  className="delete-condition-button"
-                  onClick={() => handleDeleteCondition("humidity", index)}
-                >
-                  Eliminar
-                </button>
-              </li>
+                <li key={index}>
+                  {cond.operator} {cond.value}%
+                  <button
+                    className="delete-condition-button"
+                    onClick={() => handleDeleteCondition("humidity", index)}
+                  >
+                    Eliminar
+                  </button>
+                </li>
               );
             })}
           </ul>
@@ -319,7 +327,7 @@ const EditRuleComp = () => {
           <ul>
             {soilHumidityConditions.map((cond, index) => (
               <li key={index}>
-                {cond.comparison} {cond.soilHumidity}%
+                {cond.operator} {cond.value}%
                 <button
                   className="delete-condition-button"
                   onClick={() => handleDeleteCondition("soilHumidity", index)}
@@ -360,8 +368,8 @@ const EditRuleComp = () => {
           </option>
         ))}
       </select>
-      
-      <button onClick={handleUpdateRule}>Actualizar Regla</button>
+
+      <button className="edit-rule-update-button" onClick={handleUpdateRule}>Actualizar Regla</button>
     </div>
   );
 };

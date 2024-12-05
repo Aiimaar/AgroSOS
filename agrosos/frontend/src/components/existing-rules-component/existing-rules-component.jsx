@@ -9,15 +9,6 @@ function ExistingRulesComponent() {
   const [rules, setRules] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleToDelete, setRuleToDelete] = useState(null);
-  const [cropId, setCropId] = useState("");
-  const [sensorType, setSensorType] = useState("");
-  const [actuatorType, setActuatorType] = useState("");
-  const [availableActions, setAvailableActions] = useState([]);
-  const [selectedAction, setSelectedAction] = useState("");
-  const [temperatureConditions, setTemperatureConditions] = useState("");
-  const [humidityConditions, setHumidityConditions] = useState("");
-  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState();
-  const [soilHumidityConditions, setSoilHumidityConditions] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +22,22 @@ function ExistingRulesComponent() {
   }, []);
 
   const handleEdit = (ruleId) => {
+    // Encuentra la regla que será editada
+    const selectedRule = rules.find((rule) => rule.id === ruleId);
+  
+    if (selectedRule) {
+      const ruleInfo = JSON.parse(selectedRule.rule_info);
+  
+      sessionStorage.setItem("selectedAction", JSON.stringify(ruleInfo.AND?.[0]?.actions || []));
+      sessionStorage.setItem("sensorType", JSON.stringify(ruleInfo.AND?.[0]?.sensors?.[0]?.type || null));
+      sessionStorage.setItem("soilHumidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilHumidity") || []));
+      sessionStorage.setItem("soilTemperatureConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilTemperature") || []));
+      sessionStorage.setItem("temperatureConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "temperature") || []));
+      sessionStorage.setItem("humidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "humidity") || []));
+      sessionStorage.setItem("cropId", JSON.stringify(selectedRule.crop || null));
+    }
+  
+    // Navegar a la página de edición
     navigate(`/edit-rule/${ruleId}`);
   };
 

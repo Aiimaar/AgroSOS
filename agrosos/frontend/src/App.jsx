@@ -33,9 +33,6 @@ import CropsDetails from "./pages/crops-details/CropsDetails";
 import Crops from "./pages/crops/Crops";
 import AddRule from "./pages/add-rule/AddRule";
 import Notifications from "./pages/notifications/Notifications";
-import { SensorProvider } from "./context/SensorContext";
-import { ActuatorProvider } from "./context/ActuatorContext";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SoilTemperature from "./pages/soil-temperature/SoilTemperature";
 import SoilHumidity from "./pages/soil-humidity/SoilHumdity";
 import EditRule from "./pages/edit-rule/EditRule";
@@ -64,7 +61,6 @@ function App() {
             <Route path="/rules" element={<ExistingRules />} />
             <Route path="/temperature" element={<Temperature />} />
             <Route path="/humidity" element={<Humidity />} />
-            <Route path="/irrigation-frecuency" element={<IrrigationFrecuency />} />
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/inside-a-plot" element={<InsideAPlot />} />
             <Route path="/user-profile" element={<UserProfile/>} />

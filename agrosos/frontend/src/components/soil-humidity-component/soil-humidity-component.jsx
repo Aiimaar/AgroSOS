@@ -4,29 +4,30 @@ import "./soil-humidity-component.css";
 import { useState } from "react";
 
 function SoilHumidityComponent() {
-  const [soilHumidity, setSoilHumidity] = useState(23);
-  const [comparison, setComparison] = useState("=");
+  const [value, setValue] = useState(23);
+  const [operator, setOperator] = useState("=");
   const navigate = useNavigate();
 
   const handleSoilHumidityChange = (e) => {
-    setSoilHumidity(e.target.value);
+    setValue(e.target.value);
   };
 
   const handleComparisonChange = (newComparison) => {
-    setComparison(newComparison);
+    setOperator(newComparison);
   };
 
   const handleApplyCondition = () => {
     const soilHumidityCondition = {
-      soilHumidity,
-      comparison,
+      type: "soilHumidity",
+      value: parseInt(value),
+      operator,
     };
 
-    // Guardar en localStorage
+    // Guardar en sessionStorage
     const existingConditions =
-      JSON.parse(localStorage.getItem("soilHumidityConditions")) || [];
+      JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || [];
     existingConditions.push(soilHumidityCondition);
-    localStorage.setItem(
+    sessionStorage.setItem(
       "soilHumidityConditions",
       JSON.stringify(existingConditions)
     );
@@ -41,35 +42,35 @@ function SoilHumidityComponent() {
       <h1>Humedad del Terreno</h1>
       <div className="soil-humidity-controls">
         <button
-          className={`soil-humidity-button ${comparison === "<" ? "active" : ""}`}
+          className={`soil-humidity-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
         >
           {"<"}
         </button>
         <button
           className={`humidity-button-equal ${
-            comparison === "=" ? "active" : ""
+            operator === "=" ? "active" : ""
           }`}
           onClick={() => handleComparisonChange("=")}
         >
           {"="}
         </button>
         <button
-          className={`humidity-button ${comparison === ">" ? "active" : ""}`}
+          className={`humidity-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
         >
           {">"}
         </button>
       </div>
       <div className="soil-humidity-display">
-        <span className="soil-humidity-indicator">{soilHumidity}%</span>
+        <span className="soil-humidity-indicator">{value}%</span>
       </div>
       <div className="soil-humidity-slider">
         <input
           type="range"
           min="-10"
           max="40"
-          value={soilHumidity}
+          value={value}
           onChange={handleSoilHumidityChange}
         />
         <div className="soil-humidity-limits">

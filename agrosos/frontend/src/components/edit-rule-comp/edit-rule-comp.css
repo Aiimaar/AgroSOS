@@ -50,6 +50,29 @@
     background-color: #45a049;
   }
 
+  .edit-rule-conditions {
+    margin: 20px 0;
+  padding: 10px;
+  background-color: #eef6ee;
+  border-left: 4px solid #4caf50;
+  border-radius: 4px;
+  }
+
+  .edit-rule-conditions li {
+    padding: 10px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  }
+
+.edit-rule-conditions h3 {
+  font-size: 18px;
+  color: #4caf50;
+  margin-bottom: 10px;
+}
+
   .edit-rule-conditions-button {
     background-color: #28a745; /* Color verde */
     color: white;
@@ -93,4 +116,18 @@
   .edit-rule-conditions ul {
     padding-left: 0;
     list-style-type: none;
+  }
+
+  .edit-rule-update-button {
+    display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   }

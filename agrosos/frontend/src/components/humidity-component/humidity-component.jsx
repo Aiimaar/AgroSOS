@@ -26,19 +26,19 @@ function HumidityComponent() {
   
     // Recupera las condiciones actuales
     const existingConditions =
-      JSON.parse(localStorage.getItem("humidityConditions")) || [];
+      JSON.parse(sessionStorage.getItem("humidityConditions")) || [];
   
     // Agrega la nueva condición
     existingConditions.push(humidityCondition);
     
-    // Guarda las condiciones actualizadas en el localStorage
-    localStorage.setItem(
+    // Guarda las condiciones actualizadas en el sessionStorage
+    sessionStorage.setItem(
       "humidityConditions",
       JSON.stringify(existingConditions)
     );
   
-    // Verifica el contenido del localStorage
-    console.log("Updated localStorage:", JSON.parse(localStorage.getItem("humidityConditions")));
+    // Verifica el contenido del sessionStorage
+    console.log("Updated sessionStorage:", JSON.parse(sessionStorage.getItem("humidityConditions")));
   
     // Navega hacia atrás
     navigate(-1);
