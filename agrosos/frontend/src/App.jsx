@@ -1,9 +1,4 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SensorProvider } from "./context/SensorContext";
-import { ActuatorProvider } from "./context/ActuatorContext";
-
-// Importa tus páginas
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
