@@ -122,6 +122,23 @@
   background-color: #006816;
 }
 
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 550px) {
+  .sensor-form {
+    width: 50vw;
+  }
+
+  .btn-back {
+    margin-top: 1em;
+    width: 15vw;
+  }
+  
+  .btn-enla {
+    margin-top: 1em;
+    width: 15vw;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .sensor-form {
     width: 45vw;

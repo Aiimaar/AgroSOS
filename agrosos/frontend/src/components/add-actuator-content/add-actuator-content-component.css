@@ -111,6 +111,22 @@
   .btn-enla-actuator:hover {
     background-color: #006816;
   }
+
+  @media only screen and (min-width: 550px) {
+    .actuator-form {
+      width: 50vw;
+    }
+
+    .btn-enla-actuator {
+      width: 15vw;
+      margin-top: 1em;
+    }
+
+    .btn-enla-back{
+      width: 15vw;
+      margin-top: 1em;
+    }
+  }
   
   @media only screen and (min-width: 768px) {
     .actuator-form {

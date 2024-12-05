@@ -1,6 +1,10 @@
-/* Estilos para la página */
 .plot-details {
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
 }
@@ -8,6 +12,8 @@
 .crops-section {
   margin-top: 10px;
   padding: 15px;
+  align-self: flex-start;
+  flex-direction: column;
 }
 
 .evolution-section,
@@ -18,6 +24,7 @@
   background-color: #f8f2ee;
   border-radius: 12px;
   margin-bottom: 20px;
+  width: 100%;
   padding: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -80,14 +87,18 @@
 }
 
 .inside-a-plot-actions-section {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   background-color: #f8f2ee;
   padding: 15px;
   margin-bottom: 20px;
-  height: auto;
+  height: 15vh;
 }
 
 .inside-a-plot-actions-section h3 {
@@ -98,12 +109,12 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 1em;
   gap: 1em;
-  margin-bottom: 2em;
 }
 
 .inside-a-plot-actions-section button {
-  width: 10em;
+  width: 8em;
   height: 3.5em;
   padding: 10px;
   font-size: 15px;
@@ -120,9 +131,9 @@
   opacity: 0.9;
 }
 
-/* Estilo para la sección de tareas */
 .tasks-section {
-  margin-top: 1.5em;
+  width: 100%;
+  margin-top: 0.5em;
   background-color: #f8f2ee;
   border-radius: 12px;
   padding: 20px;
@@ -134,9 +145,8 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;              /* Usamos flexbox para alinear las tareas en fila */
-  flex-wrap: wrap;            /* Permitimos que las tareas se acomoden en varias filas si es necesario */
-  gap: 20px;                  /* Espacio entre las tareas */
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* Estilo de cada tarea */
@@ -145,13 +155,14 @@
   margin-bottom: 5px;
   display: flex;
   align-items: center;
-  gap: 10px;
   background-color: #fff;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: calc(33.33% - 20px);  /* Cada tarea ocupará un 33.33% del ancho del contenedor */
-  box-sizing: border-box;      /* Asegura que el padding y border se cuenten dentro del width */
+  width: calc(
+    33.33% - 20px
+  ); /* Cada tarea ocupará un 33.33% del ancho del contenedor */
+  box-sizing: border-box; /* Asegura que el padding y border se cuenten dentro del width */
 }
 
 .tasks-section li::after {
@@ -184,10 +195,10 @@
   background-color: #388e3c;
 }
 
-
 /* Estilos específicos para la sección de Frecuencia de Riego */
 .irrigation-frecuency-section {
   background-color: #f8f2ee;
+  width: 100%;
   border-radius: 12px;
   padding: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -226,7 +237,7 @@
 }
 
 .irrigation-frecuency-calendar-icon {
-  font-size: 24px;
+  width: 5.5vw;
   color: #30590c;
   transition: transform 0.2s ease;
 }
@@ -237,7 +248,7 @@
 }
 
 .irrigation-frecuency-day-label {
-  font-size: 14px;
+  font-size: 10.3px;
   color: #30590c;
   margin-top: 3px;
 }
@@ -350,7 +361,6 @@
   transform: scale(1.05);
 }
 
-
 .close-clock-popup-button {
   position: absolute;
   top: 5px;
@@ -378,3 +388,77 @@
 .irrigation-frecuency-pro:hover {
   background-color: #388e3c;
 }
+
+@media only screen and (min-width: 768px) {
+  .plot-details {
+    width: 90vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .inside-a-plot-comp-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .inside-a-plot-comp-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .evolution-section,
+  .irrigation-frecuency-section,
+  .tasks-section {
+    box-sizing: border-box;
+    max-width: 40vw;
+    margin-bottom: 20px;
+  }
+
+  .climate-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    max-width: 40vw;
+    margin-bottom: 20px;
+    height: 12vh;
+  }
+
+  .irrigation-frecuency-section,
+  .tasks-section {
+    max-width: 40vw;
+  }
+
+  .evolution-section{
+    width: 40vw;
+  }
+
+  .crops-section {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .inside-a-plot-actions-section{
+    width: 40vw;
+  }
+
+  .inside-a-plot-actions-section button {
+    width: 16vw;
+    height: 4vh;
+    font-size: 12px;
+  }
+
+  .crops img {
+    max-width: 30vw;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+

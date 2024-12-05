@@ -1,9 +1,4 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SensorProvider } from "./context/SensorContext";
-import { ActuatorProvider } from "./context/ActuatorContext";
-
-// Importa tus páginas
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -64,7 +59,6 @@ function App() {
             <Route path="/rules" element={<ExistingRules />} />
             <Route path="/temperature" element={<Temperature />} />
             <Route path="/humidity" element={<Humidity />} />
-            <Route path="/irrigation-frecuency" element={<IrrigationFrecuency />} />
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/inside-a-plot" element={<InsideAPlot />} />
             <Route path="/user-profile" element={<UserProfile/>} />
