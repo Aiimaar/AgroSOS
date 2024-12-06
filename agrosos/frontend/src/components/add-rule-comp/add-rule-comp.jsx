@@ -30,7 +30,7 @@ const AddRuleComp = () => {
   );
   const [ruleNumber, setRuleNumber] = useState(1); // State for rule number
   const navigate = useNavigate();
-  const technicianId = sessionStorage.getItem("userId");
+  const technicianId = localStorage.getItem("userId");
 
   const actuatorActionMap = {
     Riego: ["Activar Riego", "Desactivar Riego"],

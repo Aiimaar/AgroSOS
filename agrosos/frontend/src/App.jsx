@@ -1,4 +1,7 @@
 import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { SensorProvider } from "./context/SensorContext";
+import { ActuatorProvider } from "./context/ActuatorContext";
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
