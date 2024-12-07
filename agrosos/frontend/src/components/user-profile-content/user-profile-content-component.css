@@ -1,0 +1,168 @@
+/* user-profile-content-component.css */
+
+.user-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 300px;
+    margin: auto;
+    margin-top: 30%;
+  }
+  
+  .profile-pic-container {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .camera-icon {
+    font-size: 20px;
+    color: green;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 4px;
+  }
+  
+  .form-field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .label {
+    display: block;
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid #a3d39c;
+    outline: none;
+    color: #333;
+    background-color: transparent;
+  }
+  
+  .edit-icon {
+    font-size: 16px;
+    color: #777;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+  .logout-button {
+    margin-top: 50px;
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 150px;
+    text-align: center;
+  }
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro más fuerte */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Aseguramos que el modal esté encima de todo */
+  }
+  
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 350px; /* Ampliamos un poco el tamaño máximo */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .modal h3 {
+    margin-bottom: 15px;
+    font-size: 18px; /* Aumentamos el tamaño del texto del título */
+    font-weight: bold;
+  }
+  
+  .modal-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #a3d39c;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+  
+  .modal-save-button,
+  .modal-cancel-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 45%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-save-button {
+    background-color: green;
+    color: white;
+  }
+  
+  .modal-save-button:hover {
+    background-color: darkgreen;
+  }
+  
+  .modal-cancel-button {
+    background-color: #f0f0f0; /* Un gris claro para diferenciar */
+    color: #333; /* Texto oscuro para contraste */
+  }
+  
+  .modal-cancel-button:hover {
+    background-color: #ccc; /* Gris más oscuro cuando el ratón está encima */
+  }
+  

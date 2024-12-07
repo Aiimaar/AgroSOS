@@ -3,13 +3,13 @@ import graficaAjo from "./images/grafica-ajo.png";
 import ajo from "./images/ajo.png";
 import "./crops-details-header-component.css";
 
-const CropsDetailsHeaderComponent = ({ cropImage = ajo, onBack }) => {
+const CropsDetailsHeaderComponent = ({ cultivationImage = ajo, onBack }) => {
   return (
     <div className="crops-header">
-      <button className="back-button" />
+      <button className="back-button" onClick={onBack} />
       <div className="crop-info">
-        <div className="crop-image-container">
-          <img src={ajo} alt="Crop" className="crop-image" />
+        <div className="cultivation-image-container">
+          <img src={cultivationImage} alt="Crop" className="cultivation-image-details" />
         </div>
         <h1 className="crop-title">AJO</h1>
         <div className="chart-image-container">
