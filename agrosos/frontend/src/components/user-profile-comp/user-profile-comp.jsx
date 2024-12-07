@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { FaCamera, FaPen } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ReactDOM from "react-dom";
 import "./user-profile-comp.css";
 
 const UserProfileComp = () => {
@@ -10,7 +12,9 @@ const UserProfileComp = () => {
     profile_image: "",
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingField, setEditingField] = useState(null);
+  const [fieldValue, setFieldValue] = useState("");
   const [isImageSelected, setIsImageSelected] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
@@ -41,39 +45,29 @@ const UserProfileComp = () => {
     fetchUserData();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
-
-  const handleEdit = (field) => {
+  const handleEditClick = (field) => {
     setEditingField(field);
+    setFieldValue(userData[field]);
+    setIsModalOpen(true);
   };
 
   const handleSave = async () => {
-    if (!userData.name.trim() || !userData.email.trim()) {
-      alert("Por favor, completa todos los campos antes de guardar.");
-      return;
-    }
-
     try {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
 
       await axios.put(
         `http://localhost:3000/api/users/${userId}`,
-        { name: userData.name, email: userData.email },
+        { [editingField]: fieldValue },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("Datos actualizados correctamente.");
+      setUserData((prev) => ({ ...prev, [editingField]: fieldValue }));
+      setIsModalOpen(false);
       setEditingField(null);
     } catch (error) {
-      alert(
-        error.response
-          ? error.response.data.error
-          : "No se pudo actualizar la información."
-      );
+      console.error("Error al guardar los datos:", error);
+      alert("Error al guardar los cambios.");
     }
   };
 
@@ -91,7 +85,6 @@ const UserProfileComp = () => {
 
     try {
       setIsUploading(true);
-      setIsImageSelected(false);
 
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
@@ -107,20 +100,15 @@ const UserProfileComp = () => {
         }
       );
 
-      const updatedProfileImage = response.data.profile_image;
-      console.log("Imagen actualizada:", updatedProfileImage);
-
-      alert("Imagen de perfil actualizada");
-
-      setUserData({
-        ...userData,
-        profile_image: updatedProfileImage,
-      });
-
+      setUserData((prev) => ({
+        ...prev,
+        profile_image: response.data.profile_image,
+      }));
       setImageFile(null);
+      setIsImageSelected(false);
     } catch (error) {
-      alert("Error al subir la imagen de perfil");
       console.error("Error al subir la imagen:", error);
+      alert("No se pudo subir la imagen.");
     } finally {
       setIsUploading(false);
     }
@@ -129,86 +117,86 @@ const UserProfileComp = () => {
   const handleLogout = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("authToken");
-
     navigate("/login");
   };
 
-  return (
-    <div className="user-profile-comp-page">
-      <div className="user-profile-comp-container">
-        <div className="user-profile-comp-photo-container">
-          <img
-            src={userData.profile_image || "/default-profile.png"}
-            alt="profile"
-            className="user-profile-comp-photo"
-          />
-
-          <button
-            className="user-profile-comp-edit-photo-button"
-            style={{
-              display: isUploading || isImageSelected ? "none" : "block",
-            }}
-          >
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              style={{ display: "none" }}
-              id="userProfileCompImageInput"
-            />
-            <label htmlFor="userProfileCompImageInput">
-              <i className="user-profile-comp-camera-icon">📸</i>
-            </label>
+  const modal = isModalOpen && (
+    <div className="modal-overlay">
+      <div className="modal">
+        <h3>Editar {editingField}</h3>
+        <input
+          type={editingField === "email" ? "email" : "text"}
+          value={fieldValue}
+          onChange={(e) => setFieldValue(e.target.value)}
+          className="modal-input"
+        />
+        <div className="modal-buttons">
+          <button onClick={handleSave} className="modal-save-button">
+            Guardar
           </button>
-
-          {isImageSelected && !isUploading && (
-            <span
-              className="user-profile-comp-upload-text"
-              onClick={handleImageUpload}
-            >
-              Subir Imagen
-            </span>
-          )}
+          <button
+            onClick={() => {
+              setIsModalOpen(false);
+              setEditingField(null);
+            }}
+            className="modal-cancel-button"
+          >
+            Cancelar
+          </button>
         </div>
-
-        <div className="user-profile-comp-fields">
-          {["name", "email"].map((field) => (
-            <div className="user-profile-comp-field" key={field}>
-              <input
-                type={field === "email" ? "email" : "text"}
-                name={field}
-                value={userData[field]}
-                onChange={handleChange}
-                className="user-profile-comp-input"
-                readOnly={editingField !== field}
-              />
-              {editingField === field ? (
-                <button
-                  className="user-profile-comp-save-button"
-                  onClick={handleSave}
-                >
-                  💾
-                </button>
-              ) : (
-                <button
-                  className="user-profile-comp-edit-field-button"
-                  onClick={() => handleEdit(field)}
-                  disabled={editingField !== null && editingField !== field}
-                >
-                  ✎
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <button
-          className="user-profile-comp-logout-button"
-          onClick={handleLogout}
-        >
-          Cerrar Sesión
-        </button>
       </div>
+    </div>
+  );
+
+  return (
+    <div className="user-profile-container">
+      <div className="profile-pic-container">
+        <img
+          src={userData.profile_image || "/default-profile.png"}
+          alt="profile"
+          className="profile-pic"
+        />
+        <div
+          className="camera-icon"
+          onClick={() => document.getElementById("imageUpload").click()}
+        >
+          <FaCamera />
+        </div>
+        <input
+          type="file"
+          id="imageUpload"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: "none" }}
+        />
+        {isImageSelected && (
+          <button
+            onClick={handleImageUpload}
+            className="upload-button"
+            disabled={isUploading}
+          >
+            Subir Imagen
+          </button>
+        )}
+      </div>
+      <div className="form-field">
+        <label>Nombre</label>
+        <div className="input-container">
+          <input value={userData.name} readOnly className="input-field" />
+          <FaPen className="edit-icon" onClick={() => handleEditClick("name")} />
+        </div>
+      </div>
+      <div className="form-field">
+        <label>Email</label>
+        <div className="input-container">
+          <input value={userData.email} readOnly className="input-field" />
+          <FaPen className="edit-icon" onClick={() => handleEditClick("email")} />
+        </div>
+      </div>
+      <button onClick={handleLogout} className="logout-button">
+        Cerrar Sesión
+      </button>
+      {ReactDOM.createPortal(modal, document.body)}
     </div>
   );
 };
