@@ -5,9 +5,8 @@ import { useState } from "react";
 
 function TemperatureComponent() {
   const [value, setValue] = useState(23);
-  const [operator, setOperator] = useState("="); // Para <, =, >
+  const [operator, setOperator] = useState("=");
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleTemperatureChange = (e) => {
     setValue(e.target.value);

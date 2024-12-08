@@ -6,6 +6,7 @@
   font-family: Arial, sans-serif;
   max-width: 600px;
   margin: 20px auto;
+  margin-top: 80px
 }
 
 .add-rule-form-title {
@@ -72,6 +73,9 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .add-rule-form-submit-button {
@@ -107,7 +111,7 @@
   background-color: #218838; /* Color verde más oscuro al pasar el ratón */
 }
 
-.add-rule-conditions button.delete-condition-button {
+.delete-condition-button {
   background-color: #28a745; /* Color verde */
   color: white;
   border: none;
@@ -118,21 +122,57 @@
   transition: background-color 0.3s;
 }
 
-/* Hover para el botón de eliminar */
-.add-rule-conditions button.delete-condition-button:hover {
+.delete-condition-button:hover {
   background-color: #218838; /* Color verde más oscuro al pasar el ratón */
 }
 
-/* Alineación del botón de eliminar a la derecha */
-.add-rule-conditions li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px; /* Espaciado entre las condiciones */
-}
+/* Estilos específicos para pantallas tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .add-rule-form-container {
+    padding: 15px;
+    max-width: 90%; /* Aumentar el ancho relativo */
+    margin-top: 80px;
+  }
 
-/* Para mantener las condiciones de temperatura y humedad organizadas */
-.add-rule-conditions ul {
-  padding-left: 0;
-  list-style-type: none;
+  .add-rule-form-title {
+    font-size: 22px; /* Reducir ligeramente el tamaño del título */
+  }
+
+  .add-rule-label {
+    font-size: 15px; /* Reducir el tamaño del texto de las etiquetas */
+  }
+
+  .add-rule-select {
+    padding: 10px; /* Reducir el padding para adaptarse mejor */
+    font-size: 15px;
+  }
+
+  .add-rule-conditions {
+    margin: 15px 0;
+    padding: 8px;
+  }
+
+  .add-rule-conditions h3 {
+    font-size: 16px;
+  }
+
+  .add-rule-conditions li {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .add-rule-form-submit-button {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .add-rule-conditions-button {
+    padding: 8px 16px;
+    font-size: 15px;
+  }
+
+  .delete-condition-button {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
 }

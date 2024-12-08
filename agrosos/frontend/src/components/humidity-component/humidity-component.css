@@ -162,3 +162,79 @@ h1 {
     width: 35vw;
     background-color: #5EA71E;
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Humidity Component Container */
+    #humidity-component-container {
+      width: 85vw;
+      margin-top: 10%;
+    }
+  
+    /* Adjusting arrow image size and position */
+    .humidity-component-arrow {
+      margin-left: 1.5em;
+      margin-top: 1.5em;
+    }
+  
+    /* Title size adjustment */
+    h1 {
+      font-size: 22px; /* Adjusting for a slightly smaller screen */
+      margin-bottom: 15px;
+    }
+  
+    /* Button sizes */
+    .humidity-button, .humidity-button-equal {
+      width: 35vw; /* Adjust width for touch-friendly buttons */
+      padding: 12px;
+      font-size: 18px;
+    }
+  
+    /* Active state for buttons */
+    .humidity-button.active, .humidity-button-equal.active {
+      transform: scale(1.05); /* Slightly bigger scaling effect */
+    }
+  
+    /* Display for humidity value */
+    .humidity-display {
+      width: 30vw; /* Increased width for visibility */
+      font-size: 18px;
+    }
+  
+    /* Adjust slider for tablets */
+    .humidity-slider input[type="range"] {
+      height: 10px; /* Make slider thumb bigger */
+    }
+  
+    .humidity-slider input[type="range"]::-webkit-slider-thumb {
+      width: 25px;
+      height: 25px;
+    }
+  
+    .humidity-slider input[type="range"]::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+    }
+  
+    .humidity-limits span {
+      font-size: 14px; /* Slightly larger text */
+    }
+  
+    /* Apply Button */
+    .humidity-apply-button {
+      width: 35vw;
+      padding: 15px;
+      font-size: 16px;
+    }
+  
+    /* Adjust spacing for controls and slider */
+    .humidity-controls {
+      flex-direction: column;
+      gap: 15px; /* Stack buttons vertically */
+    }
+  
+    /* Layout adjustments for elements */
+    .humidity-slider {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }

@@ -79,3 +79,41 @@
 .create-account-button:hover {
   background-color: #45a049;
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .login-form {
+    width: 80%;
+    max-width: 400px;
+    padding: 25px;
+  }
+
+  .login-form input {
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+
+  .login-form input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+
+  .login-form .submit-button {
+    padding: 14px;
+    font-size: 18px;
+    width: 100%;
+  }
+
+  .register-link {
+    margin-top: 40px;
+  }
+
+  .register-link p {
+    font-size: 16px;
+  }
+
+  .create-account-button {
+    font-size: 18px;
+    padding: 14px;
+  }
+}
