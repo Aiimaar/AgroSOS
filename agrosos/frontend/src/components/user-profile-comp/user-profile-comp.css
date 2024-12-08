@@ -95,7 +95,35 @@ label {
   cursor: default;
 }
 
+<<<<<<< HEAD
 .edit-icon {
+=======
+.user-profile-comp-edit-field-button {
+  background: none;
+  border: none;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+}
+
+#user-profile-comp-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.user-profile-comp-logout-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+>>>>>>> fixErrorDylan
   font-size: 16px;
   color: #777;
   cursor: pointer;
@@ -192,3 +220,21 @@ label {
 .modal-cancel-button:hover {
   background-color: #ccc;
 }
+
+.user-profile-comp-back-button{
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  margin-left: 1em;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 40px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.user-profile-comp-back-button:hover{
+  background-color: #45a049;
+}
+
