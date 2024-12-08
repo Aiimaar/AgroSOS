@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./user-profile-comp.css";
 
 const UserProfileComp = () => {
@@ -201,13 +201,20 @@ const UserProfileComp = () => {
             </div>
           ))}
         </div>
-
-        <button
+          <div id="user-profile-comp-buttons">
+          <button
           className="user-profile-comp-logout-button"
           onClick={handleLogout}
         >
           Cerrar Sesión
         </button>
+        <Link to="/plot-list">
+          <button className="user-profile-comp-back-button">
+            Volver
+          </button>
+        </Link>
+          </div>
+       
       </div>
     </div>
   );

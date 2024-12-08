@@ -1,4 +1,10 @@
 .user-list-container {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  max-width: 90vw;
+  justify-content: center;
+  margin: 0 auto;
   margin-top: 20%;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -16,8 +22,7 @@
   font-size: 24px;
   cursor: pointer;
   color: #000;
-  position: absolute;
-  left: 10px;
+  align-self: flex-start;
 }
 
 .user-list {
@@ -146,8 +151,9 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 400px;
-  max-width: 60%;
+  height: auto;
+  width: auto;
+  max-width: 90vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -218,4 +224,37 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+@media only screen and (min-width: 768px) {
+  .user-list-container {
+    max-width: 70vw;
+    width: auto;
+  }
+
+  .user-list-back-button {
+    margin-top: -2em;
+    margin-left: 3em;
+  }
+
+  .user-list-title {
+    margin-top: 2em;
+    text-align: center;
+  }
+
+  .user-list {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .user-list-modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: auto;
+    max-width: 50vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 }

@@ -62,8 +62,6 @@ function App() {
             <Route path="/humidity" element={<Humidity />} />
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/inside-a-plot" element={<InsideAPlot />} />
-            <Route path="/user-profile" element={<UserProfile/>} />
-            <Route path="/inside-a-plot" element={<InsideAPlot/>} />
             <Route path="/admin-user-crud" element={<AdminUserCrud />} />
             <Route path="/sustainability" element={<SustainabilityAndEnvironmentManagement />} />
             <Route path="/soil-management" element={<SoilManagement />} />
