@@ -216,7 +216,7 @@ const InsideAPlotComp = ({ plotId }) => {
             </section>
           </div>
 
-          
+
 
           <div className="inside-a-plot-comp-left">
             <section className="tasks-section">
@@ -288,9 +288,8 @@ const InsideAPlotComp = ({ plotId }) => {
                       <FontAwesomeIcon
                         icon={faCalendarDays}
                         size="2xl"
-                        className={`irrigation-frecuency-calendar-icon ${
-                          selectedDays.includes(day.name) ? "selected" : ""
-                        }`}
+                        className={`irrigation-frecuency-calendar-icon ${selectedDays.includes(day.name) ? "selected" : ""
+                          }`}
                         onClick={() => handleClick(day.name)}
                       />
                       <span className="irrigation-frecuency-day-label">
@@ -346,12 +345,7 @@ const InsideAPlotComp = ({ plotId }) => {
                       >
                         Confirmar hora
                       </button>
-                      <button
-                        className="close-clock-popup-button"
-                        onClick={() => setIsClockPopupVisible(false)}
-                      >
-                        Cerrar
-                      </button>
+                      <button class="irrigation-frecuency-pro">Programar riego</button>
                     </div>
                   </div>
                 )}

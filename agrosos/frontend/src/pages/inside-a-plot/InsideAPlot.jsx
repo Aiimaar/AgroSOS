@@ -10,7 +10,7 @@ function InsideAPlot(){
             <Header />
             <SensorHeaderGrey />
             <InsideAPlotComp />
-            {/* <InsideAPlotFooter /> */}
+            <InsideAPlotFooter />
         </>
     )
 }

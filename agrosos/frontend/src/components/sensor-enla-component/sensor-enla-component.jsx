@@ -33,10 +33,7 @@ function SensorEnlaComponent() {
           linkedSensors.map((sensor, index) => (
             <div key={index} className="sensor-item">
               <p>
-                <strong>Nombre:</strong> {typeMappingInverse[sensor.type] || sensor.type}
-              </p>
-              <p>
-                <strong>Código:</strong> {sensor.code}
+                <strong>{typeMappingInverse[sensor.type] || sensor.type}</strong> - Código: {sensor.code}
               </p>
               {showRemoveButtons && (
                 <button

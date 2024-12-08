@@ -1,35 +1,26 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Icon } from '@iconify/react'; // Importa el componente de Iconify
-import './inside-a-plot-footer-comp.css'; // Importa el archivo CSS
+import one from "./chart_icon.png";
+import two from "./cloud_icon.png";
+import three from "./Vector.png";
+import four from "./bx_task.png";
+import './inside-a-plot-footer-comp.css';
 
-const InsideAPlotFooter = () => {
-  const navigate = useNavigate();
-  const plotId = localStorage.getItem('selectedPlotId'); // Obtener el ID del terreno
-
-  if (!plotId) {
-    console.error('No plot ID found in localStorage.');
-    return null; // Puedes añadir una redirección o un mensaje de error aquí
-  }
+function InsideAPlotFooter(){
 
   return (
     <footer className="inside-a-plot-footer">
-      <button onClick={() => navigate(`/plot/${plotId}/chart`)} className="inside-a-plotfooter-button">
-        {/* Icono de gráfico */}
-        <Icon icon="akar-icons:chart-bar" width={24} height={24} />
-      </button>
-      <button onClick={() => navigate(`/plot/${plotId}/weather`)} className="inside-a-plot-footer-button">
-        {/* Icono de clima */}
-        <Icon icon="twemoji:cloud" width={24} height={24} />
-      </button>
-      <button onClick={() => navigate(`/plot/${plotId}/actions`)} className="inside-a-plot-footer-button">
-        {/* Icono de acciones */}
-        <Icon icon="twemoji:arrows-counterclockwise" width={24} height={24} />
-      </button>
-      <button onClick={() => navigate(`/plot/${plotId}/tasks`)} className="inside-a-plot-footer-button">
-        {/* Icono de tarea */}
-        <Icon icon="twemoji:white-check-mark" width={24} height={24} />
-      </button>
+      <div className='inside-a-plot-footer-comp-one'>
+        <img src={one} alt="one" className='inside-a-plot-footer-comp-image-one'/>
+      </div>
+      <div className='inside-a-plot-footer-comp-two'>
+        <img src={two} alt="two" className='inside-a-plot-footer-comp-image-two'/>
+      </div>
+      <div className='inside-a-plot-footer-comp-two'>
+        <img src={three} alt="three" className='inside-a-plot-footer-comp-image-three'/>
+      </div>
+      <div className='inside-a-plot-footer-comp-two'>
+        <img src={four} alt="four" className='inside-a-plot-footer-comp-image-four'/>
+      </div>
     </footer>
   );
 };

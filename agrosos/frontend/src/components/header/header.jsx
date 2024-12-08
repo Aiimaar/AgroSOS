@@ -38,7 +38,7 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to="/accessibility">
+              <Link to="/accesibility">
                 <FontAwesomeIcon icon={faUniversalAccess} />
                 <span>Accesibilidad</span>
               </Link>
