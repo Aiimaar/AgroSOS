@@ -162,3 +162,79 @@ h1 {
     width: 35vw;
     background-color: #5EA71E;
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Contenedor principal */
+    #soil-temperature-component-container {
+      width: 85vw; /* Aumenta el ancho del contenedor */
+      margin-top: 10%; /* Ajusta el margen superior para centrar el componente */
+    }
+  
+    /* Ajuste de la imagen de la flecha */
+    .soil-temperature-component-arrow {
+      margin-left: 1.5em;
+      margin-top: 1.5em;
+    }
+  
+    /* Ajuste del título */
+    h1 {
+      font-size: 22px; /* Ajusta el tamaño de la fuente */
+      margin-bottom: 15px;
+    }
+  
+    /* Botones de control */
+    .soil-temperature-button, .soil-temperature-button-equal {
+      width: 35vw; /* Ajusta el tamaño de los botones */
+      padding: 12px;
+      font-size: 18px;
+    }
+  
+    /* Estado activo de los botones */
+    .soil-temperature-button.active, .temperature-button-equal.active {
+      transform: scale(1.05); /* Efecto de agrandamiento sutil */
+    }
+  
+    /* Display de temperatura */
+    .soil-temperature-display {
+      width: 30vw; /* Aumenta el ancho para mejor visibilidad */
+      font-size: 18px;
+    }
+  
+    /* Ajustes para el deslizador */
+    .soil-temperature-slider input[type="range"] {
+      height: 10px; /* Hace el deslizador más grueso */
+    }
+  
+    .soil-temperature-slider input[type="range"]::-webkit-slider-thumb {
+      width: 25px; /* Hace el pulgar del deslizador más grande */
+      height: 25px;
+    }
+  
+    .soil-temperature-slider input[type="range"]::-moz-range-thumb {
+      width: 25px; /* Ajuste para Firefox */
+      height: 25px;
+    }
+  
+    /* Límites del deslizador */
+    .soil-temperature-limits span {
+      font-size: 14px; /* Ajuste para aumentar la legibilidad */
+    }
+  
+    /* Botón de aplicar */
+    .soil-temperature-apply-button {
+      width: 35vw; /* Ajusta el tamaño del botón */
+      padding: 15px;
+      font-size: 16px;
+    }
+  
+    /* Ajustes en el layout de los controles y el deslizador */
+    .soil-temperature-controls {
+      flex-direction: column;
+      gap: 15px; /* Apila los botones verticalmente */
+    }
+  
+    .soil-temperature-slider {
+      flex-direction: column;
+      gap: 15px; /* Espaciado entre elementos */
+    }
+  }

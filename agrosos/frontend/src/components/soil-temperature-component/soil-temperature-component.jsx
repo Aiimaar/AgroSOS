@@ -48,7 +48,7 @@ function SoilTemperatureComponent() {
           {"<"}
         </button>
         <button
-          className={`temperature-button-equal ${
+          className={`soil-temperature-button-equal ${
             operator === "=" ? "active" : ""
           }`}
           onClick={() => handleComparisonChange("=")}
@@ -56,7 +56,7 @@ function SoilTemperatureComponent() {
           {"="}
         </button>
         <button
-          className={`temperature-button ${operator === ">" ? "active" : ""}`}
+          className={`soil-temperature-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
         >
           {">"}

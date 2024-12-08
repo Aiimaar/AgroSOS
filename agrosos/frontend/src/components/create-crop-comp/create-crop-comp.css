@@ -156,3 +156,54 @@ p {
   border-radius: 8px;
   border: 1px solid #ddd;
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .create-crop-form {
+    width: 90%;
+    max-width: 600px;
+    padding: 1.5em;
+    gap: 1.2em;
+  }
+
+  .create-crop-form-title {
+    font-size: 1.8em;
+  }
+
+  .create-crop-form-input,
+  .create-crop-form-textarea,
+  .create-crop-form-select {
+    font-size: 1em;
+    padding: 1em;
+    border-radius: 10px;
+  }
+
+  .create-crop-form-buttons {
+    flex-direction: row;
+    gap: 1.5em;
+  }
+
+  .create-crop-submit-button,
+  .create-crop-cancel-button {
+    width: 45%;
+    padding: 0.8em 1em;
+    font-size: 1em;
+    border-radius: 15px;
+  }
+
+  .create-crop-upload-container {
+    height: 180px;
+  }
+
+  .create-crop-upload-container p {
+    font-size: 1em;
+  }
+
+  .create-crop-image-preview {
+    max-width: 400px;
+    margin-top: 1em;
+  }
+
+  .create-crop-default-image-container img {
+    width: 60%;
+  }
+}

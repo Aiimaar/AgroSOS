@@ -204,3 +204,70 @@
     color: white;
     border-color: white;
   } 
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Ajustar contenedor principal */
+  #existing-rules-container {
+    padding: 15px;
+    margin-top: 60px;
+  }
+
+  /* Encabezado */
+  .existing-rule-header {
+    justify-content: center;
+  }
+
+  .existing-rule-title {
+    font-size: 22px;
+  }
+
+  /* Contenedor de tarjetas */
+  .existing-rule-cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+  }
+
+  /* Tarjetas */
+  .existing-rule-card {
+    padding: 15px;
+    height: auto; /* Ajuste automático para contenido dinámico */
+    width: 280px;
+  }
+
+  /* Botones de acción */
+  .existing-rule-card-actions {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .existing-rule-edit-button,
+  .existing-rule-delete-button {
+    width: 40px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  /* Modal */
+  .existing-rule-modal-content {
+    width: 280px;
+  }
+
+  /* Botón agregar regla */
+  .add-rule-button-circle {
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    bottom: 15px;
+  }
+
+  /* Mensaje cuando no hay reglas */
+  .no-rules-message h2 {
+    font-size: 20px;
+  }
+
+  .add-rule-button {
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+  }
+}

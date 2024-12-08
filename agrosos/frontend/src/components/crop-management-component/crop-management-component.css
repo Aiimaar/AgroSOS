@@ -59,3 +59,28 @@
   color: #555;
   margin-bottom: 20px;
 }
+
+@media only screen and (min-width: 768px) {
+  .crop-management-container {
+    margin-top: 6em;
+  }
+
+  .crop-management-back-button {
+    font-size: 30px;
+    top: 2em;
+    left: 2em;
+  }
+
+  .crop-management-header h2 {
+    font-size: 2em;
+  }
+
+  .crop-management-txt {
+    padding: 2em 3em;
+    font-size: 1.1em;
+  }
+
+  .crop-management-txt h3 {
+    font-size: 1.5em;
+  }
+}

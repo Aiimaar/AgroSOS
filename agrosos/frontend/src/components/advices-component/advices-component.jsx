@@ -45,14 +45,14 @@ function AdvicesComponent() {
           <div
             className="advice-card"
             onClick={() =>
-              handleCardClick("/sustainability-and-enviroment")
+              handleCardClick("/sustainabilityt")
             }
           >
             Sostenibilidad y Medio Ambiente
           </div>
           <div
             className="advice-card"
-            onClick={() => handleCardClick("/efficiency-energy")}
+            onClick={() => handleCardClick("/energy-efficiency")}
           >
             Eficiencia Energética
           </div>

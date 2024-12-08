@@ -131,3 +131,36 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .edit-rule-form-container {
+      padding: 20px;
+      max-width: 80%;
+    }
+  
+    .edit-rule-form-container h2 {
+      font-size: 24px;
+    }
+  
+    .edit-rule-form-container label {
+      font-size: 16px;
+    }
+  
+    .edit-rule-form-container select {
+      font-size: 16px;
+      padding: 12px;
+    }
+  
+    .edit-rule-conditions h3 {
+      font-size: 18px;
+    }
+  
+    .edit-rule-conditions li {
+      font-size: 14px;
+    }
+  
+    .edit-rule-update-button {
+      font-size: 16px;
+      padding: 12px;
+    }
+  }
