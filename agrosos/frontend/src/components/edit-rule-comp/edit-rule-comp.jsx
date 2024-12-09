@@ -19,6 +19,7 @@ const EditRuleComp = () => {
   });
 
   const [humidityConditions, setHumidityConditions] = useState(() => {
+    console.log("USE ESTATE");
     const storedConditions = sessionStorage.getItem("humidityConditions");
     return storedConditions ? JSON.parse(storedConditions) : [];
   });
@@ -49,20 +50,13 @@ const EditRuleComp = () => {
   };
 
   useEffect(() => {
-    const fetchCrops = async () => {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) {
-        alert("Autenticación requerida. Por favor, inicia sesión.");
-        navigate("/login");
-        return;
-      }
+    console.log("Humidity conditions from sessionStorage:", humidityConditions);
+  }, []);
 
+  useEffect(() => {
+    const fetchCrops = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/crops", {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
+        const response = await axios.get("http://localhost:3000/api/crops");
         setCrops(response.data);
       } catch (error) {
         console.error("Error fetching crops:", error);
@@ -70,21 +64,9 @@ const EditRuleComp = () => {
     };
 
     const fetchRule = async () => {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) {
-        alert("Autenticación requerida. Por favor, inicia sesión.");
-        navigate("/login");
-        return;
-      }
-
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/rules/${ruleId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
+          "http://localhost:3000/api/rules/${ruleId}"
         );
         const ruleData = response.data;
         const parsedRuleInfo = JSON.parse(ruleData.rule_info);
@@ -98,26 +80,39 @@ const EditRuleComp = () => {
         setAvailableActions(
           actuatorActionMap[andConditions.actuators?.[0]?.type] || []
         );
-        setTemperatureConditions(
-          andConditions.conditions?.filter(
+        setTemperatureConditions(() => {
+          const temp = sessionStorage.getItem("temperatureConditions");
+          return temp
+          ? JSON.parse(sessionStorage.getItem("temperatureConditions"))
+          : andConditions.conditions?.filter(
             (cond) => cond.type === "temperature"
           ) || []
-        );
-        setHumidityConditions(
-          andConditions.conditions?.filter(
-            (cond) => cond.type === "humidity"
-          ) || []
-        );
-        setSoilTemperatureConditions(
-          andConditions.conditions?.filter(
+        });
+
+        setHumidityConditions(() => {
+          const hum = sessionStorage.getItem("humidityConditions");
+          return hum
+            ? JSON.parse(sessionStorage.getItem("humidityConditions"))
+            : andConditions.conditions?.filter(
+                (cond) => cond.type === "humidity"
+              ) || [];
+        });
+        setSoilTemperatureConditions(() => {
+          const sTemp = sessionStorage.getItem("soilTemperatureConditions");
+          return sTemp
+          ? JSON.parse(sessionStorage.getItem("soilTemperatureConditions"))
+          :andConditions.conditions?.filter(
             (cond) => cond.type === "soilTemperature"
           ) || []
-        );
-        setSoilHumidityConditions(
-          andConditions.conditions?.filter(
+        });
+        setSoilHumidityConditions(() => {
+          const sHum = sessionStorage.getItem("soilHumidityConditions");
+          return sHum
+          ? JSON.parse(sessionStorage.getItem("soilHumidityConditions"))
+          : andConditions.conditions?.filter(
             (cond) => cond.type === "soilHumidity"
           ) || []
-        );
+        });
       } catch (error) {
         console.error("Error fetching rule:", error);
       }
@@ -125,7 +120,38 @@ const EditRuleComp = () => {
 
     fetchCrops();
     fetchRule();
-  }, [ruleId, navigate]);
+  }, [ruleId]);
+
+  const handleActuatorChange = (e) => {
+    const selectedActuator = e.target.value;
+    setActuatorType(selectedActuator);
+    const actions = actuatorActionMap[selectedActuator] || [];
+    setAvailableActions(actions);
+  };
+
+  const handleDeleteCondition = (type, index) => {
+    if (type === "temperature") {
+      const updatedConditions = [...temperatureConditions];
+      updatedConditions.splice(index, 1);
+      setTemperatureConditions(updatedConditions);
+      sessionStorage.setItem("temperatureConditions", JSON.stringify(updatedConditions));
+    } else if (type === "humidity") {
+      const updatedConditions = [...humidityConditions];
+      updatedConditions.splice(index, 1);
+      setHumidityConditions(updatedConditions);
+      sessionStorage.setItem("humidityConditions", JSON.stringify(updatedConditions));
+    } else if (type === "soilHumidity") {
+      const updatedConditions = [...soilHumidityConditions];
+      updatedConditions.splice(index, 1);
+      setSoilHumidityConditions(updatedConditions);
+      sessionStorage.setItem("soilHumidityConditions", JSON.stringify(updatedConditions));
+    } else if (type === "soilTemperature") {
+      const updatedConditions = [...soilTemperatureConditions];
+      updatedConditions.splice(index, 1);
+      setSoilTemperatureConditions(updatedConditions);
+      sessionStorage.setItem("soilTemperatureConditions", JSON.stringify(updatedConditions));
+    }
+  };
 
   const handleUpdateRule = async () => {
     const updatedRuleInfo = {
@@ -144,28 +170,13 @@ const EditRuleComp = () => {
       ],
     };
 
-    const authToken = localStorage.getItem("authToken");
-    if (!authToken) {
-      alert("Autenticación requerida. Por favor, inicia sesión.");
-      navigate("/login");
-      return;
-    }
-
     try {
-      await axios.put(
-        `http://localhost:3000/api/rules/${ruleId}`,
-        {
-          name: rule.name,
-          crop_id: cropId,
-          technician_id: rule.technician_id,
-          rule_info: JSON.stringify(updatedRuleInfo),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
+      await axios.put("http://localhost:3000/api/rules/${ruleId}", {
+        name: rule.name,
+        crop_id: cropId,
+        technician_id: rule.technician_id,
+        rule_info: JSON.stringify(updatedRuleInfo),
+      });
 
       alert("Regla actualizada con éxito.");
       navigate("/rules");
