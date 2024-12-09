@@ -251,6 +251,9 @@ const UserProfileComp = () => {
       <button onClick={handleLogout} className="logout-button">
         Cerrar Sesión
       </button>
+      <button onClick={() => navigate(-1)} className="go-back-button">
+        Volver
+      </button>
       {ReactDOM.createPortal(modal, document.body)}
     </div>
   );

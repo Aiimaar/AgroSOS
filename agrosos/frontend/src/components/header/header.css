@@ -67,7 +67,7 @@
   background-color: white;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 15px; /* Bordes redondeados */
-  transform: translateX(300px);
+  transform: translateX(3000px);
   transition: transform 0.3s ease-in-out;
   overflow: hidden; /* Asegura que no sobresalga contenido */
 }
