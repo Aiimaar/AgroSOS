@@ -24,7 +24,7 @@ const upload = multer({ storage: storage });
 router.get("/", authenticateToken, userController.getUsers);
 router.get("/:id", authenticateToken, userController.getUserById);
 
-router.post("/", userController.createUser);
+router.post("/", authenticateToken, userController.createUser);
 
 // Ruta para actualizar el perfil de usuario y cargar una imagen
 router.put("/:id", authenticateToken, upload.single('profile_image'), userController.updateUser);

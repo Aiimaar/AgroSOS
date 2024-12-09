@@ -32,7 +32,7 @@
 
 .header-desktop-menu {
   display: none;
-  margin-left: auto; /* Alinear a la derecha */
+  margin-left: auto;
 }
 
 .header-desktop-menu ul {
@@ -51,8 +51,8 @@
   color: black;
   display: flex;
   align-items: center;
-  font-weight: bold; /* Texto en negrita */
-  font-size: 14px; /* Reducir tamaño del texto */
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .header-desktop-menu li a span {
@@ -61,15 +61,15 @@
 
 .side-menu {
   position: fixed;
-  top: 10px; /* Añadir margen superior */
-  right: 10px; /* Añadir margen derecho */
-  width: 60vw; /* Mantener el ancho dinámico */
+  top: 10px;
+  right: 10px;
+  width: 60vw;
   background-color: white;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  border-radius: 15px; /* Bordes redondeados */
+  border-radius: 15px;
   transform: translateX(3000px);
   transition: transform 0.3s ease-in-out;
-  overflow: hidden; /* Asegura que no sobresalga contenido */
+  overflow: hidden;
 }
 
 .side-menu.open {
@@ -80,15 +80,15 @@
 .side-menu-items {
   list-style: none;
   padding: 20px;
-  margin: 0; /* Eliminar márgenes */
+  margin: 0;
 }
 
 .side-menu-items li {
-  margin-bottom: 40px; /* Espaciado entre elementos */
+  margin-bottom: 40px;
 }
 
 .side-menu-items li:last-child {
-  margin-bottom: 0; /* Eliminar margen en el último elemento */
+  margin-bottom: 0;
 }
 
 .side-menu-items li a {
@@ -97,6 +97,10 @@
   display: flex;
   align-items: center;
   font-weight: bold;
+}
+
+.side-menu span {
+  margin-left: 10px;
 }
 
 .side-close-button {

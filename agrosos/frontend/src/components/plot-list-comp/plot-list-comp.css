@@ -120,7 +120,8 @@ html {
   border-radius: 15px;
 }
 
-.plot-list-edit-modal {
+.plot-list-edit-modal,
+.plot-list-delete-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -181,12 +182,31 @@ html {
   transition: all 0.2s ease;
 }
 
+.plot-list-delete-modal button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
 .plot-list-edit-modal button[type="submit"] {
   background-color: #5ea71e;
   color: white;
 }
 
 .plot-list-edit-modal button[type="submit"]:hover {
+  background-color: #54941b;
+}
+
+.plot-list-delete-modal button[type="submit"] {
+  background-color: #5ea71e;
+  color: white;
+}
+
+.plot-list-delete-modal button[type="submit"]:hover {
   background-color: #54941b;
 }
 
@@ -199,8 +219,13 @@ html {
   background-color: #bbb;
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
+.plot-list-delete-modal button[type="button"] {
+  background-color: #ccc;
+  color: #333;
+}
+
+.plot-list-delete-modal button[type="button"]:hover {
+  background-color: #bbb;
 }
 
 @media only screen and (min-width: 768px) {
@@ -229,14 +254,10 @@ html {
   }
   .plot-list-welcome {
     text-align: center;
-  } /* Asegurando que el icono del menú desaparezca */
+  }
   .menu-icon {
     display: none;
   }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */

@@ -188,11 +188,11 @@ function PlotListComp() {
     <>
       {showDeleteModal && (
         <div className="modal-overlay">
-          <div className="modal">
+          <div className="plot-list-delete-modal">
             <h3>¿Deseas eliminar este terreno?</h3>
             <div className="modal-actions">
-              <button onClick={handleDeletePlot}>Eliminar</button>
-              <button onClick={cancelDelete}>Cancelar</button>
+              <button type="submit" onClick={handleDeletePlot}>Eliminar</button>
+              <button type="button" onClick={cancelDelete}>Cancelar</button>
             </div>
           </div>
         </div>
