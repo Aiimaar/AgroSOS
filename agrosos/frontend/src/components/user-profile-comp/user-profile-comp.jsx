@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 import { FaCamera, FaPen } from "react-icons/fa";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
-import { Link, useNavigate } from "react-router-dom";
 import "./user-profile-comp.css";
 
 const UserProfileComp = () => {
@@ -144,51 +145,6 @@ const UserProfileComp = () => {
             Cancelar
           </button>
         </div>
-
-        <div className="user-profile-comp-fields">
-          {["name", "email"].map((field) => (
-            <div className="user-profile-comp-field" key={field}>
-              <input
-                type={field === "email" ? "email" : "text"}
-                name={field}
-                value={userData[field]}
-                onChange={handleChange}
-                className="user-profile-comp-input"
-                readOnly={editingField !== field}
-              />
-              {editingField === field ? (
-                <button
-                  className="user-profile-comp-save-button"
-                  onClick={handleSave}
-                >
-                  💾
-                </button>
-              ) : (
-                <button
-                  className="user-profile-comp-edit-field-button"
-                  onClick={() => handleEdit(field)}
-                  disabled={editingField !== null && editingField !== field}
-                >
-                  ✎
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-          <div id="user-profile-comp-buttons">
-          <button
-          className="user-profile-comp-logout-button"
-          onClick={handleLogout}
-        >
-          Cerrar Sesión
-        </button>
-        <Link to="/plot-list">
-          <button className="user-profile-comp-back-button">
-            Volver
-          </button>
-        </Link>
-          </div>
-       
       </div>
     </div>
   );
