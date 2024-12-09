@@ -56,14 +56,22 @@ const UserProfileComp = () => {
     try {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
-
+  
+      // Actualizar el campo editado en el objeto local
+      const updatedData = {
+        ...userData, // Incluye todos los datos existentes
+        [editingField]: fieldValue, // Actualiza solo el campo editado
+      };
+  
+      // Enviar todos los datos al backend
       await axios.put(
         `http://localhost:3000/api/users/${userId}`,
-        { [editingField]: fieldValue },
+        updatedData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      setUserData((prev) => ({ ...prev, [editingField]: fieldValue }));
+  
+      // Actualizar el estado local con los nuevos datos
+      setUserData(updatedData);
       setIsModalOpen(false);
       setEditingField(null);
     } catch (error) {
@@ -71,6 +79,8 @@ const UserProfileComp = () => {
       alert("Error al guardar los cambios.");
     }
   };
+  
+  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

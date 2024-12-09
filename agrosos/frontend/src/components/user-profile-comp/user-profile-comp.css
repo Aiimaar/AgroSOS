@@ -95,7 +95,31 @@ label {
   cursor: default;
 }
 
-.edit-icon {
+.user-profile-comp-edit-field-button {
+  background: none;
+  border: none;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+}
+
+#user-profile-comp-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.user-profile-comp-logout-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
   font-size: 16px;
   color: #777;
   cursor: pointer;
