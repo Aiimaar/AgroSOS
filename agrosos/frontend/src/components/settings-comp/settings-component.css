@@ -38,7 +38,9 @@
 .settings-noti,
 .settings-export,
 .settings-actu,
-.settings-help {
+.settings-help,
+.settings-rules,
+.settings-userc {
   width: 20em;
   border-bottom: 1px solid green;
   margin-bottom: 20px;
@@ -78,7 +80,9 @@
   .settings-noti,
   .settings-export,
   .settings-actu,
-  .settings-help {
+  .settings-help,
+  .settings-rules,
+  .settings-userc {
     width: 25em;
     border-bottom: 1px solid green;
     margin-bottom: 20px;

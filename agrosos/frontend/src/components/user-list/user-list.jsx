@@ -162,7 +162,7 @@ const UserList = () => {
   return (
     <div className="user-list-container">
       {/* Botón de retroceso que navega a la página principal */}
-      <button className="user-list-back-button" onClick={() => navigate("/")}>
+      <button className="user-list-back-button" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="user-list-title">Lista de usuarios</h1>

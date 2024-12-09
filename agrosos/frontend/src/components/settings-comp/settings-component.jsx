@@ -31,6 +31,16 @@ function SettingsComponent() {
         <div className="settings-help">
           <p className="settings-p">Ayuda y soporte</p>
         </div>
+        <div className="settings-rules">
+          <Link to="/rules">
+            <p className="settings-p">Reglas</p>
+          </Link>
+        </div>
+        <div className="settings-userc">
+          <Link to="/admin-user-crud">
+            <p className="settings-p">Lista de usuarios</p>
+          </Link>
+        </div>
       </div>
     </div>
   );

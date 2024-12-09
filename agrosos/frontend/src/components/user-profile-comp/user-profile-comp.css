@@ -95,9 +95,6 @@ label {
   cursor: default;
 }
 
-<<<<<<< HEAD
-.edit-icon {
-=======
 .user-profile-comp-edit-field-button {
   background: none;
   border: none;
@@ -123,7 +120,6 @@ label {
   border: none;
   border-radius: 30px;
   cursor: pointer;
->>>>>>> fixErrorDylan
   font-size: 16px;
   color: #777;
   cursor: pointer;
