@@ -40,6 +40,15 @@ const AddRuleComp = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetchLinkedActuators();
+    }
+  }, [navigate, fetchLinkedActuators]);
+
+  useEffect(() => {
     const fetchCrops = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/crops");
@@ -116,6 +125,13 @@ console.log(typeof cropId);
   };
 
   const handleAddRule = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert("No tienes un token de autenticación válido. Por favor, inicia sesión nuevamente.");
+      navigate("/login");
+      return;
+    }
+  
     if (
       !cropId ||
       !technicianId ||
@@ -126,12 +142,10 @@ console.log(typeof cropId);
       alert("Por favor, completa todos los campos antes de añadir la regla.");
       return;
     }
-
+  
     const cropName = crops.find((crop) => crop.id === Number(cropId))?.name || "Cultivo";
-    console.log(cropName)
     const ruleName = `Regla ${ruleNumber} ${cropName}`;
-
-
+  
     const ruleInfo = {
       AND: [
         {
@@ -163,18 +177,27 @@ console.log(typeof cropId);
         },
       ],
     };
-
+  
     try {
-      await axios.post("http://localhost:3000/api/rules", {
-        name: ruleName,
-        crop_id: cropId,
-        technician_id: technicianId,
-        rule_info: JSON.stringify(ruleInfo),
-      });
-
-      // Increment the rule number for the next rule
+      await axios.post(
+        "http://localhost:3000/api/rules",
+        {
+          name: ruleName,
+          crop_id: cropId,
+          technician_id: technicianId,
+          rule_info: JSON.stringify(ruleInfo),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Agregar el token aquí
+          },
+        }
+      );
+  
+      // Incrementar el número de regla para la próxima regla
       setRuleNumber(ruleNumber + 1);
-
+  
+      // Restablecer estados
       setCropId("");
       setSensorType("");
       setActuatorType("");
@@ -183,7 +206,7 @@ console.log(typeof cropId);
       setHumidityConditions([]);
       setSoilTemperatureConditions([]);
       setSoilHumidityConditions([]);
-
+  
       // Limpiar sessionStorage
       sessionStorage.removeItem("cropId");
       sessionStorage.removeItem("sensorType");
@@ -193,13 +216,14 @@ console.log(typeof cropId);
       sessionStorage.removeItem("humidityConditions");
       sessionStorage.removeItem("soilTemperatureConditions");
       sessionStorage.removeItem("soilHumidityConditions");
-
+  
       alert("Regla añadida con éxito.");
     } catch (error) {
       console.error("Error al añadir la regla:", error);
       alert("Hubo un problema al añadir la regla.");
     }
   };
+  
 
   return (
     <div className="add-rule-form-container">

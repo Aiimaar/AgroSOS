@@ -35,14 +35,22 @@ const CreateCropForm = () => {
     const file = e.target.files[0];
     if (file) {
       setImage(file);
-      setPreview(URL.createObjectURL(file)); // Generar vista previa de la imagen
+      setPreview(URL.createObjectURL(file));
     }
-    e.target.value = ""; // Reiniciar el input para permitir seleccionar nuevamente
+    e.target.value = "";
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm() || loading) return;
+
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      setError("Autenticación requerida. Por favor, inicia sesión.");
+      navigate("/login");
+      return;
+    }
+
     setLoading(true);
 
     const formData = new FormData();
@@ -50,18 +58,14 @@ const CreateCropForm = () => {
     formData.append("info", info);
     formData.append("crop_image", cropImage);
     formData.append("graphic_image", graphicImage);
-    formData.append("harvest_start_month", harvestStartMonth); // Añadir el mes de inicio de cosecha
-    formData.append("harvest_end_month", harvestEndMonth); // Añadir el mes de fin de cosecha
-
-    // Iterar sobre FormData para visualizar los datos antes de enviarlos
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
+    formData.append("harvest_start_month", harvestStartMonth);
+    formData.append("harvest_end_month", harvestEndMonth);
 
     try {
       await axios.post("http://localhost:3000/api/crops", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${authToken}`,
         },
       });
 

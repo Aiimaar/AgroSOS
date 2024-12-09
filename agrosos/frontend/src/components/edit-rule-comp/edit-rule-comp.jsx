@@ -19,7 +19,6 @@ const EditRuleComp = () => {
   });
 
   const [humidityConditions, setHumidityConditions] = useState(() => {
-    console.log("USE ESTATE");
     const storedConditions = sessionStorage.getItem("humidityConditions");
     return storedConditions ? JSON.parse(storedConditions) : [];
   });
@@ -50,13 +49,20 @@ const EditRuleComp = () => {
   };
 
   useEffect(() => {
-    console.log("Humidity conditions from sessionStorage:", humidityConditions);
-  }, []);
-
-  useEffect(() => {
     const fetchCrops = async () => {
+      const authToken = localStorage.getItem("authToken");
+      if (!authToken) {
+        alert("Autenticación requerida. Por favor, inicia sesión.");
+        navigate("/login");
+        return;
+      }
+
       try {
-        const response = await axios.get("http://localhost:3000/api/crops");
+        const response = await axios.get("http://localhost:3000/api/crops", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
         setCrops(response.data);
       } catch (error) {
         console.error("Error fetching crops:", error);
@@ -64,9 +70,21 @@ const EditRuleComp = () => {
     };
 
     const fetchRule = async () => {
+      const authToken = localStorage.getItem("authToken");
+      if (!authToken) {
+        alert("Autenticación requerida. Por favor, inicia sesión.");
+        navigate("/login");
+        return;
+      }
+
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/rules/${ruleId}`
+          `http://localhost:3000/api/rules/${ruleId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
         );
         const ruleData = response.data;
         const parsedRuleInfo = JSON.parse(ruleData.rule_info);
@@ -80,39 +98,26 @@ const EditRuleComp = () => {
         setAvailableActions(
           actuatorActionMap[andConditions.actuators?.[0]?.type] || []
         );
-        setTemperatureConditions(() => {
-          const temp = sessionStorage.getItem("temperatureConditions");
-          return temp
-          ? JSON.parse(sessionStorage.getItem("temperatureConditions"))
-          : andConditions.conditions?.filter(
+        setTemperatureConditions(
+          andConditions.conditions?.filter(
             (cond) => cond.type === "temperature"
           ) || []
-        });
-
-        setHumidityConditions(() => {
-          const hum = sessionStorage.getItem("humidityConditions");
-          return hum
-            ? JSON.parse(sessionStorage.getItem("humidityConditions"))
-            : andConditions.conditions?.filter(
-                (cond) => cond.type === "humidity"
-              ) || [];
-        });
-        setSoilTemperatureConditions(() => {
-          const sTemp = sessionStorage.getItem("soilTemperatureConditions");
-          return sTemp
-          ? JSON.parse(sessionStorage.getItem("soilTemperatureConditions"))
-          :andConditions.conditions?.filter(
+        );
+        setHumidityConditions(
+          andConditions.conditions?.filter(
+            (cond) => cond.type === "humidity"
+          ) || []
+        );
+        setSoilTemperatureConditions(
+          andConditions.conditions?.filter(
             (cond) => cond.type === "soilTemperature"
           ) || []
-        });
-        setSoilHumidityConditions(() => {
-          const sHum = sessionStorage.getItem("soilHumidityConditions");
-          return sHum
-          ? JSON.parse(sessionStorage.getItem("soilHumidityConditions"))
-          : andConditions.conditions?.filter(
+        );
+        setSoilHumidityConditions(
+          andConditions.conditions?.filter(
             (cond) => cond.type === "soilHumidity"
           ) || []
-        });
+        );
       } catch (error) {
         console.error("Error fetching rule:", error);
       }
@@ -120,71 +125,7 @@ const EditRuleComp = () => {
 
     fetchCrops();
     fetchRule();
-  }, [ruleId]);
-
-  // useEffect(() => {
-  //   // Store state in sessionStorage whenever it changes
-  //   sessionStorage.setItem("cropId", cropId);
-  //   sessionStorage.setItem("sensorType", sensorType);
-  //   sessionStorage.setItem("actuatorType", actuatorType);
-  //   sessionStorage.setItem("selectedAction", selectedAction);
-  //   sessionStorage.setItem(
-  //     "temperatureConditions",
-  //     JSON.stringify(temperatureConditions)
-  //   );
-  //   sessionStorage.setItem(
-  //     "humidityConditions",
-  //     JSON.stringify(humidityConditions)
-  //   );
-  //   sessionStorage.setItem(
-  //     "soilTemperatureConditions",
-  //     JSON.stringify(soilTemperatureConditions)
-  //   );
-  //   sessionStorage.setItem(
-  //     "soilHumidityConditions",
-  //     JSON.stringify(soilHumidityConditions)
-  //   );
-  // }, [
-  //   cropId,
-  //   sensorType,
-  //   actuatorType,
-  //   selectedAction,
-  //   temperatureConditions,
-  //   humidityConditions,
-  //   soilTemperatureConditions,
-  //   soilHumidityConditions,
-  // ]);
-
-  const handleActuatorChange = (e) => {
-    const selectedActuator = e.target.value;
-    setActuatorType(selectedActuator);
-    const actions = actuatorActionMap[selectedActuator] || [];
-    setAvailableActions(actions);
-  };
-
-  const handleDeleteCondition = (type, index) => {
-    if (type === "temperature") {
-      const updatedConditions = [...temperatureConditions];
-      updatedConditions.splice(index, 1);
-      setTemperatureConditions(updatedConditions);
-      sessionStorage.setItem("temperatureConditions", JSON.stringify(updatedConditions));
-    } else if (type === "humidity") {
-      const updatedConditions = [...humidityConditions];
-      updatedConditions.splice(index, 1);
-      setHumidityConditions(updatedConditions);
-      sessionStorage.setItem("humidityConditions", JSON.stringify(updatedConditions));
-    } else if (type === "soilHumidity") {
-      const updatedConditions = [...soilHumidityConditions];
-      updatedConditions.splice(index, 1);
-      setSoilHumidityConditions(updatedConditions);
-      sessionStorage.setItem("soilHumidityConditions", JSON.stringify(updatedConditions));
-    } else if (type === "soilTemperature") {
-      const updatedConditions = [...soilTemperatureConditions];
-      updatedConditions.splice(index, 1);
-      setSoilTemperatureConditions(updatedConditions);
-      sessionStorage.setItem("soilTemperatureConditions", JSON.stringify(updatedConditions));
-    }
-  };
+  }, [ruleId, navigate]);
 
   const handleUpdateRule = async () => {
     const updatedRuleInfo = {
@@ -203,13 +144,28 @@ const EditRuleComp = () => {
       ],
     };
 
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      alert("Autenticación requerida. Por favor, inicia sesión.");
+      navigate("/login");
+      return;
+    }
+
     try {
-      await axios.put(`http://localhost:3000/api/rules/${ruleId}`, {
-        name: rule.name,
-        crop_id: cropId,
-        technician_id: rule.technician_id,
-        rule_info: JSON.stringify(updatedRuleInfo),
-      });
+      await axios.put(
+        `http://localhost:3000/api/rules/${ruleId}`,
+        {
+          name: rule.name,
+          crop_id: cropId,
+          technician_id: rule.technician_id,
+          rule_info: JSON.stringify(updatedRuleInfo),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       alert("Regla actualizada con éxito.");
       navigate("/rules");

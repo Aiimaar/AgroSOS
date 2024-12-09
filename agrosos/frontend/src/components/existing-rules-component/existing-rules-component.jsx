@@ -11,23 +11,40 @@ function ExistingRulesComponent() {
   const [ruleToDelete, setRuleToDelete] = useState(null);
   const navigate = useNavigate();
 
+  // Función para obtener el token
+  const getToken = () => {
+    return localStorage.getItem("authToken"); // Cambia si usas sessionStorage u otro método
+  };
+
+  // Configuración de Axios para incluir el token
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000/api",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+
   useEffect(() => {
-    axios.get("http://localhost:3000/api/rules")
+    axiosInstance
+      .get("/rules")
       .then((response) => {
         setRules(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener las reglas:", error);
+        if (error.response && error.response.status === 401) {
+          alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
+          navigate("/login");
+        }
       });
   }, []);
 
   const handleEdit = (ruleId) => {
-    // Encuentra la regla que será editada
     const selectedRule = rules.find((rule) => rule.id === ruleId);
-  
+
     if (selectedRule) {
       const ruleInfo = JSON.parse(selectedRule.rule_info);
-  
+
       sessionStorage.setItem("selectedAction", JSON.stringify(ruleInfo.AND?.[0]?.actions || []));
       sessionStorage.setItem("sensorType", JSON.stringify(ruleInfo.AND?.[0]?.sensors?.[0]?.type || null));
       sessionStorage.setItem("soilHumidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilHumidity") || []));
@@ -36,8 +53,7 @@ function ExistingRulesComponent() {
       sessionStorage.setItem("humidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "humidity") || []));
       sessionStorage.setItem("cropId", JSON.stringify(selectedRule.crop || null));
     }
-  
-    // Navegar a la página de edición
+
     navigate(`/edit-rule/${ruleId}`);
   };
 
@@ -54,7 +70,8 @@ function ExistingRulesComponent() {
   const handleDelete = () => {
     if (!ruleToDelete) return;
 
-    axios.delete(`http://localhost:3000/api/rules/${ruleToDelete}`)
+    axiosInstance
+      .delete(`/rules/${ruleToDelete}`)
       .then((response) => {
         console.log("Regla eliminada con éxito:", response.data);
         setRules((prevRules) => prevRules.filter((rule) => rule.id !== ruleToDelete));
@@ -62,7 +79,12 @@ function ExistingRulesComponent() {
       })
       .catch((error) => {
         console.error("Error al eliminar la regla:", error);
-        alert("Hubo un problema al eliminar la regla. Intenta nuevamente.");
+        if (error.response && error.response.status === 401) {
+          alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
+          navigate("/login");
+        } else {
+          alert("Hubo un problema al eliminar la regla. Intenta nuevamente.");
+        }
       });
   };
 
