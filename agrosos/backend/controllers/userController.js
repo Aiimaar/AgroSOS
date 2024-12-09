@@ -43,41 +43,36 @@ export const updateUser = async (req, res) => {
     const userId = req.params.id;
     const { name, email } = req.body;
 
-    // Si hay una nueva imagen cargada
-    const profile_image = req.file ? req.file.filename : null;
+    // Obtener el usuario existente para conservar valores actuales
+    const existingUser = await User.findByPk(userId);
 
-    // Actualizar la información del usuario en la base de datos
-    const updatedUser = await User.update(
-      { 
-        name, 
-        email, 
-        profile_image: profile_image  // Actualizar el campo de la imagen
-      },
-      { 
-        where: { id: userId },  // Condición para encontrar al usuario
-        returning: true,  // Esto hará que Sequelize devuelva el usuario actualizado
-        plain: true  // Devuelve un solo registro
-      }
-    );
-        
-    if (!updatedUser[1]) {
+    if (!existingUser) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    const user = await User.findByPk(userId);  // El usuario actualizado
+    // Si hay una nueva imagen cargada, usa el nuevo valor, de lo contrario conserva el actual
+    const profile_image = req.file ? req.file.filename : existingUser.profile_image;
 
-    // Enviar la URL completa de la imagen del perfil
+    // Actualizar solo los campos enviados o mantener los valores existentes
+    const updatedUser = await existingUser.update({
+      name: name || existingUser.name,
+      email: email || existingUser.email,
+      profile_image: profile_image,
+    });
+
+    // Enviar la respuesta con la URL completa de la imagen
     res.status(200).json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      profile_image: user.profile_image ? `${imageBaseUrl}${user.profile_image}` : null,  // Devolver la imagen con la URL completa
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      profile_image: updatedUser.profile_image ? `${imageBaseUrl}${updatedUser.profile_image}` : null,
     });
   } catch (error) {
     console.error("Error al actualizar el usuario:", error);
     res.status(500).json({ message: "Error al actualizar el usuario" });
   }
 };
+
 
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
