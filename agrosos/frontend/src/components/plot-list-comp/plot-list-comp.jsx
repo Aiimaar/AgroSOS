@@ -7,7 +7,7 @@ import fondo2 from "../../components/plot-list-comp/fondo2.jpg";
 import fondo3 from "../../components/plot-list-comp/fondo3.png";
 import fondo4 from "../../components/plot-list-comp/fondo4.jpg";
 import fondo5 from "../../components/plot-list-comp/fondo5.jpg";
-// Importación de FontAwesome
+import AddPlotComponent from "../add-plot-component/add-plot-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 
@@ -186,6 +186,10 @@ function PlotListComp() {
 
   return (
     <>
+    {plots.length === 0 ? (
+      <AddPlotComponent />
+    ) : (
+      <>
       {showDeleteModal && (
         <div className="modal-overlay">
           <div className="plot-list-delete-modal">
@@ -312,6 +316,8 @@ function PlotListComp() {
           ))}
         </div>
       </div>
+      </>
+    )}
     </>
   );
 }
