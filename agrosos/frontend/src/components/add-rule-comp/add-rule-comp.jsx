@@ -30,7 +30,7 @@ const AddRuleComp = () => {
   );
   const [ruleNumber, setRuleNumber] = useState(1); // State for rule number
   const navigate = useNavigate();
-  const technicianId = localStorage.getItem("userId");
+  const technicianId = sessionStorage.getItem("userId");
 
   const actuatorActionMap = {
     Riego: ["Activar Riego", "Desactivar Riego"],
@@ -38,15 +38,6 @@ const AddRuleComp = () => {
     "Cobertura de cultivos": ["Cubrir cultivos con lona semi-transparente", "Cubrir cultivos con lona opaca", "Destapar cultivos"],
     "Apertura de ventanas": ["Abrir ventanas", "Cerrar ventanas"],
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      navigate("/login");
-    } else {
-      fetchLinkedActuators();
-    }
-  }, [navigate, fetchLinkedActuators]);
 
   useEffect(() => {
     const fetchCrops = async () => {
@@ -138,7 +129,7 @@ console.log(typeof cropId);
 
     const cropName = crops.find((crop) => crop.id === Number(cropId))?.name || "Cultivo";
     console.log(cropName)
-    const ruleName = Regla ${ruleNumber} ${cropName};
+    const ruleName = `Regla ${ruleNumber} ${cropName}`;
 
 
     const ruleInfo = {
