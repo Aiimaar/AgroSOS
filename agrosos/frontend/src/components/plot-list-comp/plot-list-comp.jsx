@@ -253,7 +253,7 @@ function PlotListComp() {
               {/* Mostrar la imagen si está disponible */}
               {plot.image ? (
                 <img
-                  src={`http://localhost:3000/${plot.image}`}
+                  src={`http://localhost:3000/uploads/${plot.image}`}
                   alt={`Imagen del terreno ${plot.name}`}
                   className="plot-image"
                 />
