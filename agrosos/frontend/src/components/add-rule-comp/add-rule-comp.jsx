@@ -31,6 +31,7 @@ const AddRuleComp = () => {
   const [ruleNumber, setRuleNumber] = useState(1); // State for rule number
   const navigate = useNavigate();
   const technicianId = localStorage.getItem("userId");
+  const authToken = localStorage.getItem("authToken");
 
   const actuatorActionMap = {
     Riego: ["Activar Riego", "Desactivar Riego"],
@@ -40,31 +41,29 @@ const AddRuleComp = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      navigate("/login");
-    } else {
-      fetchLinkedActuators();
-    }
-  }, [navigate, fetchLinkedActuators]);
-
-  useEffect(() => {
     const fetchCrops = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/crops");
+        const response = await axios.get("http://localhost:3000/api/crops", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
         setCrops(response.data);
       } catch (error) {
         console.error("Error fetching crops:", error);
-        alert("No se pudieron cargar los cultivos.");
+        if (error.response && error.response.status === 401) {
+          alert("No autorizado. Por favor, inicia sesión.");
+          navigate("/login");
+        } else {
+          alert("No se pudieron cargar los cultivos.");
+        }
       }
     };
-    console.log(crops);
-console.log(typeof cropId);
+
     fetchCrops();
-  }, []);
+  }, [authToken, navigate]);
 
   useEffect(() => {
-    // Store state in sessionStorage whenever it changes
     sessionStorage.setItem("cropId", cropId);
     sessionStorage.setItem("sensorType", sensorType);
     sessionStorage.setItem("actuatorType", actuatorType);
@@ -138,7 +137,7 @@ console.log(typeof cropId);
 
     const cropName = crops.find((crop) => crop.id === Number(cropId))?.name || "Cultivo";
     console.log(cropName)
-    const ruleName = Regla ${ruleNumber} ${cropName};
+    const ruleName = `Regla ${ruleNumber} ${cropName}`;
 
 
     const ruleInfo = {
@@ -174,12 +173,20 @@ console.log(typeof cropId);
     };
 
     try {
-      await axios.post("http://localhost:3000/api/rules", {
-        name: ruleName,
-        crop_id: cropId,
-        technician_id: technicianId,
-        rule_info: JSON.stringify(ruleInfo),
-      });
+      await axios.post(
+        "http://localhost:3000/api/rules",
+        {
+          name: ruleName,
+          crop_id: cropId,
+          technician_id: technicianId,
+          rule_info: JSON.stringify(ruleInfo),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       // Increment the rule number for the next rule
       setRuleNumber(ruleNumber + 1);

@@ -45,7 +45,7 @@ function AdvicesComponent() {
           <div
             className="advice-card"
             onClick={() =>
-              handleCardClick("/sustainabilityt")
+              handleCardClick("/sustainability")
             }
           >
             Sostenibilidad y Medio Ambiente

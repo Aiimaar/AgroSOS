@@ -49,6 +49,8 @@ const EditRuleComp = () => {
     "Apertura de ventanas": ["Abrir ventanas", "Cerrar ventanas"],
   };
 
+  const token = localStorage.getItem("authToken");
+
   useEffect(() => {
     console.log("Humidity conditions from sessionStorage:", humidityConditions);
   }, []);
@@ -56,17 +58,23 @@ const EditRuleComp = () => {
   useEffect(() => {
     const fetchCrops = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/crops");
+        const response = await axios.get("http://localhost:3000/api/crops", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setCrops(response.data);
       } catch (error) {
         console.error("Error fetching crops:", error);
       }
     };
 
+
     const fetchRule = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/rules/${ruleId}"
+          `http://localhost:3000/api/rules/${ruleId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         const ruleData = response.data;
         const parsedRuleInfo = JSON.parse(ruleData.rule_info);
@@ -83,16 +91,16 @@ const EditRuleComp = () => {
         setTemperatureConditions(() => {
           const temp = sessionStorage.getItem("temperatureConditions");
           return temp
-          ? JSON.parse(sessionStorage.getItem("temperatureConditions"))
-          : andConditions.conditions?.filter(
-            (cond) => cond.type === "temperature"
-          ) || []
+            ? JSON.parse(temp)
+            : andConditions.conditions?.filter(
+                (cond) => cond.type === "temperature"
+              ) || [];
         });
 
         setHumidityConditions(() => {
           const hum = sessionStorage.getItem("humidityConditions");
           return hum
-            ? JSON.parse(sessionStorage.getItem("humidityConditions"))
+            ? JSON.parse(hum)
             : andConditions.conditions?.filter(
                 (cond) => cond.type === "humidity"
               ) || [];
@@ -100,18 +108,18 @@ const EditRuleComp = () => {
         setSoilTemperatureConditions(() => {
           const sTemp = sessionStorage.getItem("soilTemperatureConditions");
           return sTemp
-          ? JSON.parse(sessionStorage.getItem("soilTemperatureConditions"))
-          :andConditions.conditions?.filter(
-            (cond) => cond.type === "soilTemperature"
-          ) || []
+            ? JSON.parse(sTemp)
+            : andConditions.conditions?.filter(
+                (cond) => cond.type === "soilTemperature"
+              ) || [];
         });
         setSoilHumidityConditions(() => {
           const sHum = sessionStorage.getItem("soilHumidityConditions");
           return sHum
-          ? JSON.parse(sessionStorage.getItem("soilHumidityConditions"))
-          : andConditions.conditions?.filter(
-            (cond) => cond.type === "soilHumidity"
-          ) || []
+            ? JSON.parse(sHum)
+            : andConditions.conditions?.filter(
+                (cond) => cond.type === "soilHumidity"
+              ) || [];
         });
       } catch (error) {
         console.error("Error fetching rule:", error);
@@ -120,7 +128,7 @@ const EditRuleComp = () => {
 
     fetchCrops();
     fetchRule();
-  }, [ruleId]);
+  }, [ruleId, token]);
 
   const handleActuatorChange = (e) => {
     const selectedActuator = e.target.value;
@@ -171,12 +179,18 @@ const EditRuleComp = () => {
     };
 
     try {
-      await axios.put("http://localhost:3000/api/rules/${ruleId}", {
-        name: rule.name,
-        crop_id: cropId,
-        technician_id: rule.technician_id,
-        rule_info: JSON.stringify(updatedRuleInfo),
-      });
+      await axios.put(
+        `http://localhost:3000/api/rules/${ruleId}`,
+        {
+          name: rule.name,
+          crop_id: cropId,
+          technician_id: rule.technician_id,
+          rule_info: JSON.stringify(updatedRuleInfo),
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       alert("Regla actualizada con éxito.");
       navigate("/rules");

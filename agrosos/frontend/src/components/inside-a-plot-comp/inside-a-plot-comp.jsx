@@ -36,44 +36,51 @@ const InsideAPlotComp = ({ plotId }) => {
     { name: "Sunday", label: "Domingo" },
   ];
 
-  useEffect(() => {
-    const storedPlotId = localStorage.getItem("selectedPlotId");
-    if (storedPlotId) {
-      setLocalPlotId(storedPlotId);
-      fetchData(storedPlotId);
-    } else {
-      setError("No se encontró un terreno seleccionado.");
-    }
+        useEffect(() => {
+          const storedPlotId = localStorage.getItem("selectedPlotId");
+          const token = localStorage.getItem("authToken");
+          if (!token) {
+            alert("No tienes un token válido. Inicia sesión.");
+            navigate("/login");
+            return;
+          }
+          if (storedPlotId) {
+            setLocalPlotId(storedPlotId);
+            fetchData(storedPlotId, token);
+          } else {
+            setError("No se encontró un terreno seleccionado.");
+          }
+        
+          const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+          if (savedTasks) {
+            setTasks(savedTasks);
+          }
+        
+          document.addEventListener("click", handleClickOutside);
+          return () => {
+            document.removeEventListener("click", handleClickOutside);
+          };
+        }, []);
 
-    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-    if (savedTasks) {
-      setTasks(savedTasks);
-    }
-
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
-  const fetchData = async (plotId) => {
-    const token = localStorage.getItem("authToken");
-
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
+  const fetchData = async (plotId, token) => {
     try {
       console.log("Solicitando datos para el plotId:", plotId);
+
       const cropResponse = await axios.get(
-        `http://localhost:3000/api/crops/plot/${plotId}`
+        `http://localhost:3000/api/crops/plot/${plotId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       setCrop(cropResponse.data);
 
       const sensorResponse = await axios.get(
-        `http://localhost:3000/api/sensor_value/plot/${plotId}`
+        `http://localhost:3000/api/sensor_value/plot/${plotId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
+
       console.log("Respuesta de los sensores:", sensorResponse.data);
 
       if (Array.isArray(sensorResponse.data)) {
@@ -87,9 +94,14 @@ const InsideAPlotComp = ({ plotId }) => {
       }
     } catch (error) {
       console.error("Error al obtener datos:", error);
-      setError(
-        "Error al cargar los datos. Por favor, inténtalo de nuevo más tarde."
-      );
+      if (error.response && error.response.status === 401) {
+        alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
+        navigate("/login");
+      } else {
+        setError(
+          "Error al cargar los datos. Por favor, inténtalo de nuevo más tarde."
+        );
+      }
     }
   };
 
@@ -153,16 +165,10 @@ const InsideAPlotComp = ({ plotId }) => {
 
         console.log("Datos enviados al backend:", irrigationSchedule);
 
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-          alert("No tienes un token válido. Inicia sesión.");
-          return;
-        }
-
         const response = await axios.post(
           "http://localhost:3000/api/irrigation_schedule",
           irrigationSchedule,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
         );
 
         console.log("Programación de riego guardada:", response.data);
