@@ -1,5 +1,5 @@
 # <img src="agrosos/Docs/Screenshots/logo2.png" alt="AgroSOS Logo" width="40"> AgroSOS
-
+<a name="readme-top"></a>
 <div align="center">
   <a href="https://github.com/Aiimaar/AgroSOS">
     <img src="agrosos/Docs/Screenshots/logo.png" alt="AgroSOS Logo" width="200">
@@ -13,8 +13,6 @@
     <a href="https://github.com/Aiimaar/AgroSOS"><strong>Explore the project »</strong></a>
   </p>
 </div>
-
-<a name="readme-top"></a>
 
 ---
 
