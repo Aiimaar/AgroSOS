@@ -95,9 +95,9 @@ Before running the application, ensure you have the MySQL database set up correc
 AgroSOS ensures consistency between the database schema and its relationships through:
 
   <div style="display: flex; gap: 10px;">
-    <img src="agrosos/Docs/Screenshots/class-diagram.png" alt="Class Diagram" width="500">
-    <img src="agrosos/Docs/Screenshots/entidad-relacion.png" alt="Entity-Relationship Diagram" width="500">
-    <img src="agrosos/Docs/Screenshots/useCase-diagram.png" alt="Use Case Diagram" width="500">
+    <img src="agrosos/Docs/Screenshots/class-diagram.png" alt="Class Diagram" width="400">
+    <img src="agrosos/Docs/Screenshots/entidad-relacion.png" alt="Entity-Relationship Diagram" width="400">
+    <img src="agrosos/Docs/Screenshots/useCase-diagram.png" alt="Use Case Diagram" width="300">
   </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
