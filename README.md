@@ -3,20 +3,12 @@
 <!-- PROJECT LOGO -->
 <div align="center">
   <a href="https://github.com/Aiimaar/AgroSOS">
-    ![logo](https://github.com/user-attachments/assets/346dd991-e7f8-463e-9199-07c1f1412e78)
+    Imagen logo
   </a>
   <h3 align="center">AgroSOS</h3>
   <p align="center">
     A project developed in collaboration with the Ministry of Education, companies, and educational centers.
     <br />
-    <a href="https://github.com/your-repo"><strong>Explore Documentation »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/your-repo">View Demo</a>
-    ·
-    <a href="https://github.com/your-repo/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/your-repo/issues">Request Feature</a>
   </p>
 </div>
 
