@@ -71,7 +71,6 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
 4. Run the development servers:
     ```bash
    cd backend && node express.js
-    ```bash
    cd frontend && npm run dev
 
 
