@@ -68,9 +68,11 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
    cd backend && npm install
     ```bash
    cd ../frontend && npm install
-4. Run the development servers:
+4. Run the development server:
     ```bash
    cd backend && node express.js
+5. Run the frontend
+```bash
    cd frontend && npm run dev
 
 
