@@ -3,7 +3,7 @@
 <div align="center">
   <a href="https://github.com/Aiimaar/AgroSOS">
     <div style="text-align: center; height: fit-content; margin: 20px 0">
-    <img src="/Docs/Screenshots/logo.png" alt="use case diagram" width="90%">
+    <img src="./Docs/Screenshots/logo.png" alt="logo" width="90%">
 </div>
   </a>
   <h2 align="center">AgroSOS</h2>
