@@ -1,14 +1,18 @@
-import { Link } from "react-router-dom";
 import "./accesibility-component.css";
-import arrow from "./ArrowLeftOutlined.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function AccesibilityComponent() {
+
+    const navigate = useNavigate();
+
     return (
         <div id="container-accesibility">
             <div className="arrow-container">
-                <Link to="/plot-list">
-                    <img src={arrow} alt="arrow" className="accesibility-arrow" />
-                </Link>
+                <button className="accesibility-arrow" onClick={() => navigate(-1)}>
+                    <FontAwesomeIcon icon={faArrowLeft} />
+                </button>
             </div>
             <h1 className="accesibility-text">Accesibilidad</h1>
             <div className="accesibility-size">

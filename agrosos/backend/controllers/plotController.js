@@ -46,6 +46,8 @@ export const updatePlot = async (req, res) => {
   const { name, size, temperature, humidity, color, default_image, farmer_id } = req.body; // Capturamos 'default_image'
   const image = req.file ? req.file.filename : undefined;
 
+  console.log("Datos recibidos para actualizar:", { id, crop_id, name, size, temperature, humidity, color, default_image, image });
+
   try {
     const updateData = {
       name,
@@ -71,9 +73,11 @@ export const updatePlot = async (req, res) => {
       farmer_id,
     }); // Devuelve 'default_image' actualizado
   } catch (error) {
+    console.error("Error actualizando el plot:", error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 export const deletePlot = async (req, res) => {
   const { id } = req.params;

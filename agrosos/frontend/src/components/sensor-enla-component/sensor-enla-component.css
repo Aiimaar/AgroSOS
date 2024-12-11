@@ -38,7 +38,8 @@
   justify-content: center;
   margin: 0 auto;
   align-items: center;
-  width: 90vw;
+  width: 100%;
+  max-width: 90vw;
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -63,6 +64,7 @@
 }
 
 .remove-sensor-btn {
+  margin-left: 2em;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: bold;
@@ -85,12 +87,13 @@
   margin-top: 20px;
 }
 
-@media only screen and (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .sensor-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50vw;
+    width: 100%;
+    max-width: 50vw;
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;
