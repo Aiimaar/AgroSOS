@@ -95,3 +95,9 @@ Before running the application, ensure you have the MySQL database set up correc
 
    ```sql
    CREATE DATABASE agrosos;
+   ```
+2. Query with the basic structure of the database.
+
+```sql
+   Query con la base de datos
+   ```
