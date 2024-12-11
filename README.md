@@ -157,17 +157,30 @@ API endpoints are documented and tested using Postman. Find the complete collect
 
 #### Backend
 The backend follows a modular structure:
-- `routes/`: Contains route definitions for API endpoints.
 - `controllers/`: Handles business logic.
+- `middleware/`: Contains middleware functions for request processing.
 - `models/`: Defines database models using Sequelize.
+- `routes/`: Contains route definitions for API endpoints.
+- `uploads/`: Directory for handling file uploads.
+- `db.js`: Database connection configuration.
+- `express.js`: Main server setup and configuration.
 
 #### Frontend
-The frontend maintains separation of concerns:
-- `services/`: Houses API interaction logic in isolated modules.
+The frontend is organized to separate concerns effectively:
+- `public/`: Contains static assets
+- `src/`:
+  - `assets/`: Images, styles, and other assets.
+  - `components/`: Reusable React components.
+  - `context/`: React context for managing global state.
+  - `pages/`: Defines the main pages for the application.
+  - `App.jsx`: Main application component.
+  - `main.jsx`: Entry point for the React app.
+  - `index.css`: Global styles.
 
-The chosen structure simplifies maintenance and scaling. Compared to a flat structure, this approach enhances readability and minimizes coupling between components.
+This structure ensures clarity, maintainability, and scalability for both backend and frontend development.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 ---
