@@ -144,7 +144,10 @@ Make sure to have the following programs installed before getting started:
 
 Here are some screenshots of the application:
 
-![Screenshot](path/to/your/screenshot.png)
+ <img src="agrosos/Docs/Screenshots/cap1.png" alt="AgroSOS Logo" width="200">
+ <img src="agrosos/Docs/Screenshots/cap2.png" alt="AgroSOS Logo" width="200">
+ <img src="agrosos/Docs/Screenshots/cap4.png" alt="AgroSOS Logo" width="200">
+ <img src="agrosos/Docs/Screenshots/cap3.png" alt="AgroSOS Logo" width="200">
 
 ---
 ### 🖥️ RESTful API and CRUD Operations
