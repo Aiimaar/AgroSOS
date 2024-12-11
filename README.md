@@ -153,3 +153,93 @@ Make sure to have the following programs installed before getting started:
 ## 📝 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+---
+
+---
+
+### 🔐 Authentication and Roles
+
+AgroSOS implements both basic and token-based authentication to ensure secure access. The roles used in the system are as follows:
+
+- **Admin**: Manages users and configurations.
+- **Farmers**: Registers and manages fields, sensors, and crops, while accessing their specific data.
+- **Technicians**: Configures automated rules based on sensor data.
+
+This structure emphasizes the distinction between authentication (verifying identity) and authorization (assigning permissions). For example, access to certain frontend routes is restricted based on authentication state, verified by checking tokens stored locally.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+### 📂 Directory Structure
+
+#### Backend
+The backend follows a modular structure:
+- `routes/`: Contains route definitions for API endpoints.
+- `controllers/`: Handles business logic.
+- `models/`: Defines database models using Sequelize.
+
+#### Frontend
+The frontend maintains separation of concerns:
+- `services/`: Houses API interaction logic in isolated modules.
+
+The chosen structure simplifies maintenance and scaling. Compared to a flat structure, this approach enhances readability and minimizes coupling between components.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+### 🖥️ RESTful API and CRUD Operations
+
+The project adheres to RESTful principles for communication between frontend and backend. Examples of implemented CRUD operations include:
+
+- **Fields API**:  
+  - `GET /api/fields`: Retrieves all fields.  
+  - `POST /api/fields`: Creates a new field.  
+  - `PUT /api/fields/:id`: Updates a field by ID.  
+  - `DELETE /api/fields/:id`: Deletes a field by ID.
+
+API endpoints are documented and tested using Postman. Find the complete collection [here](#postman-link).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+### 🌐 System Design Comparison
+
+The project adopts the **Enfoque 1** architecture, utilizing separate frontend and backend technologies. In contrast, **Enfoque 2** integrates server-side rendering tools like Laravel Blade. The decision to use Enfoque 1 enables:
+
+- Enhanced scalability.
+- Clearer separation of concerns.
+
+Technologies:
+- Backend: Node.js
+- Frontend: ReactJS
+
+An example comparison:
+
+| Feature                | Enfoque 1 (AgroSOS)           | Enfoque 2                |
+|------------------------|-------------------------------|--------------------------|
+| Communication          | RESTful APIs                 | Server-side rendering    |
+| Technologies           | Node.js, ReactJS             | Laravel Blade            |
+| Flexibility            | High                         | Moderate                 |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+### 📑 Data Access and Relationships
+
+AgroSOS ensures consistency between the database schema and its relationships through:
+
+1. A diagram of entity relationships.
+2. CRUD operations for more than two related entities.
+3. Migration scripts and seeders for consistent database setup.
+
+Data filtering is performed on the backend to optimize performance and ensure data integrity.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
