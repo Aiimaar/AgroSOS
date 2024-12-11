@@ -36,31 +36,31 @@ const InsideAPlotComp = ({ plotId }) => {
     { name: "Sunday", label: "Domingo" },
   ];
 
-        useEffect(() => {
-          const storedPlotId = localStorage.getItem("selectedPlotId");
-          const token = localStorage.getItem("authToken");
-          if (!token) {
-            alert("No tienes un token válido. Inicia sesión.");
-            navigate("/login");
-            return;
-          }
-          if (storedPlotId) {
-            setLocalPlotId(storedPlotId);
-            fetchData(storedPlotId, token);
-          } else {
-            setError("No se encontró un terreno seleccionado.");
-          }
-        
-          const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-          if (savedTasks) {
-            setTasks(savedTasks);
-          }
-        
-          document.addEventListener("click", handleClickOutside);
-          return () => {
-            document.removeEventListener("click", handleClickOutside);
-          };
-        }, []);
+  useEffect(() => {
+    const storedPlotId = localStorage.getItem("selectedPlotId");
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert("No tienes un token válido. Inicia sesión.");
+      navigate("/login");
+      return;
+    }
+    if (storedPlotId) {
+      setLocalPlotId(storedPlotId);
+      fetchData(storedPlotId, token);
+    } else {
+      setError("No se encontró un terreno seleccionado.");
+    }
+
+    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (savedTasks) {
+      setTasks(savedTasks);
+    }
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const fetchData = async (plotId, token) => {
     try {
@@ -168,7 +168,11 @@ const InsideAPlotComp = ({ plotId }) => {
         const response = await axios.post(
           "http://localhost:3000/api/irrigation_schedule",
           irrigationSchedule,
-          { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          }
         );
 
         console.log("Programación de riego guardada:", response.data);
@@ -194,12 +198,10 @@ const InsideAPlotComp = ({ plotId }) => {
 
   return (
     <div className="plot-details">
-      {/* Sección de cultivo */}
+      {error && <p className="inside-a-plot-error-message">{error}</p>}
       <section className="crops-section">
         <h3>Cultivo en el terreno</h3>
-        {error ? (
-          <p className="inside-a-plot-error-message">{error}</p>
-        ) : crop ? (
+        {crop ? (
           <div className="crop-details">
             <img
               src={`http://localhost:3000/uploads/${crop.crop_image}`}
@@ -221,8 +223,6 @@ const InsideAPlotComp = ({ plotId }) => {
               <EvolutionGraph plotId={plotId} />
             </section>
           </div>
-
-
 
           <div className="inside-a-plot-comp-left">
             <section className="tasks-section">
@@ -294,8 +294,9 @@ const InsideAPlotComp = ({ plotId }) => {
                       <FontAwesomeIcon
                         icon={faCalendarDays}
                         size="2xl"
-                        className={`irrigation-frecuency-calendar-icon ${selectedDays.includes(day.name) ? "selected" : ""
-                          }`}
+                        className={`irrigation-frecuency-calendar-icon ${
+                          selectedDays.includes(day.name) ? "selected" : ""
+                        }`}
                         onClick={() => handleClick(day.name)}
                       />
                       <span className="irrigation-frecuency-day-label">
@@ -308,7 +309,11 @@ const InsideAPlotComp = ({ plotId }) => {
                 {/* Selección de hora */}
                 <div className="select-time-container">
                   <button
-                    className="select-time-main-button"
+                    className={
+                      selectedTime
+                        ? "select-time-main-button-selected"
+                        : "select-time-main-button-unselected"
+                    }
                     onClick={() => setIsClockPopupVisible(true)}
                   >
                     {selectedTime
@@ -351,7 +356,9 @@ const InsideAPlotComp = ({ plotId }) => {
                       >
                         Confirmar hora
                       </button>
-                      <button class="irrigation-frecuency-pro">Programar riego</button>
+                      <button class="irrigation-frecuency-pro">
+                        Programar riego
+                      </button>
                     </div>
                   </div>
                 )}
@@ -382,7 +389,6 @@ const InsideAPlotComp = ({ plotId }) => {
           </div>
         </div>
       </section>
-
     </div>
   );
 };

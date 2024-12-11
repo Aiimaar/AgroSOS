@@ -41,19 +41,28 @@ export const createPlot = async (req, res) => {
 
 export const updatePlot = async (req, res) => {
   const { id } = req.params;
-  const { name, size, temperature, humidity, color, default_image } = req.body; // Capturamos 'default_image'
+  const { crop_id, name, size, temperature, humidity, color, default_image } = req.body; // Capturamos 'crop_id'
   const image = req.file ? req.file.filename : undefined;
 
+  console.log("Datos recibidos para actualizar:", { id, crop_id, name, size, temperature, humidity, color, default_image, image });
+
   try {
-    const updateData = { name, size, temperature, humidity, color, default_image }; // Incluimos 'default_image'
+    const updateData = { crop_id, name, size, temperature, humidity, color, default_image }; // Incluimos 'crop_id'
     if (image) updateData.image = image;
 
-    await Plot.update(updateData, { where: { id } });
-    res.json({ id, name, size, image, temperature, humidity, color, default_image }); // Devuelve 'default_image' actualizado
+    const [updated] = await Plot.update(updateData, { where: { id } });
+    if (updated) {
+      const updatedPlot = await Plot.findByPk(id);
+      res.json(updatedPlot);
+    } else {
+      res.status(404).json({ error: "Plot not found" });
+    }
   } catch (error) {
+    console.error("Error actualizando el plot:", error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 export const deletePlot = async (req, res) => {
   const { id } = req.params;

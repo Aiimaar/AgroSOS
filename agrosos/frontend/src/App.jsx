@@ -6,7 +6,6 @@ import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import CreatePlot from "./pages/create-plot/CreatePlot";
-import CreatePlots from "./pages/create-plots/CreatePlots";
 import TermsConditionsPage from "./pages/terms-conditions-page/TermsConditionPage";
 import Sensors from "./pages/sensors/Sensors";
 import AddSensor from "./pages/add-sensor/AddSensor";
@@ -47,7 +46,6 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/plot-list" element={<PlotList />} />
             <Route path="/create-plot" element={<CreatePlot />} />
-            <Route path="/create-plots" element={<CreatePlots />} />
             <Route path="/terms-conditions" element={<TermsConditionsPage />} />
             <Route path="/sensors" element={<Sensors />} />
             <Route path="/add-sensor" element={<AddSensor />} />

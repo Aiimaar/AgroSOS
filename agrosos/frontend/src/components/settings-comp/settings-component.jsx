@@ -1,15 +1,19 @@
 import "./settings-component.css";
-import arrow from "./ArrowLeftOutlined.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function SettingsComponent() {
+
+  const navigate = useNavigate();
+
   return (
     <div id="container-settings">
-      <div className="settings-arrow-container">
-        <Link to="/plot-list">
-          <img src={arrow} alt="arrow" className="settings-arrow" />
-        </Link>
-      </div>
+        <button className="settings-arrow-container" onClick={() => navigate(-1)}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        
       <h1 className="settings-text">Ajustes</h1>
       <div className="settings-container-elements">
         <Link to="/notifications">

@@ -4,19 +4,12 @@ body {
   box-sizing: border-box;
 }
 
-.main-container {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 .add-plot-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: auto;
+  margin: 18em auto;
   height: 55vh;
 }
 
@@ -27,5 +20,13 @@ body {
 }
 
 .plusCircleOutlined {
-  width: 30vw;
+  width: 100%;
+  max-width: 30vw;
+}
+
+#add-plot-cultive-container{
+  
+}
+
+.add-plot-cultve-img{
 }

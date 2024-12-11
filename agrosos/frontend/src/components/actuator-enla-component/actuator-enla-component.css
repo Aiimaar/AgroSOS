@@ -84,9 +84,9 @@
   margin-top: 20px;
 }
 
-@media only screen and (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   #actuator-enla-container {
-    width: 60vw;
+    width: 50vw;
   }
 
   .actuator-enla-button-arrow {
