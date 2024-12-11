@@ -80,7 +80,7 @@ const CropsListComponent = () => {
                 alt={crop.name}
                 className="crop-list-comp-image"
               />
-              <button className="info-icon">i</button>
+              <button className="info-icon" onClick={() => navigate("/crops-details")}>i</button>
             </div>
             <div className="crop-text">
               <p className="harvest-title">Tiempo de cosecha</p>

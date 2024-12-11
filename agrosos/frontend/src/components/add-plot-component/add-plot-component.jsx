@@ -9,9 +9,6 @@ function AddPlotComponent() {
         <div className="add-plot-container">
             <p className="p-container">Crear un terreno</p>
             <Link to="/create-plot" ><img src={plusCircleOutlined} alt="plusCircleOutlined" className="plusCircleOutlined"/> </Link>
-            <footer id="add-plot-cultive-container">
-                <img src={cultive} alt="cultive" className="add-plot-cultve-img"/>
-            </footer>
         </div>
     );
 }

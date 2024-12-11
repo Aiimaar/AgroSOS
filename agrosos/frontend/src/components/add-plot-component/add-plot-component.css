@@ -9,8 +9,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 18em auto;
-  height: 55vh;
+  margin: 14em auto;
+  height: 45vh;
 }
 
 .p-container {
@@ -24,9 +24,5 @@ body {
   max-width: 30vw;
 }
 
-#add-plot-cultive-container{
-  
-}
-
-.add-plot-cultve-img{
+@media (min-width: 768px) and (max-width: 1024px) {
 }
