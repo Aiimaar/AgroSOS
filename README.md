@@ -249,3 +249,33 @@ Thank you for considering contributing to AgroSOS! We appreciate your interest a
 We review all contributions and may suggest changes or improvements before merging. Thank you for helping to make AgroSOS better! 🙌
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## 👥 Team
+
+Meet the talented individuals behind **AgroSOS**:
+
+### 👨‍💻 **Víctor**
+   - **Role:** Full Stack Developer
+   - **Description:** Víctor is a dedicated Full Stack Developer with a focus on building responsive and visually appealing user interfaces. She is highly skilled in React and other modern JavaScript technologies. Aimar is passionate about creating intuitive solutions and ensuring the best possible user experience for AgroSOS users. Her work bridges the gap between design and functionality.
+   - 🌍 **Location:** Las Palmas de Gran Canaria, Spain
+   - 🐙 **GitHub:** [Víctor GitHub](https://github.com/Vitolofs7)
+
+---
+
+### 👩‍💻 **Aimar**
+   - **Role:** Full Stack Developer
+   - **Description:** Aimar is a versatile Full Stack Developer who is passionate about both frontend and backend technologies. With extensive knowledge of JavaScript, Node.js, and databases, he plays a key role in ensuring seamless integration between the user interface and backend systems for AgroSOS. He is also passionate about improving performance and optimizing user experience.
+   - 🌍 **Location:** Las Palmas de Gran Canaria, Spain
+   - 🐙 **GitHub:** [Aimar GitHub](https://github.com/Aiimaar)
+
+---
+
+### 👨‍💻 **Bob Dylan**
+   - **Role:** Full Stack Developer
+   - **Description:** simply bob dylan
+   - 🌍 **Location:** Las Palmas de Gran Canaria, Spain
+   - 🐙 **GitHub:** [Bob Dylan GitHub](https://github.com/Deathvks)
+
+---
