@@ -136,18 +136,9 @@ Here are some screenshots of the application:
 ![Screenshot](path/to/your/screenshot.png)
 
 ---
-
 ### 🖥️ RESTful API and CRUD Operations
 
-The project adheres to RESTful principles for communication between frontend and backend. Examples of implemented CRUD operations include:
-
-- **Fields API**:  
-  - `GET /api/fields`: Retrieves all fields.  
-  - `POST /api/fields`: Creates a new field.  
-  - `PUT /api/fields/:id`: Updates a field by ID.  
-  - `DELETE /api/fields/:id`: Deletes a field by ID.
-
-API endpoints are documented and tested using Postman. Find the complete collection [here](https://documenter.getpostman.com/view/38432154/2sAYHwKQaD).
+The project adheres to RESTful principles for communication between frontend and backend. API endpoints are documented and tested using Postman. Find the complete collection [here](https://documenter.getpostman.com/view/38432154/2sAYHwKQaD).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
