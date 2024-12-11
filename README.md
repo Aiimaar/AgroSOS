@@ -1,18 +1,19 @@
-# 🌾 AgroSOS
+# <img src="agrosos/Docs/Screenshots/logo2.png" alt="AgroSOS Logo" width="40"> AgroSOS
 
 <div align="center">
   <a href="https://github.com/Aiimaar/AgroSOS">
-    <div style="text-align: center; height: fit-content; margin: 20px 0">
-    <img src="agrosos/Docs/Screenshots/logo.png" alt="logo" width="30%">
-</div>
+    <img src="agrosos/Docs/Screenshots/logo.png" alt="AgroSOS Logo" width="200">
   </a>
-  <h2 align="center">AgroSOS</h2>
-  <p align="center">
-    🌱 A comprehensive agricultural data management system<br />
-    Empowering precision agriculture with technology.<br />
+  <h2>AgroSOS</h2>
+  <p>
+    🌱 A comprehensive agricultural data management system<br>
+    Empowering precision agriculture with technology.
+  </p>
+  <p>
     <a href="#about-the-project"><strong>Explore the project »</strong></a>
   </p>
 </div>
+
 
 ---
 
@@ -126,6 +127,17 @@ Data filtering is performed in the backend to optimize performance and ensure da
    ```bash
    cd frontend && npm run dev
    ```
+   
+---
+
+## 📦 System Requirements
+
+Make sure to have the following programs installed before getting started:
+
+- **Node.js** (version = v20.18.0)
+- **MySQL** (version = 8.0.38)
+- **NPM** (version = 10.8.2)
+
 ---
 
 ## 📸 Screenshots
@@ -135,18 +147,9 @@ Here are some screenshots of the application:
 ![Screenshot](path/to/your/screenshot.png)
 
 ---
-
 ### 🖥️ RESTful API and CRUD Operations
 
-The project adheres to RESTful principles for communication between frontend and backend. Examples of implemented CRUD operations include:
-
-- **Fields API**:  
-  - `GET /api/fields`: Retrieves all fields.  
-  - `POST /api/fields`: Creates a new field.  
-  - `PUT /api/fields/:id`: Updates a field by ID.  
-  - `DELETE /api/fields/:id`: Deletes a field by ID.
-
-API endpoints are documented and tested using Postman. Find the complete collection [here](#postman-link).
+The project adheres to RESTful principles for communication between frontend and backend. API endpoints are documented and tested using Postman. Find the complete collection [here](https://documenter.getpostman.com/view/38432154/2sAYHwKQaD).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -156,28 +159,29 @@ API endpoints are documented and tested using Postman. Find the complete collect
 
 #### Backend
 The backend follows a modular structure:
-- `routes/`: Contains route definitions for API endpoints.
 - `controllers/`: Handles business logic.
+- `middleware/`: Contains middleware functions for request processing.
 - `models/`: Defines database models using Sequelize.
+- `routes/`: Contains route definitions for API endpoints.
+- `uploads/`: Directory for handling file uploads.
+- `db.js`: Database connection configuration.
+- `express.js`: Main server setup and configuration.
 
 #### Frontend
-The frontend maintains separation of concerns:
-- `services/`: Houses API interaction logic in isolated modules.
+The frontend is organized to separate concerns effectively:
+- `public/`: Contains static assets
+- `src/`:
+  - `assets/`: Images, styles, and other assets.
+  - `components/`: Reusable React components.
+  - `context/`: React context for managing global state.
+  - `pages/`: Defines the main pages for the application.
+  - `App.jsx`: Main application component.
+  - `main.jsx`: Entry point for the React app.
+  - `index.css`: Global styles.
 
-The chosen structure simplifies maintenance and scaling. Compared to a flat structure, this approach enhances readability and minimizes coupling between components.
+This structure ensures clarity, maintainability, and scalability for both backend and frontend development.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
----
-
-## 📦 System Requirements
-
-Make sure to have the following programs installed before getting started:
-
-- **Node.js** (version >=14.x)
-- **MySQL** (version >=5.7)
-- **NPM** or **Yarn** (for managing dependencies)
 
 ---
 
