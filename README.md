@@ -1,11 +1,11 @@
-# Agricultural Data Management System
+# AgroSOS
 
 <!-- PROJECT LOGO -->
 <div align="center">
-  <a href="https://github.com/your-repo">
+  <a href="https://github.com/Aiimaar/AgroSOS">
     <img src="images/logo.png" alt="Project Logo" width="80" height="80">
   </a>
-  <h3 align="center">Agricultural Data Management System</h3>
+  <h3 align="center">AgroSOS</h3>
   <p align="center">
     A project developed in collaboration with the Ministry of Education, companies, and educational centers.
     <br />
@@ -64,10 +64,4 @@ This project aims to manage agricultural data using sensors placed on the fields
 
 ---
 
-## Getting Started
 
-### Prerequisites
-
-- Install Node.js and npm:
-  ```sh
-  npm install npm@latest -g
