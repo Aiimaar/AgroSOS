@@ -127,6 +127,17 @@ Data filtering is performed in the backend to optimize performance and ensure da
    ```bash
    cd frontend && npm run dev
    ```
+   
+---
+
+## 📦 System Requirements
+
+Make sure to have the following programs installed before getting started:
+
+- **Node.js** (version = v20.18.0)
+- **MySQL** (version = 8.0.38)
+- **NPM** (version = 10.8.2)
+
 ---
 
 ## 📸 Screenshots
@@ -171,18 +182,6 @@ The frontend is organized to separate concerns effectively:
 This structure ensures clarity, maintainability, and scalability for both backend and frontend development.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
----
-
-## 📦 System Requirements
-
-Make sure to have the following programs installed before getting started:
-
-- **Node.js** (version >=14.x)
-- **MySQL** (version >=5.7)
-- **NPM** or **Yarn** (for managing dependencies)
 
 ---
 
