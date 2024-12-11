@@ -90,12 +90,11 @@ Before running the application, ensure you have the MySQL database set up correc
 ### 📑 Data Access and Relationships
 
 AgroSOS ensures consistency between the database schema and its relationships through:
+ 1. A relationship diagram between entities.
+    
+ 2. CRUD operations for more than two related entities.
 
-1. A diagram of entity relationships.
-2. CRUD operations for more than two related entities.
-3. Migration scripts and seeders for consistent database setup.
-
-Data filtering is performed on the backend to optimize performance and ensure data integrity.
+Data filtering is performed in the backend to optimize performance and ensure data integrity.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -134,8 +133,6 @@ Here are some screenshots of the application:
 ![Screenshot](path/to/your/screenshot.png)
 
 ---
-
-
 
 ### 🖥️ RESTful API and CRUD Operations
 
