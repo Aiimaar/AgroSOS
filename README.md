@@ -103,3 +103,53 @@ Before running the application, ensure you have the MySQL database set up correc
    ```
 ---
 
+## 📸 Screenshots
+
+Here are some screenshots of the application:
+
+![Screenshot](path/to/your/screenshot.png)
+
+---
+
+## 🤝 How to Contribute
+
+Thank you for your interest in contributing to AgroSOS! Here are some guidelines to follow:
+
+1. Fork the repository
+2. Create a new branch for your feature (`git checkout -b feature/my-feature`)
+3. Make your changes
+4. Run tests to ensure everything works correctly
+5. Commit your changes (`git commit -m 'Add my feature'`)
+6. Push your branch (`git push origin feature/my-feature`)
+7. Open a pull request
+
+Before submitting your PR, make sure to follow these conventions:
+
+- Use clear branch and commit message naming conventions.
+- Keep the code clean and well-documented.
+- If possible, add unit tests for your functionality.
+
+---
+
+## 🖥️ API Usage Guide
+
+To interact with the API, make HTTP requests to the following endpoints:
+
+- **GET /api/fields**: Get all registered fields.
+- **POST /api/fields**: Create a new field.
+
+---
+
+## 📦 System Requirements
+
+Make sure to have the following programs installed before getting started:
+
+- **Node.js** (version >=14.x)
+- **MySQL** (version >=5.7)
+- **NPM** or **Yarn** (for managing dependencies)
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
