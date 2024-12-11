@@ -61,3 +61,13 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
 1. Clone the repository:
    ```bash
    git clone https://github.com/Aiimaar/AgroSOS.git
+2. Navigate to the project directory:
+   ```bash
+   cd AgroSOS/agrosos
+3. Install dependencies for both backend and frontend:
+   ```bash
+   cd backend && npm install
+cd ../frontend && npm install
+
+
+   
