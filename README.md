@@ -147,7 +147,7 @@ The project adheres to RESTful principles for communication between frontend and
   - `PUT /api/fields/:id`: Updates a field by ID.  
   - `DELETE /api/fields/:id`: Deletes a field by ID.
 
-API endpoints are documented and tested using Postman. Find the complete collection [here](#postman-link).
+API endpoints are documented and tested using Postman. Find the complete collection [here](https://documenter.getpostman.com/view/38432154/2sAYHwKQaD).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
