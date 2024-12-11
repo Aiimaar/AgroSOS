@@ -36,6 +36,14 @@ const Plot = sequelize.define(
       allowNull: true, // Permite nulo si no se usa imagen predeterminada
       defaultValue: null, // Valor por defecto si no se especifica
     },
+    farmer_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+    },
   },
   {
     timestamps: false,

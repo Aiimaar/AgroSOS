@@ -24,6 +24,8 @@ function PlotListComp() {
   const defaultImages = [fondo1, fondo2, fondo3, fondo4, fondo5];
   const imageMap = {}; // Mapeo de imágenes basado en IDs de terrenos
 
+  const userId = localStorage.getItem("userId");
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -46,7 +48,7 @@ function PlotListComp() {
       return;
     }
     try {
-      const response = await axios.get("http://localhost:3000/api/plots", {
+      const response = await axios.get(`http://localhost:3000/api/plots/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -38,6 +38,9 @@ Crop.hasMany(Rule, { foreignKey: 'crop_id' });
 IrrigationSchedule.belongsTo(Plot, { foreignKey: 'plotId' });
 Plot.hasMany(IrrigationSchedule, { foreignKey: 'plotId' });  // Un terreno puede tener muchas programaciones de riego
 
+User.hasMany(Plot, { foreignKey: 'farmer_id', onDelete: 'CASCADE' });
+Plot.belongsTo(User, { foreignKey: 'farmer_id' });
+
 // Exportar los modelos junto con la instancia de Sequelize
 const models = {
   sequelize,

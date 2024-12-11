@@ -19,5 +19,6 @@ router.get("/", authenticateToken, plotController.getPlots);
 router.post("/", authenticateToken, upload.single('image'), plotController.createPlot);
 router.put("/:id", authenticateToken, upload.single('image'), plotController.updatePlot);
 router.delete("/:id", authenticateToken, plotController.deletePlot);
+router.get("/user/:userId", authenticateToken, plotController.getPlotsByUserId);
 
 export default router;

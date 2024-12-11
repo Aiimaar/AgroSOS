@@ -9,7 +9,7 @@ export const createIrrigationSchedule = async (req, res) => {
   console.log('Datos recibidos:', req.body); // Verifica los datos
 
   // Validación de datos
-  if (!plotId || !startDate || !endDate || !days || !time) {
+  if (!plotId || !days || !time) {
     return res.status(400).json({ error: "Todos los campos son obligatorios" });
   }
 
@@ -31,8 +31,6 @@ export const createIrrigationSchedule = async (req, res) => {
     // Crear la programación de riego
     const irrigationSchedule = await IrrigationSchedule.create({
       plotId,
-      startDate,  // Usamos el formato ISO recibido desde el frontend
-      endDate,    // Usamos el formato ISO recibido desde el frontend
       days: JSON.stringify(daysArray), // Convertimos el array a string para almacenarlo en la base de datos
       time,       // Hora en formato 'HH:MM'
     });

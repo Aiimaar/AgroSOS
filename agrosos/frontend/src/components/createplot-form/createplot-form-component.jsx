@@ -17,11 +17,12 @@ const CreatePlotForm = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const token = localStorage.getItem("authToken");
+  const userId = localStorage.getItem("userId");
 
   const navigate = useNavigate();
 
   const validateForm = () => {
-    if (!name || !size || (imageOption === "upload" && !image)) {
+    if (!name || !size || (imageOption === "upload" && !image) || !userId) {
       setError("Por favor, completa todos los campos obligatorios.");
       return false;
     }
@@ -40,12 +41,21 @@ const CreatePlotForm = () => {
     e.preventDefault();
     if (!validateForm() || loading) return;
     setLoading(true);
-
+  
     const formData = new FormData();
     formData.append("name", name);
     formData.append("size", size);
     formData.append("unit", unit);
-
+  
+    // Verificar y añadir farmer_id
+    if (userId) {
+      formData.append("user_id", userId);
+    } else {
+      setError("Error: No se encontró el ID del usuario. Intenta iniciar sesión de nuevo.");
+      setLoading(false);
+      return;
+    }
+  
     try {
       if (imageOption === "upload" && image) {
         formData.append("image", image);
@@ -54,20 +64,20 @@ const CreatePlotForm = () => {
       } else if (imageOption === "solid-color") {
         formData.append("color", color);
       }
-
-      // Log para verificar el contenido del FormData
+  
       console.log("Contenido de FormData antes del envío:");
       for (let pair of formData.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`);
       }
-
+  
       await axios.post("http://localhost:3000/api/plots", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
+      // Resetear el formulario
       setName("");
       setSize("");
       setUnit("m2");
@@ -75,7 +85,8 @@ const CreatePlotForm = () => {
       setImageName("");
       setError("");
       setSuccess(true);
-
+  
+      // Navegar a la lista de terrenos
       navigate("/plot-list");
     } catch (error) {
       setError("Error al crear el terreno.");
