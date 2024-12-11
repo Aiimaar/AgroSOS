@@ -1,18 +1,19 @@
-# 🌾 AgroSOS
+# <img src="agrosos/Docs/Screenshots/logo2.png" alt="AgroSOS Logo" width="40"> AgroSOS
 
 <div align="center">
   <a href="https://github.com/Aiimaar/AgroSOS">
-    <div style="text-align: center; height: fit-content; margin: 20px 0">
-    <img src="agrosos/Docs/Screenshots/logo.png" alt="logo" width="30%">
-</div>
+    <img src="agrosos/Docs/Screenshots/logo.png" alt="AgroSOS Logo" width="200">
   </a>
-  <h2 align="center">AgroSOS</h2>
-  <p align="center">
-    🌱 A comprehensive agricultural data management system<br />
-    Empowering precision agriculture with technology.<br />
+  <h2>AgroSOS</h2>
+  <p>
+    🌱 A comprehensive agricultural data management system<br>
+    Empowering precision agriculture with technology.
+  </p>
+  <p>
     <a href="#about-the-project"><strong>Explore the project »</strong></a>
   </p>
 </div>
+
 
 ---
 
