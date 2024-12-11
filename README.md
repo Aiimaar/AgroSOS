@@ -10,7 +10,7 @@
     Empowering precision agriculture with technology.
   </p>
   <p>
-    <a href="#about-the-project"><strong>Explore the project »</strong></a>
+    <a href="https://github.com/Aiimaar/AgroSOS"><strong>Explore the project »</strong></a>
   </p>
 </div>
 
