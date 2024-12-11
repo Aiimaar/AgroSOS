@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <div align="center">
   <a href="https://github.com/Aiimaar/AgroSOS">
-    <img src="images/logo.png" alt="Project Logo" width="80" height="80">
+    <img src="frontend/src/components/header-image-only/logo.png" alt="Project Logo" width="80" height="80">
   </a>
   <h3 align="center">AgroSOS</h3>
   <p align="center">
