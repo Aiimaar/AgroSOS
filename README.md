@@ -55,6 +55,28 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
 
 ---
 
+## 🔄 Database Queries
+
+This section includes the queries and database setup for the project.
+
+### Database Setup
+
+Before running the application, ensure you have the MySQL database set up correctly. You can use the following steps to configure the database:
+
+1. **Create the database**:
+
+   Log into MySQL and create the database for the project:
+
+   ```sql
+   CREATE DATABASE agrosos;
+   ```
+2. Query with the basic structure of the database.
+
+```sql
+   Query con la base de datos
+   ```
+
+
 ## 🚀 How To Get Started
 
 1. Clone the repository:
@@ -81,23 +103,3 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
    ```
 
 
-## 🔄 Database Queries
-
-This section includes the queries and database setup for the project.
-
-### Database Setup
-
-Before running the application, ensure you have the MySQL database set up correctly. You can use the following steps to configure the database:
-
-1. **Create the database**:
-
-   Log into MySQL and create the database for the project:
-
-   ```sql
-   CREATE DATABASE agrosos;
-   ```
-2. Query with the basic structure of the database.
-
-```sql
-   Query con la base de datos
-   ```
