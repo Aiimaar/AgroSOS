@@ -222,20 +222,30 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 🤝 How to Contribute
 
-Thank you for your interest in contributing to AgroSOS! Here are some guidelines to follow:
+Thank you for considering contributing to AgroSOS! We appreciate your interest and help in improving the project. To ensure a smooth collaboration, please follow these guidelines:
 
-1. Fork the repository
-2. Create a new branch for your feature (`git checkout -b feature/my-feature`)
-3. Make your changes
-4. Run tests to ensure everything works correctly
-5. Commit your changes (`git commit -m 'Add my feature'`)
-6. Push your branch (`git push origin feature/my-feature`)
-7. Open a pull request
+### 📝 Steps to Contribute:
 
-Before submitting your PR, make sure to follow these conventions:
+1. 🍴 **Fork the repository** to your own GitHub account.
+2. 🔽 **Clone your forked repository** to your local machine.
+3. 🌱 **Create a new branch** for your feature or fix:  
+   `git checkout -b feature/my-feature`
+4. ✨ **Make your changes** and ensure that the code is clean and well-documented.
+5. 🧪 **Run tests** to verify that everything works correctly.
+6. 💬 **Commit your changes** with a descriptive message:  
+   `git commit -m 'Add my feature'`
+7. 🚀 **Push your branch** to your forked repository:  
+   `git push origin feature/my-feature`
+8. 🔄 **Open a pull request** to the main repository.
 
-- Use clear branch and commit message naming conventions.
-- Keep the code clean and well-documented.
-- If possible, add unit tests for your functionality.
+### 📋 Guidelines for Pull Requests:
 
----
+- 🏷️ **Use meaningful branch names** that clearly describe the purpose of the feature or fix.
+- ✍️ **Write clear and concise commit messages** that explain the "what" and "why" of your changes.
+- 💻 **Keep your code clean and readable**: Follow best practices and ensure your code is properly formatted.
+- 🧪 **Add unit tests**: Whenever possible, include tests that validate your changes.
+- ✅ **Ensure your changes don't break existing functionality**: Run all tests and check that everything is working as expected.
+
+We review all contributions and may suggest changes or improvements before merging. Thank you for helping to make AgroSOS better! 🙌
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
