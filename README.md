@@ -62,18 +62,23 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
    git clone https://github.com/Aiimaar/AgroSOS.git
 2. Navigate to the project directory:
    ```bash
-   cd AgroSOS/agrosos ```
+   cd AgroSOS/agrosos
+   ```
 3. Install dependencies for both backend and frontend:
    ```bash
-   cd backend && npm install ```
-    ```bash
-   cd ../frontend && npm install ```
+   cd backend && npm install
+   ```
+   ```bash
+   cd ../frontend && npm install
+   ```
 4. Run the development server:
-    ```bash
-   cd backend && node express.js ```
+   ```bash
+   cd backend && node express.js
+   ```
 5. Run the frontend
-```bash
-   cd frontend && npm run dev ```
+   ```bash
+   cd frontend && npm run dev
+   ```
 
 
 ## 🔄 Database Queries
