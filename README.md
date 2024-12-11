@@ -75,7 +75,7 @@ Before running the application, ensure you have the MySQL database set up correc
 ```sql
    Query con la base de datos
    ```
-
+---
 
 ## 🚀 How To Get Started
 
@@ -101,5 +101,5 @@ Before running the application, ensure you have the MySQL database set up correc
    ```bash
    cd frontend && npm run dev
    ```
-
+---
 
