@@ -2,7 +2,9 @@
 
 <div align="center">
   <a href="https://github.com/Aiimaar/AgroSOS">
-    <img src="frontend/src/components/header-image-only/logo.png" alt="AgroSOS Logo" width="200">
+    <div style="text-align: center; height: fit-content; margin: 20px 0">
+    <img src="/Docs/Screenshots/logo.png" alt="use case diagram" width="90%">
+</div>
   </a>
   <h2 align="center">AgroSOS</h2>
   <p align="center">
