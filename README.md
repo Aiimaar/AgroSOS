@@ -146,10 +146,10 @@ Make sure to have the following programs installed before getting started:
 Here are some screenshots of the application:
 
 <div style="display: flex; gap: 10px;">
-  <img src="agrosos/Docs/Screenshots/cap1.png" alt="AgroSOS Logo" width="200">
-  <img src="agrosos/Docs/Screenshots/cap2.png" alt="AgroSOS Logo" width="200">
-  <img src="agrosos/Docs/Screenshots/cap4.png" alt="AgroSOS Logo" width="200">
-  <img src="agrosos/Docs/Screenshots/cap3.png" alt="AgroSOS Logo" width="200">
+  <img src="agrosos/Docs/Screenshots/cap1.png" alt="AgroSOS Logo" width="150">
+  <img src="agrosos/Docs/Screenshots/cap2.png" alt="AgroSOS Logo" width="150">
+  <img src="agrosos/Docs/Screenshots/cap4.png" alt="AgroSOS Logo" width="150">
+  <img src="agrosos/Docs/Screenshots/cap3.png" alt="AgroSOS Logo" width="150">
 </div>
 
 ---
