@@ -22,10 +22,20 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
 
 - 📊 **Data Visualization**: Graphs showcasing key indicators of crop health and field conditions.
 - 🤖 **Automation**: Recommendations and actions based on sensor data to optimize crop performance.
-- 🔒 **Role-Based Access**:
-  - **Admin**: Manage users and system configurations.
-  - **Farmers**: Control actuators, register fields, sensors, and crops, and access data specific to their fields.
-  - **Technicians**: Configure rules for automated recommendations.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+### 🔐 Authentication and Roles
+
+AgroSOS implements both basic and token-based authentication to ensure secure access. The roles used in the system are as follows:
+
+- **Admin**: Manages users and configurations.
+- **Farmers**: Registers and manages fields, sensors, and crops, while accessing their specific data.
+- **Technicians**: Configures automated rules based on sensor data.
+
+This structure emphasizes the distinction between authentication (verifying identity) and authorization (assigning permissions). For example, access to certain frontend routes is restricted based on authentication state, verified by checking tokens stored locally.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -77,6 +87,20 @@ Before running the application, ensure you have the MySQL database set up correc
    ```
 ---
 
+### 📑 Data Access and Relationships
+
+AgroSOS ensures consistency between the database schema and its relationships through:
+
+1. A diagram of entity relationships.
+2. CRUD operations for more than two related entities.
+3. Migration scripts and seeders for consistent database setup.
+
+Data filtering is performed on the backend to optimize performance and ensure data integrity.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
 ## 🚀 How To Get Started
 
 1. Clone the repository:
@@ -111,64 +135,19 @@ Here are some screenshots of the application:
 
 ---
 
-## 🤝 How to Contribute
 
-Thank you for your interest in contributing to AgroSOS! Here are some guidelines to follow:
 
-1. Fork the repository
-2. Create a new branch for your feature (`git checkout -b feature/my-feature`)
-3. Make your changes
-4. Run tests to ensure everything works correctly
-5. Commit your changes (`git commit -m 'Add my feature'`)
-6. Push your branch (`git push origin feature/my-feature`)
-7. Open a pull request
+### 🖥️ RESTful API and CRUD Operations
 
-Before submitting your PR, make sure to follow these conventions:
+The project adheres to RESTful principles for communication between frontend and backend. Examples of implemented CRUD operations include:
 
-- Use clear branch and commit message naming conventions.
-- Keep the code clean and well-documented.
-- If possible, add unit tests for your functionality.
+- **Fields API**:  
+  - `GET /api/fields`: Retrieves all fields.  
+  - `POST /api/fields`: Creates a new field.  
+  - `PUT /api/fields/:id`: Updates a field by ID.  
+  - `DELETE /api/fields/:id`: Deletes a field by ID.
 
----
-
-## 🖥️ API Usage Guide
-
-To interact with the API, make HTTP requests to the following endpoints:
-
-- **GET /api/fields**: Get all registered fields.
-- **POST /api/fields**: Create a new field.
-
----
-
-## 📦 System Requirements
-
-Make sure to have the following programs installed before getting started:
-
-- **Node.js** (version >=14.x)
-- **MySQL** (version >=5.7)
-- **NPM** or **Yarn** (for managing dependencies)
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
----
-
----
-
----
-
-### 🔐 Authentication and Roles
-
-AgroSOS implements both basic and token-based authentication to ensure secure access. The roles used in the system are as follows:
-
-- **Admin**: Manages users and configurations.
-- **Farmers**: Registers and manages fields, sensors, and crops, while accessing their specific data.
-- **Technicians**: Configures automated rules based on sensor data.
-
-This structure emphasizes the distinction between authentication (verifying identity) and authorization (assigning permissions). For example, access to certain frontend routes is restricted based on authentication state, verified by checking tokens stored locally.
+API endpoints are documented and tested using Postman. Find the complete collection [here](#postman-link).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -190,21 +169,16 @@ The chosen structure simplifies maintenance and scaling. Compared to a flat stru
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
 ---
 
-### 🖥️ RESTful API and CRUD Operations
+## 📦 System Requirements
 
-The project adheres to RESTful principles for communication between frontend and backend. Examples of implemented CRUD operations include:
+Make sure to have the following programs installed before getting started:
 
-- **Fields API**:  
-  - `GET /api/fields`: Retrieves all fields.  
-  - `POST /api/fields`: Creates a new field.  
-  - `PUT /api/fields/:id`: Updates a field by ID.  
-  - `DELETE /api/fields/:id`: Deletes a field by ID.
-
-API endpoints are documented and tested using Postman. Find the complete collection [here](#postman-link).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- **Node.js** (version >=14.x)
+- **MySQL** (version >=5.7)
+- **NPM** or **Yarn** (for managing dependencies)
 
 ---
 
@@ -231,15 +205,28 @@ An example comparison:
 
 ---
 
-### 📑 Data Access and Relationships
+## 📝 License
 
-AgroSOS ensures consistency between the database schema and its relationships through:
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-1. A diagram of entity relationships.
-2. CRUD operations for more than two related entities.
-3. Migration scripts and seeders for consistent database setup.
+---
 
-Data filtering is performed on the backend to optimize performance and ensure data integrity.
+## 🤝 How to Contribute
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Thank you for your interest in contributing to AgroSOS! Here are some guidelines to follow:
 
+1. Fork the repository
+2. Create a new branch for your feature (`git checkout -b feature/my-feature`)
+3. Make your changes
+4. Run tests to ensure everything works correctly
+5. Commit your changes (`git commit -m 'Add my feature'`)
+6. Push your branch (`git push origin feature/my-feature`)
+7. Open a pull request
+
+Before submitting your PR, make sure to follow these conventions:
+
+- Use clear branch and commit message naming conventions.
+- Keep the code clean and well-documented.
+- If possible, add unit tests for your functionality.
+
+---
