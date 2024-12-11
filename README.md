@@ -93,9 +93,15 @@ Before running the application, ensure you have the MySQL database set up correc
 ### 📑 Data Access and Relationships
 
 AgroSOS ensures consistency between the database schema and its relationships through:
- 1. A relationship diagram between entities.
+ 1. A **relationship diagram** that visualizes the relationships between the entities.
     
- 2. CRUD operations for more than two related entities.
+ 2. **CRUD operations** for managing data across multiple related entities.
+
+  <div style="display: flex; gap: 10px;">
+    <img src="agrosos/Docs/Screenshots/class-diagram.png" alt="Class Diagram" width="200">
+    <img src="agrosos/Docs/Screenshots/entidad-relacion.png" alt="Entity-Relationship Diagram" width="200">
+    <img src="agrosos/Docs/Screenshots/useCase-diagram.png" alt="Use Case Diagram" width="200">
+  </div>
 
 Data filtering is performed in the backend to optimize performance and ensure data integrity.
 
