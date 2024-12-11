@@ -3,6 +3,8 @@ import arrow from "./ArrowLeftOutlined.png";
 import { Link } from "react-router-dom";
 
 function SettingsComponent() {
+  const role = localStorage.getItem("role");  // Obtener el role del localStorage
+
   return (
     <div id="container-settings">
       <div className="settings-arrow-container">
@@ -31,16 +33,24 @@ function SettingsComponent() {
         <div className="settings-help">
           <p className="settings-p">Ayuda y soporte</p>
         </div>
-        <div className="settings-rules">
-          <Link to="/rules">
-            <p className="settings-p">Reglas</p>
-          </Link>
-        </div>
-        <div className="settings-userc">
-          <Link to="/admin-user-crud">
-            <p className="settings-p">Lista de usuarios</p>
-          </Link>
-        </div>
+
+        {/* Mostrar "Reglas" solo para Technician y Admin */}
+        {role === "Technician" || role === "Admin" ? (
+          <div className="settings-rules">
+            <Link to="/rules">
+              <p className="settings-p">Reglas</p>
+            </Link>
+          </div>
+        ) : null}
+
+        {/* Mostrar "Lista de usuarios" solo para Admin */}
+        {role === "Admin" ? (
+          <div className="settings-userc">
+            <Link to="/admin-user-crud">
+              <p className="settings-p">Lista de usuarios</p>
+            </Link>
+          </div>
+        ) : null}
       </div>
     </div>
   );

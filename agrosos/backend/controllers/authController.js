@@ -51,12 +51,13 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
-    res.json({ token, userId: user.id });
+    // Generar el token JWT incluyendo el id y el role del usuario
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    console.log(user.role)
+    // Responder con el token, userId y role
+    res.json({ token, userId: user.id, role: user.role });
   } catch (error) {
     console.error("Error en login:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
-

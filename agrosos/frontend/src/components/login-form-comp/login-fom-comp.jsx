@@ -28,10 +28,11 @@ const LoginFormComp = ({ onLogin }) => {
         }
       );
   
-      const { token, userId } = response.data;
-  
+      const { token, userId, role } = response.data;
+      console.log(response.data);
       localStorage.setItem("authToken", token);
       localStorage.setItem("userId", userId);
+      localStorage.setItem("role", role);
   
       if (typeof onLogin === "function") {
         onLogin();
