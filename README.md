@@ -6,7 +6,7 @@
   </a>
   <h2 align="center">AgroSOS</h2>
   <p align="center">
-    🌱 A comprehensive agricultural data management system developed in collaboration with the Ministry of Education, companies, and educational centers.<br />
+    🌱 A comprehensive agricultural data management system<br />
     Empowering precision agriculture with technology.<br />
     <a href="#about-the-project"><strong>Explore the project »</strong></a>
   </p>
@@ -46,7 +46,6 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
 
 ### Students and Roles
 - **2nd DAW-Evening**: Development of the backend and frontend for the system.
-- **FPB Students**: Integration of sensors and actuators for data collection.
 
 ### Coordination
 - **Project Coordinator**: Miguel Ángel Figueroa García
@@ -67,7 +66,13 @@ AgroSOS is designed to enhance agricultural productivity by managing data collec
 3. Install dependencies for both backend and frontend:
    ```bash
    cd backend && npm install
-cd ../frontend && npm install
+    ```bash
+   cd ../frontend && npm install
+4. Run the development servers:
+    ```bash
+   cd backend && node express.js
+    ```bash
+   cd frontend && npm run dev
 
 
    
