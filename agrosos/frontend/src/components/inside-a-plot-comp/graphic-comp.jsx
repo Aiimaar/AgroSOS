@@ -27,34 +27,17 @@ const EvolutionGraph = () => {
   useEffect(() => {
     const fetchSensorData = async () => {
       try {
-        // Recuperar el plotId y el token desde localStorage
+        // Recuperar el plotId desde localStorage
         const plotId = localStorage.getItem("selectedPlotId");
-        const token = localStorage.getItem("authToken");
 
         if (!plotId) {
           console.error("No plot ID found in localStorage");
           return;
         }
 
-        if (!token) {
-          console.error("No auth token found in localStorage");
-          return;
-        }
-
         const response = await fetch(
-          `http://localhost:3000/api/sensor_value/plot/${plotId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // Añade el token aquí
-            },
-          }
+          `http://localhost:3000/api/sensor_value/plot/${plotId}`
         );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
         const sensorData = await response.json();
 
         const temperatureSensors = sensorData.filter(

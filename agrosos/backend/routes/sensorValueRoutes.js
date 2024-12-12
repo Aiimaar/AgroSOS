@@ -7,5 +7,6 @@ const router = express.Router();
 // Rutas de valores de sensor
 router.get('/', authenticateToken, sensorValue.getSensorValues);
 router.get('/:id', authenticateToken, sensorValue.getSensorValueById);
+router.get('/plot/:plotId', sensorValue.getSensorValueByPlotId);
 
 export default router;
