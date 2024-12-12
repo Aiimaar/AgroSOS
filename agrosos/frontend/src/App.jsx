@@ -1,7 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { SensorProvider } from "./context/SensorContext";
-import { ActuatorProvider } from "./context/ActuatorContext";
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -39,8 +37,6 @@ import CreateUser from "./pages/create-user/CreateUser";
 function App() {
   return (
     <BrowserRouter>
-      <SensorProvider>
-        <ActuatorProvider>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
@@ -77,8 +73,6 @@ function App() {
             <Route path="/create-crop" element={<CreateCrop />} />
             <Route path="/create-user" element={<CreateUser />} />
           </Routes>
-        </ActuatorProvider>
-      </SensorProvider>
     </BrowserRouter>
   );
 }

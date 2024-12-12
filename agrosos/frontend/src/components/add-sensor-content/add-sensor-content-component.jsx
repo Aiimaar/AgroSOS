@@ -1,94 +1,119 @@
-import React, { useContext, useState } from "react";
-import { SensorContext } from "../../context/SensorContext";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./add-sensor-content-component.css";
 import lock from "./icon_lock_locked_.png";
 
 function AddSensor() {
-  const { selectedSensor, addLinkedSensor } = useContext(SensorContext);
-  const [sensorCode, setSensorCode] = useState("");
-  const [errors, setErrors] = useState({ sensorCode: "" });
-  const [successMessage, setSuccessMessage] = useState("");
+    const [searchParams] = useSearchParams();
+    const sensorName = searchParams.get("name");
+    const [sensorCode, setSensorCode] = useState("");
+    const navigate = useNavigate();
+    const token = localStorage.getItem("authToken");
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(""); // Estado para mensajes de éxito
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!sensorCode.trim()) {
-      newErrors.sensorCode = "Por favor, ingrese un código válido.";
-    } else if (!/^\d+$/.test(sensorCode)) {
-      newErrors.sensorCode = "El código debe ser un número.";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    const sensorNames = {
+        "Temperatura": "temperature",
+        "Humedad": "humidity",
+        "Temperatura de terreno": "soil_temperature",
+        "Humedad del terreno": "soil_humidity"
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      try {
-        const plot_id = localStorage.getItem("selectedPlotId");
-        const sensor = { name: selectedSensor, plot_id, code: sensorCode };
-        await addLinkedSensor(sensor);
+    useEffect(() => {
+        if (!token) {
+            navigate("/login");
+        }
+    }, [token, navigate]);
 
-        setSuccessMessage(`El sensor "${selectedSensor}" con código "${sensorCode}" ha sido enlazado correctamente.`);
-        setSensorCode("");
-        setTimeout(() => setSuccessMessage(""), 5000);
-      } catch (error) {
-        setErrors({ sensorCode: error.message || "Error al crear el sensor" });
-      }
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const plotId = localStorage.getItem("selectedPlotId");
 
-  return (
-    <div className="container-add-sensor">
-      <div className="form-add-sensor">
-        <h1 className="sensor-form-title">Enlazar sensor</h1>
-        <form className="sensor-form" onSubmit={handleSubmit}>
-          <div className="form-group-sensor-name">
-            <label htmlFor="sensor-name-input" className="label-sensor-name">
-              Nombre del sensor
-            </label>
-            <div className="sensor-input-container">
-              <input
-                type="text"
-                id="sensor-name-input"
-                className="input-sensor-name"
-                value={selectedSensor}
-                readOnly
-              />
-              <img src={lock} alt="lock" className="lock-icon" />
+        if (!plotId) {
+            setError("No se ha seleccionado ningún terreno.");
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/api/sensors', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    type: sensorNames[sensorName],
+                    code: Number(sensorCode),
+                    plot_id: Number(plotId)
+                }),
+            });
+
+            if (!response.ok) {
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem("authToken");
+                    navigate("/login");
+                    return;
+                }
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Error al agregar sensor");
+            }
+            setSensorCode("");
+            setSuccessMessage(`Sensor "${sensorName}" con código "${sensorCode}" enlazado con éxito.`); //Mensaje de éxito
+            setTimeout(() => setSuccessMessage(""), 5000); // Limpia el mensaje después de 5 segundos
+            //navigate("/sensor-enla"); No es necesario navegar automaticamente a enlazados, ya se muestra el mensaje de exito.
+        } catch (error) {
+            console.error("Error al agregar sensor:", error);
+            setError(error.message);
+        }
+    };
+
+    return (
+        <div className="container-add-sensor">
+            <div className="form-add-sensor">
+                <h1 className="sensor-form-title">Enlazar sensor</h1>
+                <form className="sensor-form" onSubmit={handleSubmit}>
+                    <div className="form-group-sensor-name">
+                        <label htmlFor="sensor-name-input" className="label-sensor-name">
+                            Nombre del sensor
+                        </label>
+                        <div className="sensor-input-container">
+                            <input
+                                type="text"
+                                id="sensor-name-input"
+                                className="input-sensor-name"
+                                value={sensorName}
+                                readOnly
+                            />
+                            <img src={lock} alt="lock" className="lock-icon" />
+                        </div>
+                    </div>
+                    <div className="form-group-sensor-code">
+                        <label htmlFor="sensor-code-input" className="label-sensor-code">
+                            Código del sensor a enlazar
+                        </label>
+                        <input
+                            type="number"
+                            id="sensor-code-input"
+                            className="input-sensor-code"
+                            placeholder="Ingrese el código"
+                            value={sensorCode}
+                            onChange={(e) => setSensorCode(e.target.value)}
+                        />
+                    </div>
+                    {error && <p className="error-message">{error}</p>}
+                    {successMessage && <p className="sensor-success-message">{successMessage}</p>} {/*Muestra mensaje de exito*/}
+                    <div className="add-sensor-content-buttons">
+                        <button type="submit" className="btn-enla">
+                            Enlazar
+                        </button>
+                        <Link to="/sensors">
+                            <button className="btn-back">Volver</button>
+                        </Link>
+                    </div>
+                </form>
             </div>
-          </div>
-          <div className="form-group-sensor-code">
-            <label htmlFor="sensor-code-input" className="label-sensor-code">
-              Código del sensor a enlazar
-            </label>
-            <input
-              type="number"
-              id="sensor-code-input"
-              className="input-sensor-code"
-              placeholder="Ingrese el código"
-              value={sensorCode}
-              onChange={(e) => setSensorCode(e.target.value)}
-            />
-            {errors.sensorCode && (
-              <p className="sensor-error-message">{errors.sensorCode}</p>
-            )}
-          </div>
-          <div className="add-sensor-content-buttons">
-            <button type="submit" className="btn-enla">
-              Enlazar
-            </button>
-            <Link to="/sensors">
-              <button className="btn-back">Volver</button>
-            </Link>
-          </div>
-        </form>
-        {successMessage && (
-          <p className="sensor-success-message">{successMessage}</p>
-        )}
-      </div>
-    </div>
-  );
+        </div>
+    );
 }
 
 export default AddSensor;
