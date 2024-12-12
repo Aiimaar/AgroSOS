@@ -1,0 +1,84 @@
+.create-user-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 300px;
+    background-color: #F0EDED;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    max-width: 390px;
+    margin: 0 auto;
+  }
+  
+  .create-user-form input,
+  .create-user-form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    background-color: white;
+  }
+  
+  .create-user-form input:focus,
+  .create-user-form select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+  
+  .create-user-form .create-user-error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: -5px;
+  }
+  
+  .create-user-form .create-user-success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: -5px;
+  }
+  
+  .create-user-form .create-user-submit-button {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .create-user-form .create-user-submit-button:hover {
+    background-color: #45a049;
+  }
+  
+  @media (min-width: 1920px) {
+    body, html {
+      justify-content: center;
+      align-items: center;
+      padding-top: 0;
+    }
+  
+    form {
+      width: 400px;
+    }
+  }
+  
+  @media (min-width: 1024px) and (max-width: 1919px) {
+    body, html {
+      justify-content: center;
+      align-items: center;
+      padding-top: 0;
+    }
+  
+    form {
+      width: 400px;
+    }
+  }
+  

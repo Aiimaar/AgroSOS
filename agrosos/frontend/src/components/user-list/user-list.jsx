@@ -10,6 +10,8 @@ import {
 import { useNavigate } from "react-router-dom"; // Importa el hook useNavigate para la navegación
 import axios from "axios"; // Importa Axios para realizar solicitudes HTTP
 import defaultAvatar from "./default-avatar.png"; // Importa una imagen predeterminada de avatar
+import addUserIcon from "./add-user-icon.png";
+import { Link } from "react-router-dom";
 
 const UserList = () => {
   const [users, setUsers] = useState([]); // Estado para almacenar la lista de usuarios
@@ -161,14 +163,13 @@ const UserList = () => {
 
   return (
     <div className="user-list-container">
-      {/* Botón de retroceso que navega a la página principal */}
+      {/* Botón de retroceso */}
       <button className="user-list-back-button" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="user-list-title">Lista de usuarios</h1>
 
       <div className="user-list">
-        {/* Mapea y muestra la lista de usuarios */}
         {currentUsers.map((user) => (
           <div key={user.id}>
             <div className="user-list-item">
@@ -176,11 +177,13 @@ const UserList = () => {
                 <div className="user-list-avatar">
                   <img
                     src={
-                      user.profile_image
-                        ? user.profile_image
-                        : defaultAvatar // Si no hay imagen, muestra una imagen predeterminada
+                      user.profile_image ? user.profile_image : defaultAvatar
                     }
-                    alt={user.name ? `${user.name} avatar` : "Avatar predeterminado"}
+                    alt={
+                      user.name
+                        ? `${user.name} avatar`
+                        : "Avatar predeterminado"
+                    }
                     className="user-avatar-img"
                   />
                 </div>
@@ -190,7 +193,6 @@ const UserList = () => {
                 </div>
               </div>
               <div className="user-list-actions">
-                {/* Botones para editar o eliminar el usuario */}
                 <button
                   className="user-list-action-button"
                   onClick={() => handleEdit(user)}
@@ -222,6 +224,13 @@ const UserList = () => {
         ) : (
           <div style={{ width: "40px" }}></div>
         )}
+
+        {/* Nuevo botón para crear usuario */}
+        <div className="plot-list-create-plot-img-container">
+          <Link to="/create-user" className="img">
+            <img src={addUserIcon} alt="Create Plot" />
+          </Link>
+        </div>
 
         {indexOfLastUser < users.length && (
           <button
@@ -262,35 +271,18 @@ const UserList = () => {
                 id="user-list-role"
                 value={currentUser?.role || ""}
                 onChange={(e) =>
-                  setCurrentUser({ ...currentUser, role: e.target.value })
+                  setCurrentUser({
+                    ...currentUser,
+                    role: e.target.value,
+                  })
                 }
               >
-                <option value="farmer">Farmer</option>
-                <option value="technician">Technician</option>
-                <option value="admin">Admin</option>
+                <option value="Farmer">Farmer</option>
+                <option value="Admin">Admin</option>
+                <option value="Technician">Technician</option>
               </select>
-              <label htmlFor="user-list-avatar">Imagen de Perfil</label>
-              <input
-                type="file"
-                id="user-list-avatar"
-                onChange={handleImageChange}
-              />
-              <div className="user-list-modal-actions">
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="user-list-cancel-button"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  onClick={handleSave}
-                  className="user-list-save-button"
-                >
-                  Guardar
-                </button>
-              </div>
+              <button onClick={handleSave}>Guardar</button>
+              <button onClick={closeModal}>Cancelar</button>
             </form>
           </div>
         </div>
