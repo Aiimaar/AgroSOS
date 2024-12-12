@@ -11,7 +11,7 @@ function SettingsComponent() {
 
   return (
     <div id="container-settings">
-        <button className="settings-arrow-container" onClick={() => navigate(-1)}>
+        <button className="settings-arrow-container" onClick={() => navigate("/plot-list")}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         
