@@ -257,7 +257,7 @@ Meet the talented individuals behind **AgroSOS**:
 
 ### 👨‍💻 **Víctor**
    - **Role:** Full Stack Developer
-   - **Description:** Víctor is a dedicated Full Stack Developer with a focus on building responsive and visually appealing user interfaces. She is highly skilled in React and other modern JavaScript technologies. He is passionate about creating intuitive solutions and ensuring the best possible user experience for AgroSOS users. Her work bridges the gap between design and functionality.
+   - **Description:** Víctor is a dedicated Full Stack Developer with a focus on building responsive and visually appealing user interfaces. He is highly skilled in React and other modern JavaScript technologies. He is passionate about creating intuitive solutions and ensuring the best possible user experience for AgroSOS users. Her work bridges the gap between design and functionality.
    - 🌍 **Location:** Las Palmas de Gran Canaria, Spain
    - 🐙 **GitHub:** [Víctor GitHub](https://github.com/Vitolofs7)
 
