@@ -1,106 +1,92 @@
-import React, { useEffect, useState } from "react"; // Importa React y hooks para manejar estado y efectos
-import "./user-list.css"; // Importa los estilos CSS para la lista de usuarios
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Importa el componente FontAwesomeIcon para iconos
+import React, { useEffect, useState } from "react";
+import "./user-list.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faTrash,
   faPencilAlt,
   faArrowRight,
-} from "@fortawesome/free-solid-svg-icons"; // Importa varios iconos para la interfaz de usuario
-import { useNavigate } from "react-router-dom"; // Importa el hook useNavigate para la navegación
-import axios from "axios"; // Importa Axios para realizar solicitudes HTTP
-import defaultAvatar from "./default-avatar.png"; // Importa una imagen predeterminada de avatar
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import defaultAvatar from "./default-avatar.png";
 import addUserIcon from "./add-user-icon.png";
-import { Link } from "react-router-dom";
 
 const UserList = () => {
-  const [users, setUsers] = useState([]); // Estado para almacenar la lista de usuarios
-  const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual de la paginación
-  const [usersPerPage] = useState(10); // Número de usuarios por página
-  const [error, setError] = useState(null); // Estado para manejar errores
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar si el modal está abierto o cerrado
-  const [currentUser, setCurrentUser] = useState(null); // Estado para manejar el usuario actualmente seleccionado para editar
-  const [imageFile, setImageFile] = useState(null); // Estado para manejar la imagen de perfil seleccionada
-  const navigate = useNavigate(); // Hook para la navegación programática
+  const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(10);
+  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const navigate = useNavigate();
 
-  // useEffect se ejecuta cuando el componente se monta, haciendo una solicitud para obtener la lista de usuarios
   useEffect(() => {
-    const token = localStorage.getItem("authToken"); // Obtiene el token de autenticación almacenado
+    const token = localStorage.getItem("authToken");
 
     if (!token) {
-      navigate("/login"); // Si no hay token, redirige a la página de login
+      navigate("/login");
       return;
     }
 
-    // Hace una solicitud GET a la API para obtener los usuarios
     axios
       .get("http://localhost:3000/api/users", {
         headers: {
-          Authorization: `Bearer ${token}`, // Pasa el token en los encabezados para autenticación
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response.data); // Imprime los datos recibidos de la API (para depuración)
-        setUsers(response.data); // Establece la lista de usuarios en el estado
+        setUsers(response.data);
       })
-      .catch((error) => setError(error.message)); // Si hay un error, lo guarda en el estado de error
-  }, [navigate]); // El useEffect se ejecuta una sola vez al cargar el componente
+      .catch((error) => setError(error.message));
+  }, [navigate]);
 
-  // Si hay un error, muestra el mensaje de error
   if (error) {
     return <div className="user-list-error-message">Error: {error}</div>;
   }
 
-  // Cálculos para la paginación: determina los índices de los usuarios a mostrar
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser); // Obtiene los usuarios de la página actual
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  // Función para ir a la siguiente página
   const nextPage = () => {
     if (indexOfLastUser < users.length) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  // Función para ir a la página anterior
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  // Función para abrir el modal y editar un usuario
   const handleEdit = (user) => {
-    setCurrentUser(user); // Establece el usuario seleccionado en el estado
-    setIsModalOpen(true); // Abre el modal
+    setCurrentUser(user);
+    setIsModalOpen(true);
   };
 
-  // Función para cerrar el modal
   const closeModal = () => {
-    setIsModalOpen(false); // Cierra el modal
-    setCurrentUser(null); // Limpia el estado del usuario seleccionado
-    setImageFile(null); // Limpia la imagen de perfil seleccionada
+    setIsModalOpen(false);
+    setCurrentUser(null);
+    setImageFile(null);
   };
 
-  // Función que maneja el cambio de la imagen de perfil
   const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Obtiene el archivo de imagen seleccionado
+    const file = e.target.files[0];
     if (file) {
-      setImageFile(file); // Establece la imagen seleccionada en el estado
+      setImageFile(file);
     }
   };
 
-  // Función para guardar los cambios realizados al editar el usuario
   const handleSave = async (e) => {
-    e.preventDefault(); // Evita el comportamiento por defecto del formulario
-
-    // Prepara los datos del usuario para actualizarlo
+    e.preventDefault();
     let formData = { ...currentUser };
     if (imageFile) {
-      // Si se seleccionó una nueva imagen, la subimos al servidor
       const form = new FormData();
-      form.append("profile_image", imageFile); // Agrega la imagen al formulario
+      form.append("profile_image", imageFile);
 
       try {
         const response = await axios.put(
@@ -108,66 +94,91 @@ const UserList = () => {
           form,
           {
             headers: {
-              "Content-Type": "multipart/form-data", // Indicamos que estamos enviando un formulario con archivos
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Agregamos el token de autenticación
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
             },
           }
         );
 
-        const updatedUser = response.data; // El usuario actualizado
+        const updatedUser = response.data;
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
             user.id === updatedUser.id ? updatedUser : user
           )
-        ); // Actualiza la lista de usuarios con los datos del usuario actualizado
-        closeModal(); // Cierra el modal después de guardar
+        );
+        closeModal();
       } catch (error) {
-        console.error("Error al subir la imagen:", error); // Si hay un error, lo imprime
+        console.error("Error al subir la imagen:", error);
       }
     } else {
-      // Si no se seleccionó una imagen nueva, solo actualiza los demás datos del usuario
       try {
         const response = await axios.put(
           `http://localhost:3000/api/users/${currentUser.id}`,
           currentUser,
           {
             headers: {
-              "Content-Type": "application/json", // Indicamos que los datos son JSON
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Agregamos el token de autenticación
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
             },
           }
         );
 
-        const updatedUser = response.data; // El usuario actualizado
+        const updatedUser = response.data;
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
             user.id === updatedUser.id ? updatedUser : user
           )
-        ); // Actualiza la lista de usuarios con los datos del usuario actualizado
-        closeModal(); // Cierra el modal después de guardar
+        );
+        closeModal();
       } catch (error) {
-        console.error("Error al guardar:", error); // Si hay un error, lo imprime
+        console.error("Error al guardar:", error);
       }
     }
   };
 
-  // Función para eliminar un usuario
   const handleDelete = (userId) => {
     axios
       .delete(`http://localhost:3000/api/users/${userId}`)
       .then(() => {
-        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId)); // Elimina el usuario de la lista
+        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
       })
-      .catch((error) => console.error("Error al eliminar:", error)); // Si hay un error, lo imprime
+      .catch((error) => console.error("Error al eliminar:", error));
+  };
+
+  const handleCreateSubmit = async (newUser) => {
+    try {
+      const token = localStorage.getItem("authToken");
+
+      const response = await axios.post(
+        "http://localhost:3000/api/users",
+        newUser,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setUsers((prevUsers) => [...prevUsers, response.data]);
+      setIsCreatePopupOpen(false);
+    } catch (error) {
+      console.error("Error al crear usuario:", error);
+    }
   };
 
   return (
     <div className="user-list-container">
-      {/* Botón de retroceso */}
       <button className="user-list-back-button" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="user-list-title">Lista de usuarios</h1>
+      <div
+        className="plot-list-create-plot-img-container"
+        onClick={() => setIsCreatePopupOpen(true)}
+      >
+        <img src={addUserIcon} alt="Create User" />
+      </div>
 
       <div className="user-list">
         {currentUsers.map((user) => (
@@ -212,7 +223,6 @@ const UserList = () => {
         ))}
       </div>
 
-      {/* Botones de paginación */}
       <div className="user-list-arrow-buttons">
         {currentPage > 1 ? (
           <button
@@ -225,13 +235,6 @@ const UserList = () => {
           <div style={{ width: "40px" }}></div>
         )}
 
-        {/* Nuevo botón para crear usuario */}
-        <div className="plot-list-create-plot-img-container">
-          <Link to="/create-user" className="img">
-            <img src={addUserIcon} alt="Create Plot" />
-          </Link>
-        </div>
-
         {indexOfLastUser < users.length && (
           <button
             className="user-list-arrow-button user-list-arrow-right"
@@ -242,33 +245,32 @@ const UserList = () => {
         )}
       </div>
 
-      {/* Modal para editar usuario */}
+      {isCreatePopupOpen && (
+        <div className="modal-overlay">
+          <CreateUserPopup
+            onSubmit={handleCreateSubmit}
+            onClose={() => setIsCreatePopupOpen(false)}
+          />
+        </div>
+      )}
+
       {isModalOpen && (
-        <div className="user-list-modal-overlay">
-          <div className="user-list-modal">
-            <h2 className="user-list-modal-title">Editar Usuario</h2>
-            <form id="user-list-edit-form">
-              <label htmlFor="user-list-name">Nombre</label>
+        <div className="modal-overlay">
+          <div className="popup-container">
+            <h2>Editar Usuario</h2>
+            <form onSubmit={handleSave}>
               <input
                 type="text"
-                id="user-list-name"
+                id="popup-name"
                 value={currentUser?.name || ""}
                 onChange={(e) =>
                   setCurrentUser({ ...currentUser, name: e.target.value })
                 }
+                placeholder="Nombre"
+                required
               />
-              <label htmlFor="user-list-email">Correo</label>
-              <input
-                type="email"
-                id="user-list-email"
-                value={currentUser?.email || ""}
-                onChange={(e) =>
-                  setCurrentUser({ ...currentUser, email: e.target.value })
-                }
-              />
-              <label htmlFor="user-list-role">Rol</label>
               <select
-                id="user-list-role"
+                id="popup-role"
                 value={currentUser?.role || ""}
                 onChange={(e) =>
                   setCurrentUser({
@@ -276,17 +278,98 @@ const UserList = () => {
                     role: e.target.value,
                   })
                 }
+                required
               >
                 <option value="Farmer">Farmer</option>
                 <option value="Admin">Admin</option>
                 <option value="Technician">Technician</option>
               </select>
-              <button onClick={handleSave}>Guardar</button>
-              <button onClick={closeModal}>Cancelar</button>
+              <input
+                type="email"
+                id="popup-email"
+                value={currentUser?.email || ""}
+                onChange={(e) =>
+                  setCurrentUser({ ...currentUser, email: e.target.value })
+                }
+                placeholder="Correo electrónico"
+                required
+              />
+              <button type="submit" id="popup-save">
+                Guardar
+              </button>
+              <button type="button" id="popup-cancel" onClick={closeModal}>
+                Cancelar
+              </button>
             </form>
           </div>
         </div>
       )}
+    </div>
+  );
+};
+
+const CreateUserPopup = ({ onSubmit, onClose }) => {
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("Farmer");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Las contraseñas no coinciden.");
+      return;
+    }
+
+    onSubmit({ name, role, email, password });
+  };
+
+  return (
+    <div className="popup-container">
+      <h2>Crear Usuario</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Nombre"
+          required
+        />
+        <select value={role} onChange={(e) => setRole(e.target.value)} required>
+          <option value="Farmer">Farmer</option>
+          <option value="Admin">Admin</option>
+          <option value="Technician">Technician</option>
+        </select>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Correo electrónico"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Contraseña"
+          required
+        />
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Confirmar contraseña"
+          required
+        />
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <button type="submit">Crear</button>
+        <button type="button" onClick={onClose}>
+          Cancelar
+        </button>
+      </form>
     </div>
   );
 };

@@ -34,7 +34,6 @@ import SoilTemperature from "./pages/soil-temperature/SoilTemperature";
 import SoilHumidity from "./pages/soil-humidity/SoilHumdity";
 import EditRule from "./pages/edit-rule/EditRule";
 import CreateCrop from "./pages/create-crops/CreateCrops";
-import CreateUser from "./pages/create-user/CreateUser";
 
 function App() {
   return (
@@ -75,7 +74,6 @@ function App() {
             <Route path="/soil-temperature" element={<SoilTemperature />} />
             <Route path="/soil-humidity" element={<SoilHumidity />} />
             <Route path="/create-crop" element={<CreateCrop />} />
-            <Route path="/create-user" element={<CreateUser />} />
           </Routes>
         </ActuatorProvider>
       </SensorProvider>
