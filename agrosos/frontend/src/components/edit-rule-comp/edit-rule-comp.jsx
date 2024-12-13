@@ -69,62 +69,75 @@ const EditRuleComp = () => {
 
 
     const fetchRule = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/rules/${ruleId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        const ruleData = response.data;
-        const parsedRuleInfo = JSON.parse(ruleData.rule_info);
-        const andConditions = parsedRuleInfo.AND?.[0] || {};
-
-        setRule(ruleData);
-        setCropId(ruleData.crop_id || "");
-        setSensorType(andConditions.sensors?.[0]?.type || "");
-        setActuatorType(andConditions.actuators?.[0]?.type || "");
-        setSelectedAction(andConditions.actions?.[0] || "");
-        setAvailableActions(
-          actuatorActionMap[andConditions.actuators?.[0]?.type] || []
-        );
-        setTemperatureConditions(() => {
-          const temp = sessionStorage.getItem("temperatureConditions");
-          return temp
-            ? JSON.parse(temp)
-            : andConditions.conditions?.filter(
-                (cond) => cond.type === "temperature"
-              ) || [];
-        });
-
-        setHumidityConditions(() => {
-          const hum = sessionStorage.getItem("humidityConditions");
-          return hum
-            ? JSON.parse(hum)
-            : andConditions.conditions?.filter(
-                (cond) => cond.type === "humidity"
-              ) || [];
-        });
-        setSoilTemperatureConditions(() => {
-          const sTemp = sessionStorage.getItem("soilTemperatureConditions");
-          return sTemp
-            ? JSON.parse(sTemp)
-            : andConditions.conditions?.filter(
-                (cond) => cond.type === "soilTemperature"
-              ) || [];
-        });
-        setSoilHumidityConditions(() => {
-          const sHum = sessionStorage.getItem("soilHumidityConditions");
-          return sHum
-            ? JSON.parse(sHum)
-            : andConditions.conditions?.filter(
-                (cond) => cond.type === "soilHumidity"
-              ) || [];
-        });
-      } catch (error) {
-        console.error("Error fetching rule:", error);
+  try {
+    // Realiza una solicitud GET para obtener los detalles de la regla especificada por 'ruleId'
+    const response = await axios.get(
+      `http://localhost:3000/api/rules/${ruleId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
       }
-    };
+    );
+
+    // Almacena la respuesta de la API en la variable ruleData
+    const ruleData = response.data;
+
+    // Parsea la información específica de la regla desde la respuesta JSON
+    const parsedRuleInfo = JSON.parse(ruleData.rule_info);
+
+    // Extrae las condiciones 'AND' desde la información de la regla
+    const andConditions = parsedRuleInfo.AND?.[0] || {};
+
+    // Establece los datos extraídos en diferentes estados para su uso en la interfaz
+    setRule(ruleData);
+    setCropId(ruleData.crop_id || "");
+    setSensorType(andConditions.sensors?.[0]?.type || "");
+    setActuatorType(andConditions.actuators?.[0]?.type || "");
+    setSelectedAction(andConditions.actions?.[0] || "");
+    setAvailableActions(
+      actuatorActionMap[andConditions.actuators?.[0]?.type] || []
+    );
+
+    // Recupera condiciones específicas de temperatura, humedad, etc., de sessionStorage o las crea
+    setTemperatureConditions(() => {
+      const temp = sessionStorage.getItem("temperatureConditions");
+      return temp
+        ? JSON.parse(temp)
+        : andConditions.conditions?.filter(
+            (cond) => cond.type === "temperature"
+          ) || [];
+    });
+
+    setHumidityConditions(() => {
+      const hum = sessionStorage.getItem("humidityConditions");
+      return hum
+        ? JSON.parse(hum)
+        : andConditions.conditions?.filter(
+            (cond) => cond.type === "humidity"
+          ) || [];
+    });
+
+    setSoilTemperatureConditions(() => {
+      const sTemp = sessionStorage.getItem("soilTemperatureConditions");
+      return sTemp
+        ? JSON.parse(sTemp)
+        : andConditions.conditions?.filter(
+            (cond) => cond.type === "soilTemperature"
+          ) || [];
+    });
+
+    setSoilHumidityConditions(() => {
+      const sHum = sessionStorage.getItem("soilHumidityConditions");
+      return sHum
+        ? JSON.parse(sHum)
+        : andConditions.conditions?.filter(
+            (cond) => cond.type === "soilHumidity"
+          ) || [];
+    });
+  } catch (error) {
+    console.error("Error fetching rule:", error);
+  }
+};
+
 
     fetchCrops();
     fetchRule();

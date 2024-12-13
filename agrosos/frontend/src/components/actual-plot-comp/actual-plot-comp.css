@@ -1,0 +1,10 @@
+#actual-plot-comp-container{
+    width: 90vw;
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+}
+
+.actual-plot-comp-text{
+    background-color: aqua;
+}
