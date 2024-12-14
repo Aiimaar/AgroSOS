@@ -1,0 +1,114 @@
+#sensor-enla-container {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.sensor-enla-button-arrow {
+  margin-top: 2em;
+  align-self: flex-start;
+  margin-left: 2em;
+  border: none;
+  background-color: white;
+  font-size: 20px;
+  cursor: pointer; /* Añadido cursor pointer */
+}
+
+.enla-title {
+  margin-top: 1em;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.linked-sensors-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  width: 90vw;
+  align-items: center;
+  gap: 15px;
+}
+
+.sensor-item {
+  display: flex;
+  justify-content: space-between; /* Espacio entre el texto y el botón */
+  align-items: center;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sensor-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.sensor-item p {
+  margin: 0;
+  font-size: 16px; /* Aumentado el tamaño de la fuente */
+  color: #555;
+  flex-grow: 1; /* Permite que el texto se expanda */
+}
+
+.sensor-item strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.delete-sensor-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #3f790e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Transición suave */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+.no-sensors-message {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .sensor-item {
+      max-width: 70vw; /* Ajustado para tablets */
+  }
+
+  .sensor-enla-button-arrow {
+      margin-top: 3em;
+      margin-left: 5em; /* Ajustado margen izquierdo */
+  }
+
+  .linked-sensors-list {
+    width: 100%;
+    max-width: 60vw;
+  }
+}
+
+@media (min-width: 1025px) {
+  .linked-sensors-list {
+      max-width: 800px; /* Ancho máximo para escritorios */
+  }
+
+  .sensor-enla-button-arrow {
+      margin-left: 10em;
+  }
+}

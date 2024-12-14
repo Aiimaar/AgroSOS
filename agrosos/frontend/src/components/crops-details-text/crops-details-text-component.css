@@ -1,0 +1,32 @@
+.crops-details-text-component-container {
+  padding: 2em;
+  margin: 2em auto;
+  max-width: 800px;
+  background-color: #f9f9f9; /* Fondo suave */
+  border-radius: 15px; /* Bordes redondeados */
+  line-height: 1.6;
+  color: #000000;
+}
+
+.crops-details-text-component-title {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center; /* Centra el título */
+  color: #000000;
+  margin-bottom: 1em;
+}
+
+.crops-details-text-component-subtitle {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #000000;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  text-align: center; /* Centra los subtítulos */
+}
+
+.crops-details-text-component-paragraph {
+  font-size: 1.1em;
+  color: #555;
+  text-align: justify; /* Justifica el texto */
+}

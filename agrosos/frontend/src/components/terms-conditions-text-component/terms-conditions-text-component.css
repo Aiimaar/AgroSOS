@@ -1,0 +1,41 @@
+.terms-condition-text-container {
+  padding-top: 15%;
+  flex-direction: column;
+  width: 70vw;
+  margin: 2em auto;
+  text-align: justify;
+}
+
+.terms-back-button {
+  background: none;  
+  border: none;      
+  font-size: 20px;
+  cursor: pointer;   
+  color: #000;      
+  margin-bottom: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.terms-condition-text-title {
+  color: #000000;
+  font-size: 23px;
+  margin-bottom: 1em;
+}
+
+.terms-condition-text-section {
+  margin-bottom: 1em;
+}
+
+.terms-condition-text-section-number {
+  font-weight: bold;
+  color: #000000;
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.terms-condition-text-paragraph {
+  color: black;
+  margin-bottom: 2em;
+  text-align: justify;
+}

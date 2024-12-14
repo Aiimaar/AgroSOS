@@ -1,0 +1,151 @@
+.container-add-actuator {
+    margin: 20px;
+    padding: 15px;
+  }
+  
+  .form-add-actuator {
+    max-width: 500px;
+    margin: 3em auto;
+  }
+  
+  .actuator-form-title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 1.5em;
+  }
+  
+  .actuator-form {
+    width: 70vw;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+  
+  .actuator-form .form-group-actuator-name,
+  .actuator-form .form-group-actuator-code {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .label-actuator-name,
+  .label-actuator-code {
+    font-size: 16px;
+    color: gray;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+  
+  .actuator-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-actuator-name,
+  .input-actuator-code {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #4caf50;
+    font-size: 16px;
+    padding: 5px 25px 5px 5px;
+    outline: none;
+    color: #333;
+    background: none;
+  }
+
+  .add-actuator-content-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+  }
+  
+  .lock-icon {
+    position: absolute;
+    right: 5px;
+    font-size: 16px;
+    color: gray;
+    pointer-events: none;
+  }
+  
+  .input-actuator-name:focus,
+  .input-actuator-code:focus {
+    outline: none;
+    border-color: #006816;
+  }
+
+  .add-actuator-content-component-button{
+    display: flex;
+    gap: 1em;
+  }
+  
+  .btn-enla-back{
+    display: block;
+    width: 25vw;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 30px;
+    background-color: #5EA71E;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .actuator-success-message{
+    margin-top: 1em;
+  }
+
+  .btn-enla-actuator {
+    display: block;
+    width: 25vw;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 30px;
+    background-color: #5EA71E;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .btn-enla-actuator:hover {
+    background-color: #006816;
+  }
+
+  @media only screen and (min-width: 550px) {
+    .actuator-form {
+      width: 50vw;
+    }
+
+    .btn-enla-actuator {
+      width: 15vw;
+      margin-top: 1em;
+    }
+
+    .btn-enla-back{
+      width: 15vw;
+      margin-top: 1em;
+    }
+  }
+  
+  @media only screen and (min-width: 768px) {
+    .actuator-form {
+      width: 45vw;
+    }
+
+    .btn-enla-actuator {
+      width: 15vw;
+      margin-top: 1em;
+    }
+
+    .btn-enla-back{
+      width: 15vw;
+      margin-top: 1em;
+    }
+  }

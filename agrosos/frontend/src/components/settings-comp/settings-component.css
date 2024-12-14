@@ -1,0 +1,97 @@
+#container-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+
+.settings-arrow-container {
+  background: none;
+  align-self: flex-start;
+  margin-left: 2em;
+  margin-bottom: 1em;
+  border: none;      
+  font-size: 20px;
+  cursor: pointer;   
+  color: #000;      
+  display: flex;
+  align-items: center;
+}
+
+.settings-text {
+  margin-top: 1em;
+  margin-bottom: 4em;
+}
+
+.settings-p {
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.settings-subp {
+  color: green;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.settings-sub {
+  font-weight: bold;
+}
+
+.settings-noti,
+.settings-export,
+.settings-actu,
+.settings-help,
+.settings-rules,
+.settings-userc {
+  width: 20em;
+  border-bottom: 1px solid green;
+  margin-bottom: 20px;
+}
+
+.settings-ex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-container-elements {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .settings-arrow-container {
+    margin-top: -2em;
+    margin-left: 10em;
+  }
+
+  .settings-text {
+    font-size: 30px;
+    margin-top: 2em;
+    margin-bottom: 3em;
+  }
+
+  .settings-p {
+    font-size: 25px;
+  }
+
+  .settings-noti,
+  .settings-export,
+  .settings-actu,
+  .settings-help,
+  .settings-rules,
+  .settings-userc {
+    width: 25em;
+    border-bottom: 1px solid green;
+    margin-bottom: 20px;
+  }
+}

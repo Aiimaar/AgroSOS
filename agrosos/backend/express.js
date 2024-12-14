@@ -1,185 +1,61 @@
-import express from "express";
-import cors from "cors";
-import db from "./db.js";
+import express from 'express';
+import cors from 'cors';
+import sequelize from './db.js';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+import plotsRoutes from './routes/plotsRoutes.js';
+import usersRoutes from './routes/usersRoutes.js';
+import sensorsRoutes from './routes/sensorsRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import cropRoutes from './routes/cropRoutes.js';
+import sensorValueRoutes from './routes/sensorValueRoutes.js';
+import dotenv from 'dotenv';
+import actuatorRoutes from './routes/actuatorRoutes.js';
+import rulesRoutes from './routes/rulesRoutes.js';
+import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';  // Nueva ruta importada
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+dotenv.config();
 
-// Plots
-app.get("/api/plots", (req, res) => {
-  db.query("SELECT * FROM plots", (error, results) => {
-    if (error) {
-      res.status(500).send(error);
-    } else {
-      res.json(results);
-    }
-  });
-});
+sequelize.sync();
 
-app.post("/api/plots", (req, res) => {
-  const { name, size } = req.body;
-  db.query(
-    "INSERT INTO plots (name, size) VALUES (?, ?)",
-    [name, size],
-    (error, results) => {
-      if (error) {
-        res.status(500).send(error);
-      } else {
-        res.status(201).json({ id: results.insertId, name, size });
-      }
-    }
-  );
-});
+// Plot routes
+app.use("/api/plots", plotsRoutes);
 
-app.put("/api/plots/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, size } = req.body;
-  db.query(
-    "UPDATE plots SET name = ?, size = ? WHERE id = ?",
-    [name, size, id],
-    (error) => {
-      if (error) {
-        res.status(500).send(error);
-      } else {
-        res.json({ id, name, size });
-      }
-    }
-  );
-});
+// User routes
+app.use("/api/users", usersRoutes);
 
-app.delete("/api/plots/:id", (req, res) => {
-  const { id } = req.params;
+// Auth routes
+app.use("/api/auth", authRoutes);
 
-  db.query("DELETE FROM sensors WHERE plot_id = ?", [id], (error) => {
-    if (error) {
-      return res.status(500).send("Error al eliminar sensores: " + error);
-    }
+// Sensor routes
+app.use("/api/sensors", sensorsRoutes);
 
-    db.query("DELETE FROM plots WHERE id = ?", [id], (error) => {
-      if (error) {
-        return res.status(500).send("Error al eliminar la parcela: " + error);
-      }
-      return res.status(204).send();
-    });
-  });
-});
+// Crop routes
+app.use("/api/crops", cropRoutes);
 
-// Users
-app.get("/users", (req, res) => {
-  const query = "SELECT id, name, role, email FROM users";
-  db.query(query, (error, results) => {
-    if (error) {
-      console.error("Error al obtener los usuarios:", error);
-      res.status(500).send("Error al obtener los usuarios");
-    } else {
-      res.json(results);
-    }
-  });
-});
+// Sensor Value routes
+app.use("/api/sensor_value", sensorValueRoutes);
 
-app.post("/users", (req, res) => {
-  const { name, email, role, password } = req.body;
-  db.query(
-    "INSERT INTO users (name, email, role, password) VALUES (?, ?, ?, ?)",
-    [name, email, role, password],
-    (error, results) => {
-      if (error) {
-        console.error("Error al añadir el usuario:", error);
-        res.status(500).send("Error al añadir el usuario");
-      } else {
-        res.status(201).json({ id: results.insertId, name, email, role, password });
-      }
-    }
-  );
-});
+// Actuators routes
+app.use('/api/actuators', actuatorRoutes);
 
-app.put("/users/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, email, role } = req.body;
-  db.query(
-    "UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?",
-    [name, email, role, id],
-    (error) => {
-      if (error) {
-        console.error("Error al actualizar el usuario:", error);
-        res.status(500).send("Error al actualizar el usuario");
-      } else {
-        res.json({ id, name, email, role });
-      }
-    }
-  );
-});
-
-app.delete("/users/:id", (req, res) => {
-  const { id } = req.params;
-  db.query("DELETE FROM users WHERE id = ?", [id], (error) => {
-    if (error) {
-      console.error("Error al eliminar el usuario:", error);
-      res.status(500).send("Error al eliminar el usuario");
-    } else {
-      res.status(204).send();
-    }
-  });
-});
-
-// Sensors
-app.get("/api/sensors", (req, res) => {
-  db.query("SELECT * FROM sensors", (error, results) => {
-    if (error) {
-      console.error("Error ejecutando consulta:", error);
-      res.status(500).send(error);
-    } else {
-      res.json(results);
-    }
-  });
-});
-
-app.post("/api/sensors", (req, res) => {
-  const { type, value, date, plot_id } = req.body;
-  db.query(
-    "INSERT INTO sensors (type, value, date, plot_id) VALUES (?, ?, ?, ?)",
-    [type, value, date, plot_id],
-    (error, results) => {
-      if (error) {
-        console.error("Error ejecutando consulta:", error);
-        res.status(500).send(error);
-      } else {
-        res.status(201).json({ id: results.insertId, type, value, date, plot_id });
-      }
-    }
-  );
-});
-
-app.put("/api/sensors/:id", (req, res) => {
-  const { id } = req.params;
-  const { type, value, date, plot_id } = req.body;
-  db.query(
-    "UPDATE sensors SET type = ?, value = ?, date = ?, plot_id = ? WHERE id = ?",
-    [type, value, date, plot_id, id],
-    (error) => {
-      if (error) {
-        console.error("Error ejecutando consulta:", error);
-        res.status(500).send(error);
-      } else {
-        res.json({ id, type, value, date, plot_id });
-      }
-    }
-  );
-});
-
-app.delete("/api/sensors/:id", (req, res) => {
-  const { id } = req.params;
-  db.query("DELETE FROM sensors WHERE id = ?", [id], (error) => {
-    if (error) {
-      console.error("Error ejecutando consulta:", error);
-      res.status(500).send("Error al eliminar el sensor: " + error);
-    } else {
-      res.json({ message: `Sensor con ID ${id} eliminado.` });
-    }
-  });
-});
+// Rules routes
+app.use('/api/rules', rulesRoutes);
+// Irrigation Schedule routes (añadido)
+// Irrigation Schedule routes
+app.use("/api/irrigation_schedule", irrigationScheduleRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {

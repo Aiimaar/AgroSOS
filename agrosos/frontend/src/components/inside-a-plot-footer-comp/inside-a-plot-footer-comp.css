@@ -1,0 +1,17 @@
+.inside-a-plot-footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .inside-a-plot-footer-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.3s ease;
+  }

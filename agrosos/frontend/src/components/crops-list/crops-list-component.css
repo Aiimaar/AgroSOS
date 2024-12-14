@@ -1,0 +1,97 @@
+body, html {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.crops-list {
+  width: 100%;
+  max-width: 600px;
+  margin: 2em auto;
+  padding: 20px 0;
+}
+
+.crop-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.crop-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.crop-image-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.crop-list-comp-image {
+  width: 80px;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  padding-left: 20px;
+}
+
+.info-icon {
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  top: -17px;  
+}
+
+.crop-text {
+  margin-left: auto; 
+  text-align: left; 
+  padding-right: 20px;
+  position: relative;
+  top: 20px;
+  line-height: 1;
+}
+
+.harvest-title {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.harvest-subtitle {
+  font-size: 0.8em;
+  color: #777;
+  text-align: right;
+}
+
+.divider {
+  width: 90%; 
+  height: 1px;
+  background-color: #288528; 
+  margin: 12px auto 0; 
+}
+
+@media only screen and (min-width: 768px) {
+  .crops-list {
+    width: 70%;
+    max-width: 600px;
+    margin: 1em auto;
+    padding: 20px 0;
+  }
+
+  .crop-list-comp-image {
+    width: 85px;
+  }
+}

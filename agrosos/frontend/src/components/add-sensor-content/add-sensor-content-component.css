@@ -1,0 +1,156 @@
+.container-add-sensor {
+  margin: 20px;
+  padding: 15px;
+}
+
+.form-add-sensor {
+  max-width: 500px;
+  margin: 3em auto;
+}
+
+.sensor-form-title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 1.5em;
+}
+
+.sensor-form {
+  width: 70vw;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.sensor-form .form-group-sensor-name,
+.sensor-form .form-group-sensor-code {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.label-sensor-name,
+.label-sensor-code {
+  font-size: 16px;
+  color: gray;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.sensor-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-sensor-name,
+.input-sensor-code {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #4caf50;
+  font-size: 16px;
+  padding: 5px 25px 5px 5px;
+  outline: none;
+  color: #333;
+  background: none;
+}
+
+.sensor-error-message {
+  margin-top: 15px;
+  font-size: 14px;
+  color: red;
+}
+
+.sensor-success-message {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  color: gray;
+  font-style: italic;
+}
+
+.lock-icon {
+  position: absolute;
+  right: 5px;
+  font-size: 16px;
+  color: gray;
+  pointer-events: none;
+}
+
+.input-sensor-name:focus,
+.input-sensor-code:focus {
+  outline: none;
+  border-color: #006816;
+}
+
+.add-sensor-content-buttons {
+  display: flex;
+  gap: 1em;
+}
+
+.btn-back {
+  display: block;
+  width: 25vw;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 30px;
+  background-color: #5ea71e;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-enla {
+  display: block;
+  width: 25vw;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 30px;
+  background-color: #5ea71e;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-enla:hover {
+  background-color: #006816;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 550px) {
+  .sensor-form {
+    width: 50vw;
+  }
+
+  .btn-back {
+    margin-top: 1em;
+    width: 15vw;
+  }
+  
+  .btn-enla {
+    margin-top: 1em;
+    width: 15vw;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .sensor-form {
+    width: 45vw;
+  }
+
+  .btn-back {
+    margin-top: 1em;
+    width: 15vw;
+  }
+  
+  .btn-enla {
+    margin-top: 1em;
+    width: 15vw;
+  }
+}

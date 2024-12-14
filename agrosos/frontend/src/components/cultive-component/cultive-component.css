@@ -1,0 +1,19 @@
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.add-crop-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cultive {
+  width: 100vw;
+  height: 30vh;
+}

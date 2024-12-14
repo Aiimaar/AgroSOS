@@ -1,0 +1,179 @@
+.add-rule-form-container {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: auto;
+  max-width: 90vw;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  margin: 8em auto;
+}
+
+.add-rule-form-title {
+  color: #4caf50;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.add-rule-label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.add-rule-select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-rule-select:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
+.add-rule-select option[value=""] {
+  color: #999;
+}
+
+.add-rule-conditions {
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #eef6ee;
+  border-left: 4px solid #4caf50;
+  border-radius: 4px;
+}
+
+.add-rule-conditions h3 {
+  font-size: 18px;
+  color: #4caf50;
+  margin-bottom: 10px;
+}
+
+.add-rule-conditions ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.add-rule-conditions li {
+  padding: 10px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-rule-form-submit-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-rule-form-submit-button:hover {
+  background-color: #45a049;
+}
+
+.add-rule-conditions-button {
+  background-color: #28a745; /* Color verde */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px; /* Bordes redondeados */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.add-rule-conditions-button:hover {
+  background-color: #218838; /* Color verde más oscuro al pasar el ratón */
+}
+
+.delete-condition-button {
+  background-color: #28a745; /* Color verde */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 12px; /* Bordes redondeados */
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.delete-condition-button:hover {
+  background-color: #218838; /* Color verde más oscuro al pasar el ratón */
+}
+
+/* Estilos específicos para pantallas tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .add-rule-form-container {
+    width: 100%;
+    max-width: 50vw;
+  }
+
+  .add-rule-form-title {
+    font-size: 22px; /* Reducir ligeramente el tamaño del título */
+  }
+
+  .add-rule-label {
+    font-size: 15px; /* Reducir el tamaño del texto de las etiquetas */
+  }
+
+  .add-rule-select {
+    padding: 10px; /* Reducir el padding para adaptarse mejor */
+    font-size: 15px;
+  }
+
+  .add-rule-conditions {
+    margin: 15px 0;
+    padding: 8px;
+  }
+
+  .add-rule-conditions h3 {
+    font-size: 16px;
+  }
+
+  .add-rule-conditions li {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .add-rule-form-submit-button {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .add-rule-conditions-button {
+    padding: 8px 16px;
+    font-size: 15px;
+  }
+
+  .delete-condition-button {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+}

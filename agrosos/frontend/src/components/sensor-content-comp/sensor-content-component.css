@@ -1,0 +1,87 @@
+body{
+  background-color: white;
+}
+
+#sensor-content-container {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.sensorList {
+  margin-top: 3em;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5em;
+  width: 100%;
+  align-items: center;
+}
+
+.sensor-content-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid green;
+  padding-bottom: 1em;
+}
+
+.sensor-content-list img {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.sensor-content-list p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 40px;
+}
+
+.sun {
+  width: 47px;
+}
+
+.sensor-content-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.sensor-content-buttons .quit {
+  width: 46px;
+  height: 46px;
+}
+
+.enla{
+  display: flex;
+  margin-top: 2.5em;
+}
+
+.enla-p{
+  color: white;
+  font-size: 15px;
+}
+
+.button-enla{
+  border-radius: 30px;
+  width: 45vw;
+  border: none;
+  background-color: #5EA71E;
+  height: 5vh;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  #sensor-content-container {
+    width: 100%;
+    max-width: 70vw;
+  }
+}

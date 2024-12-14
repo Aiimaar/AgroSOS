@@ -1,0 +1,28 @@
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.add-plot-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 14em auto;
+  height: 45vh;
+}
+
+.p-container {
+  color: grey;
+  font-size: 20px;
+  margin: 0;
+}
+
+.plusCircleOutlined {
+  width: 100%;
+  max-width: 30vw;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+}
