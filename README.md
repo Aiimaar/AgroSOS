@@ -85,7 +85,349 @@ Before running the application, ensure you have the MySQL database set up correc
 2. Query with the basic structure of the database.
 
 ```sql
-   Query con la base de datos
+    -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+--
+-- Host: localhost    Database: agrosos
+-- ------------------------------------------------------
+-- Server version	8.0.39
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `actuators`
+--
+
+DROP TABLE IF EXISTS `actuators`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `actuators` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL,
+  `plot_id` int NOT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `actuators_ibfk_1` (`plot_id`),
+  CONSTRAINT `actuators_ibfk_1` FOREIGN KEY (`plot_id`) REFERENCES `plots` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `actuators`
+--
+
+LOCK TABLES `actuators` WRITE;
+/*!40000 ALTER TABLE `actuators` DISABLE KEYS */;
+/*!40000 ALTER TABLE `actuators` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `admins`
+--
+
+DROP TABLE IF EXISTS `admins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admins` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `admins_ibfk_1` (`user_id`),
+  CONSTRAINT `admins_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admins`
+--
+
+LOCK TABLES `admins` WRITE;
+/*!40000 ALTER TABLE `admins` DISABLE KEYS */;
+INSERT INTO `admins` VALUES (1,1),(2,127);
+/*!40000 ALTER TABLE `admins` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `crops`
+--
+
+DROP TABLE IF EXISTS `crops`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `crops` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `graphic_image` varchar(255) DEFAULT NULL,
+  `crop_image` varchar(255) DEFAULT NULL,
+  `info` longtext,
+  `start_month` varchar(45) DEFAULT NULL,
+  `end_month` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `crops`
+--
+
+LOCK TABLES `crops` WRITE;
+/*!40000 ALTER TABLE `crops` DISABLE KEYS */;
+INSERT INTO `crops` VALUES (1,'zanahoria',NULL,'zanahoria.png','','Julio','Ago'),(2,'platano',NULL,'platano.png','','Enero','Diciembre'),(3,'papa',NULL,'papa.png','','Marzo','Junio'),(4,'ajo',NULL,'ajo.png','','Junio','Julio'),(5,'EGFWG','1733855234316-568757681-tiochill.jpg','1733855234316-765937037-tiochill.jpg','RGAAAAAAAA','Enero','Noviembre');
+/*!40000 ALTER TABLE `crops` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `farmers`
+--
+
+DROP TABLE IF EXISTS `farmers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `farmers` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `farmers_ibfk_1` (`user_id`),
+  CONSTRAINT `farmers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `farmers`
+--
+
+LOCK TABLES `farmers` WRITE;
+/*!40000 ALTER TABLE `farmers` DISABLE KEYS */;
+INSERT INTO `farmers` VALUES (1,2),(2,4),(3,88),(4,90),(5,92),(7,94),(8,112),(9,114),(10,115),(11,120),(12,121),(13,123),(17,126),(20,129),(21,130);
+/*!40000 ALTER TABLE `farmers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `irrigationschedules`
+--
+
+DROP TABLE IF EXISTS `irrigationschedules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `irrigationschedules` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `plotId` int NOT NULL,
+  `days` json NOT NULL,
+  `time` time NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `irrigationschedules_ibfk_1` (`plotId`),
+  CONSTRAINT `irrigationschedules_ibfk_1` FOREIGN KEY (`plotId`) REFERENCES `plots` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `irrigationschedules`
+--
+
+LOCK TABLES `irrigationschedules` WRITE;
+/*!40000 ALTER TABLE `irrigationschedules` DISABLE KEYS */;
+INSERT INTO `irrigationschedules` VALUES (2,64,'\"[\\\"Monday\\\",\\\"Saturday\\\",\\\"Thursday\\\"]\"','12:00:00','2024-12-10 17:27:57','2024-12-10 17:27:57'),(3,64,'\"[\\\"Tuesday\\\",\\\"Saturday\\\",\\\"Thursday\\\"]\"','22:00:00','2024-12-11 16:51:52','2024-12-11 16:51:52');
+/*!40000 ALTER TABLE `irrigationschedules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plots`
+--
+
+DROP TABLE IF EXISTS `plots`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `plots` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `size` float DEFAULT NULL,
+  `image` text,
+  `crop_id` int DEFAULT NULL,
+  `color` varchar(45) DEFAULT NULL,
+  `default_image` varchar(45) DEFAULT NULL,
+  `farmer_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `plots_fbk_1_idx` (`crop_id`),
+  KEY `user_fbk_1_idx` (`farmer_id`),
+  CONSTRAINT `plots_fbk_1` FOREIGN KEY (`crop_id`) REFERENCES `crops` (`id`),
+  CONSTRAINT `user_fbk_1` FOREIGN KEY (`farmer_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plots`
+--
+
+LOCK TABLES `plots` WRITE;
+/*!40000 ALTER TABLE `plots` DISABLE KEYS */;
+INSERT INTO `plots` VALUES (64,'Postman',-50,NULL,1,'#a31f1f',NULL,93),(66,'Chano',2103,NULL,NULL,NULL,'X',93),(67,'Papas',234,NULL,1,NULL,'X',127),(68,'Chano',234,NULL,NULL,NULL,'X',114),(69,'G3',42,NULL,3,'#a80000',NULL,127),(70,'hffsghs',-3455,'1734017241667-Informe_Cambios_Aimar.pdf',NULL,NULL,NULL,93);
+/*!40000 ALTER TABLE `plots` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rules`
+--
+
+DROP TABLE IF EXISTS `rules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rules` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `crop_id` int DEFAULT NULL,
+  `technician_id` int NOT NULL,
+  `rule_info` json NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `technician_fbk_1_idx` (`technician_id`),
+  KEY `crop_fbk_1_idx` (`crop_id`),
+  CONSTRAINT `crop_fbk_1` FOREIGN KEY (`crop_id`) REFERENCES `crops` (`id`),
+  CONSTRAINT `technician_fbk_1` FOREIGN KEY (`technician_id`) REFERENCES `technicians` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rules`
+--
+
+LOCK TABLES `rules` WRITE;
+/*!40000 ALTER TABLE `rules` DISABLE KEYS */;
+INSERT INTO `rules` VALUES (23,'Regla 1 Cultivo',1,93,'\"{\\\"AND\\\":[{\\\"conditions\\\":[{\\\"type\\\":\\\"humidity\\\",\\\"value\\\":8,\\\"operator\\\":\\\"=\\\"},{\\\"type\\\":\\\"humidity\\\",\\\"value\\\":40,\\\"operator\\\":\\\"=\\\"}],\\\"actions\\\":[\\\"Activar Riego\\\"],\\\"sensors\\\":[{\\\"type\\\":\\\"Humedad\\\"}],\\\"actuators\\\":[{\\\"type\\\":\\\"Riego\\\"}]}]}\"'),(30,'Regla 1 Cultivo',3,93,'\"{\\\"AND\\\":[{\\\"conditions\\\":[{\\\"type\\\":\\\"temperature\\\",\\\"value\\\":\\\"16\\\",\\\"operator\\\":\\\">\\\"},{\\\"type\\\":\\\"temperature\\\",\\\"value\\\":23,\\\"operator\\\":\\\"<\\\"}],\\\"actions\\\":[\\\"Cubrir cultivos con lona semi-transparente\\\"],\\\"sensors\\\":[{\\\"type\\\":\\\"Temperatura\\\"}],\\\"actuators\\\":[{\\\"type\\\":\\\"Riego\\\"}]}]}\"');
+/*!40000 ALTER TABLE `rules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sensor_value`
+--
+
+DROP TABLE IF EXISTS `sensor_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sensor_value` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sensor_id` int NOT NULL,
+  `value` float DEFAULT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sensor_fbk_1_idx` (`sensor_id`),
+  CONSTRAINT `sensor_fbk_1` FOREIGN KEY (`sensor_id`) REFERENCES `sensors` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sensor_value`
+--
+
+LOCK TABLES `sensor_value` WRITE;
+/*!40000 ALTER TABLE `sensor_value` DISABLE KEYS */;
+INSERT INTO `sensor_value` VALUES (172,37,66.13,'2024-12-12 00:00:00'),(173,36,34.54,'2024-12-12 00:00:00'),(174,35,74.31,'2024-12-12 00:00:00'),(175,34,67.91,'2024-12-12 00:00:00'),(176,37,16.63,'2024-12-12 08:00:00'),(177,36,79.42,'2024-12-12 08:00:00'),(178,35,47.22,'2024-12-12 08:00:00'),(179,34,97.82,'2024-12-12 08:00:00'),(180,37,47.44,'2024-12-12 16:00:00'),(181,36,43.75,'2024-12-12 16:00:00'),(182,35,76.44,'2024-12-12 16:00:00'),(183,34,50.95,'2024-12-12 16:00:00'),(184,37,25.41,'2024-12-12 23:00:00'),(185,36,74.19,'2024-12-12 23:00:00'),(186,35,94.75,'2024-12-12 23:00:00'),(187,34,51.17,'2024-12-12 23:00:00'),(203,34,38,'2024-12-12 04:00:00'),(204,34,11,'2024-12-12 12:00:00'),(205,34,12,'2024-12-12 20:00:00'),(206,36,33,'2024-12-12 04:00:00'),(207,36,76,'2024-12-12 12:00:00'),(208,36,21,'2024-12-12 20:00:00');
+/*!40000 ALTER TABLE `sensor_value` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sensors`
+--
+
+DROP TABLE IF EXISTS `sensors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sensors` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) DEFAULT NULL,
+  `plot_id` int DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sensors_ibfk_1` (`plot_id`),
+  CONSTRAINT `sensors_ibfk_1` FOREIGN KEY (`plot_id`) REFERENCES `plots` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sensors`
+--
+
+LOCK TABLES `sensors` WRITE;
+/*!40000 ALTER TABLE `sensors` DISABLE KEYS */;
+INSERT INTO `sensors` VALUES (34,'temperature',69,'20241211'),(35,'soil_temperature',69,'4234234'),(36,'humidity',69,'77'),(37,'soil_humidity',69,'123213');
+/*!40000 ALTER TABLE `sensors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `technicians`
+--
+
+DROP TABLE IF EXISTS `technicians`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `technicians` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `technicians_ibfk_1` (`user_id`),
+  CONSTRAINT `technicians_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `technicians`
+--
+
+LOCK TABLES `technicians` WRITE;
+/*!40000 ALTER TABLE `technicians` DISABLE KEYS */;
+INSERT INTO `technicians` VALUES (1,3),(2,93);
+/*!40000 ALTER TABLE `technicians` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `role` enum('Admin','Farmer','Technician') NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `profile_image` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Alice Smith','Admin','alice.smith@example.com','$2y$10$e1.S3BHQnpZzz2.HF1G9/Oh5E9AaBxdIWZZh0BzA1KmlVJ0R1JTP2',NULL),(2,'Bob Johnson','Farmer','bob.johnson@example.com','$2y$10$e1.S3BHQnpZzz2.HF1G9/Oh5E9AaBxdIWZZh0BzA1KmlVJ0R1JTP3',NULL),(3,'Charlie Brown','Technician','charlie.brown@example.com','$2y$10$e1.S3BHQnpZzz2.HF1G9/Oh5E9AaBxdIWZZh0BzA1KmlVJ0R1JTP4',NULL),(4,'Diana Prince','Farmer','diana.prince@example.com','$2y$10$e1.S3BHQnpZzz2.HF1G9/Oh5E9AaBxdIWZZh0BzA1KmlVJ0R1JTP5',NULL),(88,'Jose Juan','Farmer','josejuan@gmail.com','$2b$10$1rKGIfXoE8cT655dszP3UuuWdLY/ibIJhenXfKH5RPSVqsNa6bxEi','1732132049535-bp.jpg'),(90,'Juan','Farmer','juan@juan','$2b$10$.yoOdC8luC5muguNOJ11eeoGQh7dzo/SHBj9PmRWzpfVad8DZvK/e',NULL),(92,'Jose','Farmer','jose@gmail.com','$2b$10$xg7oaYlKOBo8akv2aeAvz.6UJyy5YhyuCM2GcYtfEm/cE0Jj2ZP5i',NULL),(93,'pepe','Technician','pepe@gmail.com','$2b$10$8dRquNOy2vDjgTVk2/9csuPq6G1eKsLb3Qg2aE3wTNm64TKkY4zq6','1733848140173-platano.png'),(94,'Martin','Farmer','martin@martin.com','$2b$10$q22opWcU1ab5yMbKwr.TeOXwPmepB.I9rEaopXmbbHQfbJzbEstD6',NULL),(112,'Juan','Farmer','juan@juan.com','$2b$10$ka0WZOiZjqFcyvWobH17RO3ZZup7V10mHRsgsfI./VCZF61jktqWq','1733848095945-ajo.png'),(114,'Jose','Farmer','jose@jose','$2b$10$dQIAgLwgijlm2Juqt15uZuaQGAbiBL2ND9.8DohaaJfrQUFEgNQFe',NULL),(115,'Julian','Farmer','julian@julian','$2b$10$Pf7I4JZ/YxwWoPOUE1ZmGes2sPUzs46IeLc.TGM6vhCkEB7sdr23e',NULL),(120,'Wilmer','Farmer','wilmerzeasrodriguez@gmail.com','$2b$10$OmpQb3/fxkjWvxpiP0pwkOfdxw/q.uX1HTMUq4lh9Cqw9flFqI5q.','1734016133576-monkey.jpg'),(121,'Tiburcio','Farmer','tiburcio@tiburcio.com','$2b$10$h1kJO2JeAVv.xlv39LYUK.sGT8nSXThLFluLBTbx6xALf7d7ZyAnq',NULL),(123,'Miguel Ángel ','Farmer','miguelangelfigueroa@ieselrincon.es','$2b$10$3lAiIsU9ok9OxaY3/0iUSukVbY4DfyBod4UOw/3QBWJWSFuxpFoc6','1732206138614-bp.jpg'),(126,'Miguel ángel','Farmer','mfiggar@canariaseducacion.es','$2b$10$aTVMoCtUkN3exlcp5bWheuydXm6MXfzeZiphe8VQuokKgrhR2UlT.',NULL),(127,'Chano','Admin','chano@chano','$2b$10$RdKIL3Y9J7G7L8jlWASZh.fOKYKTCyN9H6/74VGVZTiF0GPKXJZ5y','1732813711313-bp.jpg'),(129,'Pepe Juan','Farmer','pepejuan@gmail.com','$2b$10$G/hlYC8SQg8GsVJM4XfmiOKmW1bnE.gKSOmV.HLEF38GF/EQ50IHi',NULL),(130,'Paco Jose','Farmer','pacojose@gmail.com','$2b$10$NjvRb0f0DeU/ckiIIgGBUeXq786a8UKK/D9W2agkLfVQVEZ0Bh2la',NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-12-12 17:42:29
+
    ```
 ---
 
