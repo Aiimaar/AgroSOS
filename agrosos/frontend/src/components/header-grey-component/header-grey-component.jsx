@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function SensorHeaderGrey(){
     return(
-        <div className="headerGrey">
+        <div className="headerGrey-inside-a-plot">
         <div className="headerGreyItemContainer">
         <Link to="/crops"><img src={headerGrey} alt="headerGrey" className="headerGreyItem" /></Link>
           <p className="header-p">Cultivo</p>
