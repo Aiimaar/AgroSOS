@@ -181,8 +181,9 @@ function PlotListComp() {
     }
   };
 
-  const handlePlotClick = (plotId) => {
+  const handlePlotClick = (plotId, plotName) => {
     localStorage.setItem("selectedPlotId", plotId);
+    localStorage.setItem("selectedPlotName", plotName);
     navigate("/inside-a-plot");
   };
 
@@ -253,7 +254,7 @@ function PlotListComp() {
             <div
               key={plot.id}
               className="plot-card"
-              onClick={() => handlePlotClick(plot.id)}
+              onClick={() => handlePlotClick(plot.id, plot.name)}
               style={{ backgroundColor: plot.color || "transparent" }}
             >
               {/* Mostrar la imagen si está disponible */}

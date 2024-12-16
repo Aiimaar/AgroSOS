@@ -1,12 +1,19 @@
 #actual-plot-comp-container{
     width: 100%;
     max-width: 90vw;
-    margin-top: 90px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin: 90px auto auto auto;
 }
 
 .actual-plot-comp-text{
     font-weight: bold;
     color: black;
+}
+
+@media only screen and (min-width: 768px){
+    .actual-plot-comp-text{
+        font-size: 16px;
+    }
 }

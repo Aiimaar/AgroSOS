@@ -30,7 +30,6 @@
 
 @media only screen and (min-width: 768px) {
   .headerGrey-inside-a-plot {
-    margin-top: 15%;
     gap: 6em;
   }
 }
