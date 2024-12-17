@@ -30,8 +30,8 @@ export const createUser = async (req, res) => {
   const { name, role, email, password, profile_image } = req.body;
 
   // Validación de campos requeridos
-  if (!email || !password) {
-    return res.status(400).json({ error: "Email and password are required." });
+  if (!email || !password || !name) {
+    return res.status(400).json({ error: "Email, password and name are required." });
   }
 
   try {

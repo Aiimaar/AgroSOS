@@ -12,6 +12,28 @@ export const getSensorValues = async (req, res) => {
   }
 };
 
+export const createSensorValue = async (req, res) => {
+  try {
+    const { sensor_id, value, createdAt } = req.body;
+
+    // Verificar que todos los campos están presentes y no están en blanco
+    if (!sensor_id || !value || !createdAt) {
+      return res.status(400).json({ error: 'Todos los campos (sensor_id, value, createdAt) son obligatorios' });
+    }
+
+    if (sensor_id.trim() === '' || value.trim() === '' || createdAt.trim() === '') {
+      return res.status(400).json({ error: 'Ninguno de los campos (sensor_id, value, createdAt) puede estar en blanco' });
+    }
+
+    const newSensorValue = await SensorValue.create({ sensor_id, value, createdAt });
+
+    res.status(201).json(newSensorValue);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al crear el valor del sensor' });
+  }
+};
+
+
 export const deleteSensorValue = async (req, res) => {
   const { id } = req.params; // Obtener el ID desde los parámetros de la URL
 

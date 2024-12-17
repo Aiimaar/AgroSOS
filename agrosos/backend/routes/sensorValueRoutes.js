@@ -10,5 +10,5 @@ router.get('/:id', authenticateToken, sensorValue.getSensorValueById);
 router.get('/plot/:plotId', sensorValue.getSensorValueByPlotId);
 router.delete('/:id', authenticateToken, sensorValue.deleteSensorValue);
 router.put('/:id', authenticateToken, sensorValue.updateSensorValue);
-
+router.post('/', authenticateToken, sensorValue.createSensorValue);
 export default router;
