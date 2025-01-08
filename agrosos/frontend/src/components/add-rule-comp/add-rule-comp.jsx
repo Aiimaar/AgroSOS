@@ -36,7 +36,11 @@ const AddRuleComp = () => {
   const actuatorActionMap = {
     Riego: ["Activar Riego", "Desactivar Riego"],
     Ventilación: ["Activar Ventilación", "Desactivar Ventilación"],
-    "Cobertura de cultivos": ["Cubrir cultivos con lona semi-transparente", "Cubrir cultivos con lona opaca", "Destapar cultivos"],
+    "Cobertura de cultivos": [
+      "Cubrir cultivos con lona semi-transparente",
+      "Cubrir cultivos con lona opaca",
+      "Destapar cultivos",
+    ],
     "Apertura de ventanas": ["Abrir ventanas", "Cerrar ventanas"],
   };
 
@@ -135,10 +139,8 @@ const AddRuleComp = () => {
       return;
     }
 
-    const cropName = crops.find((crop) => crop.id === Number(cropId))?.name || "Cultivo";
-    console.log(cropName)
+    const cropName = localStorage.getItem("cropName") || "Cultivo";
     const ruleName = `Regla ${ruleNumber} ${cropName}`;
-
 
     const ruleInfo = {
       AND: [
@@ -188,7 +190,6 @@ const AddRuleComp = () => {
         }
       );
 
-      // Increment the rule number for the next rule
       setRuleNumber(ruleNumber + 1);
 
       setCropId("");
@@ -200,7 +201,6 @@ const AddRuleComp = () => {
       setSoilTemperatureConditions([]);
       setSoilHumidityConditions([]);
 
-      // Limpiar sessionStorage
       sessionStorage.removeItem("cropId");
       sessionStorage.removeItem("sensorType");
       sessionStorage.removeItem("actuatorType");
@@ -209,6 +209,7 @@ const AddRuleComp = () => {
       sessionStorage.removeItem("humidityConditions");
       sessionStorage.removeItem("soilTemperatureConditions");
       sessionStorage.removeItem("soilHumidityConditions");
+      localStorage.removeItem("cropName");
 
       alert("Regla añadida con éxito.");
     } catch (error) {
@@ -228,7 +229,16 @@ const AddRuleComp = () => {
         id="add-rule-crop"
         className="add-rule-select"
         value={cropId}
-        onChange={(e) => setCropId(e.target.value)}
+        onChange={(e) => {
+          const selectedCropId = e.target.value;
+          setCropId(selectedCropId);
+
+          // Guardar el nombre del cultivo en el localStorage
+          const selectedCropName =
+            crops.find((crop) => crop.id === Number(selectedCropId))?.name ||
+            "";
+          localStorage.setItem("cropName", selectedCropName);
+        }}
       >
         <option value="">Selecciona un cultivo</option>
         {crops.map((crop) => (
@@ -261,7 +271,8 @@ const AddRuleComp = () => {
             {temperatureConditions.map((cond, index) => (
               <li key={index}>
                 {cond.operator} {cond.value}°C
-                <button className="delete-condition-button"
+                <button
+                  className="delete-condition-button"
                   onClick={() => handleDeleteCondition("temperature", index)}
                 >
                   Eliminar
@@ -269,7 +280,10 @@ const AddRuleComp = () => {
               </li>
             ))}
           </ul>
-          <button className="add-rule-conditions-button" onClick={() => navigate("/temperature")}>
+          <button
+            className="add-rule-conditions-button"
+            onClick={() => navigate("/temperature")}
+          >
             Añadir
           </button>
         </div>
@@ -282,7 +296,8 @@ const AddRuleComp = () => {
             {humidityConditions.map((cond, index) => (
               <li key={index}>
                 {cond.operator} {cond.value}%
-                <button className="delete-condition-button"
+                <button
+                  className="delete-condition-button"
                   onClick={() => handleDeleteCondition("humidity", index)}
                 >
                   Eliminar
@@ -290,28 +305,37 @@ const AddRuleComp = () => {
               </li>
             ))}
           </ul>
-          <button className="add-rule-conditions-button" onClick={() => navigate("/humidity")}>
+          <button
+            className="add-rule-conditions-button"
+            onClick={() => navigate("/humidity")}
+          >
             Añadir
           </button>
         </div>
       )}
 
-{sensorType === "Temperatura del terreno" && (
+      {sensorType === "Temperatura del terreno" && (
         <div className="add-rule-conditions">
           <h3>Condiciones de Temperatura del terreno</h3>
           <ul>
             {soilTemperatureConditions.map((cond, index) => (
               <li key={index}>
                 {cond.operator} {cond.value}°C
-                <button className="delete-condition-button"
-                  onClick={() => handleDeleteCondition("soilTemperature", index)}
+                <button
+                  className="delete-condition-button"
+                  onClick={() =>
+                    handleDeleteCondition("soilTemperature", index)
+                  }
                 >
                   Eliminar
                 </button>
               </li>
             ))}
           </ul>
-          <button className="add-rule-conditions-button" onClick={() => navigate("/soil-temperature")}>
+          <button
+            className="add-rule-conditions-button"
+            onClick={() => navigate("/soil-temperature")}
+          >
             Añadir
           </button>
         </div>
@@ -324,7 +348,8 @@ const AddRuleComp = () => {
             {soilHumidityConditions.map((cond, index) => (
               <li key={index}>
                 {cond.operator} {cond.value}%
-                <button className="delete-condition-button"
+                <button
+                  className="delete-condition-button"
                   onClick={() => handleDeleteCondition("soilHumidity", index)}
                 >
                   Eliminar
@@ -332,7 +357,10 @@ const AddRuleComp = () => {
               </li>
             ))}
           </ul>
-          <button className="add-rule-conditions-button" onClick={() => navigate("/soil-humidity")}>
+          <button
+            className="add-rule-conditions-button"
+            onClick={() => navigate("/soil-humidity")}
+          >
             Añadir
           </button>
         </div>
