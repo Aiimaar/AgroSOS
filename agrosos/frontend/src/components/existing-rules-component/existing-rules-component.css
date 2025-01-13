@@ -20,6 +20,10 @@
   margin-bottom: 20px;
 }
 
+.existing-rule-back-button:focus {
+  outline: 2px solid #FFD700; /* Indicador de enfoque accesible */
+}
+
 /* Estilos para el encabezado */
 .existing-rule-header {
   display: flex;
@@ -31,10 +35,12 @@
   font-size: 24px;
   font-weight: bold;
   display: flex;
+  color: #333; /* Color de texto accesible */
 }
 
 .icon-list {
   margin-right: 10px;
+  color: #555;
 }
 
 /* Estilos para las tarjetas de reglas */
@@ -46,23 +52,29 @@
 }
 
 .existing-rule-card {
-  background-color: #5EA71E;
-  color: white;
+  background-color: #3b873e;
+  color: #fff;
   padding: 20px;
-  border-radius: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 200px;
-  width: 320px;
+  height: 220px;
+  width: 100%;
+  max-width: 320px;
   position: relative;
+}
+
+.existing-rule-card:focus-within {
+  outline: 2px solid #FFD700;
 }
 
 /* Información de la tarjeta */
 .existing-rule-card-info p {
   margin: 5px 0;
-  color: white;
+  color: #fff;
+  font-size: 1rem;
 }
 
 /* Estilos para los botones de acción */
@@ -77,45 +89,37 @@
 
 .existing-rule-edit-button,
 .existing-rule-delete-button {
-  background-color: white;
-  border: 1px solid #000;
-  border-radius: 20px;
-  width: 50px;
-  height: 30px;
-  padding: 10px;
-  color: #000;
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: #333;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Hover para botones de editar y eliminar */
 .existing-rule-edit-button:hover,
 .existing-rule-delete-button:hover {
-  background-color: #f1f1f1;
+  background-color: #e0e0e0;
 }
 
-/* Estilos para los iconos dentro de los botones */
-.existing-rule-edit-button,
-.existing-rule-delete-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.existing-rule-edit-button:focus,
+.existing-rule-delete-button:focus {
+  outline: 2px solid #FFD700;
+  transform: scale(1.1);
 }
 
-/* Enlaces y otros ajustes */
-.existing-rule-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
+/* Modal */
 .existing-rule-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  /* Fondo oscuro */
+  background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -123,181 +127,69 @@
 }
 
 .existing-rule-modal-content {
-  background-color: white;
+  background-color: #fff;
   padding: 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   width: 300px;
+  max-width: 90%;
   text-align: center;
-}
-
-.existing-rule-modal-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
 }
 
 .existing-rule-modal-button {
   padding: 10px 20px;
-  border-radius: 20px;
-  border: 1px solid #000;
+  border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
 }
 
 .existing-rule-modal-confirm {
-  background-color: #5EA71E;
-  color: white;
+  background-color: #3b873e;
+  color: #fff;
+  border: 1px solid #2a5e28;
 }
 
 .existing-rule-modal-cancel {
-  background-color: white;
-  color: #000;
+  background-color: #e0e0e0;
+  color: #333;
 }
 
+.existing-rule-modal-button:focus {
+  outline: 2px solid #FFD700;
+}
+
+.add-rule-button,
+.add-rule-button-circle {
+  margin-top: 2em;
+  background-color: #fff;
+  color: #3b873e;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #3b873e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-rule-button:hover,
+.add-rule-button-circle:hover {
+  background-color: #3b873e;
+  color: #fff;
+}
+
+.add-rule-button:focus,
+.add-rule-button-circle:focus {
+  outline: 2px solid #FFD700;
+  transform: scale(1.1);
+}
+
+/* Mensaje sin reglas */
 .no-rules-message {
   text-align: center;
-  margin-top: 180px;
-  justify-content: center;
-  justify-items: center;
-}
-
-.no-rules-message h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.add-rule-button {
-  background-color: white;
-  color: #5EA71E;
-  font-size: 30px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 3px solid #5EA71E;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  justify-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.add-rule-button:hover {
-  background-color: #5EA71E;
-  color: white;
-  border-color: white;
-}
-
-.add-rule-button-circle {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  color: #5EA71E;
-  font-size: 30px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 3px solid #5EA71E;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.add-rule-button-circle:hover {
-  background-color: green;
-  color: white;
-  border-color: white;
-}
-
-@media only screen and (min-width: 768px) {
-  .existing-rule-back-button {
-    margin-top: 2em;
-    margin-left: 6em;
-    margin-bottom: 2em;
-  }
-
-  .existing-rule-title h1{
-    font-size: 30px;
-  }
-
-  .no-rules-message {
-    margin-top: 150px;
-  }
-
-  .no-rules-message h2 {
-    font-size: 25px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-
-  /* Ajustar contenedor principal */
-  #existing-rules-container {
-    padding: 15px;
-    margin-top: 60px;
-  }
-
-  /* Encabezado */
-  .existing-rule-header {
-    justify-content: center;
-  }
-
-  .existing-rule-title {
-    font-size: 22px;
-  }
-
-  /* Contenedor de tarjetas */
-  .existing-rule-cards-container {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 30px;
-  }
-
-  /* Tarjetas */
-  .existing-rule-card {
-    padding: 15px;
-    height: auto;
-    /* Ajuste automático para contenido dinámico */
-    width: 280px;
-  }
-
-  /* Botones de acción */
-  .existing-rule-card-actions {
-    bottom: 15px;
-    right: 15px;
-  }
-
-  .existing-rule-edit-button,
-  .existing-rule-delete-button {
-    width: 40px;
-    height: 30px;
-    font-size: 14px;
-  }
-
-  /* Modal */
-  .existing-rule-modal-content {
-    width: 280px;
-  }
-
-  /* Botón agregar regla */
-  .add-rule-button-circle {
-    width: 50px;
-    height: 50px;
-    font-size: 25px;
-    bottom: 15px;
-  }
-
-  /* Mensaje cuando no hay reglas */
-  .no-rules-message h2 {
-    font-size: 20px;
-  }
-
-  .add-rule-button {
-    width: 50px;
-    height: 50px;
-    font-size: 25px;
-  }
+  color: #333;
 }
