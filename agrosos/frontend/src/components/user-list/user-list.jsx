@@ -337,6 +337,7 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
           onChange={(e) => setName(e.target.value)}
           placeholder="Nombre"
           required
+          className="user-list-text"
         />
         <select value={role} onChange={(e) => setRole(e.target.value)} required>
           <option value="Farmer">Farmer</option>
@@ -349,6 +350,7 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Correo electrónico"
           required
+          className="user-list-email"
         />
         <input
           type="password"
@@ -356,6 +358,7 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Contraseña"
           required
+          className="user-list-password"
         />
         <input
           type="password"
@@ -363,6 +366,7 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirmar contraseña"
           required
+          className="user-list-password"
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit">Crear</button>

@@ -190,10 +190,7 @@
   color: #333;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-select {
+.user-list-text, .user-list-email, .user-list-password{
   width: 100%;
   padding: 12px 15px;
   margin: 10px 0;

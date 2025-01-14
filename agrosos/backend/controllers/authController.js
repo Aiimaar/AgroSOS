@@ -8,6 +8,11 @@ const { User } = models;
 export const register = async (req, res) => {
   const { name, email, password, role } = req.body;
 
+  // Validación de campos obligatorios
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'Name, email, and password are required.' });
+  }
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
@@ -21,6 +26,7 @@ export const register = async (req, res) => {
     res.status(500).json({ message: 'Error al registrar usuario', error });
   }
 };
+
 
 // Iniciar sesión de usuario
 export const login = async (req, res) => {

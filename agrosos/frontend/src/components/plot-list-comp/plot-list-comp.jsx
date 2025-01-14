@@ -22,7 +22,7 @@ function PlotListComp() {
   const navigate = useNavigate();
 
   const defaultImages = [fondo1, fondo2, fondo3, fondo4, fondo5];
-  const imageMap = {}; // Mapeo de imágenes basado en IDs de terrenos
+  const imageMap = {};
 
   const userId = localStorage.getItem("userId");
 
@@ -181,145 +181,151 @@ function PlotListComp() {
     }
   };
 
-  const handlePlotClick = (plotId) => {
+  const handlePlotClick = (plotId, plotName) => {
     localStorage.setItem("selectedPlotId", plotId);
+    localStorage.setItem("selectedPlotName", plotName);
     navigate("/inside-a-plot");
   };
 
   return (
     <>
-    {plots.length === 0 ? (
-      <AddPlotComponent />
-    ) : (
-      <>
-      {showDeleteModal && (
-        <div className="modal-overlay">
-          <div className="plot-list-delete-modal">
-            <h3>¿Deseas eliminar este terreno?</h3>
-            <div className="modal-actions">
-              <button type="submit" onClick={handleDeletePlot}>Eliminar</button>
-              <button type="button" onClick={cancelDelete}>Cancelar</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {editPlot && (
-        <div className="modal-overlay">
-          <div className="plot-list-edit-modal">
-            <h3>Editar Terreno</h3>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                submitEditForm();
-              }}
-            >
-              <label>
-                Nombre:
-                <input
-                  type="text"
-                  name="name"
-                  value={editForm.name}
-                  onChange={handleEditFormChange}
-                />
-              </label>
-              <label>
-                Tamaño:
-                <input
-                  type="number"
-                  name="size"
-                  value={editForm.size}
-                  onChange={handleEditFormChange}
-                />
-              </label>
-              <button type="submit">Guardar</button>
-              <button type="button" onClick={() => setEditPlot(null)}>
-                Cancelar
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      <div className="plot-list-welcome">
-        <h3>Buenos días!</h3>
-      </div>
-      <div className="plot-list-container">
-        {errorMessage && (
-          <p className="plot-list-error-message">{errorMessage}</p>
-        )}
-        <div className="plot-list">
-          {plots.map((plot) => (
-            <div
-              key={plot.id}
-              className="plot-card"
-              onClick={() => handlePlotClick(plot.id)}
-              style={{ backgroundColor: plot.color || "transparent" }}
-            >
-              {/* Mostrar la imagen si está disponible */}
-              {plot.image ? (
-                <img
-                  src={`http://localhost:3000/uploads/${plot.image}`}
-                  alt={`Imagen del terreno ${plot.name}`}
-                  className="plot-image"
-                />
-              ) : plot.color ? (
-                // Si tiene color, solo mostrar el color de fondo sin imagen
-                <div className="plot-image" />
-              ) : (
-                // Si no tiene imagen ni color, asignar una imagen predeterminada
-                <img
-                  src={assignDefaultImage(plot.id)}
-                  alt={`Imagen predeterminada del terreno ${plot.name}`}
-                  className="plot-image"
-                />
-              )}
-
-              <div className="terrain-name">{plot.name}</div>
-              <div className="card-footer">
-                <div className="plot-list-actions">
-                  <div
-                    className="plot-list-button plot-list-edit-button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleEditPlot(plot);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faPen} />
-                  </div>
-                  <div
-                    className="plot-list-button plot-list-delete-button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      confirmDeletePlot(plot.id);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </div>
-                </div>
-                <div className="plot-list-info">
-                  <div className="plot-list-info-item">
-                    <span role="img" aria-label="temperature">
-                      🌡️
-                    </span>
-                    <span>
-                      {sensorAverages[plot.id]?.temperature || "--"}°C
-                    </span>
-                  </div>
-                  <div className="plot-list-info-item">
-                    <span role="img" aria-label="humidity">
-                      💧
-                    </span>
-                    <span>{sensorAverages[plot.id]?.humidity || "--"}%</span>
-                  </div>
+      {plots.length === 0 ? (
+        <AddPlotComponent />
+      ) : (
+        <>
+          {showDeleteModal && (
+            <div className="modal-overlay">
+              <div className="plot-list-delete-modal">
+                <h3>¿Deseas eliminar este terreno?</h3>
+                <div className="modal-actions">
+                  <button type="submit" onClick={handleDeletePlot}>
+                    Eliminar
+                  </button>
+                  <button type="button" onClick={cancelDelete}>
+                    Cancelar
+                  </button>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-      </>
-    )}
+          )}
+
+          {editPlot && (
+            <div className="modal-overlay">
+              <div className="plot-list-edit-modal">
+                <h3>Editar Terreno</h3>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    submitEditForm();
+                  }}
+                >
+                  <label>
+                    Nombre:
+                    <input
+                      type="text"
+                      name="name"
+                      value={editForm.name}
+                      onChange={handleEditFormChange}
+                    />
+                  </label>
+                  <label>
+                    Tamaño:
+                    <input
+                      type="number"
+                      name="size"
+                      value={editForm.size}
+                      onChange={handleEditFormChange}
+                    />
+                  </label>
+                  <button type="submit">Guardar</button>
+                  <button type="button" onClick={() => setEditPlot(null)}>
+                    Cancelar
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+
+          <div className="plot-list-welcome">
+            <h3>Buenos días!</h3>
+          </div>
+          <div className="plot-list-container">
+            {errorMessage && (
+              <p className="plot-list-error-message">{errorMessage}</p>
+            )}
+            <div className="plot-list">
+              {plots.map((plot) => (
+                <div
+                  key={plot.id}
+                  className="plot-card"
+                  tabIndex="0"
+                  onClick={() => handlePlotClick(plot.id, plot.name)}
+                  style={{ backgroundColor: plot.color || "transparent" }}
+                >
+                  {plot.image ? (
+                    <img
+                      src={`http://localhost:3000/uploads/${plot.image}`}
+                      alt={`Imagen del terreno ${plot.name}`}
+                      className="plot-image"
+                    />
+                  ) : plot.color ? (
+                    <div className="plot-image" />
+                  ) : (
+                    <img
+                      src={assignDefaultImage(plot.id)}
+                      alt={`Imagen predeterminada del terreno ${plot.name}`}
+                      className="plot-image"
+                    />
+                  )}
+                  <div className="terrain-name">{plot.name}</div>
+                  <div className="card-footer">
+                    <div className="plot-list-actions">
+                      <div
+                        className="plot-list-button plot-list-edit-button"
+                        tabIndex="0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEditPlot(plot);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faPen} />
+                      </div>
+                      <div
+                        className="plot-list-button plot-list-delete-button"
+                        tabIndex="0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          confirmDeletePlot(plot.id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </div>
+                    </div>
+                    <div className="plot-list-info">
+                      <div className="plot-list-info-item">
+                        <span role="img" aria-label="temperature">
+                          🌡️
+                        </span>
+                        <span>
+                          {sensorAverages[plot.id]?.temperature || "--"}°C
+                        </span>
+                      </div>
+                      <div className="plot-list-info-item">
+                        <span role="img" aria-label="humidity">
+                          💧
+                        </span>
+                        <span>
+                          {sensorAverages[plot.id]?.humidity || "--"}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
