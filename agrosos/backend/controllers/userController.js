@@ -84,6 +84,7 @@ export const deleteUser = async (req, res) => {
   }
 };
 
+//GET
 export const getUserById = async (req, res) => {
   const { id } = req.params;
 
