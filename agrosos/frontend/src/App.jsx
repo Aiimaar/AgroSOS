@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoadingScreen from "./pages/loading-screen/LoadingScreen";
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -34,10 +35,13 @@ import EditRule from "./pages/edit-rule/EditRule";
 import CreateCrop from "./pages/create-crops/CreateCrops";
 
 function App() {
+
+
   return (
     <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/loading" element={<LoadingScreen />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/plot-list" element={<PlotList />} />
