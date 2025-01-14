@@ -259,7 +259,11 @@ function PlotListComp() {
                   key={plot.id}
                   className="plot-card"
                   tabIndex="0"
+                  role="button"
                   onClick={() => handlePlotClick(plot.id, plot.name)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handlePlotClick(plot.id, plot.name);
+                  }}
                   style={{ backgroundColor: plot.color || "transparent" }}
                 >
                   {plot.image ? (
@@ -283,9 +287,16 @@ function PlotListComp() {
                       <div
                         className="plot-list-button plot-list-edit-button"
                         tabIndex="0"
+                        role="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleEditPlot(plot);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.stopPropagation();
+                            handleEditPlot(plot);
+                          }
                         }}
                       >
                         <FontAwesomeIcon icon={faPen} />
@@ -293,9 +304,16 @@ function PlotListComp() {
                       <div
                         className="plot-list-button plot-list-delete-button"
                         tabIndex="0"
+                        role="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           confirmDeletePlot(plot.id);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.stopPropagation();
+                            confirmDeletePlot(plot.id);
+                          }
                         }}
                       >
                         <FontAwesomeIcon icon={faTrash} />
