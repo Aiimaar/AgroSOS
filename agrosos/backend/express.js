@@ -30,6 +30,23 @@ dotenv.config();
 
 sequelize.sync();
 
+// Setting the view engine to ejs
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.get('/api/header', (req, res) => {
+  res.json({
+      logo: '/static/images/logo.png',
+      menuItems: [
+          { path: '/plot-list', icon: 'fa-home', label: 'Inicio' },
+          { path: '/accesibility', icon: 'fa-universal-access', label: 'Accesibilidad' },
+          { path: '/advices', icon: 'fa-lightbulb', label: 'Consejos' },
+          { path: '/notifications', icon: 'fa-bell', label: 'Notificaciones' },
+          { path: '/terms-conditions', icon: 'fa-book', label: 'Términos y condiciones' }
+      ]
+  });
+});
+
 // Plot routes
 app.use("/api/plots", plotsRoutes);
 

@@ -1,105 +1,108 @@
 #actuator-container {
-    width: 90vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-  }
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4; /* Mejor contraste y accesibilidad */
+  border-radius: 8px; /* Suaviza los bordes */
+}
 
-  a{
-    text-decoration: none;
-  }
-  
-  .actuatorList {
-    margin-top: 3em;
-    display: flex;
-    flex-direction: column;
-    gap: 3.5em;
-    width: 100%;
-    align-items: center;
-  }
-  
-  .list {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    border-bottom: 1px solid green;
-    padding-bottom: 1em;
-  }
-  
-  .list img {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    vertical-align: middle;
-  }
-  
-  .list p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    line-height: 40px;
-  }
-  
-  .actuator-buttons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1em;
-  }
+a {
+  text-decoration: none;
+}
 
-  .actuator-buttons .add{
-    margin: none;
-  }
-  
-  .actuator-buttons .quit {
-    width: 46px;
-    height: 46px;
-  }
-  
-  .enla {
-    display: flex;
-    margin-top: 2.5em;
-  }
-  
-  .enla-p {
-    color: white;
-    font-size: 15px;
-  }
-  
-  .button-enla {
-    border-radius: 30px;
-    width: 45vw;
-    border: none;
-    background-color: #5EA71E;
-    height: 5vh;
-  }
-  
-  .actuator-content-component-img{
-    width: 10vw;
-    height: auto;
-  }
+.actuatorList {
+  margin-top: 3em;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5em;
+  width: 100%;
+  align-items: center;
+}
 
-  @media (min-width: 768px) and (max-width: 1024px) {
-    #actuator-container {
+.list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid green;
+  padding-bottom: 1em;
+}
+
+.list img {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.list p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 40px;
+}
+
+.actuator-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.actuator-buttons .add {
+  margin: none;
+}
+
+.actuator-buttons .quit {
+  width: 46px;
+  height: 46px;
+}
+
+.enla {
+  display: flex;
+  margin-top: 2.5em;
+}
+
+.enla-p {
+  color: white;
+  font-size: 15px;
+}
+
+.button-enla {
+  border-radius: 30px;
+  width: 45vw;
+  border: none;
+  background-color: #5EA71E;
+  height: 5vh;
+}
+
+.actuator-content-component-img {
+  width: 10vw;
+  height: auto;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  #actuator-container {
       width: 100%;
       max-width: 70vw;
-    }
+  }
 
-    .actuator-content-component-img{
+  .actuator-content-component-img {
       width: 4vw;
       height: auto;
-    }
+  }
 
-    .button-enla {
+  .button-enla {
       border-radius: 30px;
       width: 25vw;
       border: none;
       background-color: #5EA71E;
       height: 5vh;
-    }
   }
+}

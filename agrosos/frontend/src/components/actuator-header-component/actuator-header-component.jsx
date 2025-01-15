@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 
 function ActuatorHeaderComponent(){
     return(
-        <div id="actuator-header-container">
+        <div id="actuator-header-container" role="banner">
             <div className="headerGrey">
                 <div className="headerGreyItemContainer">
-                    <Link to="/crops">
+                    <Link to="/crops" aria-label="Ir a Cultivos">
                         <img 
                             src={headerGrey} 
                             alt="Icono representando cultivo" 
@@ -17,7 +17,7 @@ function ActuatorHeaderComponent(){
                     </Link>
                     <p className="header-p">Cultivo</p>
                 </div>
-                <div className="headerGreyItemContainer">
+                <div className="headerGreyItemContainer" aria-label="Ir a Sensores">
                     <Link to="/sensors">
                         <img
                             src={headerGrey}
@@ -27,7 +27,7 @@ function ActuatorHeaderComponent(){
                     </Link>
                     <p className="header-p">Sensores</p>
                 </div>
-                <div className="headerGreyItemContainer">
+                <div className="headerGreyItemContainer" aria-label="Ir a Actuadores">
                     <Link to="/inside-a-plot">
                         <img 
                             src={headerGreyBold} 

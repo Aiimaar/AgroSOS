@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 function SensorHeaderGrey() {
     return (
-        <div className="headerGrey-inside-a-plot">
+        <div className="headerGrey-inside-a-plot" role="region" aria-label="Opciones de sensores y actuadores">
             <div className="headerGreyItemContainer">
-                <Link to="/crops">
+                <Link to="/crops" aria-label="Ir a Cultivo">
                     <img
                         src={headerGrey}
                         alt="Imagen representativa de Cultivo"
@@ -16,7 +16,7 @@ function SensorHeaderGrey() {
                 <p className="header-p">Cultivo</p>
             </div>
             <div className="headerGreyItemContainer">
-                <Link to="/sensors">
+                <Link to="/sensors" aria-label="Ir a Sensores">
                     <img
                         src={headerGrey}
                         alt="Imagen representativa de Sensores"
@@ -26,7 +26,7 @@ function SensorHeaderGrey() {
                 <p className="header-p">Sensores</p>
             </div>
             <div className="headerGreyItemContainer">
-                <Link to="/actuators">
+                <Link to="/actuators" aria-label="Ir a Actuadores">
                     <img
                         src={headerGrey}
                         alt="Imagen representativa de Actuadores"

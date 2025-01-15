@@ -168,11 +168,13 @@ const UserList = () => {
   };
 
   return (
-    <div className="user-list-container">
+    <div className="user-list-container" aria-live="polite">
       <button className="user-list-back-button" onClick={() => navigate(-1)} aria-label="Volver a la página anterior">
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
-      <h1 className="user-list-title">Lista de usuarios</h1>
+      <h1 className="user-list-title" id="user-list-title">
+        Lista de usuarios
+      </h1>
       <div
         className="plot-list-create-plot-img-container"
         onClick={() => setIsCreatePopupOpen(true)}
@@ -181,27 +183,31 @@ const UserList = () => {
         <img src={addUserIcon} alt="Icono para crear un nuevo usuario" />
       </div>
 
-      <div className="user-list">
+      <div className="user-list" role="list" aria-labelledby="user-list-title">
         {currentUsers.map((user) => (
-          <div key={user.id}>
+          <div key={user.id} role="listitem">
             <div className="user-list-item">
               <div className="user-list-details">
                 <div className="user-list-avatar">
                   <img
-                    src={
-                      user.profile_image ? user.profile_image : defaultAvatar
-                    }
+                    src={user.profile_image ? user.profile_image : defaultAvatar}
                     alt={
                       user.name
                         ? `${user.name} avatar`
                         : "Avatar predeterminado"
                     }
                     className="user-avatar-img"
+                    role="img"
+                    aria-label={`Avatar de ${user.name}`}
                   />
                 </div>
                 <div className="user-list-info">
-                  <p className="user-list-name">{user.name}</p>
-                  <p className="user-list-role">{user.role}</p>
+                  <p className="user-list-name" aria-label="Nombre del usuario">
+                    {user.name}
+                  </p>
+                  <p className="user-list-role" aria-label="Rol del usuario">
+                    {user.role}
+                  </p>
                 </div>
               </div>
               <div className="user-list-actions">
@@ -251,7 +257,7 @@ const UserList = () => {
       </div>
 
       {isCreatePopupOpen && (
-        <div className="modal-overlay">
+        <div className="modal-overlay" aria-hidden={!isCreatePopupOpen}>
           <CreateUserPopup
             onSubmit={handleCreateSubmit}
             onClose={() => setIsCreatePopupOpen(false)}
@@ -260,7 +266,7 @@ const UserList = () => {
       )}
 
       {isModalOpen && (
-        <div className="modal-overlay">
+        <div className="modal-overlay" aria-hidden={!isModalOpen}>
           <div className="popup-container">
             <h2>Editar Usuario</h2>
             <form onSubmit={handleSave}>
@@ -273,6 +279,7 @@ const UserList = () => {
                 }
                 placeholder="Nombre"
                 required
+                aria-label="Nombre del usuario"
               />
               <select
                 id="popup-role"
@@ -284,6 +291,7 @@ const UserList = () => {
                   })
                 }
                 required
+                aria-label="Rol del usuario"
               >
                 <option value="Farmer">Farmer</option>
                 <option value="Admin">Admin</option>
@@ -298,11 +306,17 @@ const UserList = () => {
                 }
                 placeholder="Correo electrónico"
                 required
+                aria-label="Correo electrónico del usuario"
               />
-              <button type="submit" id="popup-save">
+              <button type="submit" id="popup-save" aria-label="Guardar cambios">
                 Guardar
               </button>
-              <button type="button" id="popup-cancel" onClick={closeModal}>
+              <button
+                type="button"
+                id="popup-cancel"
+                onClick={closeModal}
+                aria-label="Cancelar edición"
+              >
                 Cancelar
               </button>
             </form>
@@ -343,8 +357,14 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
           placeholder="Nombre"
           required
           className="user-list-text"
+          aria-label="Nombre del nuevo usuario"
         />
-        <select value={role} onChange={(e) => setRole(e.target.value)} required>
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          required
+          aria-label="Rol del nuevo usuario"
+        >
           <option value="Farmer">Farmer</option>
           <option value="Admin">Admin</option>
           <option value="Technician">Technician</option>
@@ -356,6 +376,7 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
           placeholder="Correo electrónico"
           required
           className="user-list-email"
+          aria-label="Correo electrónico del nuevo usuario"
         />
         <input
           type="password"
@@ -364,6 +385,7 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
           placeholder="Contraseña"
           required
           className="user-list-password"
+          aria-label="Contraseña del nuevo usuario"
         />
         <input
           type="password"
@@ -372,10 +394,17 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
           placeholder="Confirmar contraseña"
           required
           className="user-list-password"
+          aria-label="Confirmar contraseña del nuevo usuario"
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <button type="submit">Crear</button>
-        <button type="button" onClick={onClose}>
+        <button type="submit" aria-label="Crear nuevo usuario">
+          Crear
+        </button>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Cancelar creación de usuario"
+        >
           Cancelar
         </button>
       </form>

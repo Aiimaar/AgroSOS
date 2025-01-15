@@ -72,6 +72,6 @@ function InsideAPlotFooter() {
       </div>
     </footer>
   );
-};
+}
 
 export default InsideAPlotFooter;

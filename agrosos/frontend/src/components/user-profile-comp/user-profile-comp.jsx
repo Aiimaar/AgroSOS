@@ -128,6 +128,7 @@ const UserProfileComp = () => {
   const modal = isModalOpen && (
     <div
       className="modal-overlay"
+      role="dialog"
       aria-hidden={!isModalOpen}
       aria-labelledby="edit-modal-title"
     >
@@ -139,17 +140,17 @@ const UserProfileComp = () => {
           value={fieldValue}
           onChange={(e) => setFieldValue(e.target.value)}
           className="modal-input"
+          aria-describedby="field-description"
         />
         <div className="modal-buttons">
-          <button onClick={handleSave} className="modal-save-button">
-            Guardar
-          </button>
+          <button onClick={handleSave} className="modal-save-button" aria-label="Guardar cambios">Guardar</button>
           <button
             onClick={() => {
               setIsModalOpen(false);
               setEditingField(null);
             }}
-            className="modal-cancel-button"
+            className="modal-cancel-button" 
+            aria-label="Cancelar edición"
           >
             Cancelar
           </button>
@@ -160,11 +161,13 @@ const UserProfileComp = () => {
 
   return (
     <div className="user-profile-container">
-      <div className="profile-pic-container">
+      <div className="profile-pic-container" aria-labelledby="profile-picture">
         <img
           src={userData.profile_image || "/default-profile.png"}
-          alt="profile"
+          alt="Imagen de perfil"
           className="profile-pic"
+          role="img"
+          aria-label="Imagen de perfil del usuario"
         />
         <div
           className="camera-icon"
@@ -182,12 +185,14 @@ const UserProfileComp = () => {
           accept="image/*"
           onChange={handleImageChange}
           style={{ display: "none" }}
+          aria-label="Seleccionar imagen"
         />
         {isImageSelected && (
           <button
             onClick={handleImageUpload}
             className="upload-button"
             disabled={isUploading}
+            aria-label="Subir imagen seleccionada"
           >
             Subir Imagen
           </button>
@@ -221,10 +226,10 @@ const UserProfileComp = () => {
           />
         </div>
       </div>
-      <button onClick={handleLogout} className="logout-button">
+      <button onClick={handleLogout} className="logout-button" aria-label="Cerrar sesión">
         Cerrar Sesión
       </button>
-      <button onClick={() => navigate(-1)} className="go-back-button">
+      <button onClick={() => navigate(-1)} className="go-back-button" aria-label="Volver a la página anterior">
         Volver
       </button>
       {ReactDOM.createPortal(modal, document.body)}

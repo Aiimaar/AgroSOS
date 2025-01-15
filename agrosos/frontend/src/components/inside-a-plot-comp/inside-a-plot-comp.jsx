@@ -197,10 +197,10 @@ const InsideAPlotComp = ({ plotId }) => {
   };
 
   return (
-    <div className="plot-details">
-      {error && <p className="inside-a-plot-error-message">{error}</p>}
-      <section className="crops-section">
-        <h3>Cultivo en el terreno</h3>
+    <div className="plot-details" aria-label="Detalles del terreno">
+      {error && <p className="inside-a-plot-error-message" aria-live="assertive">{error}</p>}
+      <section className="crops-section" aria-labelledby="crops-section-title">
+        <h3 id="crops-section-title">Cultivo en el terreno</h3>
         {crop ? (
           <div className="crop-details">
             <img
@@ -211,29 +211,31 @@ const InsideAPlotComp = ({ plotId }) => {
             />
           </div>
         ) : (
-          <p className="no-crops">No hay cultivo registrado en este terreno.</p>
+          <p className="no-crops" aria-live="polite">No hay cultivo registrado en este terreno.</p>
         )}
       </section>
 
       <section id="inside-a-plot-comp-global">
         <div id="inside-a-plot-comp-left">
           <div className="inside-a-plot-comp-left">
-            <section className="evolution-section">
-              <h3>Evolución Temperatura / Humedad</h3>
+            <section className="evolution-section" aria-labelledby="evolution-section-title">
+              <h3 id="evolution-section-title">Evolución Temperatura / Humedad</h3>
               <EvolutionGraph plotId={plotId} />
             </section>
           </div>
 
           <div className="inside-a-plot-comp-left">
-            <section className="tasks-section">
-              <h3>Tareas</h3>
-              <ul className="task-list">
+            <section className="tasks-section" aria-labelledby="tasks-section-title">
+              <h3 id="tasks-section-title">Tareas</h3>
+              <ul className="task-list" aria-live="polite">
                 {tasks.map((task, index) => (
                   <li key={index}>{task}</li>
                 ))}
               </ul>
               <div className="task-input">
+                <label htmlFor="new-task-input">Añadir tarea completada:</label>
                 <input
+                  id="new-task-input"
                   type="text"
                   value={newTask}
                   placeholder="Añadir tarea completada..."
@@ -249,24 +251,19 @@ const InsideAPlotComp = ({ plotId }) => {
 
         <div id="inside-a-plot-comp-right">
           <div className="inside-a-plot-comp-right">
-            <section className="climate-section">
-              <h3>Clima</h3>
+            <section className="climate-section" aria-labelledby="climate-section-title">
+              <h3 id="climate-section-title">Clima</h3>
               {sensorValues.length > 0 ? (
-                <div className="climate-stats">
-                  {[
-                    "temperature",
-                    "soil_temperature",
-                    "humidity",
-                    "soil_humidity",
-                  ].map((sensorType) => {
+                <div className="climate-stats" aria-live="polite">
+                  {["temperature", "soil_temperature", "humidity", "soil_humidity"].map((sensorType) => {
                     const averageValue = calculateAverage(sensorType);
                     if (averageValue !== null) {
                       return (
-                        <div key={sensorType}>
+                        <div key={sensorType} aria-label={`Valor promedio de ${getSensorLabel(sensorType)}`}>
                           <p>
                             {sensorType.includes("temperature")
                               ? `${averageValue.toFixed(0)}°C`
-                              : `${averageValue.toFixed(0)}%`}{" "}
+                              : `${averageValue.toFixed(0)}%`} {" "}
                             <span>{getSensorLabel(sensorType)}</span>
                           </p>
                         </div>
@@ -282,15 +279,20 @@ const InsideAPlotComp = ({ plotId }) => {
           </div>
 
           <div className="inside-a-plot-comp-right">
-            <section className="irrigation-frecuency-section">
+            <section className="irrigation-frecuency-section" aria-labelledby="irrigation-section-title">
               <div id="irrigation-frecuency-component">
-                <h3 className="irrigation-frecuency-title">
+                <h3 id="irrigation-section-title" className="irrigation-frecuency-title">
                   Frecuencia de riego
                 </h3>
                 <p className="irrigation-frecuency-p">Días de riego</p>
-                <div className="irrigation-frecuency-calendar">
+                <div className="irrigation-frecuency-calendar" role="list">
                   {days.map((day) => (
-                    <div key={day.name} className="irrigation-frecuency-day">
+                    <div
+                      key={day.name}
+                      className="irrigation-frecuency-day"
+                      role="listitem"
+                      aria-selected={selectedDays.includes(day.name)}
+                    >
                       <FontAwesomeIcon
                         icon={faCalendarDays}
                         size="2xl"
@@ -298,6 +300,7 @@ const InsideAPlotComp = ({ plotId }) => {
                           selectedDays.includes(day.name) ? "selected" : ""
                         }`}
                         onClick={() => handleClick(day.name)}
+                        aria-label={`Seleccionar día ${day.label}`}
                       />
                       <span className="irrigation-frecuency-day-label">
                         {day.label}
@@ -306,7 +309,6 @@ const InsideAPlotComp = ({ plotId }) => {
                   ))}
                 </div>
 
-                {/* Selección de hora */}
                 <div className="select-time-container">
                   <button
                     className={
@@ -315,6 +317,8 @@ const InsideAPlotComp = ({ plotId }) => {
                         : "select-time-main-button-unselected"
                     }
                     onClick={() => setIsClockPopupVisible(true)}
+                    aria-expanded={isClockPopupVisible}
+                    aria-controls="clock-popup"
                   >
                     {selectedTime
                       ? `Hora seleccionada: ${selectedTime}`
@@ -322,10 +326,10 @@ const InsideAPlotComp = ({ plotId }) => {
                   </button>
                 </div>
 
-                {/* Modal de selección de hora */}
                 {isClockPopupVisible && (
-                  <div className="clock-popup" id="clock-popup">
+                  <div className="clock-popup" id="clock-popup" role="dialog" aria-labelledby="clock-popup-title">
                     <div className="clock-popup-content">
+                      <h3 id="clock-popup-title">Seleccionar hora</h3>
                       <ReactClock
                         value={clockValue}
                         onChange={(value) => {
@@ -343,7 +347,9 @@ const InsideAPlotComp = ({ plotId }) => {
                         size={200}
                         renderNumbers={true}
                       />
+                      <label htmlFor="manual-time-input">Introduce la hora manualmente:</label>
                       <input
+                        id="manual-time-input"
                         type="text"
                         value={manualTime}
                         onChange={(e) => setManualTime(e.target.value)}
@@ -356,14 +362,10 @@ const InsideAPlotComp = ({ plotId }) => {
                       >
                         Confirmar hora
                       </button>
-                      <button class="irrigation-frecuency-pro">
-                        Programar riego
-                      </button>
                     </div>
                   </div>
                 )}
 
-                {/* Botón para programar riego */}
                 <button
                   className="irrigation-frecuency-pro"
                   onClick={handleProgramarRiego}
@@ -375,13 +377,13 @@ const InsideAPlotComp = ({ plotId }) => {
           </div>
 
           <div className="inside-a-plot-comp-left">
-            <section className="inside-a-plot-actions-section">
-              <h3>Acciones</h3>
+            <section className="inside-a-plot-actions-section" aria-labelledby="actions-section-title">
+              <h3 id="actions-section-title">Acciones</h3>
               <div className="inside-a-plot-actions-buttons-container">
-                <button className="inside-a-plot-action-button">
+                <button className="inside-a-plot-action-button" aria-label="Activar riego">
                   Activar Riego
                 </button>
-                <button className="inside-a-plot-action-button">
+                <button className="inside-a-plot-action-button" aria-label="Desactivar riego">
                   Desactivar Riego
                 </button>
               </div>

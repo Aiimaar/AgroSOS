@@ -100,29 +100,33 @@ const CreateCropForm = () => {
   return (
     <form onSubmit={handleSubmit} className="create-crop-form">
       <h2 className="create-crop-form-title">Crear Nuevo Cultivo</h2>
-      {error && <p className="create-crop-error-message">{error}</p>}
+      {error && <p className="create-crop-error-message" aria-live="assertive">{error}</p>}
       {success && (
-        <p className="create-crop-success-message">
+        <p className="create-crop-success-message" aria-live="polite">
           Cultivo creado exitosamente!
         </p>
       )}
       <div className="create-crop-form-group">
-        <label className="create-crop-form-label">Nombre del cultivo*</label>
+        <label className="create-crop-form-label" htmlFor="name">Nombre del cultivo*</label>
         <input
+          id="name"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="create-crop-form-input"
           tabIndex="0"
+          aria-required="true"
         />
       </div>
       <div className="create-crop-form-group">
-        <label className="create-crop-form-label">Información*</label>
+        <label className="create-crop-form-label" htmlFor="info">Información*</label>
         <textarea
+          id="info"
           value={info}
           onChange={(e) => setInfo(e.target.value)}
           className="create-crop-form-textarea"
           tabIndex="0"
+          aria-required="true"
         ></textarea>
       </div>
       <div className="create-crop-form-group">
@@ -133,6 +137,8 @@ const CreateCropForm = () => {
         onClick={() => document.getElementById("crop-image-input").click()}
         onKeyDown={(e) => handleKeyDown(e, "crop-image-input")}
         tabIndex="0"
+        role="button"
+        aria-label="Sube una imagen del cultivo"
       >
         <p>Sube una imagen del cultivo</p>
         <input
@@ -146,13 +152,19 @@ const CreateCropForm = () => {
       </div>
       {cropImagePreview && (
         // Texto alternativo añadido a la vista previa de la imagen
-        <img src={cropImagePreview} alt="Vista previa de la imagen del cultivo" className="create-crop-image-preview" />
+        <img src={cropImagePreview} alt="Vista previa de la imagen del cultivo" 
+        className="create-crop-image-preview"
+        aria-describedby="crop-image-description"
+        aria-required="true"
+        />
       )}
       <div
         className="create-crop-upload-container"
         onClick={() => document.getElementById("graphic-image-input").click()}
         onKeyDown={(e) => handleKeyDown(e, "graphic-image-input")}
         tabIndex="0"
+        role="button"
+        aria-label="Sube una imagen gráfica"
       >
         <p>Sube una imagen gráfica</p>
         <input
@@ -166,7 +178,10 @@ const CreateCropForm = () => {
       </div>
       {graphicImagePreview && (
         // Texto alternativo añadido a la vista previa de la imagen gráfica
-        <img src={graphicImagePreview} alt="Vista previa de la imagen gráfica del cultivo" className="create-crop-image-preview" />
+        <img src={graphicImagePreview} alt="Vista previa de la imagen gráfica del cultivo" className="create-crop-image-preview"
+        aria-describedby="graphic-image-description"
+          aria-required="true"
+        />
       )}
       <div className="create-crop-form-group">
         <label className="create-crop-form-label">Tiempo de Cosecha*</label>
@@ -176,6 +191,7 @@ const CreateCropForm = () => {
             onChange={(e) => setHarvestStartMonth(e.target.value)}
             className="create-crop-form-select"
             tabIndex="0"
+            aria-required="true"
           >
             <option value="">Seleccionar mes de inicio</option>
             {months.map((month, index) => (
@@ -189,6 +205,7 @@ const CreateCropForm = () => {
             onChange={(e) => setHarvestEndMonth(e.target.value)}
             className="create-crop-form-select"
             tabIndex="0"
+            aria-required="true"
           >
             <option value="">Seleccionar mes de fin</option>
             {months.map((month, index) => (
@@ -213,6 +230,7 @@ const CreateCropForm = () => {
           onClick={handleCancel}
           className="create-crop-cancel-button"
           tabIndex="0"
+          aria-label="Cancelar creación de cultivo"
         >
           Cancelar
         </button>

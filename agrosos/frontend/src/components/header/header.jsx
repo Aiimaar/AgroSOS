@@ -24,8 +24,8 @@ function Header() {
 
   return (
     <div className="app-container" onClick={handleOutsideClick}>
-      <header className="header">
-        <img src={logo} alt="Logo de la aplicación Planta" className="plant-icon" />
+      <header className="header" aria-label="Header">
+        <img src={logo} alt="Logo de la aplicación Planta" className="plant-icon" aria-label="Logo Planta" />
         <button 
           className="header-menu-button" 
           onClick={openMenu}
@@ -33,7 +33,7 @@ function Header() {
         >
           <FontAwesomeIcon icon={faBars} size="2xl" />
         </button>
-        <div className="header-desktop-menu">
+        <nav className="header-desktop-menu" aria-label="Menú principal">
           <ul>
             <li>
               <Link to="/plot-list" aria-label="Ir a la página de inicio">
@@ -66,7 +66,7 @@ function Header() {
               </Link>
             </li>
           </ul>
-        </div>
+        </nav>
       </header>
       <SideMenu isOpen={isMenuOpen} onClose={closeMenu} />
     </div>

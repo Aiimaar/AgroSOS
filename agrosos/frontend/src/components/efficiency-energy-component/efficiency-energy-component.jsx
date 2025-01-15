@@ -9,15 +9,19 @@ function EfficiencyEnergyComponent() {
 
   return (
     <>
-      <button className="efficiency-back-button" onClick={() => navigate("/advices")}>
+      <button
+        className="efficiency-back-button"
+        onClick={() => navigate("/advices")}
+        aria-label="Volver a la página de consejos"
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
 
-      <div className="efficiency-energy-container">
+      <div className="efficiency-energy-container" aria-labelledby="efficiency-header">
         <div className="efficiency-energy-header">
-          <h2>Eficiencia Energética</h2>
+          <h2 id="efficiency-header">Eficiencia Energética</h2>
         </div>
-        <div className="efficiency-energy-txt">
+        <div className="efficiency-energy-txt" role="document">
           <h3>1. Energía Renovable</h3>
           <p>
             Considera la instalación de paneles solares o turbinas eólicas para
