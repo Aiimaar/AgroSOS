@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import arrow from "./ArrowLeftOutlined.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./humidity-component.css";
 import { useState } from "react";
 
@@ -23,32 +24,22 @@ function HumidityComponent() {
       value: parseInt(value),
       operator,
     };
-  
-    // Recupera las condiciones actuales
+
     const existingConditions =
       JSON.parse(sessionStorage.getItem("humidityConditions")) || [];
-  
-    // Agrega la nueva condición
     existingConditions.push(humidityCondition);
-    
-    // Guarda las condiciones actualizadas en el sessionStorage
     sessionStorage.setItem(
       "humidityConditions",
       JSON.stringify(existingConditions)
     );
-  
-    // Verifica el contenido del sessionStorage
     console.log("Updated sessionStorage:", JSON.parse(sessionStorage.getItem("humidityConditions")));
-  
-    // Navega hacia atrás
     navigate(-1);
   };
-  
 
   return (
     <div id="humidity-component-container">
-      <div className="humidity-component-arrow">
-        <img src={arrow} alt="arrow" className="humidity-component-arrow-img" />
+      <div className="humidity-component-arrow" onClick={() => navigate(-1)}>
+        <FontAwesomeIcon icon={faArrowLeft} className="humidity-component-arrow-icon" />
       </div>
       <h1>Humedad</h1>
       <div className="humidity-controls">
@@ -59,9 +50,7 @@ function HumidityComponent() {
           {"<"}
         </button>
         <button
-          className={`humidity-button-equal ${
-            operator === "=" ? "active" : ""
-          }`}
+          className={`humidity-button-equal ${operator === "=" ? "active" : ""}`}
           onClick={() => handleComparisonChange("=")}
         >
           {"="}
@@ -90,10 +79,7 @@ function HumidityComponent() {
         </div>
       </div>
       <div className="humidity-apply">
-        <button
-          className="humidity-apply-button"
-          onClick={handleApplyCondition}
-        >
+        <button className="humidity-apply-button" onClick={handleApplyCondition}>
           Aplicar condición
         </button>
       </div>

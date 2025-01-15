@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import arrow from "./ArrowLeftOutlined.png";
+import { FaArrowLeft } from "react-icons/fa";
 import "./soil-temperature-component.css";
 import { useState } from "react";
 
@@ -37,7 +37,7 @@ function SoilTemperatureComponent() {
   return (
     <div id="soil-temperature-component-container">
       <div className="soil-temperature-component-arrow">
-        <img src={arrow} alt="arrow" className="soil-temperature-component-arrow-img" />
+        <FaArrowLeft className="soil-humidity-component-arrow-icon" />
       </div>
       <h1>Temperatura del Terreno</h1>
       <div className="soil-temperature-controls">

@@ -1,5 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import arrow from "./ArrowLeftOutlined.png";
+import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 import "./temperature-component.css";
 import { useState } from "react";
 
@@ -17,34 +17,21 @@ function TemperatureComponent() {
   };
 
   const handleApplyCondition = () => {
-    // Crear el objeto de condición de temperatura
     const temperatureCondition = {
       type: "humidity",
       value: parseInt(value),
       operator,
     };
-
-    // Guardar en sessionStorage
-    const existingConditions =
-      JSON.parse(sessionStorage.getItem("temperatureConditions")) || [];
+    const existingConditions = JSON.parse(sessionStorage.getItem("temperatureConditions")) || [];
     existingConditions.push(temperatureCondition);
-    sessionStorage.setItem(
-      "temperatureConditions",
-      JSON.stringify(existingConditions)
-    );
-
-    // Después de guardar en sessionStorage, navegar hacia atrás
+    sessionStorage.setItem("temperatureConditions", JSON.stringify(existingConditions));
     navigate(-1);
   };
 
   return (
     <div id="temperature-component-container">
-      <div className="temperature-component-arrow">
-        <img
-          src={arrow}
-          alt="arrow"
-          className="temperature-component-arrow-img"
-        />
+      <div className="temperature-component-arrow" onClick={() => navigate(-1)}>
+        <FaArrowLeft className="temperature-component-arrow-icon" />
       </div>
       <h1>Temperatura</h1>
       <div className="temperature-controls">
@@ -55,9 +42,7 @@ function TemperatureComponent() {
           {"<"}
         </button>
         <button
-          className={`temperature-button-equal ${
-            operator === "=" ? "active" : ""
-          }`}
+          className={`temperature-button-equal ${operator === "=" ? "active" : ""}`}
           onClick={() => handleComparisonChange("=")}
         >
           {"="}
@@ -73,23 +58,14 @@ function TemperatureComponent() {
         <span className="temperature-indicator">{value}°C</span>
       </div>
       <div className="temperature-slider">
-        <input
-          type="range"
-          min="-10"
-          max="40"
-          value={value}
-          onChange={handleTemperatureChange}
-        />
+        <input type="range" min="-10" max="40" value={value} onChange={handleTemperatureChange} />
         <div className="temperature-limits">
           <span>-10°C</span>
           <span>40°C</span>
         </div>
       </div>
       <div className="temperature-apply">
-        <button
-          className="temperature-apply-button"
-          onClick={handleApplyCondition}
-        >
+        <button className="temperature-apply-button" onClick={handleApplyCondition}>
           Aplicar condición
         </button>
       </div>
