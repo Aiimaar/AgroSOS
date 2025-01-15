@@ -77,7 +77,7 @@ const CropsListComponent = () => {
             <div className="crop-image-container">
               <img
                 src={`http://localhost:3000/uploads/${crop.crop_image}`}
-                alt={crop.name}
+                alt={`Imagen del cultivo de ${crop.name}`} // Añadido texto alternativo con el nombre del cultivo
                 className="crop-list-comp-image"
               />
               <button className="info-icon" onClick={() => navigate("/crop-details")}>i</button>

@@ -60,7 +60,7 @@ function AddSensor() {
             setSensorCode("");
             setSuccessMessage(`Sensor "${sensorName}" con código "${sensorCode}" enlazado con éxito.`); //Mensaje de éxito
             setTimeout(() => setSuccessMessage(""), 5000); // Limpia el mensaje después de 5 segundos
-            //navigate("/sensor-enla"); No es necesario navegar automaticamente a enlazados, ya se muestra el mensaje de exito.
+            //navigate("/sensor-enla"); No es necesario navegar automáticamente a enlazados, ya se muestra el mensaje de éxito.
         } catch (error) {
             console.error("Error al agregar sensor:", error);
             setError(error.message);
@@ -84,7 +84,8 @@ function AddSensor() {
                                 value={sensorName}
                                 readOnly
                             />
-                            <img src={lock} alt="lock" className="lock-icon" />
+                            {/* Añadido texto alternativo descriptivo */}
+                            <img src={lock} alt="Icono de candado que indica que el nombre del sensor está bloqueado para edición" className="lock-icon" />
                         </div>
                     </div>
                     <div className="form-group-sensor-code">
@@ -101,7 +102,7 @@ function AddSensor() {
                         />
                     </div>
                     {error && <p className="error-message">{error}</p>}
-                    {successMessage && <p className="sensor-success-message">{successMessage}</p>} {/*Muestra mensaje de exito*/}
+                    {successMessage && <p className="sensor-success-message">{successMessage}</p>} {/*Muestra mensaje de éxito*/}
                     <div className="add-sensor-content-buttons">
                         <button type="submit" className="btn-enla">
                             Enlazar

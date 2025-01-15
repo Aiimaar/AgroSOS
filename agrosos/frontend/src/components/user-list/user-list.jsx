@@ -169,15 +169,16 @@ const UserList = () => {
 
   return (
     <div className="user-list-container">
-      <button className="user-list-back-button" onClick={() => navigate(-1)}>
+      <button className="user-list-back-button" onClick={() => navigate(-1)} aria-label="Volver a la página anterior">
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="user-list-title">Lista de usuarios</h1>
       <div
         className="plot-list-create-plot-img-container"
         onClick={() => setIsCreatePopupOpen(true)}
+        aria-label="Crear nuevo usuario"
       >
-        <img src={addUserIcon} alt="Create User" />
+        <img src={addUserIcon} alt="Icono para crear un nuevo usuario" />
       </div>
 
       <div className="user-list">
@@ -207,12 +208,14 @@ const UserList = () => {
                 <button
                   className="user-list-action-button"
                   onClick={() => handleEdit(user)}
+                  aria-label={`Editar usuario ${user.name}`}
                 >
                   <FontAwesomeIcon icon={faPencilAlt} />
                 </button>
                 <button
                   className="user-list-action-button"
                   onClick={() => handleDelete(user.id)}
+                  aria-label={`Eliminar usuario ${user.name}`}
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
@@ -228,6 +231,7 @@ const UserList = () => {
           <button
             className="user-list-arrow-button user-list-arrow-left"
             onClick={prevPage}
+            aria-label="Página anterior"
           >
             <FontAwesomeIcon icon={faArrowLeft} />
           </button>
@@ -239,6 +243,7 @@ const UserList = () => {
           <button
             className="user-list-arrow-button user-list-arrow-right"
             onClick={nextPage}
+            aria-label="Página siguiente"
           >
             <FontAwesomeIcon icon={faArrowRight} />
           </button>

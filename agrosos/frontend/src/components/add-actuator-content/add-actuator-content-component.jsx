@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./add-actuator-content-component.css"; // Asegúrate de tener este archivo
 import lock from "./icon_lock_locked_.png";
@@ -60,8 +60,8 @@ function AddActuatorContentComponent() {
       }
       setActuatorCode(""); // Limpiar el campo de código
       setSuccessMessage(
-        `Actuador "${actuatorName}" con código "${actuatorCode}" enlazado con éxito.`
-      ); // Mensaje de éxito
+        `Actuador "${actuatorName}" con código "${actuatorCode}" enlazado con éxito.` // Mensaje de éxito
+      );
       setTimeout(() => setSuccessMessage(""), 5000); // Limpiar el mensaje después de 5 segundos
     } catch (error) {
       console.error("Error al agregar actuador:", error);
@@ -91,7 +91,12 @@ function AddActuatorContentComponent() {
                 value={actuatorName}
                 readOnly
               />
-              <img src={lock} alt="lock" className="lock-icon" />
+              {/* Imagen del candado con texto alternativo */}
+              <img 
+                src={lock} 
+                alt="Icono de candado cerrado, indicando que el nombre del actuador es de solo lectura" 
+                className="lock-icon" 
+              />
             </div>
           </div>
           <div className="form-group-actuator-code">

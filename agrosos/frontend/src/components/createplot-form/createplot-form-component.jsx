@@ -41,12 +41,12 @@ const CreatePlotForm = () => {
     e.preventDefault();
     if (!validateForm() || loading) return;
     setLoading(true);
-  
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("size", size);
     formData.append("unit", unit);
-  
+
     // Verificar y añadir farmer_id
     if (userId) {
       formData.append("user_id", userId);
@@ -55,7 +55,7 @@ const CreatePlotForm = () => {
       setLoading(false);
       return;
     }
-  
+
     try {
       if (imageOption === "upload" && image) {
         formData.append("image", image);
@@ -64,19 +64,19 @@ const CreatePlotForm = () => {
       } else if (imageOption === "solid-color") {
         formData.append("color", color);
       }
-  
+
       console.log("Contenido de FormData antes del envío:");
       for (let pair of formData.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`);
       }
-  
+
       await axios.post("http://localhost:3000/api/plots", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       // Resetear el formulario
       setName("");
       setSize("");
@@ -85,7 +85,7 @@ const CreatePlotForm = () => {
       setImageName("");
       setError("");
       setSuccess(true);
-  
+
       // Navegar a la lista de terrenos
       navigate("/plot-list");
     } catch (error) {
@@ -160,7 +160,7 @@ const CreatePlotForm = () => {
           className="create-plot-upload-container"
           onClick={() => document.getElementById("file-input").click()}
         >
-          <img src={plot} alt="Ícono de subir" />
+          <img src={plot} alt="Ícono de subir imagen" />
           <p>Sube una foto</p>
           <input id="file-input" type="file" onChange={handleImageChange} />
         </div>
@@ -170,7 +170,7 @@ const CreatePlotForm = () => {
           <p>Vista previa de la imagen seleccionada:</p>
           <img
             src={URL.createObjectURL(image)}
-            alt="Vista previa"
+            alt="Vista previa de la imagen subida"
             className="image-preview"
             style={{ objectFit: "cover", width: "100%", height: "auto" }}
           />
@@ -181,7 +181,7 @@ const CreatePlotForm = () => {
           <p>Se utilizará la siguiente imagen predeterminada:</p>
           <img
             src={pre}
-            alt="Imagen predeterminada"
+            alt="Imagen predeterminada de terreno"
             className="image-preview"
           />
         </div>

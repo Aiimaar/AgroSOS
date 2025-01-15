@@ -19,11 +19,19 @@ const CropsDetailsHeaderComponent = ({ cropImage = ajo, onBack }) => {
       </button>
       <div className="crop-info">
         <div className="crop-image-container">
-          <img src={cropImage} alt="Crop" className="crop-image" /> {/* Usa cropImage dinámicamente */}
+          <img
+            src={cropImage}
+            alt="Imagen del cultivo de ajo"
+            className="crop-image"
+          /> {/* Usa cropImage dinámicamente */}
         </div>
         <h1 className="crop-title">AJO</h1>
         <div className="chart-image-container">
-          <img src={graficaAjo} alt="Chart" className="chart-image" />
+          <img
+            src={graficaAjo}
+            alt="Gráfico de rendimiento del cultivo de ajo"
+            className="chart-image"
+          />
         </div>
       </div>
     </div>

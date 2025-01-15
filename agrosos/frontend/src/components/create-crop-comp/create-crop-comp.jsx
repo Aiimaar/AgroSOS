@@ -145,7 +145,8 @@ const CreateCropForm = () => {
         />
       </div>
       {cropImagePreview && (
-        <img src={cropImagePreview} alt="Vista previa del cultivo" className="create-crop-image-preview" />
+        // Texto alternativo añadido a la vista previa de la imagen
+        <img src={cropImagePreview} alt="Vista previa de la imagen del cultivo" className="create-crop-image-preview" />
       )}
       <div
         className="create-crop-upload-container"
@@ -164,7 +165,8 @@ const CreateCropForm = () => {
         />
       </div>
       {graphicImagePreview && (
-        <img src={graphicImagePreview} alt="Vista previa gráfica" className="create-crop-image-preview" />
+        // Texto alternativo añadido a la vista previa de la imagen gráfica
+        <img src={graphicImagePreview} alt="Vista previa de la imagen gráfica del cultivo" className="create-crop-image-preview" />
       )}
       <div className="create-crop-form-group">
         <label className="create-crop-form-label">Tiempo de Cosecha*</label>
