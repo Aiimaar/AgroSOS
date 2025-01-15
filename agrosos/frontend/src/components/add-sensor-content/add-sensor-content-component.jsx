@@ -70,8 +70,8 @@ function AddSensor() {
     return (
         <div className="container-add-sensor">
             <div className="form-add-sensor">
-                <h1 className="sensor-form-title">Enlazar sensor</h1>
-                <form className="sensor-form" onSubmit={handleSubmit}>
+                <h1 className="sensor-form-title" aria-live="polite">Enlazar sensor</h1>
+                <form className="sensor-form" onSubmit={handleSubmit} aria-labelledby="sensor-form-title">
                     <div className="form-group-sensor-name">
                         <label htmlFor="sensor-name-input" className="label-sensor-name">
                             Nombre del sensor
@@ -83,9 +83,14 @@ function AddSensor() {
                                 className="input-sensor-name"
                                 value={sensorName}
                                 readOnly
+                                aria-readonly="true"
+                                aria-describedby="sensor-name-description"
                             />
-                            <img src={lock} alt="lock" className="lock-icon" />
+                            <img src={lock} alt="Bloqueado" className="lock-icon" />
                         </div>
+                        <span id="sensor-name-description" className="sr-only">
+                            Este campo está bloqueado y solo muestra el nombre del sensor.
+                        </span>
                     </div>
                     <div className="form-group-sensor-code">
                         <label htmlFor="sensor-code-input" className="label-sensor-code">
@@ -98,16 +103,21 @@ function AddSensor() {
                             placeholder="Ingrese el código"
                             value={sensorCode}
                             onChange={(e) => setSensorCode(e.target.value)}
+                            aria-required="true"
+                            aria-invalid={error ? "true" : "false"}
+                            aria-describedby="sensor-code-error"
                         />
+                        {error && <p id="sensor-code-error" className="error-message">{error}</p>}
                     </div>
-                    {error && <p className="error-message">{error}</p>}
                     {successMessage && <p className="sensor-success-message">{successMessage}</p>} {/*Muestra mensaje de exito*/}
                     <div className="add-sensor-content-buttons">
-                        <button type="submit" className="btn-enla">
+                        <button type="submit" className="btn-enla" aria-label="Enlazar sensor">
                             Enlazar
                         </button>
                         <Link to="/sensors">
-                            <button className="btn-back">Volver</button>
+                            <button className="btn-back" aria-label="Volver a la lista de sensores">
+                                Volver
+                            </button>
                         </Link>
                     </div>
                 </form>

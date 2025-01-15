@@ -36,14 +36,20 @@ function SoilTemperatureComponent() {
 
   return (
     <div id="soil-temperature-component-container">
-      <div className="soil-temperature-component-arrow">
-        <img src={arrow} alt="arrow" className="soil-temperature-component-arrow-img" />
+      <div className="soil-temperature-component-arrow" aria-label="Regresar a la página anterior">
+        <img
+          src={arrow}
+          alt="Flecha para volver"
+          className="soil-temperature-component-arrow-img"
+        />
       </div>
       <h1>Temperatura del Terreno</h1>
-      <div className="soil-temperature-controls">
+      <div className="soil-temperature-controls" role="group" aria-labelledby="comparison-controls">
+        <h2 id="comparison-controls" className="sr-only">Controles de comparación de temperatura</h2>
         <button
           className={`soil-temperature-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
+          aria-pressed={operator === "<"}
         >
           {"<"}
         </button>
@@ -52,26 +58,36 @@ function SoilTemperatureComponent() {
             operator === "=" ? "active" : ""
           }`}
           onClick={() => handleComparisonChange("=")}
+          aria-pressed={operator === "="}
         >
           {"="}
         </button>
         <button
           className={`soil-temperature-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
+          aria-pressed={operator === ">"}
         >
           {">"}
         </button>
       </div>
       <div className="soil-temperature-display">
-        <span className="soil-temperature-indicator">{value}%</span>
+        <span className="soil-temperature-indicator" aria-live="polite">
+          {value}%
+        </span>
       </div>
       <div className="soil-temperature-slider">
+        <label htmlFor="soilTemperatureRange" className="sr-only">Ajuste de temperatura del terreno</label>
         <input
+          id="soilTemperatureRange"
           type="range"
           min="-10"
           max="40"
           value={value}
           onChange={handleSoilTemperatureChange}
+          aria-valuenow={value}
+          aria-valuemin="-10"
+          aria-valuemax="40"
+          aria-label="Ajustar temperatura del terreno"
         />
         <div className="soil-temperature-limits">
           <span>-10%</span>
@@ -82,6 +98,7 @@ function SoilTemperatureComponent() {
         <button
           className="soil-temperature-apply-button"
           onClick={handleApplyCondition}
+          aria-label="Aplicar condición de temperatura"
         >
           Aplicar condición
         </button>

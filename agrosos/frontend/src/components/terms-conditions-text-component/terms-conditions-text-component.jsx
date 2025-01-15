@@ -9,10 +9,14 @@ function TermsConditionText() {
 
   return (
     <div className="terms-condition-text-container">
-      <button className="terms-back-button" onClick={() => navigate(-1)}>
+      <button
+        className="terms-back-button"
+        onClick={() => navigate(-1)}
+        aria-label="Volver a la página anterior"
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
-      <h1 className="terms-condition-text-title">Términos y condiciones</h1>
+      <h1 className="terms-condition-text-title" id="terms-heading">Términos y condiciones</h1>
       <p className="terms-condition-text-paragraph">
         Última actualización: [Fecha] Bienvenido a [Nombre de la App] ("la
         App"). Estos Términos y Condiciones ("Términos") rigen el uso de nuestra
@@ -20,16 +24,18 @@ function TermsConditionText() {
         ("nosotros" o "nuestro"). Al descargar, instalar y utilizar la App,
         aceptas estar sujeto a estos Términos.
       </p>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">1. Aceptación de los Términos:</span>
+      <div className="terms-condition-text-section" aria-labelledby="section-1">
+        <h2 id="section-1" className="sr-only">1. Aceptación de los Términos</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-1">1. Aceptación de los Términos:</span>
         <p className="terms-condition-text-paragraph">
           Al acceder o usar la App, aceptas estos Términos y te comprometes a
           cumplir con todas las leyes y regulaciones aplicables. Si no estás de
           acuerdo con alguna parte de estos Términos, no debes usar la App.
         </p>
       </div>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">2. Uso de la App:</span>
+      <div className="terms-condition-text-section" aria-labelledby="section-2">
+        <h2 id="section-2" className="sr-only">2. Uso de la App</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-2">2. Uso de la App:</span>
         <p className="terms-condition-text-paragraph">
           a. Debes tener al menos 18 años de edad para usar la App. b. Te
           comprometes a usar la App únicamente para fines lícitos y de acuerdo
@@ -39,8 +45,9 @@ function TermsConditionText() {
           usuarios.
         </p>
       </div>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">3. Registro y Cuentas:</span>
+      <div className="terms-condition-text-section" aria-labelledby="section-3">
+        <h2 id="section-3" className="sr-only">3. Registro y Cuentas</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-3">3. Registro y Cuentas:</span>
         <p className="terms-condition-text-paragraph">
           a. Para acceder a ciertas funciones de la App, es posible que
           necesites crear una cuenta. b. Eres responsable de mantener la
@@ -48,8 +55,9 @@ function TermsConditionText() {
           las actividades que ocurran bajo tu cuenta.
         </p>
       </div>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">4. Privacidad:</span>
+      <div className="terms-condition-text-section" aria-labelledby="section-4">
+        <h2 id="section-4" className="sr-only">4. Privacidad</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-4">4. Privacidad:</span>
         <p className="terms-condition-text-paragraph">
           a. Recopilamos y usamos tu información personal de acuerdo con nuestra
           Política de Privacidad, disponible en [Enlace a la Política de
@@ -57,8 +65,9 @@ function TermsConditionText() {
           información según nuestra Política de Privacidad.
         </p>
       </div>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">5. Propiedad Intelectual:</span>
+      <div className="terms-condition-text-section" aria-labelledby="section-5">
+        <h2 id="section-5" className="sr-only">5. Propiedad Intelectual</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-5">5. Propiedad Intelectual:</span>
         <p className="terms-condition-text-paragraph">
           a. Todos los derechos de propiedad intelectual en la App y su
           contenido (incluyendo, sin limitación, software, texto, gráficos,
@@ -68,10 +77,9 @@ function TermsConditionText() {
           en estos Términos.
         </p>
       </div>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">
-          6. Limitación de Responsabilidad:
-        </span>
+      <div className="terms-condition-text-section" aria-labelledby="section-6">
+        <h2 id="section-6" className="sr-only">6. Limitación de Responsabilidad</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-6">6. Limitación de Responsabilidad:</span>
         <p className="terms-condition-text-paragraph">
           a. La App se proporciona "tal cual" y "según disponibilidad". No
           garantizamos que la App esté libre de errores o interrupciones. b. En
@@ -80,10 +88,9 @@ function TermsConditionText() {
           que surja del uso de la App.
         </p>
       </div>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">
-          7. Modificaciones a los Términos:
-        </span>
+      <div className="terms-condition-text-section" aria-labelledby="section-7">
+        <h2 id="section-7" className="sr-only">7. Modificaciones a los Términos</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-7">7. Modificaciones a los Términos:</span>
         <p className="terms-condition-text-paragraph">
           a. Nos reservamos el derecho de modificar estos Términos en cualquier
           momento. Cualquier cambio se publicará en esta página y, si los
@@ -92,16 +99,18 @@ function TermsConditionText() {
           constituye tu aceptación de los nuevos Términos.
         </p>
       </div>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">8. Terminación:</span>
+      <div className="terms-condition-text-section" aria-labelledby="section-8">
+        <h2 id="section-8" className="sr-only">8. Terminación</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-8">8. Terminación:</span>
         <p className="terms-condition-text-paragraph">
           a. Podemos suspender o terminar tu acceso a la App en cualquier
           momento, sin previo aviso, si incumples estos Términos o si decidimos
           descontinuar la App.
         </p>
       </div>
-      <div className="terms-condition-text-section">
-        <span className="terms-condition-text-section-number">9. Contacto:</span>
+      <div className="terms-condition-text-section" aria-labelledby="section-9">
+        <h2 id="section-9" className="sr-only">9. Contacto</h2>
+        <span className="terms-condition-text-section-number" aria-labelledby="section-9">9. Contacto:</span>
         <p className="terms-condition-text-paragraph">
           a. Si tienes alguna pregunta o inquietud sobre estos Términos, puedes
           contactarnos en [Correo electrónico de contacto].

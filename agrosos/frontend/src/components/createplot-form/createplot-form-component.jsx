@@ -101,40 +101,42 @@ const CreatePlotForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="create-plot-form">
-      <h2 className="create-plot-form-title">Crear Nuevo Terreno</h2>
-      {error && <p className="create-plot-error-message">{error}</p>}
+    <form onSubmit={handleSubmit} className="create-plot-form" aria-labelledby="create-plot-form-title">
+      <h2 id="create-plot-form-title" className="create-plot-form-title">Crear Nuevo Terreno</h2>
+      {error && <p role="alert" className="create-plot-error-message">{error}</p>}
       {success && (
-        <p className="create-plot-success-message">
+        <p role="status" className="create-plot-success-message">
           Terreno creado exitosamente!
         </p>
       )}
       <div className="create-plot-form-group">
-        <label className="create-plot-form-label">
-          Nombre del terreno*
-        </label>
+        <label htmlFor="name" className="create-plot-form-label">Nombre del terreno*</label>
         <input
           type="text"
+          id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="create-plot-form-input"
+          aria-required="true"
         />
       </div>
       <div className="create-plot-form-group">
-        <label className="create-plot-form-label">
-          Dimensiones del terreno*
-        </label>
+        <label htmlFor="size" className="create-plot-form-label">Dimensiones del terreno*</label>
         <div className="size-unit-container">
           <input
             type="number"
+            id="size"
             value={size}
             onChange={(e) => setSize(e.target.value)}
             className="create-plot-form-input"
+            aria-required="true"
           />
           <select
+            id="unit"
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
             className="create-plot-form-select"
+            aria-required="true"
           >
             <option value="m2">m²</option>
             <option value="ha">ha</option>
@@ -142,13 +144,13 @@ const CreatePlotForm = () => {
         </div>
       </div>
       <div className="create-plot-form-group">
-        <label className="create-plot-form-label">
-          Personaliza tu terreno*
-        </label>
+        <label htmlFor="image-option" className="create-plot-form-label">Personaliza tu terreno*</label>
         <select
+          id="image-option"
           value={imageOption}
           onChange={(e) => setImageOption(e.target.value)}
           className="create-plot-form-select"
+          aria-required="true"
         >
           <option value="upload">Subir imagen</option>
           <option value="default">Imagen predeterminada</option>
@@ -159,10 +161,17 @@ const CreatePlotForm = () => {
         <div
           className="create-plot-upload-container"
           onClick={() => document.getElementById("file-input").click()}
+          role="button"
+          aria-label="Subir una imagen"
         >
           <img src={plot} alt="Ícono de subir" />
           <p>Sube una foto</p>
-          <input id="file-input" type="file" onChange={handleImageChange} />
+          <input
+            id="file-input"
+            type="file"
+            onChange={handleImageChange}
+            aria-label="Selecciona una imagen para subir"
+          />
         </div>
       )}
       {imageOption === "upload" && imageName && (
@@ -188,14 +197,13 @@ const CreatePlotForm = () => {
       )}
       {imageOption === "solid-color" && (
         <div className="create-plot-color-picker-container">
-          <label htmlFor="create-plot-color-picker">
-            Seleccionar color:
-          </label>
+          <label htmlFor="create-plot-color-picker">Seleccionar color:</label>
           <input
             type="color"
             id="color-picker"
             value={color}
             onChange={(e) => setColor(e.target.value)}
+            aria-label="Selecciona un color para el fondo"
           />
           <p>El color seleccionado será el fondo del terreno.</p>
         </div>
@@ -205,6 +213,7 @@ const CreatePlotForm = () => {
           type="submit"
           disabled={loading}
           className="create-plot-submit-button"
+          aria-live="polite"
         >
           {loading ? "Cargando..." : "Crear Terreno"}
         </button>

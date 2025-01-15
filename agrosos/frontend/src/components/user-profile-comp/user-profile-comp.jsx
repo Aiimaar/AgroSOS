@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { FaCamera, FaPen } from "react-icons/fa";
 import axios from "axios";
@@ -79,8 +78,6 @@ const UserProfileComp = () => {
       alert("Error al guardar los cambios.");
     }
   };
-  
-  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -132,25 +129,25 @@ const UserProfileComp = () => {
   };
 
   const modal = isModalOpen && (
-    <div className="modal-overlay">
+    <div className="modal-overlay" role="dialog" aria-labelledby="edit-modal-title" aria-hidden={!isModalOpen}>
       <div className="modal">
-        <h3>Editar {editingField}</h3>
+        <h3 id="edit-modal-title">Editar {editingField}</h3>
         <input
           type={editingField === "email" ? "email" : "text"}
           value={fieldValue}
           onChange={(e) => setFieldValue(e.target.value)}
           className="modal-input"
+          aria-describedby="field-description"
         />
         <div className="modal-buttons">
-          <button onClick={handleSave} className="modal-save-button">
-            Guardar
-          </button>
+          <button onClick={handleSave} className="modal-save-button" aria-label="Guardar cambios">Guardar</button>
           <button
             onClick={() => {
               setIsModalOpen(false);
               setEditingField(null);
             }}
-            className="modal-cancel-button"
+            className="modal-cancel-button" 
+            aria-label="Cancelar edición"
           >
             Cancelar
           </button>
@@ -161,15 +158,19 @@ const UserProfileComp = () => {
 
   return (
     <div className="user-profile-container">
-      <div className="profile-pic-container">
+      <div className="profile-pic-container" aria-labelledby="profile-picture">
         <img
           src={userData.profile_image || "/default-profile.png"}
-          alt="profile"
+          alt="Imagen de perfil"
           className="profile-pic"
+          role="img"
+          aria-label="Imagen de perfil del usuario"
         />
         <div
           className="camera-icon"
           onClick={() => document.getElementById("imageUpload").click()}
+          role="button"
+          aria-label="Cambiar imagen de perfil"
         >
           <FaCamera />
         </div>
@@ -179,35 +180,57 @@ const UserProfileComp = () => {
           accept="image/*"
           onChange={handleImageChange}
           style={{ display: "none" }}
+          aria-label="Seleccionar imagen"
         />
         {isImageSelected && (
           <button
             onClick={handleImageUpload}
             className="upload-button"
             disabled={isUploading}
+            aria-label="Subir imagen seleccionada"
           >
             Subir Imagen
           </button>
         )}
       </div>
       <div className="form-field">
-        <label>Nombre</label>
+        <label htmlFor="name-input">Nombre</label>
         <div className="input-container">
-          <input value={userData.name} readOnly className="input-field" />
-          <FaPen className="edit-icon" onClick={() => handleEditClick("name")} />
+          <input
+            id="name-input"
+            value={userData.name}
+            readOnly
+            className="input-field"
+            aria-label="Nombre del usuario"
+          />
+          <FaPen 
+            className="edit-icon" 
+            onClick={() => handleEditClick("name")} 
+            aria-label="Editar nombre"
+          />
         </div>
       </div>
       <div className="form-field">
-        <label>Email</label>
+        <label htmlFor="email-input">Email</label>
         <div className="input-container">
-          <input value={userData.email} readOnly className="input-field" />
-          <FaPen className="edit-icon" onClick={() => handleEditClick("email")} />
+          <input
+            id="email-input"
+            value={userData.email}
+            readOnly
+            className="input-field"
+            aria-label="Correo electrónico del usuario"
+          />
+          <FaPen 
+            className="edit-icon" 
+            onClick={() => handleEditClick("email")} 
+            aria-label="Editar correo electrónico"
+          />
         </div>
       </div>
-      <button onClick={handleLogout} className="logout-button">
+      <button onClick={handleLogout} className="logout-button" aria-label="Cerrar sesión">
         Cerrar Sesión
       </button>
-      <button onClick={() => navigate(-1)} className="go-back-button">
+      <button onClick={() => navigate(-1)} className="go-back-button" aria-label="Volver a la página anterior">
         Volver
       </button>
       {ReactDOM.createPortal(modal, document.body)}

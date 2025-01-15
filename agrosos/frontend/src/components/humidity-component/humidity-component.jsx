@@ -43,46 +43,52 @@ function HumidityComponent() {
     // Navega hacia atrás
     navigate(-1);
   };
-  
 
   return (
-    <div id="humidity-component-container">
+    <div id="humidity-component-container" aria-labelledby="humidity-component-title">
       <div className="humidity-component-arrow">
-        <img src={arrow} alt="arrow" className="humidity-component-arrow-img" />
+        <img src={arrow} alt="Flecha para regresar" className="humidity-component-arrow-img" />
       </div>
-      <h1>Humedad</h1>
+      <h1 id="humidity-component-title">Humedad</h1>
       <div className="humidity-controls">
         <button
           className={`humidity-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
+          aria-pressed={operator === "<"}
         >
           {"<"}
         </button>
         <button
-          className={`humidity-button-equal ${
-            operator === "=" ? "active" : ""
-          }`}
+          className={`humidity-button-equal ${operator === "=" ? "active" : ""}`}
           onClick={() => handleComparisonChange("=")}
+          aria-pressed={operator === "="}
         >
           {"="}
         </button>
         <button
           className={`humidity-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
+          aria-pressed={operator === ">"}
         >
           {">"}
         </button>
       </div>
       <div className="humidity-display">
-        <span className="humidity-indicator">{value}%</span>
+        <span className="humidity-indicator" id="humidity-indicator">{value}%</span>
       </div>
       <div className="humidity-slider">
+        <label htmlFor="humidity-slider" className="sr-only">Deslizador de humedad</label>
         <input
+          id="humidity-slider"
           type="range"
           min="-10"
           max="40"
           value={value}
           onChange={handleHumidityChange}
+          aria-valuenow={value}
+          aria-valuemin="-10"
+          aria-valuemax="40"
+          aria-labelledby="humidity-indicator"
         />
         <div className="humidity-limits">
           <span>-10%</span>
@@ -93,6 +99,7 @@ function HumidityComponent() {
         <button
           className="humidity-apply-button"
           onClick={handleApplyCondition}
+          aria-label="Aplicar condición de humedad"
         >
           Aplicar condición
         </button>
