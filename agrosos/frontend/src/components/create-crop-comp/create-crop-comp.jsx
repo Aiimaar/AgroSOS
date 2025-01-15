@@ -91,6 +91,12 @@ const CreateCropForm = () => {
     navigate("/crops");
   };
 
+  const handleKeyDown = (e, inputId) => {
+    if (e.key === "Enter") {
+      document.getElementById(inputId).click();
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="create-crop-form">
       <h2 className="create-crop-form-title">Crear Nuevo Cultivo</h2>
@@ -107,6 +113,7 @@ const CreateCropForm = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="create-crop-form-input"
+          tabIndex="0"
         />
       </div>
       <div className="create-crop-form-group">
@@ -115,6 +122,7 @@ const CreateCropForm = () => {
           value={info}
           onChange={(e) => setInfo(e.target.value)}
           className="create-crop-form-textarea"
+          tabIndex="0"
         ></textarea>
       </div>
       <div className="create-crop-form-group">
@@ -123,6 +131,8 @@ const CreateCropForm = () => {
       <div
         className="create-crop-upload-container"
         onClick={() => document.getElementById("crop-image-input").click()}
+        onKeyDown={(e) => handleKeyDown(e, "crop-image-input")}
+        tabIndex="0"
       >
         <p>Sube una imagen del cultivo</p>
         <input
@@ -131,6 +141,7 @@ const CreateCropForm = () => {
           accept="image/*"
           onChange={(e) => handleImageChange(e, setCropImage, setCropImagePreview)}
           style={{ display: "none" }}
+          tabIndex="0"
         />
       </div>
       {cropImagePreview && (
@@ -139,6 +150,8 @@ const CreateCropForm = () => {
       <div
         className="create-crop-upload-container"
         onClick={() => document.getElementById("graphic-image-input").click()}
+        onKeyDown={(e) => handleKeyDown(e, "graphic-image-input")}
+        tabIndex="0"
       >
         <p>Sube una imagen gráfica</p>
         <input
@@ -147,6 +160,7 @@ const CreateCropForm = () => {
           accept="image/*"
           onChange={(e) => handleImageChange(e, setGraphicImage, setGraphicImagePreview)}
           style={{ display: "none" }}
+          tabIndex="0"
         />
       </div>
       {graphicImagePreview && (
@@ -159,6 +173,7 @@ const CreateCropForm = () => {
             value={harvestStartMonth}
             onChange={(e) => setHarvestStartMonth(e.target.value)}
             className="create-crop-form-select"
+            tabIndex="0"
           >
             <option value="">Seleccionar mes de inicio</option>
             {months.map((month, index) => (
@@ -171,6 +186,7 @@ const CreateCropForm = () => {
             value={harvestEndMonth}
             onChange={(e) => setHarvestEndMonth(e.target.value)}
             className="create-crop-form-select"
+            tabIndex="0"
           >
             <option value="">Seleccionar mes de fin</option>
             {months.map((month, index) => (
@@ -186,6 +202,7 @@ const CreateCropForm = () => {
           type="submit"
           disabled={loading}
           className="create-crop-submit-button"
+          tabIndex="0"
         >
           {loading ? "Cargando..." : "Crear Cultivo"}
         </button>
@@ -193,6 +210,7 @@ const CreateCropForm = () => {
           type="button"
           onClick={handleCancel}
           className="create-crop-cancel-button"
+          tabIndex="0"
         >
           Cancelar
         </button>

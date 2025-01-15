@@ -1,5 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import arrow from "./ArrowLeftOutlined.png";
+import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 import "./soil-humidity-component.css";
 import { useState } from "react";
 
@@ -23,7 +23,6 @@ function SoilHumidityComponent() {
       operator,
     };
 
-    // Guardar en sessionStorage
     const existingConditions =
       JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || [];
     existingConditions.push(soilHumidityCondition);
@@ -36,8 +35,8 @@ function SoilHumidityComponent() {
 
   return (
     <div id="soil-humidity-component-container">
-      <div className="soil-humidity-component-arrow">
-        <img src={arrow} alt="arrow" className="soil-humidity-component-arrow-img" />
+      <div className="soil-humidity-component-arrow" onClick={() => navigate(-1)}>
+        <FaArrowLeft className="soil-humidity-component-arrow-icon" />
       </div>
       <h1>Humedad del Terreno</h1>
       <div className="soil-humidity-controls">
@@ -48,9 +47,7 @@ function SoilHumidityComponent() {
           {"<"}
         </button>
         <button
-          className={`humidity-button-equal ${
-            operator === "=" ? "active" : ""
-          }`}
+          className={`humidity-button-equal ${operator === "=" ? "active" : ""}`}
           onClick={() => handleComparisonChange("=")}
         >
           {"="}
