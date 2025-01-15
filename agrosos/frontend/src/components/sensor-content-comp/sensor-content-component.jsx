@@ -23,50 +23,50 @@ function Sensors() {
         <div id="sensor-content-container">
             <div className="sensorList">
                 <div className="sensor-content-list">
-                    <img src={airTemp} alt="airTemp" className="airTemp" />
+                    <img src={airTemp} alt="Icono de sensor de temperatura del aire" className="airTemp" />
                     <p>Temperatura</p>
                     <div className="sensor-content-buttons">
                         <Link to="/add-sensor?name=Temperatura">
-                            <img src={add} alt="add" className="add" />
+                            <img src={add} alt="Icono para agregar un sensor de temperatura" className="add" />
                         </Link>
                         <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="quit" className="quit" />
+                            <img src={quit} alt="Icono para quitar el sensor de temperatura" className="quit" />
                         </Link>
                     </div>
                 </div>
                 <div className="sensor-content-list">
-                    <img src={airHu} alt="airHu" className="airHu" />
+                    <img src={airHu} alt="Icono de sensor de humedad del aire" className="airHu" />
                     <p>Humedad</p>
                     <div className="sensor-content-buttons">
                         <Link to="/add-sensor?name=Humedad">
-                            <img src={add} alt="add" className="add" />
+                            <img src={add} alt="Icono para agregar un sensor de humedad" className="add" />
                         </Link>
                         <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="quit" className="quit" />
+                            <img src={quit} alt="Icono para quitar el sensor de humedad" className="quit" />
                         </Link>
                     </div>
                 </div>
                 <div className="sensor-content-list">
-                    <img src={plotTemp} alt="plotTemp" className="plotTemp" />
+                    <img src={plotTemp} alt="Icono de sensor de temperatura del terreno" className="plotTemp" />
                     <p>Temperatura de terreno</p>
                     <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Temperatura%20de%20terreno"> {/* Codificación del espacio */}
-                            <img src={add} alt="add" className="add" />
+                        <Link to="/add-sensor?name=Temperatura%20de%20terreno">
+                            <img src={add} alt="Icono para agregar un sensor de temperatura de terreno" className="add" />
                         </Link>
                         <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="quit" className="quit" />
+                            <img src={quit} alt="Icono para quitar el sensor de temperatura del terreno" className="quit" />
                         </Link>
                     </div>
                 </div>
                 <div className="sensor-content-list">
-                    <img src={plotHu} alt="plotHu" className="plotHu" />
+                    <img src={plotHu} alt="Icono de sensor de humedad del terreno" className="plotHu" />
                     <p>Humedad del terreno</p>
                     <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Humedad%20del%20terreno"> {/* Codificación del espacio */}
-                            <img src={add} alt="add" className="add" />
+                        <Link to="/add-sensor?name=Humedad%20del%20terreno">
+                            <img src={add} alt="Icono para agregar un sensor de humedad del terreno" className="add" />
                         </Link>
                         <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="quit" className="quit" />
+                            <img src={quit} alt="Icono para quitar el sensor de humedad del terreno" className="quit" />
                         </Link>
                     </div>
                 </div>

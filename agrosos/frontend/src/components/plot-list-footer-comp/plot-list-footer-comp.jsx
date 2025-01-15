@@ -11,19 +11,19 @@ const PlotListFooterComp = () => {
         <div className="plot-list-img-container">
             <div className="plot-list-user-img-container">
                 <Link to="/user-profile" className="img">
-                    <img src={userProfileIcon} alt="User Profile" />
+                    <img src={userProfileIcon} alt="Icono de perfil de usuario. Redirige al perfil del usuario." />
                 </Link>
             </div>
 
             <div className="plot-list-create-plot-img-container">
                 <Link to="/create-plot" className="img">
-                    <img src={addPlotIcon} alt="Create Plot" />
+                    <img src={addPlotIcon} alt="Icono para crear una nueva parcela. Redirige al formulario de creación de parcela." />
                 </Link>
             </div>
 
             <div className="plot-list-config-img-container">
                 <Link to="/settings" className="img">
-                    <img src={configIcon} alt="Configuration" />
+                    <img src={configIcon} alt="Icono de configuración. Redirige a la página de configuración." />
                 </Link>
             </div>
         </div>

@@ -10,10 +10,10 @@ import vent from "./Group1.png";
 
 function ActuatorContentComponent() {
   const actuators = [
-    { name: "Riego", img: irrigation },
-    { name: "Ventilación", img: vent },
-    { name: "Cobertura de cultivos", img: nutrition },
-    { name: "Apertura de ventanas", img: vector },
+    { name: "Riego", img: irrigation, altText: "Imagen de sistema de riego" },
+    { name: "Ventilación", img: vent, altText: "Imagen de ventilación del invernadero" },
+    { name: "Cobertura de cultivos", img: nutrition, altText: "Imagen de cobertura de cultivos" },
+    { name: "Apertura de ventanas", img: vector, altText: "Imagen de apertura de ventanas" },
   ];
 
   return (
@@ -23,17 +23,16 @@ function ActuatorContentComponent() {
           <div className="list" key={actuator.name}>
             <img
               src={actuator.img}
-              alt={actuator.name}
+              alt={actuator.altText}
               className="actuator-content-component-img"
             />
             <p>{actuator.name}</p>
             <div className="actuator-buttons">
               <Link to={`/add-actuator?name=${actuator.name}`}>
-                <img src={add} alt="add" className="add" />
+                <img src={add} alt="Añadir actuador" className="add" />
               </Link>
               <Link to="/actuator-enla?showDelete=true">
-                {" "}
-                <img src={quit} alt="quit" className="quit" />
+                <img src={quit} alt="Eliminar actuador" className="quit" />
               </Link>
             </div>
           </div>

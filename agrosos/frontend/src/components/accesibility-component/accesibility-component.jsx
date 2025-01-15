@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function AccesibilityComponent() {
-
     const navigate = useNavigate();
 
     return (
         <div id="container-accesibility">
             <div className="arrow-container">
                 <button className="accesibility-arrow" onClick={() => navigate(-1)}>
-                    <FontAwesomeIcon icon={faArrowLeft} />
+                    <FontAwesomeIcon icon={faArrowLeft} className="accesibility-icon" />
                 </button>
             </div>
             <h1 className="accesibility-text">Accesibilidad</h1>
@@ -22,7 +21,7 @@ function AccesibilityComponent() {
                 <p className="accesibility-p">Tutorial Aplicación</p>
             </div>
         </div>
-    )
+    );
 }
 
 export default AccesibilityComponent;

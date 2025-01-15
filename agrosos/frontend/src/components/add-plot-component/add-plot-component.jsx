@@ -8,7 +8,14 @@ function AddPlotComponent() {
     return (
         <div className="add-plot-container">
             <p className="p-container">Crear un terreno</p>
-            <Link to="/create-plot" ><img src={plusCircleOutlined} alt="plusCircleOutlined" className="plusCircleOutlined"/> </Link>
+            {/* Añadido texto alternativo descriptivo */}
+            <Link to="/create-plot" >
+                <img 
+                    src={plusCircleOutlined} 
+                    alt="Icono de un círculo con un signo más, para crear un nuevo terreno" 
+                    className="plusCircleOutlined"
+                />
+            </Link>
         </div>
     );
 }

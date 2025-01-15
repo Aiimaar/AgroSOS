@@ -159,12 +159,12 @@ function ExistingRulesComponent() {
 
   return (
     <div id="existing-rules-container">
-      <button className="existing-rule-back-button" onClick={() => navigate("/settings")}>
+      <button className="existing-rule-back-button" onClick={() => navigate("/settings")} aria-label="Volver a configuración">
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <div className="existing-rule-header">
         <h1 className="existing-rule-title">
-          <FontAwesomeIcon icon={faClipboardList} className="icon-list" />
+          <FontAwesomeIcon icon={faClipboardList} className="icon-list" aria-hidden="true" />
           Reglas
         </h1>
       </div>
@@ -176,8 +176,9 @@ function ExistingRulesComponent() {
             <button
               className="add-rule-button"
               onClick={() => navigate("/add-rule")}
+              aria-label="Añadir nueva regla"
             >
-              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon icon={faPlus} aria-hidden="true" />
             </button>
           </div>
         ) : (
@@ -193,14 +194,16 @@ function ExistingRulesComponent() {
                 <button
                   className="existing-rule-edit-button"
                   onClick={() => handleEdit(rule.id)}
+                  aria-label="Editar regla"
                 >
-                  <FontAwesomeIcon icon={faEdit} />
+                  <FontAwesomeIcon icon={faEdit} aria-hidden="true" />
                 </button>
                 <button
                   className="existing-rule-delete-button"
                   onClick={() => openModal(rule.id)}
+                  aria-label="Eliminar regla"
                 >
-                  <FontAwesomeIcon icon={faTrashAlt} />
+                  <FontAwesomeIcon icon={faTrashAlt} aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -212,18 +215,19 @@ function ExistingRulesComponent() {
         <button
           className="add-rule-button-circle"
           onClick={() => navigate("/add-rule")}
+          aria-label="Añadir nueva regla"
         >
-          <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={faPlus} aria-hidden="true" />
         </button>
       )}
 
       {isModalOpen && (
-        <div className="existing-rule-modal-overlay" onClick={closeModal}>
+        <div className="existing-rule-modal-overlay" onClick={closeModal} aria-label="Cerrar modal">
           <div className="existing-rule-modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>¿Estás seguro de que deseas eliminar esta regla?</h2>
             <div className="existing-rule-modal-buttons">
-              <button className="existing-rule-modal-button existing-rule-modal-confirm" onClick={handleDelete}>Aceptar</button>
-              <button className="existing-rule-modal-button existing-rule-modal-cancel" onClick={closeModal}>Cancelar</button>
+              <button className="existing-rule-modal-button existing-rule-modal-confirm" onClick={handleDelete} aria-label="Confirmar eliminación">Aceptar</button>
+              <button className="existing-rule-modal-button existing-rule-modal-cancel" onClick={closeModal} aria-label="Cancelar eliminación">Cancelar</button>
             </div>
           </div>
         </div>
