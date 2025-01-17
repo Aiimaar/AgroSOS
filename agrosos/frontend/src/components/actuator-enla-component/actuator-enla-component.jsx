@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./actuator-enla-component.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function ActuatorEnlaComponent() {
     const [linkedActuators, setLinkedActuators] = useState([]);
@@ -11,6 +12,7 @@ function ActuatorEnlaComponent() {
     const [searchParams] = useSearchParams(); 
     const showDelete = searchParams.get("showDelete") === "true"; 
     const [error, setError] = useState(null); 
+    const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
     const actuatorTranslations = {
         "Irrigation": "Riego",
@@ -83,7 +85,7 @@ function ActuatorEnlaComponent() {
     };
 
     return (
-        <div id="actuator-enla-container">
+        <div id="actuator-enla-container" className={darkMode ? 'dark-mode' : ''}>
             <button
                 className="actuator-enla-button-arrow"
                 onClick={() => navigate("/actuators")}

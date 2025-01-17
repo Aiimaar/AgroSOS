@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./add-sensor-content-component.css";
 import lock from "./icon_lock_locked_.png";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function AddSensor() {
     const [searchParams] = useSearchParams();
@@ -11,6 +12,7 @@ function AddSensor() {
     const token = localStorage.getItem("authToken");
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(""); // Estado para mensajes de éxito
+    const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
     const sensorNames = {
         "Temperatura": "temperature",
@@ -68,7 +70,7 @@ function AddSensor() {
     };
 
     return (
-        <div className="container-add-sensor">
+        <div className={`container-add-sensor ${darkMode ? 'dark-mode' : ''}`}>
             <div className="form-add-sensor">
                 <h1 className="sensor-form-title">Enlazar sensor</h1>
                 <form className="sensor-form" onSubmit={handleSubmit}>

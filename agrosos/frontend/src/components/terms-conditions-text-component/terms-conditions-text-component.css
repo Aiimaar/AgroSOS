@@ -1,9 +1,17 @@
+/* terms-conditions-text-component.css */
+
 .terms-condition-text-container {
   padding-top: 15%;
   flex-direction: column;
   width: 70vw;
   margin: 2em auto;
   text-align: justify;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .terms-condition-text-container {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .terms-back-button {
@@ -17,10 +25,18 @@
   align-items: center;
 }
 
+.dark-mode .terms-back-button {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 .terms-condition-text-title {
   color: #000000;
   font-size: 23px;
   margin-bottom: 1em;
+}
+
+.dark-mode .terms-condition-text-title {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .terms-condition-text-section {
@@ -34,8 +50,16 @@
   margin-bottom: 0.5em;
 }
 
+.dark-mode .terms-condition-text-section-number {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 .terms-condition-text-paragraph {
   color: black;
   margin-bottom: 2em;
   text-align: justify;
+}
+
+.dark-mode .terms-condition-text-paragraph {
+  color: #ccc; /* Texto claro en modo oscuro */
 }

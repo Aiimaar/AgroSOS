@@ -1,6 +1,15 @@
 .container-add-sensor {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   margin: 20px;
   padding: 15px;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .container-add-sensor {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .form-add-sensor {
@@ -13,6 +22,11 @@
   font-size: 24px;
   color: #333;
   margin-bottom: 1.5em;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .sensor-form-title {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .sensor-form {
@@ -39,6 +53,12 @@
   text-align: left;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .label-sensor-name,
+.dark-mode .label-sensor-code {
+  color: #ccc; /* Texto claro en modo oscuro */
+}
+
 .sensor-input-container {
   position: relative;
   display: flex;
@@ -57,6 +77,13 @@
   background: none;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .input-sensor-name,
+.dark-mode .input-sensor-code {
+  color: white; /* Texto claro en modo oscuro */
+  border-bottom: 1px solid green; /* Borde diferente en modo oscuro */
+}
+
 .sensor-error-message {
   margin-top: 15px;
   font-size: 14px;
@@ -71,6 +98,11 @@
   font-style: italic;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .sensor-success-message {
+  color: #ccc; /* Texto claro en modo oscuro */
+}
+
 .lock-icon {
   position: absolute;
   right: 5px;
@@ -79,10 +111,21 @@
   pointer-events: none;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .lock-icon {
+  color: #ccc; /* Icono claro en modo oscuro */
+}
+
 .input-sensor-name:focus,
 .input-sensor-code:focus {
   outline: none;
   border-color: #006816;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .input-sensor-name:focus,
+.dark-mode .input-sensor-code:focus {
+  border-color: green; /* Borde diferente en modo oscuro */
 }
 
 .add-sensor-content-buttons {
@@ -104,6 +147,12 @@
   text-align: center;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .btn-back {
+  background-color: green; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
+}
+
 .btn-enla {
   display: block;
   width: 25vw;
@@ -116,6 +165,11 @@
   border: none;
   cursor: pointer;
   text-align: center;
+}
+
+.dark-mode .btn-enla {
+  background-color: green; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
 }
 
 .btn-enla:hover {

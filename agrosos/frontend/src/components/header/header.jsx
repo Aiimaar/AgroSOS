@@ -4,9 +4,11 @@ import { faBars, faTimes, faHome, faBell, faBook, faLightbulb, faUniversalAccess
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
 import "./header.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   const openMenu = () => {
     setIsMenuOpen(true);
@@ -23,7 +25,7 @@ function Header() {
   };
 
   return (
-    <div className="app-container" onClick={handleOutsideClick}>
+    <div className={`app-container ${darkMode ? 'dark-mode' : ''}`} onClick={handleOutsideClick}>
       <header className="header">
         <img src={logo} alt="Logo Planta" className="plant-icon" />
         <button className="header-menu-button" onClick={openMenu}>
@@ -64,6 +66,9 @@ function Header() {
           </ul>
         </div>
       </header>
+      <button onClick={toggleDarkMode} className="toggle-dark-mode">
+        {darkMode ? 'Desactivar Modo Oscuro' : 'Activar Modo Oscuro'}
+      </button>
       <SideMenu isOpen={isMenuOpen} onClose={closeMenu} />
     </div>
   );

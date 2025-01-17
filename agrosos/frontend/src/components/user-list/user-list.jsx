@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import defaultAvatar from "./default-avatar.png";
 import addUserIcon from "./add-user-icon.png";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -22,6 +23,7 @@ const UserList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -168,7 +170,7 @@ const UserList = () => {
   };
 
   return (
-    <div className="user-list-container">
+    <div className={`user-list-container ${darkMode ? 'dark-mode' : ''}`}>
       <button className="user-list-back-button" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
@@ -179,7 +181,7 @@ const UserList = () => {
       >
         <img src={addUserIcon} alt="Create User" />
       </div>
-
+  
       <div className="user-list">
         {currentUsers.map((user) => (
           <div key={user.id}>
@@ -222,7 +224,7 @@ const UserList = () => {
           </div>
         ))}
       </div>
-
+  
       <div className="user-list-arrow-buttons">
         {currentPage > 1 ? (
           <button
@@ -234,7 +236,7 @@ const UserList = () => {
         ) : (
           <div style={{ width: "40px" }}></div>
         )}
-
+  
         {indexOfLastUser < users.length && (
           <button
             className="user-list-arrow-button user-list-arrow-right"
@@ -244,18 +246,18 @@ const UserList = () => {
           </button>
         )}
       </div>
-
+  
       {isCreatePopupOpen && (
-        <div className="modal-overlay">
+        <div className={`modal-overlay ${darkMode ? 'dark-mode' : ''}`}>
           <CreateUserPopup
             onSubmit={handleCreateSubmit}
             onClose={() => setIsCreatePopupOpen(false)}
           />
         </div>
       )}
-
+  
       {isModalOpen && (
-        <div className="modal-overlay">
+        <div className={`modal-overlay ${darkMode ? 'dark-mode' : ''}`}>
           <div className="popup-container">
             <h2>Editar Usuario</h2>
             <form onSubmit={handleSave}>
@@ -305,7 +307,7 @@ const UserList = () => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 const CreateUserPopup = ({ onSubmit, onClose }) => {
@@ -328,7 +330,7 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
   };
 
   return (
-    <div className="popup-container">
+    <div className={`popup-container ${darkMode ? 'dark-mode' : ''}`}>
       <h2>Crear Usuario</h2>
       <form onSubmit={handleSubmit}>
         <input

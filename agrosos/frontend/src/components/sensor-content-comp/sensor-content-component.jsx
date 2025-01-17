@@ -7,9 +7,11 @@ import plotTemp from "./Hydroponics.png";
 import plotHu from "./image56.png";
 import add from "./image50.png";
 import quit from "./image51.png";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function Sensors() {
     const [showRemoveButtons, setShowRemoveButtons] = useState(false);
+    const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
     const handleQuitClick = () => {
         setShowRemoveButtons(true);
@@ -20,7 +22,7 @@ function Sensors() {
     };
 
     return (
-        <div id="sensor-content-container">
+        <div id="sensor-content-container" className={darkMode ? 'dark-mode' : ''}>
             <div className="sensorList">
                 <div className="sensor-content-list">
                     <img src={airTemp} alt="airTemp" className="airTemp" />

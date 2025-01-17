@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./crops-list-component.css";
 import { useNavigate } from "react-router-dom";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const CropsListComponent = () => {
   const [crops, setCrops] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   useEffect(() => {
     const fetchCrops = async () => {
@@ -65,7 +67,7 @@ const CropsListComponent = () => {
   };
 
   return (
-    <div className="crops-list">
+    <div className={`crops-list ${darkMode ? 'dark-mode' : ''}`}>
       {error && <p className="error-message">{error}</p>}
       {crops.map((crop) => (
         <div

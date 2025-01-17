@@ -1,10 +1,10 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCamera, FaPen } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./user-profile-comp.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const UserProfileComp = () => {
   const [userData, setUserData] = useState({
@@ -20,6 +20,7 @@ const UserProfileComp = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -56,20 +57,20 @@ const UserProfileComp = () => {
     try {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
-  
+
       // Actualizar el campo editado en el objeto local
       const updatedData = {
         ...userData, // Incluye todos los datos existentes
         [editingField]: fieldValue, // Actualiza solo el campo editado
       };
-  
+
       // Enviar todos los datos al backend
       await axios.put(
         `http://localhost:3000/api/users/${userId}`,
         updatedData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-  
+
       // Actualizar el estado local con los nuevos datos
       setUserData(updatedData);
       setIsModalOpen(false);
@@ -79,8 +80,6 @@ const UserProfileComp = () => {
       alert("Error al guardar los cambios.");
     }
   };
-  
-  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -132,17 +131,17 @@ const UserProfileComp = () => {
   };
 
   const modal = isModalOpen && (
-    <div className="modal-overlay">
-      <div className="modal">
+    <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
+      <div className={`modal ${darkMode ? "dark-mode" : ""}`}>
         <h3>Editar {editingField}</h3>
         <input
           type={editingField === "email" ? "email" : "text"}
           value={fieldValue}
           onChange={(e) => setFieldValue(e.target.value)}
-          className="modal-input"
+          className={`modal-input ${darkMode ? "dark-mode" : ""}`}
         />
         <div className="modal-buttons">
-          <button onClick={handleSave} className="modal-save-button">
+          <button onClick={handleSave} className={`modal-save-button ${darkMode ? "dark-mode" : ""}`}>
             Guardar
           </button>
           <button
@@ -150,7 +149,7 @@ const UserProfileComp = () => {
               setIsModalOpen(false);
               setEditingField(null);
             }}
-            className="modal-cancel-button"
+            className={`modal-cancel-button ${darkMode ? "dark-mode" : ""}`}
           >
             Cancelar
           </button>
@@ -158,9 +157,10 @@ const UserProfileComp = () => {
       </div>
     </div>
   );
+  
 
   return (
-    <div className="user-profile-container">
+    <div className={`user-profile-container ${darkMode ? 'dark-mode' : ''}`}>
       <div className="profile-pic-container">
         <img
           src={userData.profile_image || "/default-profile.png"}

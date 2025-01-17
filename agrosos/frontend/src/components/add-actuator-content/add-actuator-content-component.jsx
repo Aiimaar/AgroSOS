@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./add-actuator-content-component.css"; // Asegúrate de tener este archivo
 import lock from "./icon_lock_locked_.png";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function AddActuatorContentComponent() {
   const [searchParams] = useSearchParams();
@@ -11,6 +12,7 @@ function AddActuatorContentComponent() {
   const token = localStorage.getItem("authToken");
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(""); // Nuevo estado para mensajes de éxito
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const actuatorNames = {
     Riego: "Irrigation",
@@ -70,17 +72,12 @@ function AddActuatorContentComponent() {
   };
 
   return (
-    <div className="container-add-actuator">
-      {" "}
-      {/* Asegúrate de tener esta clase en tu CSS */}
+    <div className={`container-add-actuator ${darkMode ? 'dark-mode' : ''}`}>
       <div className="form-add-actuator">
         <h1 className="actuator-form-title">Enlazar actuador</h1>
         <form className="actuator-form" onSubmit={handleSubmit}>
           <div className="form-group-actuator-name">
-            <label
-              htmlFor="actuator-name-input"
-              className="label-actuator-name"
-            >
+            <label htmlFor="actuator-name-input" className="label-actuator-name">
               Nombre del actuador
             </label>
             <div className="actuator-input-container">
@@ -95,10 +92,7 @@ function AddActuatorContentComponent() {
             </div>
           </div>
           <div className="form-group-actuator-code">
-            <label
-              htmlFor="actuator-code-input"
-              className="label-actuator-code"
-            >
+            <label htmlFor="actuator-code-input" className="label-actuator-code">
               Código del actuador a enlazar
             </label>
             <input
@@ -113,8 +107,7 @@ function AddActuatorContentComponent() {
           {error && <p className="error-message">{error}</p>}
           {successMessage && (
             <p className="actuator-success-message">{successMessage}</p>
-          )}{" "}
-          {/* Mostrar mensaje de éxito */}
+          )} {/* Mostrar mensaje de éxito */}
           <div className="add-actuator-content-buttons">
             <button type="submit" className="btn-enla">
               Enlazar

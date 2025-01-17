@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoadingScreen from "./pages/loading-screen/LoadingScreen";
+import { DarkModeProvider } from "./context/DarkModeContext";
 import PlotList from "./pages/plot-list/PlotList";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -35,47 +36,47 @@ import EditRule from "./pages/edit-rule/EditRule";
 import CreateCrop from "./pages/create-crops/CreateCrops";
 
 function App() {
-
-
   return (
-    <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/loading" element={<LoadingScreen />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/plot-list" element={<PlotList />} />
-            <Route path="/create-plot" element={<CreatePlot />} />
-            <Route path="/terms-conditions" element={<TermsConditionsPage />} />
-            <Route path="/sensors" element={<Sensors />} />
-            <Route path="/add-sensor" element={<AddSensor />} />
-            <Route path="/sensor-enla" element={<SensorEnla />} />
-            <Route path="/actuators" element={<Actuators />} />
-            <Route path="/actuator-enla" element={<ActuadorEnla />} />
-            <Route path="/add-actuator" element={<AddActuator />} />
-            <Route path="/accesibility" element={<Accesibility />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/rules" element={<ExistingRules />} />
-            <Route path="/temperature" element={<Temperature />} />
-            <Route path="/humidity" element={<Humidity />} />
-            <Route path="/user-profile" element={<UserProfile />} />
-            <Route path="/inside-a-plot" element={<InsideAPlot />} />
-            <Route path="/admin-user-crud" element={<AdminUserCrud />} />
-            <Route path="/sustainability" element={<SustainabilityAndEnvironmentManagement />} />
-            <Route path="/soil-management" element={<SoilManagement />} />
-            <Route path="/advices" element={<Advices />} />
-            <Route path="/crop-management" element={<CropManagement />} />
-            <Route path="/energy-efficiency" element={<EfficiencyEnergy />} />
-            <Route path="/crop-details" element={<CropsDetails />} />
-            <Route path="/crops" element={<Crops />} />
-            <Route path="/add-rule" element={<AddRule />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/edit-rule/:ruleId" element={<EditRule />} />
-            <Route path="/soil-temperature" element={<SoilTemperature />} />
-            <Route path="/soil-humidity" element={<SoilHumidity />} />
-            <Route path="/create-crop" element={<CreateCrop />} />
-          </Routes>
-    </BrowserRouter>
+    <DarkModeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/loading" element={<LoadingScreen />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/plot-list" element={<PlotList />} />
+          <Route path="/create-plot" element={<CreatePlot />} />
+          <Route path="/terms-conditions" element={<TermsConditionsPage />} />
+          <Route path="/sensors" element={<Sensors />} />
+          <Route path="/add-sensor" element={<AddSensor />} />
+          <Route path="/sensor-enla" element={<SensorEnla />} />
+          <Route path="/actuators" element={<Actuators />} />
+          <Route path="/actuator-enla" element={<ActuadorEnla />} />
+          <Route path="/add-actuator" element={<AddActuator />} />
+          <Route path="/accesibility" element={<Accesibility />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/rules" element={<ExistingRules />} />
+          <Route path="/temperature" element={<Temperature />} />
+          <Route path="/humidity" element={<Humidity />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/inside-a-plot" element={<InsideAPlot />} />
+          <Route path="/admin-user-crud" element={<AdminUserCrud />} />
+          <Route path="/sustainability" element={<SustainabilityAndEnvironmentManagement />} />
+          <Route path="/soil-management" element={<SoilManagement />} />
+          <Route path="/advices" element={<Advices />} />
+          <Route path="/crop-management" element={<CropManagement />} />
+          <Route path="/energy-efficiency" element={<EfficiencyEnergy />} />
+          <Route path="/crop-details" element={<CropsDetails />} />
+          <Route path="/crops" element={<Crops />} />
+          <Route path="/add-rule" element={<AddRule />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/edit-rule/:ruleId" element={<EditRule />} />
+          <Route path="/soil-temperature" element={<SoilTemperature />} />
+          <Route path="/soil-humidity" element={<SoilHumidity />} />
+          <Route path="/create-crop" element={<CreateCrop />} />
+        </Routes>
+      </BrowserRouter>
+    </DarkModeProvider>
   );
 }
 

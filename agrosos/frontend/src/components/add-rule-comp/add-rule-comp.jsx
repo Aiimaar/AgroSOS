@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./add-rule-comp.css";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const AddRuleComp = () => {
   const [cropId, setCropId] = useState(sessionStorage.getItem("cropId") || "");
@@ -32,6 +33,7 @@ const AddRuleComp = () => {
   const navigate = useNavigate();
   const technicianId = localStorage.getItem("userId");
   const authToken = localStorage.getItem("authToken");
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const actuatorActionMap = {
     Riego: ["Activar Riego", "Desactivar Riego"],

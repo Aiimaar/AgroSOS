@@ -1,10 +1,18 @@
+/* settings-component.css */
+
 #container-settings {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
   margin: 0 auto;
-  margin-top: 20%;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode #container-settings {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .settings-arrow-container {
@@ -12,12 +20,16 @@
   align-self: flex-start;
   margin-left: 2em;
   margin-bottom: 1em;
-  border: none;      
+  border: none;
   font-size: 20px;
-  cursor: pointer;   
-  color: #000;      
+  cursor: pointer;
+  color: #ffffff;
   display: flex;
   align-items: center;
+}
+
+.dark-mode .settings-arrow-container {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .settings-text {
@@ -25,11 +37,19 @@
   margin-bottom: 4em;
 }
 
+.dark-mode .settings-text {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 .settings-p {
   color: black;
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 10px;
+}
+
+.dark-mode .settings-p {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .settings-subp {
@@ -51,6 +71,15 @@
   width: 20em;
   border-bottom: 1px solid green;
   margin-bottom: 20px;
+}
+
+.dark-mode .settings-noti,
+.dark-mode .settings-export,
+.dark-mode .settings-actu,
+.dark-mode .settings-help,
+.dark-mode .settings-rules,
+.dark-mode .settings-userc {
+  border-bottom: 1px solid green; /* Borde diferente en modo oscuro */
 }
 
 .settings-ex {
@@ -93,5 +122,15 @@
     width: 25em;
     border-bottom: 1px solid green;
     margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .settings-arrow-container {
+    color: white; /* Texto claro en modo oscuro */
+  }
+
+  .settings-p {
+    color: white; /* Texto claro en modo oscuro */
   }
 }

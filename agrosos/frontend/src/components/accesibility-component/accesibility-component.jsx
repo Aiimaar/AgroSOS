@@ -1,14 +1,30 @@
+import React, { useState, useEffect } from 'react';
 import "./accesibility-component.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function AccesibilityComponent() {
-
     const navigate = useNavigate();
+    const { darkMode, toggleDarkMode } = useDarkMode();
+
+    // Leer el estado inicial desde el localStorage (lo retiraremos ya que usamos el contexto)
+    // const [darkMode, setDarkMode] = useState(() => {
+    //     return localStorage.getItem('darkMode') === 'true'; // Devuelve true si está activado
+    // });
+
+    // useEffect(() => {
+    //     // Guardar en localStorage cuando cambie darkMode
+    //     localStorage.setItem('darkMode', darkMode);
+    // }, [darkMode]);
+
+    // const toggleDarkMode = () => {
+    //     setDarkMode(!darkMode);
+    // };
 
     return (
-        <div id="container-accesibility">
+        <div id="container-accesibility" className={darkMode ? 'dark-mode' : ''}>
             <div className="arrow-container">
                 <button className="accesibility-arrow" onClick={() => navigate(-1)}>
                     <FontAwesomeIcon icon={faArrowLeft} />
@@ -21,8 +37,13 @@ function AccesibilityComponent() {
             <div className="accesibility-tuto">
                 <p className="accesibility-p">Tutorial Aplicación</p>
             </div>
+            <div className="accesibility-dark-mode">
+                <p className="accesibility-p" onClick={toggleDarkMode}>
+                    {darkMode ? 'Modo claro' : 'Modo oscuro'}
+                </p>
+            </div>
         </div>
-    )
+    );
 }
 
 export default AccesibilityComponent;
