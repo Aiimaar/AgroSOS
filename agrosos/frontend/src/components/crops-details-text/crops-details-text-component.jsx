@@ -1,9 +1,12 @@
 import React from 'react';
 import './crops-details-text-component.css'; // Importa el archivo CSS
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const CropsDetailsTextComponent = () => {
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
+
   return (
-    <div className="crops-details-text-component-container" role="article">
+    <div className={`crops-details-text-component-container ${darkMode ? 'dark-mode' : ''}`} role="article">
       <h2 className="crops-details-text-component-title" id="cultivo-titulo">Cómo cultivar ajo en macetas en casa</h2>
       <p className="crops-details-text-component-paragraph">
         Cultivar ajo en macetas es una excelente opción para obtener una cosecha fresca y saludable, incluso en espacios pequeños. Aquí tienes los pasos esenciales para un cultivo exitoso:
