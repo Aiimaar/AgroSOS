@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCamera, FaPen } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./user-profile-comp.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const UserProfileComp = () => {
   const [userData, setUserData] = useState({
@@ -19,6 +20,7 @@ const UserProfileComp = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -126,31 +128,26 @@ const UserProfileComp = () => {
   };
 
   const modal = isModalOpen && (
-    <div
-      className="modal-overlay"
-      role="dialog"
-      aria-hidden={!isModalOpen}
-      aria-labelledby="edit-modal-title"
-    >
-      <div className="modal">
-        <h3 id="edit-modal-title">Editar {editingField}</h3>
+    <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
+      <div className={`modal ${darkMode ? "dark-mode" : ""}`}>
+        <h3>Editar {editingField}</h3>
         <input
           type={editingField === "email" ? "email" : "text"}
           aria-label={`Editar ${editingField}`}
           value={fieldValue}
           onChange={(e) => setFieldValue(e.target.value)}
-          className="modal-input"
-          aria-describedby="field-description"
+          className={`modal-input ${darkMode ? "dark-mode" : ""}`}
         />
         <div className="modal-buttons">
-          <button onClick={handleSave} className="modal-save-button" aria-label="Guardar cambios">Guardar</button>
+          <button onClick={handleSave} className={`modal-save-button ${darkMode ? "dark-mode" : ""}`}>
+            Guardar
+          </button>
           <button
             onClick={() => {
               setIsModalOpen(false);
               setEditingField(null);
             }}
-            className="modal-cancel-button" 
-            aria-label="Cancelar edición"
+            className={`modal-cancel-button ${darkMode ? "dark-mode" : ""}`}
           >
             Cancelar
           </button>
@@ -158,10 +155,11 @@ const UserProfileComp = () => {
       </div>
     </div>
   );
+  
 
   return (
-    <div className="user-profile-container">
-      <div className="profile-pic-container" aria-labelledby="profile-picture">
+    <div className={`user-profile-container ${darkMode ? 'dark-mode' : ''}`}>
+      <div className="profile-pic-container">
         <img
           src={userData.profile_image || "/default-profile.png"}
           alt="Imagen de perfil"

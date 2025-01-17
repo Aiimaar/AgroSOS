@@ -4,6 +4,7 @@ import plot from "./ImagewithFixedRatio.png";
 import pre from "./image29.png";
 import { useNavigate } from "react-router-dom";
 import "./createplot-form-component.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const CreatePlotForm = () => {
   const [name, setName] = useState("");
@@ -18,6 +19,7 @@ const CreatePlotForm = () => {
   const [success, setSuccess] = useState(false);
   const token = localStorage.getItem("authToken");
   const userId = localStorage.getItem("userId");
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const navigate = useNavigate();
 
@@ -101,9 +103,9 @@ const CreatePlotForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="create-plot-form" aria-labelledby="create-plot-form-title">
-      <h2 id="create-plot-form-title" className="create-plot-form-title">Crear Nuevo Terreno</h2>
-      {error && <p role="alert" className="create-plot-error-message">{error}</p>}
+    <form onSubmit={handleSubmit} className={`create-plot-form ${darkMode ? 'dark-mode' : ''}`}>
+      <h2 className="create-plot-form-title">Crear Nuevo Terreno</h2>
+      {error && <p className="create-plot-error-message">{error}</p>}
       {success && (
         <p role="status" className="create-plot-success-message">
           Terreno creado exitosamente!

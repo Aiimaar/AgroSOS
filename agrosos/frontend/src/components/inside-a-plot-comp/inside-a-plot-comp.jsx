@@ -7,9 +7,11 @@ import ReactClock from "react-clock";
 import "react-clock/dist/Clock.css";
 import { useNavigate } from "react-router-dom";
 import "./inside-a-plot-comp.css";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const InsideAPlotComp = ({ plotId }) => {
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
   const [crop, setCrop] = useState(null);
   const [sensorValues, setSensorValues] = useState([]);
   const [newTask, setNewTask] = useState("");
@@ -197,10 +199,10 @@ const InsideAPlotComp = ({ plotId }) => {
   };
 
   return (
-    <div className="plot-details" aria-label="Detalles del terreno">
-      {error && <p className="inside-a-plot-error-message" aria-live="assertive">{error}</p>}
-      <section className="crops-section" aria-labelledby="crops-section-title">
-        <h3 id="crops-section-title">Cultivo en el terreno</h3>
+    <div className={`plot-details ${darkMode ? "dark-mode" : ""}`}>
+      {error && <p className="inside-a-plot-error-message">{error}</p>}
+      <section className="crops-section">
+        <h3>Cultivo en el terreno</h3>
         {crop ? (
           <div className="crop-details">
             <img
@@ -361,6 +363,9 @@ const InsideAPlotComp = ({ plotId }) => {
                         onClick={handleTimeSelect}
                       >
                         Confirmar hora
+                      </button>
+                      <button className="irrigation-frecuency-pro">
+                        Programar riego
                       </button>
                     </div>
                   </div>

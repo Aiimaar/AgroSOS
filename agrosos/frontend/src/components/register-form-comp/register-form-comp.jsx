@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./register-form-comp.css";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const RegisterFormComp = ({ onRegister }) => {
   const [name, setName] = useState("");
@@ -13,6 +14,7 @@ const RegisterFormComp = ({ onRegister }) => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +55,7 @@ const RegisterFormComp = ({ onRegister }) => {
   };
 
   return (
-    <div className="register-form-container" aria-labelledby="register-form-title">
+    <div className={`register-form-container ${darkMode ? 'dark-mode' : ''}`} aria-labelledby="register-form-title">
       <form onSubmit={handleSubmit} className="register-form" aria-describedby="form-instructions">
         <h1 id="register-form-title">Registro</h1>
         <p id="form-instructions">

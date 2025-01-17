@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 ChartJS.register(
   LineElement,
@@ -23,6 +24,7 @@ ChartJS.register(
 
 const EvolutionGraph = () => {
   const [data, setData] = useState(null);
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   useEffect(() => {
     const fetchSensorData = async () => {
@@ -149,7 +151,7 @@ const EvolutionGraph = () => {
       legend: {
         position: "bottom",
         labels: {
-          color: "#30590C",
+          color: darkMode ? "white" : "#30590C",
           usePointStyle: true,
           pointStyle: "circle",
         },
@@ -160,13 +162,13 @@ const EvolutionGraph = () => {
         title: {
           display: true,
           text: "Tiempo (Horas)",
-          color: "#30590C",
+          color: darkMode ? "white" : "#30590C",
         },
         grid: {
           display: false,
         },
         ticks: {
-          color: "#30590C",
+          color: darkMode ? "white" : "#30590C",
         },
       },
       y: {
@@ -174,12 +176,12 @@ const EvolutionGraph = () => {
         max: 100,
         ticks: {
           stepSize: 20,
-          color: "#30590C",
+          color: darkMode ? "white" : "#30590C",
         },
         title: {
           display: true,
           text: "Valores",
-          color: "#30590C",
+          color: darkMode ? "white" : "#30590C",
         },
         grid: {
           display: false,

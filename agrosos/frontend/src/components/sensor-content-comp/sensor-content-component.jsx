@@ -7,9 +7,11 @@ import plotTemp from "./Hydroponics.png";
 import plotHu from "./image56.png";
 import add from "./image50.png";
 import quit from "./image51.png";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function Sensors() {
     const [showRemoveButtons, setShowRemoveButtons] = useState(false);
+    const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
     const handleQuitClick = () => {
         setShowRemoveButtons(true);
@@ -20,11 +22,11 @@ function Sensors() {
     };
 
     return (
-        <div id="sensor-content-container" aria-labelledby="sensor-content-title">
-            <div className="sensorList" role="list" aria-label="Lista de sensores disponibles">
-                <div className="sensor-content-list" role="listitem" aria-labelledby="sensor-temperature">
-                    <img src={airTemp} alt="Icono de sensor de temperatura del aire" className="airTemp" />
-                    <p id="sensor-temperature">Temperatura</p>
+        <div id="sensor-content-container" className={darkMode ? 'dark-mode' : ''}>
+            <div className="sensorList">
+                <div className="sensor-content-list">
+                    <img src={airTemp} alt="airTemp" className="airTemp" />
+                    <p>Temperatura</p>
                     <div className="sensor-content-buttons">
                         <Link to="/add-sensor?name=Temperatura" aria-label="Agregar sensor de temperatura">
                             <img src={add} alt="Agregar" className="add" />

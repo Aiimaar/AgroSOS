@@ -7,8 +7,11 @@ import add from "./image50.png";
 import quit from "./image51.png";
 import nutrition from "./image61.png";
 import vent from "./Group1.png";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function ActuatorContentComponent() {
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
+
   const actuators = [
     { name: "Riego", img: irrigation, altText: "Imagen de sistema de riego" },
     { name: "Ventilación", img: vent, altText: "Imagen de ventilación del invernadero" },
@@ -17,7 +20,7 @@ function ActuatorContentComponent() {
   ];
 
   return (
-    <div id="actuator-container" role="region" aria-labelledby="actuator-list">
+    <div id="actuator-container" className={darkMode ? 'dark-mode' : ''}>
       <h2 id="actuator-list" className="sr-only">Lista de actuadores</h2>
       <div className="actuatorList">
         {actuators.map((actuator) => (

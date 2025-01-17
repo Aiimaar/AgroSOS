@@ -1,17 +1,29 @@
 .inside-a-plot-footer {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  .inside-a-plot-footer-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 5px;
-    transition: transform 0.3s ease;
-  }
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff; /* Fondo claro por defecto */
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .inside-a-plot-footer {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
+.inside-a-plot-footer-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.3s ease;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .inside-a-plot-footer-button {
+  color: white; /* Texto claro en modo oscuro */
+}

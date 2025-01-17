@@ -9,6 +9,12 @@
   margin-top: 80px;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode #existing-rules-container {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 /* Estilos para el botón de retroceso */
 .existing-rule-back-button {
   align-self: flex-start;
@@ -18,6 +24,11 @@
   font-size: 20px;
   cursor: pointer;
   margin-bottom: 20px;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-back-button {
+  color: white; /* Texto claro */
 }
 
 .existing-rule-back-button:focus {
@@ -38,9 +49,19 @@
   color: #333; /* Color de texto accesible */
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-title {
+  color: white; /* Texto claro */
+}
+
 .icon-list {
   margin-right: 10px;
   color: #555;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .icon-list {
+  color: white; /* Texto claro */
 }
 
 /* Estilos para las tarjetas de reglas */
@@ -66,6 +87,12 @@
   position: relative;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-card {
+  background-color: #3b873e; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 .existing-rule-card:focus-within {
   outline: 2px solid #FFD700;
 }
@@ -75,6 +102,11 @@
   margin: 5px 0;
   color: #fff;
   font-size: 1rem;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-card-info p {
+  color: white; /* Texto claro */
 }
 
 /* Estilos para los botones de acción */
@@ -101,9 +133,23 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-edit-button,
+.dark-mode .existing-rule-delete-button {
+  background-color: #245525; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 .existing-rule-edit-button:hover,
 .existing-rule-delete-button:hover {
   background-color: #e0e0e0;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-edit-button:hover,
+.dark-mode .existing-rule-delete-button:hover {
+  background-color: #777; /* Fondo diferente en modo oscuro */
+  color: white; /* Texto claro */
 }
 
 .existing-rule-edit-button:focus,
@@ -126,6 +172,11 @@
   z-index: 1000;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-modal-overlay {
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo claro en modo oscuro */
+}
+
 .existing-rule-modal-content {
   background-color: #fff;
   padding: 20px;
@@ -133,6 +184,12 @@
   width: 300px;
   max-width: 90%;
   text-align: center;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-modal-content {
+  background-color: #444; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .existing-rule-modal-button {
@@ -150,9 +207,21 @@
   border: 1px solid #2a5e28;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-modal-confirm {
+  background-color: #77a3d3; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro */
+}
+
 .existing-rule-modal-cancel {
   background-color: #e0e0e0;
   color: #333;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .existing-rule-modal-cancel {
+  background-color: #777; /* Fondo diferente en modo oscuro */
+  color: white; /* Texto claro */
 }
 
 .existing-rule-modal-button:focus {
@@ -176,10 +245,25 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .add-rule-button,
+.dark-mode .add-rule-button-circle {
+  background-color: #3b873e; /* Fondo oscuro */
+  color: white; /* Texto claro */
+  border: 2px solid #000000; /* Borde diferente en modo oscuro */
+}
+
 .add-rule-button:hover,
 .add-rule-button-circle:hover {
   background-color: #3b873e;
   color: #fff;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .add-rule-button:hover,
+.dark-mode .add-rule-button-circle:hover {
+  background-color: 3b873e; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro */
 }
 
 .add-rule-button:focus,
@@ -192,4 +276,9 @@
 .no-rules-message {
   text-align: center;
   color: #333;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .no-rules-message {
+  color: white; /* Texto claro */
 }

@@ -1,12 +1,16 @@
 #actuator-container {
   width: 90vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-  padding: 20px;
-  background-color: #f4f4f4; /* Mejor contraste y accesibilidad */
-  border-radius: 8px; /* Suaviza los bordes */
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode #actuator-container {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 a {
@@ -45,6 +49,12 @@ a {
   justify-content: center;
   text-align: center;
   line-height: 40px;
+  color: black;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .list p {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .actuator-buttons {
@@ -82,6 +92,11 @@ a {
   height: 5vh;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .button-enla {
+  background-color: green;
+}
+
 .actuator-content-component-img {
   width: 10vw;
   height: auto;
@@ -89,20 +104,24 @@ a {
 
 @media (min-width: 768px) and (max-width: 1024px) {
   #actuator-container {
-      width: 100%;
-      max-width: 70vw;
+    width: 100%;
+    max-width: 70vw;
   }
 
   .actuator-content-component-img {
-      width: 4vw;
-      height: auto;
+    width: 4vw;
+    height: auto;
   }
 
   .button-enla {
-      border-radius: 30px;
-      width: 25vw;
-      border: none;
-      background-color: #5EA71E;
-      height: 5vh;
+    border-radius: 30px;
+    width: 25vw;
+    border: none;
+    background-color: #5EA71E;
+    height: 5vh;
+  }
+
+  .dark-mode .button-enla {
+    background-color: green; /* Fondo diferente en modo oscuro */
   }
 }

@@ -3,21 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function SettingsComponent() {
-  const role = localStorage.getItem("role"); // Obtener el role del localStorage
+  const role = localStorage.getItem("role");  // Obtener el role del localStorage
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
+
   const navigate = useNavigate();
 
   return (
-    <div id="container-settings" aria-labelledby="settings-title">
-      <button
-        className="settings-arrow-container"
-        onClick={() => navigate("/plot-list")}
-        aria-label="Volver a la lista de terrenos"
-      >
+    <div id="container-settings" className={darkMode ? 'dark-mode' : ''}>
+      <button className="settings-arrow-container" onClick={() => navigate("/plot-list")}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
-      <h1 id="settings-title" className="settings-text">Ajustes</h1>
+        
+      <h1 className="settings-text">Ajustes</h1>
       <div className="settings-container-elements">
         <Link to="/notifications" aria-label="Ir a Alertas y notificaciones">
           <div className="settings-noti">

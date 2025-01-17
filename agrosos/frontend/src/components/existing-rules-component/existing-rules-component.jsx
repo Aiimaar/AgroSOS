@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faClipboardList, faEdit, faTrashAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faClipboardList,
+  faEdit,
+  faTrashAlt,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./existing-rules-component.css";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function ExistingRulesComponent() {
   const [rules, setRules] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleToDelete, setRuleToDelete] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const getToken = () => {
     return localStorage.getItem("authToken");
@@ -43,13 +51,50 @@ function ExistingRulesComponent() {
     if (selectedRule) {
       const ruleInfo = JSON.parse(selectedRule.rule_info);
 
-      sessionStorage.setItem("selectedAction", JSON.stringify(ruleInfo.AND?.[0]?.actions || []));
-      sessionStorage.setItem("sensorType", JSON.stringify(ruleInfo.AND?.[0]?.sensors?.[0]?.type || null));
-      sessionStorage.setItem("soilHumidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilHumidity") || []));
-      sessionStorage.setItem("soilTemperatureConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilTemperature") || []));
-      sessionStorage.setItem("temperatureConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "temperature") || []));
-      sessionStorage.setItem("humidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "humidity") || []));
-      sessionStorage.setItem("cropId", JSON.stringify(selectedRule.crop || null));
+      sessionStorage.setItem(
+        "selectedAction",
+        JSON.stringify(ruleInfo.AND?.[0]?.actions || [])
+      );
+      sessionStorage.setItem(
+        "sensorType",
+        JSON.stringify(ruleInfo.AND?.[0]?.sensors?.[0]?.type || null)
+      );
+      sessionStorage.setItem(
+        "soilHumidityConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "soilHumidity"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "soilTemperatureConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "soilTemperature"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "temperatureConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "temperature"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "humidityConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "humidity"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "cropId",
+        JSON.stringify(selectedRule.crop || null)
+      );
     }
 
     navigate(`/edit-rule/${ruleId}`);
@@ -72,7 +117,9 @@ function ExistingRulesComponent() {
       .delete(`/rules/${ruleToDelete}`)
       .then((response) => {
         console.log("Regla eliminada con éxito:", response.data);
-        setRules((prevRules) => prevRules.filter((rule) => rule.id !== ruleToDelete));
+        setRules((prevRules) =>
+          prevRules.filter((rule) => rule.id !== ruleToDelete)
+        );
         closeModal();
       })
       .catch((error) => {
@@ -88,12 +135,12 @@ function ExistingRulesComponent() {
 
   const formatRuleInfo = (info) => {
     if (!info) return null;
-  
+
     try {
       const parsedInfo = JSON.parse(info);
-  
+
       let formattedInfo = "";
-  
+
       if (parsedInfo.AND && Array.isArray(parsedInfo.AND)) {
         parsedInfo.AND.forEach((conditionGroup) => {
           if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
@@ -144,7 +191,7 @@ function ExistingRulesComponent() {
           }
         });
       }
-  
+
       return formattedInfo || "Información no disponible";
     } catch (error) {
       console.error("Error al parsear la información de la regla:", error);
@@ -153,11 +200,10 @@ function ExistingRulesComponent() {
   };
 
   return (
-<div id="existing-rules-container" role="main" aria-labelledby="existing-rules-title">
+    <div id="existing-rules-container" className={darkMode ? "dark-mode" : ""}>
       <button
         className="existing-rule-back-button"
         onClick={() => navigate("/settings")}
-        aria-label="Volver a la página de configuración"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
@@ -184,9 +230,15 @@ function ExistingRulesComponent() {
           rules.map((rule) => (
             <div className="existing-rule-card" key={rule.id} tabIndex="0" role="article" aria-labelledby={`rule-${rule.id}`}>
               <div className="existing-rule-card-info">
-                <p><strong>Nombre:</strong> {rule.name}</p>
-                <p><strong>Cultivo:</strong> {rule.crop}</p>
-                <p><strong>Condiciones:</strong> {formatRuleInfo(rule.rule_info)}</p>
+                <p>
+                  <strong>Nombre:</strong> {rule.name}
+                </p>
+                <p>
+                  <strong>Cultivo:</strong> {rule.crop}
+                </p>
+                <p>
+                  <strong>Condiciones:</strong> {formatRuleInfo(rule.rule_info)}
+                </p>
               </div>
 
               <div className="existing-rule-card-actions">
@@ -221,25 +273,16 @@ function ExistingRulesComponent() {
       )}
 
       {isModalOpen && (
-        <div 
-          className="existing-rule-modal-overlay" 
-          onClick={closeModal} 
-          aria-label="Cerrar modal"
-          role="dialog"
-          aria-labelledby="delete-modal-title"
-          aria-hidden={!isModalOpen}
-        >
+        <div className="existing-rule-modal-overlay" onClick={closeModal}>
           <div
             className="existing-rule-modal-content"
             onClick={(e) => e.stopPropagation()}
-            role="document"
           >
             <h2>¿Estás seguro de que deseas eliminar esta regla?</h2>
             <div className="existing-rule-modal-buttons">
-            <button
+              <button
                 className="existing-rule-modal-button existing-rule-modal-confirm"
                 onClick={handleDelete}
-                aria-label="Confirmar eliminación de la regla"
               >
                 Aceptar
               </button>

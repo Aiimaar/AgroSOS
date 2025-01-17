@@ -1,36 +1,25 @@
-#actual-plot-comp-container{
+#actual-plot-comp-container {
     width: 100%;
     max-width: 90vw;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 90px auto auto auto;
-    padding: 20px;
-    background-color: #f4f4f4; /* Mejor contraste para la accesibilidad */
-    border-radius: 8px; /* Suaviza los bordes */
-}
-
-.actual-plot-comp-text{
+  }
+  
+  .actual-plot-comp-text {
     font-weight: bold;
     color: black;
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    overflow: hidden;
-}
-
-@media only screen and (min-width: 768px){
-    .actual-plot-comp-text{
-        font-size: 16px;
+  }
+  
+  /* Estilos para el modo oscuro */
+  .dark-mode .actual-plot-comp-text {
+    color: white; /* Texto claro */
+  }
+  
+  @media only screen and (min-width: 768px) {
+    .actual-plot-comp-text {
+      font-size: 16px;
     }
-}
+  }
+  

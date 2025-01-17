@@ -3,17 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "./terms-conditions-text-component.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function TermsConditionText() {
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   return (
-    <div className="terms-condition-text-container">
-      <button
-        className="terms-back-button"
-        onClick={() => navigate(-1)}
-        aria-label="Volver a la página anterior"
-      >
+    <div className={`terms-condition-text-container ${darkMode ? 'dark-mode' : ''}`}>
+      <button className="terms-back-button" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="terms-condition-text-title" id="terms-heading">Términos y condiciones</h1>

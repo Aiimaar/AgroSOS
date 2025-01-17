@@ -4,6 +4,7 @@
   margin: 0 auto;
   text-align: center;
   width: 90vw;
+  height: 100vh;
   max-width: 600px; /* Limitar el ancho máximo */
   justify-content: center;
   padding: 20px;
@@ -11,13 +12,27 @@
   background-color: #f9f9f9; /* Mejor contraste y accesibilidad */
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode #actuator-enla-container {
+  margin-top: 2em;
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 .actuator-enla-button-arrow {
   align-self: flex-start;
   margin-left: 1em;
+  margin-top: -25em;
+  margin-bottom: 1em;
   border: none;
   background-color: transparent; /* Fondo transparente */
   cursor: pointer;
   font-size: 20px;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .actuator-enla-button-arrow {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .enla-title {
@@ -27,6 +42,11 @@
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .enla-title {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .linked-actuators-list {
@@ -45,6 +65,12 @@
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .actuator-item {
+  background-color: #555; /* Fondo más oscuro para los elementos del actuador */
+  color: white; /* Texto claro en modo oscuro */
+}
+
 .actuator-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
@@ -57,9 +83,19 @@
   flex-grow: 1;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .actuator-item p {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 .actuator-item strong {
   color: #333;
   font-weight: 600;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .actuator-item strong {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .delete-actuator-button {
@@ -83,13 +119,18 @@
   margin-top: 20px;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .no-actuators-message {
+  color: #ccc; /* Texto claro en modo oscuro */
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
   #actuator-enla-container {
       width: 50vw;
   }
 
   .actuator-enla-button-arrow {
-      margin-top: 1em;
+      margin-top: -30em;
   }
 
   .delete-actuator-button {

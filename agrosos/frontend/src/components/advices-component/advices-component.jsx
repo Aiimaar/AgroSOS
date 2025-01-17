@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "./advices-component.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function AdvicesComponent() {
   const navigate = useNavigate(); // Inicializar useNavigate
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   // Función para manejar el clic en una tarjeta
   const handleCardClick = (path) => {
@@ -13,7 +15,7 @@ function AdvicesComponent() {
   };
 
   return (
-    <div className="advices-page">
+    <div className={`advices-page ${darkMode ? 'dark-mode' : ''}`}>
       <div className="advices-container">
         {/* Botón de retroceso */}
         <button
