@@ -1,12 +1,44 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import "./soil-humidity-component.css";
-import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 function SoilHumidityComponent() {
+  const { t, i18n } = useTranslation();  // Obtén las funciones de traducción
   const [value, setValue] = useState(23);
   const [operator, setOperator] = useState("=");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchLanguage = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await axios.get("http://localhost:3000/api/users/1/language", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const fetchedLanguage = response.data.language || "es";
+        if (fetchedLanguage !== i18n.language) {
+          i18n.changeLanguage(fetchedLanguage);
+        }
+
+      } catch (error) {
+        console.log("Error fetching language:", error);
+        i18n.changeLanguage("es");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLanguage();
+  }, [i18n]);
 
   const handleSoilHumidityChange = (e) => {
     setValue(e.target.value);
@@ -33,12 +65,16 @@ function SoilHumidityComponent() {
     navigate(-1);
   };
 
+  if (loading) {
+    return <div>{t("loading")}</div>;
+  }
+
   return (
     <div id="soil-humidity-component-container">
       <div className="soil-humidity-component-arrow" onClick={() => navigate(-1)}>
         <FaArrowLeft className="soil-humidity-component-arrow-icon" />
       </div>
-      <h1>Humedad del Terreno</h1>
+      <h1>{t("soil_humidity")}</h1>
       <div className="soil-humidity-controls">
         <button
           className={`soil-humidity-button ${operator === "<" ? "active" : ""}`}
@@ -80,7 +116,7 @@ function SoilHumidityComponent() {
           className="soil-humidity-apply-button"
           onClick={handleApplyCondition}
         >
-          Aplicar condición
+          {t("apply_condition")}
         </button>
       </div>
     </div>

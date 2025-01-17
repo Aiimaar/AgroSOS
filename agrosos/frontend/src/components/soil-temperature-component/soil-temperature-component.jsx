@@ -1,12 +1,44 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import "./soil-temperature-component.css";
-import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 function SoilTemperatureComponent() {
+  const { t, i18n } = useTranslation();  // Obtén las funciones de traducción
   const [value, setValue] = useState(23);
   const [operator, setOperator] = useState("=");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchLanguage = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await axios.get("http://localhost:3000/api/users/1/language", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const fetchedLanguage = response.data.language || "es";
+        if (fetchedLanguage !== i18n.language) {
+          i18n.changeLanguage(fetchedLanguage);
+        }
+
+      } catch (error) {
+        console.log("Error fetching language:", error);
+        i18n.changeLanguage("es");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLanguage();
+  }, [i18n]);
 
   const handleSoilTemperatureChange = (e) => {
     setValue(e.target.value);
@@ -23,7 +55,6 @@ function SoilTemperatureComponent() {
       operator,
     };
 
-    // Guardar en sessionStorage
     const existingConditions =
       JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || [];
     existingConditions.push(soilTemperatureCondition);
@@ -34,12 +65,16 @@ function SoilTemperatureComponent() {
     navigate(-1);
   };
 
+  if (loading) {
+    return <div>{t("loading")}</div>;
+  }
+
   return (
     <div id="soil-temperature-component-container">
-      <div className="soil-temperature-component-arrow">
+      <div className="soil-temperature-component-arrow" onClick={() => navigate(-1)}>
         <FaArrowLeft className="soil-humidity-component-arrow-icon" />
       </div>
-      <h1>Temperatura del Terreno</h1>
+      <h1>{t("soil_temperature")}</h1>
       <div className="soil-temperature-controls">
         <button
           className={`soil-temperature-button ${operator === "<" ? "active" : ""}`}
@@ -48,9 +83,7 @@ function SoilTemperatureComponent() {
           {"<"}
         </button>
         <button
-          className={`soil-temperature-button-equal ${
-            operator === "=" ? "active" : ""
-          }`}
+          className={`soil-temperature-button-equal ${operator === "=" ? "active" : ""}`}
           onClick={() => handleComparisonChange("=")}
         >
           {"="}
@@ -83,7 +116,7 @@ function SoilTemperatureComponent() {
           className="soil-temperature-apply-button"
           onClick={handleApplyCondition}
         >
-          Aplicar condición
+          {t("apply_condition")}
         </button>
       </div>
     </div>

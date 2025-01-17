@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./add-plot-component.css";
 import plusCircleOutlined from "./plusCircleOutlined.png";
-import cultive from "./cultivo.png";
 
 function AddPlotComponent() {
     return (

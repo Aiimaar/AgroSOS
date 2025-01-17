@@ -35,8 +35,6 @@ import EditRule from "./pages/edit-rule/EditRule";
 import CreateCrop from "./pages/create-crops/CreateCrops";
 
 function App() {
-
-
   return (
     <BrowserRouter>
           <Routes>

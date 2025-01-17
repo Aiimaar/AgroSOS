@@ -7,13 +7,16 @@ import add from "./image50.png";
 import quit from "./image51.png";
 import nutrition from "./image61.png";
 import vent from "./Group1.png";
+import { useTranslation } from "react-i18next"; // Importa el hook useTranslation
 
 function ActuatorContentComponent() {
+  const { t } = useTranslation(); // Obtén la función de traducción
+
   const actuators = [
-    { name: "Riego", img: irrigation, altText: "Imagen de sistema de riego" },
-    { name: "Ventilación", img: vent, altText: "Imagen de ventilación del invernadero" },
-    { name: "Cobertura de cultivos", img: nutrition, altText: "Imagen de cobertura de cultivos" },
-    { name: "Apertura de ventanas", img: vector, altText: "Imagen de apertura de ventanas" },
+    { name: t("irrigation"), img: irrigation, altText: t("irrigation_image") },
+    { name: t("ventilation"), img: vent, altText: t("ventilation_image") },
+    { name: t("crop_covering"), img: nutrition, altText: t("crop_covering_image") },
+    { name: t("window_opening"), img: vector, altText: t("window_opening_image") },
   ];
 
   return (
@@ -29,10 +32,10 @@ function ActuatorContentComponent() {
             <p>{actuator.name}</p>
             <div className="actuator-buttons">
               <Link to={`/add-actuator?name=${actuator.name}`}>
-                <img src={add} alt="Añadir actuador" className="add" />
+                <img src={add} alt={t("add_actuator")} className="add" />
               </Link>
               <Link to="/actuator-enla?showDelete=true">
-                <img src={quit} alt="Eliminar actuador" className="quit" />
+                <img src={quit} alt={t("delete_actuator")} className="quit" />
               </Link>
             </div>
           </div>
@@ -41,7 +44,7 @@ function ActuatorContentComponent() {
       <div className="enla">
         <Link to="/actuator-enla">
           <button className="button-enla">
-            <p className="enla-p">Actuadores enlazados</p>
+            <p className="enla-p">{t("linked_actuators")}</p>
           </button>
         </Link>
       </div>
