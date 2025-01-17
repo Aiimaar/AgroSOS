@@ -8,12 +8,23 @@
   color: #000000;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .crops-details-text-component-container {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 .crops-details-text-component-title {
   font-size: 2em;
   font-weight: bold;
   text-align: center; /* Centra el título */
   color: #000000;
   margin-bottom: 1em;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .crops-details-text-component-title {
+  color: white; /* Texto claro */
 }
 
 .crops-details-text-component-subtitle {
@@ -25,8 +36,18 @@
   text-align: center; /* Centra los subtítulos */
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .crops-details-text-component-subtitle {
+  color: white; /* Texto claro */
+}
+
 .crops-details-text-component-paragraph {
   font-size: 1.1em;
   color: #555;
   text-align: justify; /* Justifica el texto */
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .crops-details-text-component-paragraph {
+  color: #ccc; /* Texto claro */
 }
