@@ -189,8 +189,10 @@ function PlotListComp() {
   const handlePlotClick = (plotId, plotName) => {
     localStorage.setItem("selectedPlotId", plotId);
     localStorage.setItem("selectedPlotName", plotName);
+    console.log("Plot selected:", { plotId, plotName }); // Agrega este log
     navigate("/inside-a-plot");
   };
+  
 
   return (
     <>

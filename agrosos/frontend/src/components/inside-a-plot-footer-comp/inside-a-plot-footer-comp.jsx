@@ -9,6 +9,11 @@ import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de aj
 function InsideAPlotFooter(){
   const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
+  const handleImageClick = (event) => {
+    console.log('Imagen clickeada:', event.target.alt);
+    // Aquí puedes agregar la lógica que necesitas
+  };
+
   return (
     <footer className={`inside-a-plot-footer ${darkMode ? 'dark-mode' : ''}`}>
       <div className='inside-a-plot-footer-comp-one'>

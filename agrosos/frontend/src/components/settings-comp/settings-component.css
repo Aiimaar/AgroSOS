@@ -42,14 +42,14 @@
 }
 
 .settings-p {
-  color: black;
+  color: black; /* Texto negro para el modo claro */
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 10px;
 }
 
 .dark-mode .settings-p {
-  color: white; /* Texto claro en modo oscuro */
+  color: white; /* Texto blanco para el modo oscuro */
 }
 
 .settings-subp {
@@ -131,6 +131,6 @@
   }
 
   .settings-p {
-    color: white; /* Texto claro en modo oscuro */
+    font-size: 30px;
   }
 }
