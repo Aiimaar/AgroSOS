@@ -58,20 +58,17 @@ const UserProfileComp = () => {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
 
-      // Actualizar el campo editado en el objeto local
       const updatedData = {
-        ...userData, // Incluye todos los datos existentes
-        [editingField]: fieldValue, // Actualiza solo el campo editado
+        ...userData,
+        [editingField]: fieldValue,
       };
 
-      // Enviar todos los datos al backend
       await axios.put(
         `http://localhost:3000/api/users/${userId}`,
         updatedData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Actualizar el estado local con los nuevos datos
       setUserData(updatedData);
       setIsModalOpen(false);
       setEditingField(null);
@@ -136,6 +133,7 @@ const UserProfileComp = () => {
         <h3>Editar {editingField}</h3>
         <input
           type={editingField === "email" ? "email" : "text"}
+          aria-label={`Editar ${editingField}`}
           value={fieldValue}
           onChange={(e) => setFieldValue(e.target.value)}
           className={`modal-input ${darkMode ? "dark-mode" : ""}`}
@@ -164,12 +162,18 @@ const UserProfileComp = () => {
       <div className="profile-pic-container">
         <img
           src={userData.profile_image || "/default-profile.png"}
-          alt="profile"
+          alt="Imagen de perfil"
           className="profile-pic"
+          role="img"
+          aria-label="Imagen de perfil del usuario"
         />
         <div
           className="camera-icon"
+          role="button"
+          aria-label="Cambiar imagen de perfil"
+          tabIndex="0"
           onClick={() => document.getElementById("imageUpload").click()}
+          onKeyDown={(e) => e.key === "Enter" && document.getElementById("imageUpload").click()}
         >
           <FaCamera />
         </div>
@@ -179,35 +183,51 @@ const UserProfileComp = () => {
           accept="image/*"
           onChange={handleImageChange}
           style={{ display: "none" }}
+          aria-label="Seleccionar imagen"
         />
         {isImageSelected && (
           <button
             onClick={handleImageUpload}
             className="upload-button"
             disabled={isUploading}
+            aria-label="Subir imagen seleccionada"
           >
             Subir Imagen
           </button>
         )}
       </div>
       <div className="form-field">
-        <label>Nombre</label>
+        <label htmlFor="name">Nombre</label>
         <div className="input-container">
-          <input value={userData.name} readOnly className="input-field" />
-          <FaPen className="edit-icon" onClick={() => handleEditClick("name")} />
+          <input id="name" value={userData.name} readOnly className="input-field" />
+          <FaPen
+            className="edit-icon"
+            role="button"
+            aria-label="Editar nombre"
+            tabIndex="0"
+            onClick={() => handleEditClick("name")}
+            onKeyDown={(e) => e.key === "Enter" && handleEditClick("name")}
+          />
         </div>
       </div>
       <div className="form-field">
-        <label>Email</label>
+        <label htmlFor="email">Email</label>
         <div className="input-container">
-          <input value={userData.email} readOnly className="input-field" />
-          <FaPen className="edit-icon" onClick={() => handleEditClick("email")} />
+          <input id="email" value={userData.email} readOnly className="input-field" />
+          <FaPen
+            className="edit-icon"
+            role="button"
+            aria-label="Editar email"
+            tabIndex="0"
+            onClick={() => handleEditClick("email")}
+            onKeyDown={(e) => e.key === "Enter" && handleEditClick("email")}
+          />
         </div>
       </div>
-      <button onClick={handleLogout} className="logout-button">
+      <button onClick={handleLogout} className="logout-button" aria-label="Cerrar sesión">
         Cerrar Sesión
       </button>
-      <button onClick={() => navigate(-1)} className="go-back-button">
+      <button onClick={() => navigate(-1)} className="go-back-button" aria-label="Volver a la página anterior">
         Volver
       </button>
       {ReactDOM.createPortal(modal, document.body)}

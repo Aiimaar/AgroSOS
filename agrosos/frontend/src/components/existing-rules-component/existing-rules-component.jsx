@@ -19,12 +19,10 @@ function ExistingRulesComponent() {
   const navigate = useNavigate();
   const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
-  // Función para obtener el token
   const getToken = () => {
-    return localStorage.getItem("authToken"); // Cambia si usas sessionStorage u otro método
+    return localStorage.getItem("authToken");
   };
 
-  // Configuración de Axios para incluir el token
   const axiosInstance = axios.create({
     baseURL: "http://localhost:3000/api",
     headers: {
@@ -144,45 +142,30 @@ function ExistingRulesComponent() {
       let formattedInfo = "";
 
       if (parsedInfo.AND && Array.isArray(parsedInfo.AND)) {
-        parsedInfo.AND.forEach((conditionGroup, index) => {
-          if (
-            conditionGroup.conditions &&
-            Array.isArray(conditionGroup.conditions)
-          ) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+        parsedInfo.AND.forEach((conditionGroup) => {
+          if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "temperature") {
                 formattedInfo += `Temperatura ${condition.operator} ${condition.value}°C`;
               }
             });
           }
-
-          if (
-            conditionGroup.conditions &&
-            Array.isArray(conditionGroup.conditions)
-          ) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+          if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "humidity") {
                 formattedInfo += `Humedad ${condition.operator} ${condition.value}%`;
               }
             });
           }
-
-          if (
-            conditionGroup.conditions &&
-            Array.isArray(conditionGroup.conditions)
-          ) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+          if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "soilTemperature") {
                 formattedInfo += `Temperatura del terreno ${condition.operator} ${condition.value}°C`;
               }
             });
           }
-
-          if (
-            conditionGroup.conditions &&
-            Array.isArray(conditionGroup.conditions)
-          ) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+          if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "soilHumidity") {
                 formattedInfo += `Humedad del terreno ${condition.operator} ${condition.value}%`;
               }
@@ -190,22 +173,19 @@ function ExistingRulesComponent() {
           }
 
           if (conditionGroup.actions && Array.isArray(conditionGroup.actions)) {
-            conditionGroup.actions.forEach((action, actionIndex) => {
+            conditionGroup.actions.forEach((action) => {
               formattedInfo += ` | Acción: ${action}`;
             });
           }
 
           if (conditionGroup.sensors && Array.isArray(conditionGroup.sensors)) {
-            conditionGroup.sensors.forEach((sensor, sensorIndex) => {
+            conditionGroup.sensors.forEach((sensor) => {
               formattedInfo += ` | Sensor: ${sensor.type}`;
             });
           }
 
-          if (
-            conditionGroup.actuators &&
-            Array.isArray(conditionGroup.actuators)
-          ) {
-            conditionGroup.actuators.forEach((actuator, actuatorIndex) => {
+          if (conditionGroup.actuators && Array.isArray(conditionGroup.actuators)) {
+            conditionGroup.actuators.forEach((actuator) => {
               formattedInfo += ` | Actuador: ${actuator.type}`;
             });
           }
@@ -229,25 +209,26 @@ function ExistingRulesComponent() {
       </button>
       <div className="existing-rule-header">
         <h1 className="existing-rule-title">
-          <FontAwesomeIcon icon={faClipboardList} className="icon-list" />
+          <FontAwesomeIcon icon={faClipboardList} className="icon-list" aria-hidden="true" />
           Reglas
         </h1>
       </div>
 
-      <div className="existing-rule-cards-container">
+      <div className="existing-rule-cards-container" role="region" aria-live="polite">
         {rules.length === 0 ? (
           <div className="no-rules-message">
             <h2>Añadir regla</h2>
             <button
               className="add-rule-button"
               onClick={() => navigate("/add-rule")}
+              aria-label="Añadir una nueva regla"
             >
-              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon icon={faPlus} aria-hidden="true" />
             </button>
           </div>
         ) : (
           rules.map((rule) => (
-            <div className="existing-rule-card" key={rule.id}>
+            <div className="existing-rule-card" key={rule.id} tabIndex="0" role="article" aria-labelledby={`rule-${rule.id}`}>
               <div className="existing-rule-card-info">
                 <p>
                   <strong>Nombre:</strong> {rule.name}
@@ -264,14 +245,16 @@ function ExistingRulesComponent() {
                 <button
                   className="existing-rule-edit-button"
                   onClick={() => handleEdit(rule.id)}
+                  aria-label={`Editar regla ${rule.name}`}
                 >
-                  <FontAwesomeIcon icon={faEdit} />
+                  <FontAwesomeIcon icon={faEdit} aria-hidden="true" />
                 </button>
                 <button
                   className="existing-rule-delete-button"
                   onClick={() => openModal(rule.id)}
+                  aria-label={`Eliminar regla ${rule.name}`}
                 >
-                  <FontAwesomeIcon icon={faTrashAlt} />
+                  <FontAwesomeIcon icon={faTrashAlt} aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -283,8 +266,9 @@ function ExistingRulesComponent() {
         <button
           className="add-rule-button-circle"
           onClick={() => navigate("/add-rule")}
+          aria-label="Añadir una nueva regla"
         >
-          <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={faPlus} aria-hidden="true" />
         </button>
       )}
 
@@ -305,6 +289,7 @@ function ExistingRulesComponent() {
               <button
                 className="existing-rule-modal-button existing-rule-modal-cancel"
                 onClick={closeModal}
+                aria-label="Cancelar eliminación de la regla"
               >
                 Cancelar
               </button>

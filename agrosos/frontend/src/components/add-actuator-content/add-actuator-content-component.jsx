@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import "./add-actuator-content-component.css"; // Asegúrate de tener este archivo
+import "./add-actuator-content-component.css";
 import lock from "./icon_lock_locked_.png";
 import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
@@ -38,7 +38,6 @@ function AddActuatorContentComponent() {
 
     try {
       const response = await fetch("http://localhost:3000/api/actuators", {
-        // Ajusta la URL si es diferente
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,8 +61,8 @@ function AddActuatorContentComponent() {
       }
       setActuatorCode(""); // Limpiar el campo de código
       setSuccessMessage(
-        `Actuador "${actuatorName}" con código "${actuatorCode}" enlazado con éxito.`
-      ); // Mensaje de éxito
+        `Actuador "${actuatorName}" con código "${actuatorCode}" enlazado con éxito.` // Mensaje de éxito
+      );
       setTimeout(() => setSuccessMessage(""), 5000); // Limpiar el mensaje después de 5 segundos
     } catch (error) {
       console.error("Error al agregar actuador:", error);
@@ -87,8 +86,21 @@ function AddActuatorContentComponent() {
                 className="input-actuator-name"
                 value={actuatorName}
                 readOnly
+                aria-readonly="true"
+                aria-label={`Nombre del actuador: ${actuatorName}`}
               />
-              <img src={lock} alt="lock" className="lock-icon" />
+              <img
+                src={lock}
+                alt="Icono de bloqueo"
+                className="lock-icon"
+                aria-hidden="true"
+              />
+              {/* Imagen del candado con texto alternativo */}
+              <img 
+                src={lock} 
+                alt="Icono de candado cerrado, indicando que el nombre del actuador es de solo lectura" 
+                className="lock-icon" 
+              />
             </div>
           </div>
           <div className="form-group-actuator-code">
@@ -102,17 +114,19 @@ function AddActuatorContentComponent() {
               placeholder="Ingrese el código"
               value={actuatorCode}
               onChange={(e) => setActuatorCode(e.target.value)}
+              aria-label="Código del actuador a enlazar"
+              required
             />
           </div>
-          {error && <p className="error-message">{error}</p>}
+          {error && <p className="error-message" role="alert">{error}</p>}
           {successMessage && (
-            <p className="actuator-success-message">{successMessage}</p>
-          )} {/* Mostrar mensaje de éxito */}
+            <p className="actuator-success-message" role="alert">{successMessage}</p>
+          )}
           <div className="add-actuator-content-buttons">
-            <button type="submit" className="btn-enla">
+            <button type="submit" className="btn-enla" aria-label="Enlazar actuador">
               Enlazar
             </button>
-            <Link to="/actuators">
+            <Link to="/actuators" aria-label="Volver a la lista de actuadores">
               <button className="btn-back">Volver</button>
             </Link>
           </div>

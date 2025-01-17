@@ -28,54 +28,66 @@ function Sensors() {
                     <img src={airTemp} alt="airTemp" className="airTemp" />
                     <p>Temperatura</p>
                     <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Temperatura">
-                            <img src={add} alt="add" className="add" />
+                        <Link to="/add-sensor?name=Temperatura" aria-label="Agregar sensor de temperatura">
+                            <img src={add} alt="Agregar" className="add" />
                         </Link>
-                        <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="quit" className="quit" />
-                        </Link>
-                    </div>
-                </div>
-                <div className="sensor-content-list">
-                    <img src={airHu} alt="airHu" className="airHu" />
-                    <p>Humedad</p>
-                    <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Humedad">
-                            <img src={add} alt="add" className="add" />
-                        </Link>
-                        <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="quit" className="quit" />
+                        <Link to="/sensor-enla?showDelete=true" aria-label="Quitar sensor de temperatura">
+                            <img src={quit} alt="Quitar" className="quit" />
                         </Link>
                     </div>
                 </div>
-                <div className="sensor-content-list">
-                    <img src={plotTemp} alt="plotTemp" className="plotTemp" />
-                    <p>Temperatura de terreno</p>
+                <div className="sensor-content-list" role="listitem" aria-labelledby="sensor-humidity">
+                    <img src={airHu} alt="Icono de sensor de humedad del aire" className="airHu" />
+                    <p id="sensor-humidity">Humedad</p>
                     <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Temperatura%20de%20terreno"> {/* Codificación del espacio */}
-                            <img src={add} alt="add" className="add" />
+                        <Link to="/add-sensor?name=Humedad" aria-label="Agregar sensor de humedad">
+                            <img src={add} alt="Agregar" className="add" />
                         </Link>
-                        <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="quit" className="quit" />
+                        <Link to="/sensor-enla?showDelete=true" aria-label="Quitar sensor de humedad">
+                            <img src={quit} alt="Quitar" className="quit" />
                         </Link>
                     </div>
                 </div>
-                <div className="sensor-content-list">
-                    <img src={plotHu} alt="plotHu" className="plotHu" />
-                    <p>Humedad del terreno</p>
+                <div className="sensor-content-list" role="listitem" aria-labelledby="sensor-plot-temperature">
+                    <img src={plotTemp} alt="Icono de sensor de temperatura del terreno" className="plotTemp" />
+                    <p id="sensor-plot-temperature">Temperatura de terreno</p>
                     <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Humedad%20del%20terreno"> {/* Codificación del espacio */}
-                            <img src={add} alt="add" className="add" />
+                        <Link
+                            to="/add-sensor?name=Temperatura%20de%20terreno"
+                            aria-label="Agregar sensor de temperatura del terreno"
+                        >
+                            <img src={add} alt="Agregar" className="add" />
                         </Link>
-                        <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="quit" className="quit" />
+                        <Link
+                            to="/sensor-enla?showDelete=true"
+                            aria-label="Quitar sensor de temperatura del terreno"
+                        >
+                            <img src={quit} alt="Quitar" className="quit" />
+                        </Link>
+                    </div>
+                </div>
+                <div className="sensor-content-list" role="listitem" aria-labelledby="sensor-plot-humidity">
+                    <img src={plotHu} alt="Icono de sensor de humedad del terreno" className="plotHu" />
+                    <p id="sensor-plot-humidity">Humedad del terreno</p>
+                    <div className="sensor-content-buttons">
+                        <Link
+                            to="/add-sensor?name=Humedad%20del%20terreno"
+                            aria-label="Agregar sensor de humedad del terreno"
+                        >
+                            <img src={add} alt="Agregar" className="add" />
+                        </Link>
+                        <Link
+                            to="/sensor-enla?showDelete=true"
+                            aria-label="Quitar sensor de humedad del terreno"
+                        >
+                            <img src={quit} alt="Quitar" className="quit" />
                         </Link>
                     </div>
                 </div>
             </div>
             <div className="enla">
                 <Link to="/sensor-enla">
-                    <button className="button-enla">
+                    <button className="button-enla" aria-label="Ver sensores enlazados">
                         <p className="enla-p">Sensores enlazados</p>
                     </button>
                 </Link>

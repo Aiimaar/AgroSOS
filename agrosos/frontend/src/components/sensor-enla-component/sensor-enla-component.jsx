@@ -88,24 +88,31 @@ function SensorEnlaComponent() {
             <button
                 className="sensor-enla-button-arrow"
                 onClick={() => navigate("/sensors")}
+                aria-label="Volver a la lista de sensores"
             >
                 <FontAwesomeIcon icon={faArrowLeft} />
             </button>
-            <h1 className="enla-title">Sensores enlazados</h1>
-            {error && <p className="error-message">{error}</p>}
-            <div className="linked-sensors-list">
+            <h1 id="sensor-enla-title" className="enla-title">Sensores enlazados</h1>
+            {error && <p className="error-message" role="alert">{error}</p>}
+            <div className="linked-sensors-list" role="list" aria-label="Lista de sensores enlazados">
                 {linkedSensors.length === 0 ? (
-                    <p className="no-sensors-message">No hay sensores enlazados.</p>
+                    <p className="no-sensors-message" role="alert">No hay sensores enlazados.</p>
                 ) : (
                     linkedSensors.map((sensor) => (
-                        <div key={sensor.id} className="sensor-item">
-                            <p>
+                        <div
+                            key={sensor.id}
+                            className="sensor-item"
+                            role="listitem"
+                            aria-labelledby={`sensor-${sensor.id}`}
+                        >
+                            <p id={`sensor-${sensor.id}`}>
                                 <strong>{typeMappingInverse[sensor.type] || sensor.type}</strong> - Código: {sensor.code}
                             </p>
                             {showDelete && (
                                 <button
                                     onClick={() => deleteSensor(sensor.id)}
                                     className="delete-sensor-button"
+                                    aria-label={`Eliminar sensor ${typeMappingInverse[sensor.type] || sensor.type} con código ${sensor.code}`}
                                 >
                                     Eliminar
                                 </button>

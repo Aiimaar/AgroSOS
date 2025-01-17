@@ -26,16 +26,37 @@ function AccesibilityComponent() {
     return (
         <div id="container-accesibility" className={darkMode ? 'dark-mode' : ''}>
             <div className="arrow-container">
-                <button className="accesibility-arrow" onClick={() => navigate(-1)}>
-                    <FontAwesomeIcon icon={faArrowLeft} />
+                <button
+                    className="accesibility-arrow"
+                    onClick={() => navigate(-1)}
+                    aria-label="Volver"
+                >
+                    <FontAwesomeIcon icon={faArrowLeft} aria-hidden="true" />
                 </button>
             </div>
-            <h1 className="accesibility-text">Accesibilidad</h1>
+            <h1
+                id="accesibility-title"
+                className="accesibility-text"
+            >
+                Accesibilidad
+            </h1>
             <div className="accesibility-size">
-                <p className="accesibility-p">Tamaño del texto</p>
+                <p
+                    className="accesibility-p"
+                    id="text-size-label"
+                    role="note"
+                >
+                    Tamaño del texto
+                </p>
             </div>
             <div className="accesibility-tuto">
-                <p className="accesibility-p">Tutorial Aplicación</p>
+                <p
+                    className="accesibility-p"
+                    id="app-tutorial-label"
+                    role="note"
+                >
+                    Tutorial Aplicación
+                </p>
             </div>
             <div className="accesibility-dark-mode">
                 <p className="accesibility-p" onClick={toggleDarkMode}>

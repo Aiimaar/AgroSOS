@@ -1,5 +1,5 @@
 import React from "react";
-import LoaScreenComp from "../../components/loading-dcreen-component/loading-screen";
+import LoaScreenComp from "../../components/loading-screen-component/loading-screen";
 
 function LoadingScreen(){
   return <LoaScreenComp />;

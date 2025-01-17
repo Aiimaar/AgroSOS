@@ -13,36 +13,38 @@ function ActuatorContentComponent() {
   const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const actuators = [
-    { name: "Riego", img: irrigation },
-    { name: "Ventilación", img: vent },
-    { name: "Cobertura de cultivos", img: nutrition },
-    { name: "Apertura de ventanas", img: vector },
+    { name: "Riego", img: irrigation, altText: "Imagen de sistema de riego" },
+    { name: "Ventilación", img: vent, altText: "Imagen de ventilación del invernadero" },
+    { name: "Cobertura de cultivos", img: nutrition, altText: "Imagen de cobertura de cultivos" },
+    { name: "Apertura de ventanas", img: vector, altText: "Imagen de apertura de ventanas" },
   ];
 
   return (
     <div id="actuator-container" className={darkMode ? 'dark-mode' : ''}>
+      <h2 id="actuator-list" className="sr-only">Lista de actuadores</h2>
       <div className="actuatorList">
         {actuators.map((actuator) => (
-          <div className="list" key={actuator.name}>
+          <div className="list" key={actuator.name} role="listitem">
             <img
               src={actuator.img}
-              alt={actuator.name}
+              alt={`Imagen de ${actuator.name}`}
               className="actuator-content-component-img"
+              aria-hidden="true"
             />
             <p>{actuator.name}</p>
             <div className="actuator-buttons">
-              <Link to={`/add-actuator?name=${actuator.name}`}>
-                <img src={add} alt="add" className="add" />
+              <Link to={`/add-actuator?name=${actuator.name}`} aria-label={`Añadir actuador ${actuator.name}`}>
+                <img src={add} alt="Añadir actuador" className="add" />
               </Link>
-              <Link to="/actuator-enla?showDelete=true">
-                <img src={quit} alt="quit" className="quit" />
+              <Link to="/actuator-enla?showDelete=true" aria-label={`Eliminar actuador ${actuator.name}`}>
+                <img src={quit} alt="Eliminar actuador" className="quit" />
               </Link>
             </div>
           </div>
         ))}
       </div>
       <div className="enla">
-        <Link to="/actuator-enla">
+        <Link to="/actuator-enla" aria-label="Ver actuadores enlazados">
           <button className="button-enla">
             <p className="enla-p">Actuadores enlazados</p>
           </button>

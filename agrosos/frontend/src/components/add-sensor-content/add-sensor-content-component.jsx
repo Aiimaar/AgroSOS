@@ -62,7 +62,7 @@ function AddSensor() {
             setSensorCode("");
             setSuccessMessage(`Sensor "${sensorName}" con código "${sensorCode}" enlazado con éxito.`); //Mensaje de éxito
             setTimeout(() => setSuccessMessage(""), 5000); // Limpia el mensaje después de 5 segundos
-            //navigate("/sensor-enla"); No es necesario navegar automaticamente a enlazados, ya se muestra el mensaje de exito.
+            //navigate("/sensor-enla"); No es necesario navegar automáticamente a enlazados, ya se muestra el mensaje de éxito.
         } catch (error) {
             console.error("Error al agregar sensor:", error);
             setError(error.message);
@@ -72,8 +72,8 @@ function AddSensor() {
     return (
         <div className={`container-add-sensor ${darkMode ? 'dark-mode' : ''}`}>
             <div className="form-add-sensor">
-                <h1 className="sensor-form-title">Enlazar sensor</h1>
-                <form className="sensor-form" onSubmit={handleSubmit}>
+                <h1 className="sensor-form-title" aria-live="polite">Enlazar sensor</h1>
+                <form className="sensor-form" onSubmit={handleSubmit} aria-labelledby="sensor-form-title">
                     <div className="form-group-sensor-name">
                         <label htmlFor="sensor-name-input" className="label-sensor-name">
                             Nombre del sensor
@@ -85,9 +85,15 @@ function AddSensor() {
                                 className="input-sensor-name"
                                 value={sensorName}
                                 readOnly
+                                aria-readonly="true"
+                                aria-describedby="sensor-name-description"
                             />
-                            <img src={lock} alt="lock" className="lock-icon" />
+                            {/* Añadido texto alternativo descriptivo */}
+                            <img src={lock} alt="Icono de candado que indica que el nombre del sensor está bloqueado para edición" className="lock-icon" />
                         </div>
+                        <span id="sensor-name-description" className="sr-only">
+                            Este campo está bloqueado y solo muestra el nombre del sensor.
+                        </span>
                     </div>
                     <div className="form-group-sensor-code">
                         <label htmlFor="sensor-code-input" className="label-sensor-code">
@@ -100,16 +106,22 @@ function AddSensor() {
                             placeholder="Ingrese el código"
                             value={sensorCode}
                             onChange={(e) => setSensorCode(e.target.value)}
+                            aria-required="true"
+                            aria-invalid={error ? "true" : "false"}
+                            aria-describedby="sensor-code-error"
                         />
+                        {error && <p id="sensor-code-error" className="error-message">{error}</p>}
                     </div>
                     {error && <p className="error-message">{error}</p>}
-                    {successMessage && <p className="sensor-success-message">{successMessage}</p>} {/*Muestra mensaje de exito*/}
+                    {successMessage && <p className="sensor-success-message">{successMessage}</p>} {/*Muestra mensaje de éxito*/}
                     <div className="add-sensor-content-buttons">
-                        <button type="submit" className="btn-enla">
+                        <button type="submit" className="btn-enla" aria-label="Enlazar sensor">
                             Enlazar
                         </button>
                         <Link to="/sensors">
-                            <button className="btn-back">Volver</button>
+                            <button className="btn-back" aria-label="Volver a la lista de sensores">
+                                Volver
+                            </button>
                         </Link>
                     </div>
                 </form>

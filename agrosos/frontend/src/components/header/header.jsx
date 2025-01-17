@@ -31,40 +31,40 @@ function Header() {
         <button className="header-menu-button" onClick={openMenu}>
           <FontAwesomeIcon icon={faBars} size="2xl" />
         </button>
-        <div className="header-desktop-menu">
+        <nav className="header-desktop-menu" aria-label="Menú principal">
           <ul>
             <li>
-              <Link to="/plot-list">
+              <Link to="/plot-list" aria-label="Ir a la página de inicio">
                 <FontAwesomeIcon icon={faHome} />
                 <span>Inicio</span>
               </Link>
             </li>
             <li>
-              <Link to="/accesibility">
+              <Link to="/accesibility" aria-label="Acceder a la página de accesibilidad">
                 <FontAwesomeIcon icon={faUniversalAccess} />
                 <span>Accesibilidad</span>
               </Link>
             </li>
             <li>
-              <Link to="/advices">
+              <Link to="/advices" aria-label="Ir a la sección de consejos">
                 <FontAwesomeIcon icon={faLightbulb} />
                 <span>Consejos</span>
               </Link>
             </li>
             <li>
-              <Link to="/notifications">
+              <Link to="/notifications" aria-label="Ir a la sección de notificaciones">
                 <FontAwesomeIcon icon={faBell} />
                 <span>Notificaciones</span>
               </Link>
             </li>
             <li>
-              <Link to="/terms-conditions">
+              <Link to="/terms-conditions" aria-label="Ir a los términos y condiciones">
                 <FontAwesomeIcon icon={faBook} />
                 <span>Términos y condiciones</span>
               </Link>
             </li>
           </ul>
-        </div>
+        </nav>
       </header>
       <button onClick={toggleDarkMode} className="toggle-dark-mode">
         {darkMode ? 'Desactivar Modo Oscuro' : 'Activar Modo Oscuro'}
@@ -77,30 +77,34 @@ function Header() {
 function SideMenu({ isOpen, onClose }) {
   return (
     <div className={`side-menu ${isOpen ? "open" : ""}`}>
-      <button className="side-close-button" onClick={onClose}>
+      <button 
+        className="side-close-button" 
+        onClick={onClose} 
+        aria-label="Cerrar el menú lateral"
+      >
         <FontAwesomeIcon icon={faTimes} size="2xl" />
       </button>
       <ul className="side-menu-items">
         <li>
-          <Link to="/plot-list" onClick={onClose}>
+          <Link to="/plot-list" onClick={onClose} aria-label="Ir a la página de inicio">
             <FontAwesomeIcon icon={faHome} />
             <span>Inicio</span>
           </Link>
         </li>
         <li>
-          <Link to="/notifications" onClick={onClose}>
+          <Link to="/notifications" onClick={onClose} aria-label="Ir a la sección de notificaciones">
             <FontAwesomeIcon icon={faBell} />
             <span>Notificaciones</span>
           </Link>
         </li>
         <li>
-          <Link to="/advices" onClick={onClose}>
+          <Link to="/advices" onClick={onClose} aria-label="Ir a la sección de consejos">
             <FontAwesomeIcon icon={faLightbulb} />
             <span>Consejos</span>
           </Link>
         </li>
         <li>
-          <Link to="/terms-conditions" onClick={onClose}>
+          <Link to="/terms-conditions" onClick={onClose} aria-label="Ir a los términos y condiciones">
             <FontAwesomeIcon icon={faBook} />
             <span>Términos y condiciones</span>
           </Link>

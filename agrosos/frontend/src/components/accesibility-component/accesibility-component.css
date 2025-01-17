@@ -27,6 +27,14 @@
   margin-bottom: 1.5em;
   display: flex;
   align-items: center;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.accesibility-arrow:focus,
+.accesibility-arrow:hover {
+  color: #007acc; /* Mejor contraste para el enfoque */
+  transform: scale(1.1); /* Efecto visual para hover/focus */
+  outline: 2px solid #007acc; /* Resaltado al navegar con teclado */
 }
 
 #container-accesibility.dark-mode .accesibility-p {
@@ -36,6 +44,7 @@
 .accesibility-text {
   margin-top: 0.5em;
   margin-bottom: 5em;
+  text-align: center; /* Mejor alineación del texto */
 }
 
 .accesibility-p {
@@ -44,6 +53,7 @@
   font-weight: bold;
   margin-bottom: 10px;
   cursor: pointer;
+  line-height: 1.6; /* Mejora la legibilidad */
 }
 
 .accesibility-size {

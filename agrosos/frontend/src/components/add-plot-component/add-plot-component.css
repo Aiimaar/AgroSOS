@@ -21,7 +21,11 @@ body {
 .plusCircleOutlined {
   width: 100%;
   max-width: 30vw;
+  cursor: pointer; /* Asegura que el icono sea percibido como interactivo */
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .plusCircleOutlined {
+    max-width: 20vw; /* Ajustar tamaño para pantallas medianas */
+  }
 }

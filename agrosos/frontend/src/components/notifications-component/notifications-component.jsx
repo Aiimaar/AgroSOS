@@ -14,6 +14,7 @@ function NotificationsComponent() {
       <button
         className="notifications-component-button-arrow"
         onClick={() => navigate("/plot-list")}
+        aria-label="Volver a la lista de parcelas"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
@@ -21,7 +22,7 @@ function NotificationsComponent() {
       <div className="notifications-component-notification">
         <img
           src={alert}
-          alt="alert"
+          alt="Icono de alerta, indicando que la temperatura ha superado los 30°C"
           className="notifications-component-notification-alert"
         />
         <p className="notifications-component-p">
@@ -31,7 +32,7 @@ function NotificationsComponent() {
       <div className="notifications-component-notification">
         <img
           src={alert}
-          alt="alert"
+          alt="Icono de alerta, indicando que la humedad está por debajo del 20%"
           className="notifications-component-notification-alert"
         />
         <p className="notifications-component-p">

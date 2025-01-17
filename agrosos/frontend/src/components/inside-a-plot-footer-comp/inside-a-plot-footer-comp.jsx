@@ -14,17 +14,50 @@ function InsideAPlotFooter(){
       <div className='inside-a-plot-footer-comp-one'>
         <img src={one} alt="one" className='inside-a-plot-footer-comp-image-one'/>
       </div>
-      <div className='inside-a-plot-footer-comp-two'>
-        <img src={two} alt="two" className='inside-a-plot-footer-comp-image-two'/>
+      <div 
+        className="inside-a-plot-footer-comp-two" 
+        role="button" 
+        tabIndex="0" 
+        aria-label="Acceder a información sobre el clima actual"
+        onClick={handleImageClick} 
+        onKeyPress={(e) => e.key === 'Enter' || e.key === ' ' ? handleImageClick(e) : null}
+      >
+        <img 
+          src={two} 
+          alt="Imagen representando una nube, indicando información climática"
+          className="inside-a-plot-footer-comp-image-two"
+        />
       </div>
-      <div className='inside-a-plot-footer-comp-two'>
-        <img src={three} alt="three" className='inside-a-plot-footer-comp-image-three'/>
+      <div 
+        className="inside-a-plot-footer-comp-two" 
+        role="button" 
+        tabIndex="0" 
+        aria-label="Ver el vector de datos o de sensores"
+        onClick={handleImageClick} 
+        onKeyPress={(e) => e.key === 'Enter' || e.key === ' ' ? handleImageClick(e) : null}
+      >
+        <img 
+          src={three} 
+          alt="Vector que puede representar datos o dirección de sensores"
+          className="inside-a-plot-footer-comp-image-three"
+        />
       </div>
-      <div className='inside-a-plot-footer-comp-two'>
-        <img src={four} alt="four" className='inside-a-plot-footer-comp-image-four'/>
+      <div 
+        className="inside-a-plot-footer-comp-two" 
+        role="button" 
+        tabIndex="0" 
+        aria-label="Ver lista de tareas pendientes"
+        onClick={handleImageClick} 
+        onKeyPress={(e) => e.key === 'Enter' || e.key === ' ' ? handleImageClick(e) : null}
+      >
+        <img 
+          src={four} 
+          alt="Icono que representa tareas o actividades pendientes"
+          className="inside-a-plot-footer-comp-image-four"
+        />
       </div>
     </footer>
   );
-};
+}
 
 export default InsideAPlotFooter;
