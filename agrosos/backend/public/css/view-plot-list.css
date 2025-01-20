@@ -1,0 +1,237 @@
+/* Base styles */
+body,
+html {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.plot-list-welcome {
+  margin-top: 110px;
+  margin-left: 20px;
+}
+
+.plot-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.plot-list-container {
+  padding: auto;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 25px;
+  margin-bottom: 80px;
+}
+
+.plot-card {
+  position: relative;
+  width: 320px;
+  height: 160px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.plot-card:focus {
+  outline: 3px solid #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.plot-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.terrain-name {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  color: white;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  border-radius: 8px;
+}
+
+.card-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.plot-list-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.plot-list-button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+}
+
+.plot-list-button svg {
+  font-size: 13px; 
+}
+
+.plot-list-edit-button {
+  background-color: #333;
+}
+
+.plot-list-delete-button {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.plot-list-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+
+.plot-list-info-item {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  gap: 5px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-overlay.visible {
+    display: flex; /* Muestra el modal cuando tiene la clase 'visible' */
+  }
+
+.plot-list-edit-modal,
+.plot-list-delete-modal {
+  background: #f4f4f9;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  width: 350px;
+  text-align: center;
+}
+
+.plot-list-edit-modal h3,
+.plot-list-delete-modal h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.plot-list-edit-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.plot-list-edit-modal label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  display: block;
+  text-align: left;
+}
+
+.plot-list-edit-modal input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+.plot-list-edit-modal input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+.modal-actions button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-actions .confirm {
+  background-color: #5ea71e;
+  color: white;
+}
+
+.modal-actions .confirm:hover {
+  background-color: #54941b;
+}
+
+.modal-actions .cancel {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modal-actions .cancel:hover {
+  background-color: #bbb;
+}
+
+/* Responsive Adjustments */
+@media only screen and (min-width: 768px) {
+  .plot-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .plot-card {
+    min-width: 250px;
+    height: 180px;
+  }
+}

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="http://localhost:3000/css/view-plot-list.css"
+    />
+    <title>Lista de Terrenos</title>
+  </head>
+  <body>
+    <!-- Modal para eliminar terreno -->
+    <div class="modal-overlay" id="delete-modal">
+      <div class="plot-list-delete-modal">
+        <h3>¿Deseas eliminar este terreno?</h3>
+        <div class="modal-actions">
+          <button type="button" onclick="deletePlot()">Eliminar</button>
+          <button type="button" onclick="cancelDelete()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para editar terreno -->
+    <% if (updatePlot) { %>
+    <div class="modal-overlay" id="edit-modal">
+      <div class="plot-list-edit-modal">
+        <h3>Editar Terreno</h3>
+        <form id="edit-form">
+          <label>
+            Nombre:
+            <input type="text" id="edit-name" name="name" required />
+          </label>
+          <label>
+            Tamaño:
+            <input type="number" id="edit-size" name="size" required />
+          </label>
+          <button type="submit">Guardar</button>
+          <button type="button" onclick="cancelEdit()">Cancelar</button>
+        </form>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Mensaje de bienvenida -->
+    <div class="plot-list-welcome">
+      <h3>¡Buenos días!</h3>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="plot-list-container">
+      <% if (error) { %>
+      <p class="plot-list-error-message"><%= error %></p>
+      <% } %>
+
+      <div class="plot-list">
+        <% plots.forEach(plot => { %>
+        <div
+          class="plot-card"
+          tabindex="0"
+          role="button"
+          data-id="<%= plot.id %>"
+          data-size="<%= plot.size %>"
+          onclick="selectPlot('<%= plot.id %>', '<%= plot.name %>')"
+        >
+          <% if (plot.image) { %>
+          <img
+            src="http://localhost:3000/uploads/<%= plot.image %>"
+            alt="Imagen del terreno <%= plot.name %>"
+            class="plot-image"
+          />
+          <% } else if (plot.color) { %>
+          <div
+            class="plot-image"
+            style="background-color: <%= plot.color %>"
+          ></div>
+          <% } else { %>
+          <img
+            src="http://localhost:3000/images/default-plot.png"
+            alt="Imagen predeterminada del terreno <%= plot.name %>"
+            class="plot-image"
+          />
+          <% } %>
+          <div class="terrain-name"><%= plot.name %></div>
+          <div class="card-footer">
+            <div class="plot-list-actions">
+              <div
+                class="plot-list-button plot-list-edit-button"
+                onclick="event.stopPropagation(); updatePlot('<%= plot.id %>')"
+              >
+                ✏️
+              </div>
+              <div
+                class="plot-list-button plot-list-delete-button"
+                onclick="event.stopPropagation(); confirmDelete('<%= plot.id %>')"
+              >
+                🗑️
+              </div>
+            </div>
+            <div class="plot-list-info">
+              <div class="plot-list-info-item">
+                <span role="img" aria-label="temperature">🌡️</span>
+                <span
+                  ><%= sensorAverages[plot.id]?.temperature || '--' %>°C</span
+                >
+              </div>
+              <div class="plot-list-info-item">
+                <span role="img" aria-label="humidity">💧</span>
+                <span><%= sensorAverages[plot.id]?.humidity || '--' %>%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <script>
+      let plotToDelete = null;
+
+      function selectPlot(plotId, plotName) {
+        localStorage.setItem("selectedPlotId", plotId);
+        localStorage.setItem("selectedPlotName", plotName);
+        window.location.href = "/inside-a-plot";
+      }
+
+      function deletePlot() {
+        if (!plotToDelete) return;
+
+        const token = localStorage.getItem("authToken");
+        fetch(`/views/plot-list/delete/${plotToDelete}`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error("Error al eliminar el terreno");
+            document
+              .querySelector(`.plot-card[data-id="${plotToDelete}"]`)
+              .remove();
+            cancelDelete();
+          })
+          .catch((error) => {
+            console.error(error);
+            alert("No se pudo eliminar el terreno.");
+          });
+      }
+
+      function confirmDelete(plotId) {
+        plotToDelete = plotId;
+        document.getElementById("delete-modal").classList.add("visible");
+      }
+
+      function cancelDelete() {
+        plotToDelete = null;
+        document.getElementById("delete-modal").classList.remove("visible");
+      }
+
+      let plotToEdit = null; // Variable global para almacenar el terreno a editar
+
+      function updatePlot(plotId) {
+        // Almacenar el ID del terreno actual
+        plotToEdit = plotId;
+
+        // Obtener el terreno desde el DOM
+        const plotCard = document.querySelector(
+          `.plot-card[data-id="${plotId}"]`
+        );
+        const plotName = plotCard.querySelector(".terrain-name").textContent;
+        const plotSize = plotCard.getAttribute("data-size");
+
+        // Rellenar los campos del modal con los datos del terreno
+        document.getElementById("edit-name").value = plotName;
+        document.getElementById("edit-size").value = plotSize;
+
+        // Mostrar el modal de edición
+        document.getElementById("edit-modal").classList.add("visible");
+      }
+
+      function cancelEdit() {
+        // Ocultar el modal de edición
+        document.getElementById("edit-modal").classList.remove("visible");
+      }
+
+      document
+        .getElementById("edit-form")
+        .addEventListener("submit", (event) => {
+          event.preventDefault(); // Evitar que el formulario recargue la página
+
+          const updatedName = document.getElementById("edit-name").value;
+          const updatedSize = document.getElementById("edit-size").value;
+
+          const token = localStorage.getItem("authToken");
+          fetch(`/views/plot-list/update/${plotToEdit}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ name: updatedName, size: updatedSize }),
+          })
+            .then((response) => {
+              if (!response.ok)
+                throw new Error("Error al actualizar el terreno");
+              // Actualizar el DOM con los nuevos datos
+              const plotCard = document.querySelector(
+                `.plot-card[data-id="${plotToEdit}"]`
+              );
+              plotCard.querySelector(".terrain-name").textContent = updatedName;
+              plotCard.setAttribute("data-size", updatedSize);
+
+              // Cerrar el modal de edición
+              cancelEdit();
+            })
+            .catch((error) => {
+              console.error(error);
+              alert("No se pudo actualizar el terreno.");
+            });
+        });
+    </script>
+  </body>
+</html>
