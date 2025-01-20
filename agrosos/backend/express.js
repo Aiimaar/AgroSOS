@@ -74,6 +74,8 @@ app.use('/api/rules', rulesRoutes);
 // Irrigation Schedule routes
 app.use("/api/irrigation_schedule", irrigationScheduleRoutes);
 
+app.use('/views/rules', rulesRoutes);
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);

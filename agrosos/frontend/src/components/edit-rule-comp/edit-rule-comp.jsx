@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de proyecto
 import "./edit-rule-comp.css";
 
 const EditRuleComp = () => {
+  const { darkMode } = useDarkMode();
   const { ruleId } = useParams();
   const navigate = useNavigate();
   const [rule, setRule] = useState(null);
@@ -210,10 +212,10 @@ const EditRuleComp = () => {
     }
   };
 
-  if (!rule) return <p>Cargando...</p>;
+  if (!rule) return <p className={darkMode ? 'dark-mode' : ''}>Cargando...</p>;
 
   return (
-    <div className="edit-rule-form-container">
+    <div className={`edit-rule-form-container ${darkMode ? 'dark-mode' : ''}`}>
       <h2>Editar Regla</h2>
       <label htmlFor="cropId">Cultivo:</label>
       <select

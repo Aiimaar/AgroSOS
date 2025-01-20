@@ -2,10 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import "./temperature-component.css";
 import { useState } from "react";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de proyecto
 
 function TemperatureComponent() {
   const [value, setValue] = useState(23);
   const [operator, setOperator] = useState("=");
+  const { darkMode } = useDarkMode();
   const navigate = useNavigate();
 
   const handleTemperatureChange = (e) => {
@@ -18,7 +20,7 @@ function TemperatureComponent() {
 
   const handleApplyCondition = () => {
     const temperatureCondition = {
-      type: "humidity",
+      type: "temperature",
       value: parseInt(value),
       operator,
     };
@@ -29,7 +31,7 @@ function TemperatureComponent() {
   };
 
   return (
-    <div id="temperature-component-container">
+    <div id="temperature-component-container" className={darkMode ? 'dark-mode' : ''}>
       <div className="temperature-component-arrow" aria-label="Volver a la página anterior" onClick={() => navigate(-1)}>
         <FaArrowLeft className="temperature-component-arrow-icon" />
       </div>
