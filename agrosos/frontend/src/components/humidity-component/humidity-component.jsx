@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./humidity-component.css";
 import { useState } from "react";
+import { useDarkMode } from './path-to-your-DarkModeProvider'; // Asegúrate de ajustar la ruta según tu estructura de proyecto
 
 function HumidityComponent() {
   const [value, setValue] = useState(23);
   const [operator, setOperator] = useState("=");
+  const { darkMode } = useDarkMode();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,7 +39,7 @@ function HumidityComponent() {
   };
 
   return (
-    <div id="humidity-component-container" aria-labelledby="humidity-component-title">
+    <div id="humidity-component-container" className={darkMode ? 'dark-mode' : ''} aria-labelledby="humidity-component-title">
       <div className="humidity-component-arrow" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} className="humidity-component-arrow-icon" />
       </div>

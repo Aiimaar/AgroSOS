@@ -1,71 +1,94 @@
 .edit-rule-form-container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 20px auto;
-  }
-  
-  .edit-rule-form-container h2 {
-    color: #4caf50;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-    margin-top: 40px;
-  }
-  
-  .edit-rule-form-container label {
-    display: block;
-    margin: 10px 0 5px;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .edit-rule-form-container select {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    color: #333;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .edit-rule-form-container select:focus {
-    border-color: #4caf50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-    outline: none;
-  }
-  
-  .edit-rule-form-container select option[value=""] {
-    color: #999;
-  }
-  
-  .edit-rule-form-container button:hover {
-    background-color: #45a049;
-  }
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  height: 100vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  width: 90vw;
+  margin: 20px auto;
+}
 
-  .edit-rule-conditions {
-    margin: 20px 0;
+.dark-mode .edit-rule-form-container {
+  background-color: #444;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.edit-rule-form-container h2 {
+  color: #4caf50;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.edit-rule-form-container label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 16px;
+  color: #000000;
+}
+
+.dark-mode .edit-rule-form-container label {
+  color: #ffffff;
+}
+
+.edit-rule-form-container select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: #000000;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark-mode .edit-rule-form-container select {
+  background-color: #444;
+  color: #ffffff;
+}
+
+.edit-rule-form-container select:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
+.edit-rule-form-container select option[value=""] {
+  color: #999;
+}
+
+.edit-rule-form-container button:hover {
+  background-color: #45a049;
+}
+
+.edit-rule-conditions {
+  margin: 20px 0;
   padding: 10px;
-  background-color: #eef6ee;
+  background-color: #ffffff;
   border-left: 4px solid #4caf50;
   border-radius: 4px;
-  }
+}
 
-  .edit-rule-conditions li {
-    padding: 10px;
+.dark-mode .edit-rule-conditions {
+  background-color: #333;
+}
+
+.edit-rule-conditions li {
+  padding: 10px;
   margin-bottom: 8px;
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
-  }
+}
+
+.dark-mode .edit-rule-conditions li {
+  background-color: #444;
+}
 
 .edit-rule-conditions h3 {
   font-size: 18px;
@@ -73,53 +96,53 @@
   margin-bottom: 10px;
 }
 
-  .edit-rule-conditions-button {
-    background-color: #28a745; /* Color verde */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px; /* Bordes redondeados */
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-  
-  .edit-rule-conditions-button:hover {
-    background-color: #218838; /* Color verde más oscuro al pasar el ratón */
-  }
-  
-  .edit-rule-conditions button.delete-condition-button {
-    background-color: #28a745; /* Color verde */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 12px; /* Bordes redondeados */
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-  }
-  
-  /* Hover para el botón de eliminar */
-  .edit-rule-conditions button.delete-condition-button:hover {
-    background-color: #218838; /* Color verde más oscuro al pasar el ratón */
-  }
-  
-  /* Alineación del botón de eliminar a la derecha */
-  .edit-rule-conditions li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px; /* Espaciado entre las condiciones */
-  }
-  
-  /* Para mantener las condiciones de temperatura y humedad organizadas */
-  .edit-rule-conditions ul {
-    padding-left: 0;
-    list-style-type: none;
-  }
+.edit-rule-conditions-button {
+  background-color: #28a745; /* Color verde */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px; /* Bordes redondeados */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
 
-  .edit-rule-update-button {
-    display: block;
+.edit-rule-conditions-button:hover {
+  background-color: #218838; /* Color verde más oscuro al pasar el ratón */
+}
+
+.edit-rule-conditions button.delete-condition-button {
+  background-color: #28a745; /* Color verde */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 12px; /* Bordes redondeados */
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+/* Hover para el botón de eliminar */
+.edit-rule-conditions button.delete-condition-button:hover {
+  background-color: #218838; /* Color verde más oscuro al pasar el ratón */
+}
+
+/* Alineación del botón de eliminar a la derecha */
+.edit-rule-conditions li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px; /* Espaciado entre las condiciones */
+}
+
+/* Para mantener las condiciones de temperatura y humedad organizadas */
+.edit-rule-conditions ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.edit-rule-update-button {
+  display: block;
   width: 100%;
   padding: 12px;
   background-color: #4caf50;
@@ -130,37 +153,37 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  }
+}
 
-  @media (min-width: 768px) and (max-width: 1024px) {
-    .edit-rule-form-container {
+@media (min-width: 768px) and (max-width: 1024px) {
+  .edit-rule-form-container {
       padding: 20px;
       max-width: 80%;
-    }
-  
-    .edit-rule-form-container h2 {
-      font-size: 24px;
-    }
-  
-    .edit-rule-form-container label {
-      font-size: 16px;
-    }
-  
-    .edit-rule-form-container select {
-      font-size: 16px;
-      padding: 12px;
-    }
-  
-    .edit-rule-conditions h3 {
-      font-size: 18px;
-    }
-  
-    .edit-rule-conditions li {
-      font-size: 14px;
-    }
-  
-    .edit-rule-update-button {
-      font-size: 16px;
-      padding: 12px;
-    }
   }
+
+  .edit-rule-form-container h2 {
+      font-size: 24px;
+  }
+
+  .edit-rule-form-container label {
+      font-size: 16px;
+  }
+
+  .edit-rule-form-container select {
+      font-size: 16px;
+      padding: 12px;
+  }
+
+  .edit-rule-conditions h3 {
+      font-size: 18px;
+  }
+
+  .edit-rule-conditions li {
+      font-size: 14px;
+  }
+
+  .edit-rule-update-button {
+      font-size: 16px;
+      padding: 12px;
+  }
+}

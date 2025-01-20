@@ -27,7 +27,7 @@ function Header() {
   return (
     <div className={`app-container ${darkMode ? 'dark-mode' : ''}`} onClick={handleOutsideClick}>
       <header className="header">
-        <img src={logo} alt="Logo Planta" className="plant-icon" />
+        <Link to={"/plot-list"}><img src={logo} alt="Logo Planta" className="plant-icon" /></Link>
         <button className="header-menu-button" onClick={openMenu}>
           <FontAwesomeIcon icon={faBars} size="2xl" />
         </button>

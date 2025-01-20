@@ -2,43 +2,42 @@
   display: flex;
   flex-direction: column;
   width: 90vw;
+  height: 100vh;
   margin: 0 auto;
   align-items: center;
   justify-content: center;
+  margin-top: -1em;
   gap: 20px;
-  margin-top: 20%;
 }
-
+#humidity-component-container.dark-mode {
+  background-color: #333;
+  color: #f9f9f9;
+}
 .humidity-component-arrow {
   align-self: flex-start;
   margin-top: 2em;
   margin-left: 2em;
   cursor: pointer;
 }
-
 .humidity-component-arrow-icon {
   font-size: 1.5em;
   color: #000000;
   transition: transform 0.2s ease, color 0.2s ease;
 }
-
 .humidity-component-arrow-icon:hover {
-  color: #3C750F;
+  color: #3c750f;
   transform: scale(1.1);
 }
-
 h1 {
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
 }
-
 .humidity-controls {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
-
 .humidity-button-equal {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
   border-radius: 30px;
@@ -47,10 +46,9 @@ h1 {
   width: 35vw;
   font-size: 16px;
   cursor: pointer;
-  background-color: #5EA71E;
+  background-color: #5ea71e;
   color: white;
 }
-
 .humidity-button {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
   border-radius: 30px;
@@ -59,16 +57,15 @@ h1 {
   padding: 11px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #5EA71E;
+  background-color: #5ea71e;
   color: white;
 }
-
-.humidity-button.active, .humidity-button-equal.active {
-  background-color: #3C750F;
+.humidity-button.active,
+.humidity-button-equal.active {
+  background-color: #3c750f;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
   transform: scale(1.05);
 }
-
 .humidity-display {
   width: 20vw;
   padding: 10px;
@@ -79,7 +76,6 @@ h1 {
   margin-bottom: 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .humidity-slider {
   display: flex;
   align-items: center;
@@ -88,37 +84,33 @@ h1 {
   width: 90%;
   position: relative;
 }
-
 .humidity-slider input[type="range"] {
   width: 100%;
   -webkit-appearance: none;
   border-radius: 16px;
   appearance: none;
   height: 8px;
-  background: #5EA71E;
+  background: #5ea71e;
   outline: none;
   opacity: 0.7;
-  transition: opacity .2s;
+  transition: opacity 0.2s;
 }
-
 .humidity-slider input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #5EA71E;
+  background: #5ea71e;
   cursor: pointer;
 }
-
 .humidity-slider input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #5EA71E;
+  background: #5ea71e;
   cursor: pointer;
 }
-
 .humidity-limits {
   display: flex;
   justify-content: space-between;
@@ -128,11 +120,9 @@ h1 {
   margin-top: 0;
   font-size: 12px;
 }
-
 .humidity-limits span {
   font-size: 14px;
 }
-
 .humidity-options {
   margin-top: 2em;
   display: flex;
@@ -141,30 +131,25 @@ h1 {
   align-items: flex-start;
   width: 90%;
 }
-
 .humidity-option {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-
 .humidity-option input {
   width: 20px;
   height: 20px;
   margin-left: auto;
 }
-
 .humidity-option span {
   font-size: 16px;
   margin-right: auto;
 }
-
 .humidity-apply {
   display: flex;
   margin-top: 1em;
 }
-
 .humidity-apply-button {
   padding: 15px;
   border-radius: 30px;
@@ -172,75 +157,77 @@ h1 {
   color: white;
   border: none;
   width: 35vw;
-  background-color: #5EA71E;
+  background-color: #5ea71e;
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
   #humidity-component-container {
-      width: 85vw;
-      margin-top: 10%;
+    width: 85vw;
+    margin-top: 10%;
   }
 
   .humidity-component-arrow {
-      margin-left: 1.5em;
-      margin-top: 1.5em;
+    margin-left: 1.5em;
+    margin-top: 1.5em;
   }
 
   .humidity-component-arrow-icon {
-      font-size: 1.8em;
+    font-size: 1.8em;
   }
 
   h1 {
-      font-size: 22px;
-      margin-bottom: 15px;
+    font-size: 22px;
+    margin-bottom: 15px;
   }
 
-  .humidity-button, .humidity-button-equal {
-      width: 35vw;
-      padding: 12px;
-      font-size: 18px;
+  .humidity-button,
+  .humidity-button-equal {
+    width: 35vw;
+    padding: 12px;
+    font-size: 18px;
   }
 
-  .humidity-button.active, .humidity-button-equal.active {
-      transform: scale(1.05);
+  .humidity-button.active,
+  .humidity-button-equal.active {
+    transform: scale(1.05);
   }
 
   .humidity-display {
-      width: 30vw;
-      font-size: 18px;
+    width: 30vw;
+    font-size: 18px;
   }
 
   .humidity-slider input[type="range"] {
-      height: 10px;
+    height: 10px;
   }
 
   .humidity-slider input[type="range"]::-webkit-slider-thumb {
-      width: 25px;
-      height: 25px;
+    width: 25px;
+    height: 25px;
   }
 
   .humidity-slider input[type="range"]::-moz-range-thumb {
-      width: 25px;
-      height: 25px;
+    width: 25px;
+    height: 25px;
   }
 
   .humidity-limits span {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   .humidity-apply-button {
-      width: 35vw;
-      padding: 15px;
-      font-size: 16px;
+    width: 35vw;
+    padding: 15px;
+    font-size: 16px;
   }
 
   .humidity-controls {
-      flex-direction: column;
-      gap: 15px;
+    flex-direction: column;
+    gap: 15px;
   }
 
   .humidity-slider {
-      flex-direction: column;
-      gap: 15px;
+    flex-direction: column;
+    gap: 15px;
   }
 }

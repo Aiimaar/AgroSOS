@@ -23,11 +23,15 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #ffffff;
+  color: #000000;
   margin-bottom: 1.5em;
   display: flex;
   align-items: center;
   transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.dark-mode .accesibility-arrow {
+  color: #ffffff;
 }
 
 .accesibility-arrow:focus,
