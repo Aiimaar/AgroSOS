@@ -5,6 +5,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import plotsRoutes from './routes/plotsRoutes.js';
 import usersRoutes from './routes/usersRoutes.js';
+import userListViewsRoutes from './routes/views-routes/userListViewsRoutes.js';
 import sensorsRoutes from './routes/sensorsRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import cropRoutes from './routes/cropRoutes.js';
@@ -26,9 +27,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 dotenv.config();
 
 sequelize.sync();
+
+// Setting the view engine to ejs
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Plot routes
 app.use("/api/plots", plotsRoutes);
@@ -56,6 +62,9 @@ app.use('/api/rules', rulesRoutes);
 // Irrigation Schedule routes (añadido)
 // Irrigation Schedule routes
 app.use("/api/irrigation_schedule", irrigationScheduleRoutes);
+
+// View userList Route
+app.use('/views/userList', userListViewsRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
