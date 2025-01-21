@@ -1,0 +1,185 @@
+/* Estilos para el contenedor principal */
+#view-existing-rules-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Estilos para el botón de retroceso */
+.view-existing-rule-back-button {
+  align-self: flex-start;
+  background-color: transparent;
+  border: none;
+  margin-left: 1em;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.view-existing-rule-back-button:focus {
+  outline: 2px solid #FFD700;
+}
+
+/* Estilos para el encabezado */
+.view-existing-rule-header {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.view-existing-rule-title {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  color: #333;
+}
+
+.view-icon-list {
+  margin-right: 10px;
+  color: #555;
+}
+
+/* Estilos para las tarjetas de reglas */
+.view-existing-rule-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 40px;
+  justify-items: center;
+}
+
+.view-existing-rule-card {
+  background-color: #3b873e;
+  color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 220px;
+  width: 100%;
+  max-width: 320px;
+  position: relative;
+}
+
+.view-existing-rule-card-info p {
+  margin: 5px 0;
+  color: #fff;
+  font-size: 1rem;
+}
+
+/* Estilos para los botones de acción */
+.view-existing-rule-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  gap: 10px;
+}
+
+.view-existing-rule-edit-button,
+.view-existing-rule-delete-button {
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: #333;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-existing-rule-edit-button:hover,
+.view-existing-rule-delete-button:hover {
+  background-color: #e0e0e0;
+}
+
+.view-existing-rule-edit-button:focus,
+.view-existing-rule-delete-button:focus {
+  outline: 2px solid #FFD700;
+  transform: scale(1.1);
+}
+
+.view-add-rule-button-circle {
+  border: none;
+  margin-top: 2em;
+  background-color: white;
+}
+
+/* Asegúrate de que el modal esté oculto por defecto */
+.view-modal {
+  display: none; /* Inicialmente oculto */
+  align-items: center;
+  margin: 0 auto;
+  justify-content: center;
+  position: fixed; /* Fija en la pantalla */
+  z-index: 1; /* Asegúrate de que el modal se muestre encima de todo */
+  left: 0;
+  top: 0;
+  width: 100%; /* Ancho completo */
+  height: 100%; /* Alto completo */
+  overflow: auto; /* Si el contenido es grande, se agrega desplazamiento */
+  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro con opacidad */
+}
+
+/* Estilo del contenido del modal */
+.view-modal-content {
+  background-color: #fff; /* Fondo blanco */
+  margin: 15% auto; /* Centrado vertical y horizontal */
+  padding: 20px;
+  border: 1px solid #888; /* Borde gris */
+  width: 80%; /* Ancho ajustado según sea necesario */
+  max-width: 500px; /* Ancho máximo */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra */
+}
+
+/* Estilo del botón de cierre */
+.view-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.view-close:hover,
+.view-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilo de los botones dentro del modal */
+.view-modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#view-confirmDelete {
+  background-color: green; /* Verde para eliminar */
+  color: #fff;
+}
+
+#view-confirmDelete:hover {
+  background-color: rgb(0, 97, 0); /* Verde oscuro al pasar el mouse */
+}
+
+#view-cancelDelete {
+  background-color: #ccc; /* Gris para cancelar */
+  color: #333;
+}
+
+#view-cancelDelete:hover {
+  background-color: #aaa; /* Gris oscuro al pasar el mouse */
+}

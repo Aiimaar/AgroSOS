@@ -1,166 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Existing Rules</title>
-    <link rel="stylesheet" href="/css/existing-rules-component.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/view-rules.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <title>Existing Rules</title>
 </head>
-<body class="<%= darkMode ? 'dark-mode' : '' %>">
-    <div id="existing-rules-container">
-        <button class="existing-rule-back-button" onclick="window.location.href='/settings'">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        <div class="existing-rule-header">
-            <h1 class="existing-rule-title">
-                <i class="fas fa-clipboard-list icon-list" aria-hidden="true"></i>
-                Reglas
-            </h1>
-        </div>
 
-        <div class="existing-rule-cards-container" role="region" aria-live="polite">
-            <% if (rules.length === 0) { %>
-                <div class="no-rules-message">
-                    <h2>Añadir regla</h2>
-                    <button class="add-rule-button" onclick="window.location.href='/add-rule'" aria-label="Añadir una nueva regla">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                    </button>
-                </div>
-            <% } else { %>
-                <% rules.forEach(rule => { %>
-                    <div class="existing-rule-card" tabindex="0" role="article" aria-labelledby="rule-<%= rule.id %>">
-                        <div class="existing-rule-card-info">
-                            <p><strong>Nombre:</strong> <%= rule.name %></p>
-                            <p><strong>Cultivo:</strong> <%= rule.crop %></p>
-                            <p><strong>Condiciones:</strong> <%= formatRuleInfo(rule.rule_info) %></p>
-                        </div>
-
-                        <div class="existing-rule-card-actions">
-                            <button class="existing-rule-edit-button" onclick="window.location.href='/edit-rule/<%= rule.id %>'" aria-label="Editar regla <%= rule.name %>">
-                                <i class="fas fa-edit" aria-hidden="true"></i>
-                            </button>
-                            <button class="existing-rule-delete-button" onclick="openModal(<%= rule.id %>)" aria-label="Eliminar regla <%= rule.name %>">
-                                <i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-                <% }) %>
-            <% } %>
-        </div>
-
-        <% if (rules.length > 0) { %>
-            <button class="add-rule-button-circle" onclick="window.location.href='/add-rule'" aria-label="Añadir una nueva regla">
-                <i class="fas fa-plus" aria-hidden="true"></i>
-            </button>
-        <% } %>
-
-        <% if (isModalOpen) { %>
-            <div class="existing-rule-modal-overlay" onclick="closeModal()">
-                <div class="existing-rule-modal-content" onclick="event.stopPropagation()">
-                    <h2>¿Estás seguro de que deseas eliminar esta regla?</h2>
-                    <div class="existing-rule-modal-buttons">
-                        <button class="existing-rule-modal-button existing-rule-modal-confirm" onclick="handleDelete()">
-                            Aceptar
-                        </button>
-                        <button class="existing-rule-modal-button existing-rule-modal-cancel" onclick="closeModal()" aria-label="Cancelar eliminación de la regla">
-                            Cancelar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        <% } %>
+<body>
+  <div id="view-existing-rules-container">
+    <button class="view-existing-rule-back-button" onclick="window.location.href='/settings'">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <div class="view-existing-rule-header">
+      <h1 class="view-existing-rule-title">
+        <i class="fas fa-clipboard-list view-icon-list" aria-hidden="true"></i> Reglas
+      </h1>
     </div>
+    <div class="view-existing-rule-cards-container" role="region" aria-live="polite">
+      <% if (rules.length === 0) { %>
+      <div class="view-no-rules-message">
+        <h2>Añadir regla</h2>
+        <img src="../public/img/plusCircleOutlined.png" alt="Añadir una nueva regla" />
 
-    <script>
-        let isModalOpen = false;
-        let ruleToDelete = null;
-
-        function openModal(ruleId) {
-            ruleToDelete = ruleId;
-            isModalOpen = true;
-            renderModal();
-        }
-
-        function closeModal() {
-            isModalOpen = false;
-            ruleToDelete = null;
-            renderModal();
-        }
-
-        function handleDelete() {
-            if (!ruleToDelete) return;
-
-            fetch(`/rules/${ruleToDelete}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-                },
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error al eliminar la regla');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Regla eliminada con éxito:', data);
-                    window.location.reload(); // Recargar para actualizar la lista de reglas
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Hubo un problema al eliminar la regla. Intenta nuevamente.');
-                });
-
-            closeModal();
-        }
-
-        function renderModal() {
-            const modalOverlay = document.querySelector('.existing-rule-modal-overlay');
-            if (modalOverlay) {
-                modalOverlay.style.display = isModalOpen ? 'flex' : 'none';
-            }
-        }
-
-        function formatRuleInfo(info) {
-            if (!info) return 'Información no válida';
-
-            try {
-                const parsedInfo = JSON.parse(info);
-                let formattedInfo = '';
-
-                if (parsedInfo.AND && Array.isArray(parsedInfo.AND)) {
-                    parsedInfo.AND.forEach(conditionGroup => {
-                        if (conditionGroup.conditions) {
-                            conditionGroup.conditions.forEach(condition => {
-                                formattedInfo += `${condition.type} ${condition.operator} ${condition.value}, `;
-                            });
-                        }
-
-                        if (conditionGroup.actions) {
-                            conditionGroup.actions.forEach(action => {
-                                formattedInfo += `Acción: ${action}, `;
-                            });
-                        }
-
-                        if (conditionGroup.sensors) {
-                            conditionGroup.sensors.forEach(sensor => {
-                                formattedInfo += `Sensor: ${sensor.type}, `;
-                            });
-                        }
+      </div>
+      <% } else { %>
+      <% rules.forEach(function(rule) { %>
+      <% const crop = crops.find(c => c.id === rule.crop_id); %>
+      <div class="view-existing-rule-card" role="article" aria-labelledby="view-rule-<%= rule.id %>">
+        <div class="view-existing-rule-card-info">
+          <p><strong>Nombre:</strong> <%= rule.name %></p>
+          <p><strong>Cultivo:</strong> <%= crop ? crop.name : "Cultivo no encontrado" %></p>
+          <p><strong>Condiciones:</strong>
+            <% try {
+              const ruleInfo = JSON.parse(rule.rule_info);
+              let formattedInfo = '';
+              if (ruleInfo.AND && Array.isArray(ruleInfo.AND)) {
+                ruleInfo.AND.forEach(function(conditionGroup) {
+                  if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
+                    conditionGroup.conditions.forEach(function(condition) {
+                      if (condition.type === 'temperature') {
+                        formattedInfo += `Temperatura ${condition.operator} ${condition.value}°C `;
+                      }
+                      if (condition.type === 'humidity') {
+                        formattedInfo += `Humedad ${condition.operator} ${condition.value}% `;
+                      }
+                      if (condition.type === 'soilTemperature') {
+                        formattedInfo += `Temperatura del terreno ${condition.operator} ${condition.value}°C `;
+                      }
+                      if (condition.type === 'soilHumidity') {
+                        formattedInfo += `Humedad del terreno ${condition.operator} ${condition.value}% `;
+                      }
                     });
-                }
+                  }
+                  if (conditionGroup.actions && Array.isArray(conditionGroup.actions)) {
+                    conditionGroup.actions.forEach(function(action) {
+                      formattedInfo += ` | Acción: ${action}`;
+                    });
+                  }
+                  if (conditionGroup.sensors && Array.isArray(conditionGroup.sensors)) {
+                    conditionGroup.sensors.forEach(function(sensor) {
+                      formattedInfo += ` | Sensor: ${sensor.type}`;
+                    });
+                  }
+                  if (conditionGroup.actuators && Array.isArray(conditionGroup.actuators)) {
+                    conditionGroup.actuators.forEach(function(actuator) {
+                      formattedInfo += ` | Actuador: ${actuator.type}`;
+                    });
+                  }
+                });
+              }
+            %>
+            <%= formattedInfo %>
+            <% } catch (error) {
+              console.error('Error al parsear la información de la regla:', error); %>Información no válida<% } %>
+          </p>
+        </div>
+        <div class="view-existing-rule-card-actions">
+          <button class="view-existing-rule-edit-button" onclick="window.location.href='./edit-rule/<%= rule.id %>'" aria-label="Editar regla <%= rule.name %>">
+            <i class="fas fa-edit" aria-hidden="true"></i>
+          </button>
+          <button class="view-existing-rule-delete-button" onclick="showModal('<%= rule.id %>')" aria-label="Eliminar regla <%= rule.name %>">
+            <i class="fas fa-trash-alt" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <% }) %>
+      <% } %>
+    </div>
+    <% if (rules.length > 0) { %>
+    <button class="view-add-rule-button-circle" onclick="window.location.href='/add-rule'" aria-label="Añadir una nueva regla">
+      <img src="/img/plusCircleOutlined.png" alt="Añadir una nueva regla" />
+    </button>
+    <% } %>
+  </div>
+  <!-- Modal -->
+  <div id="view-deleteModal" class="view-modal">
+    <div class="view-modal-content">
+      <span class="view-close">&times;</span>
+      <p>¿Estás seguro de que quieres eliminar esta regla?</p>
+      <button id="view-confirmDelete">Eliminar</button>
+      <button id="view-cancelDelete">Cancelar</button>
+    </div>
+  </div>
+  <script>
+    function showModal(ruleId) {
+      const modal = document.getElementById('view-deleteModal');
+      if (modal) {
+        modal.style.display = 'block';
+        document.getElementById('view-confirmDelete').onclick = function() {
+          deleteRule(ruleId);
+          modal.style.display = 'none';
+        };
+        document.getElementById('view-cancelDelete').onclick = function() {
+          modal.style.display = 'none';
+        };
+        document.getElementsByClassName('view-close')[0].onclick = function() {
+          modal.style.display = 'none';
+        };
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+      } else {
+        console.error('No se pudo encontrar el modal con el ID view-deleteModal');
+      }
+    }
 
-                return formattedInfo.slice(0, -2); // Eliminar la última coma y espacio
-            } catch (error) {
-                console.error('Error al parsear la información de la regla:', error);
-                return 'Información no válida';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderModal();
+    async function deleteRule(id) {
+      try {
+        const response = await fetch(`/views/rules/${id}`, {
+          method: 'DELETE',
         });
-    </script>
+        if (response.ok) {
+          alert('Regla eliminada con éxito');
+          location.reload();
+        } else {
+          const errorData = await response.json();
+          console.error('Error al eliminar la regla:', errorData.message);
+          alert('Error al eliminar la regla');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un problema al intentar eliminar la regla');
+      }
+    }
+  </script>
 </body>
+
 </html>

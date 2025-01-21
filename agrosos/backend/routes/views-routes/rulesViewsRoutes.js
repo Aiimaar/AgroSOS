@@ -1,27 +1,21 @@
 import express from 'express';
-import {
-  getAllRules,
-  getRuleById,
-  createRule,
-  updateRule,
-  deleteRule,
-} from '../controllers/rulesViewsController.js';
+import * as rulesViewsController from '../../controllers/views-controllers/rulesViewsController.js';
 
 const router = express.Router();
 
 // Ruta para obtener todas las reglas
-router.get('/', getAllRules);
+router.get('/', rulesViewsController.getAllRules);
 
-// Ruta para obtener una regla por ID
-router.get('/:id', getRuleById);
+// Ruta para obtener una regla por ID (para editar)
+router.get('/edit-rule/:id', rulesViewsController.getRuleById); // Ajuste aquí
 
 // Ruta para crear una nueva regla
-router.post('/', createRule);
+router.post('/', rulesViewsController.createRule);
 
 // Ruta para actualizar una regla existente
-router.put('/:id', updateRule);
+router.put('/:id', rulesViewsController.updateRule);
 
 // Ruta para eliminar una regla
-router.delete('/:id', deleteRule);
+router.delete('/:id', rulesViewsController.deleteRule);
 
 export default router;

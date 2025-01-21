@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Regla</title>
+    <link rel="stylesheet" href="/path/to/your/css/edit-rule-comp.css">
+</head>
+<body>
+    <div class="view-edit-rule-form-container">
+        <h2>Editar Regla</h2>
+        <label for="view-cropId">Cultivo:</label>
+        <select id="view-cropId" value="<%= cropId %>" aria-label="Selecciona el cultivo">
+            <option value="">Selecciona un cultivo</option>
+            <% crops.forEach((crop) => { %>
+                <option value="<%= crop.id %>" <%= crop.id == cropId ? 'selected' : '' %>><%= crop.name %></option>
+            <% }) %>
+        </select>
+
+        <label for="view-sensorType">Sensor:</label>
+        <select id="view-sensorType" value="<%= sensorType %>" aria-label="Selecciona un sensor">
+            <option value="">Selecciona un sensor</option>
+            <option value="Humedad" <%= sensorType === "Humedad" ? "selected" : "" %>>Humedad</option>
+            <option value="Temperatura" <%= sensorType === "Temperatura" ? "selected" : "" %>>Temperatura</option>
+            <option value="Humedad del terreno" <%= sensorType === "Humedad del terreno" ? "selected" : "" %>>Humedad del terreno</option>
+            <option value="Temperatura del terreno" <%= sensorType === "Temperatura del terreno" ? "selected" : "" %>>Temperatura del terreno</option>
+        </select>
+
+        <% if (sensorType === "Temperatura") { %>
+        <div class="view-edit-rule-conditions">
+            <h3>Condiciones de Temperatura</h3>
+            <ul>
+                <% temperatureConditions.forEach((cond, index) => { %>
+                    <li>
+                        <%= cond.operator %> <%= cond.value %>°C
+                        <button class="view-delete-condition-button" aria-label="Eliminar condición de temperatura <%= cond.operator %> <%= cond.value %>°C">
+                            Eliminar
+                        </button>
+                    </li>
+                <% }) %>
+            </ul>
+            <button class="view-edit-rule-conditions-button" aria-label="Añadir condición de temperatura">Añadir</button>
+        </div>
+        <% } %>
+
+        <% if (sensorType === "Humedad") { %>
+        <div class="view-edit-rule-conditions">
+            <h3>Condiciones de Humedad</h3>
+            <ul>
+                <% humidityConditions.forEach((cond, index) => { %>
+                    <li>
+                        <%= cond.operator %> <%= cond.value %>%
+                        <button class="view-delete-condition-button" aria-label="Eliminar condición de humedad <%= cond.operator %> <%= cond.value %>%">
+                            Eliminar
+                        </button>
+                    </li>
+                <% }) %>
+            </ul>
+            <button class="view-edit-rule-conditions-button" aria-label="Añadir condición de humedad">Añadir</button>
+        </div>
+        <% } %>
+
+        <label for="view-actuatorType">Actuador:</label>
+        <select id="view-actuatorType" value="<%= actuatorType %>" aria-label="Selecciona un actuador">
+            <option value="">Selecciona un actuador</option>
+            <option value="Riego" <%= actuatorType === "Riego" ? "selected" : "" %>>Riego</option>
+            <option value="Ventilación" <%= actuatorType === "Ventilación" ? "selected" : "" %>>Ventilación</option>
+            <option value="Cobertura de cultivos" <%= actuatorType === "Cobertura de cultivos" ? "selected" : "" %>>Cobertura de cultivos</option>
+            <option value="Apertura de ventanas" <%= actuatorType === "Apertura de ventanas" ? "selected" : "" %>>Apertura de ventanas</option>
+        </select>
+
+        <label for="view-selectedAction">Acción:</label>
+        <select id="view-selectedAction" value="<%= selectedAction %>" aria-label="Selecciona una acción">
+            <option value="">Selecciona una acción</option>
+            <option value="Cubrir cultivos con lona semi-transparente" <%= selectedAction.includes("Cubrir cultivos con lona semi-transparente") ? "selected" : "" %>>Cubrir cultivos con lona semi-transparente</option>
+            <option value="Cubrir cultivos con lona opaca" <%= selectedAction.includes("Cubrir cultivos con lona opaca") ? "selected" : "" %>>Cubrir cultivos con lona opaca</option>
+            <option value="Destapar cultivos" <%= selectedAction.includes("Destapar cultivos") ? "selected" : "" %>>Destapar cultivos</option>
+        </select>
+
+        <button class="view-edit-rule-update-button" aria-label="Actualizar la regla" onclick="viewHandleUpdateRule()">Actualizar Regla</button>
+    </div>
+
+    <script>
+    async function viewHandleUpdateRule() {
+        const cropId = document.getElementById('view-cropId').value;
+        const sensorType = document.getElementById('view-sensorType').value;
+        const actuatorType = document.getElementById('view-actuatorType').value;
+        const selectedAction = document.getElementById('view-selectedAction').value;
+
+        const ruleInfo = {
+            AND: [
+                {
+                    sensors: [{ type: sensorType }],
+                    conditions: [], // Añade las condiciones correspondientes
+                    actions: [selectedAction],
+                    actuators: [{ type: actuatorType }]
+                }
+            ]
+        };
+
+        try {
+            const response = await fetch(`/views/edit-rule/<%= rule.id %>`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    crop_id: cropId,
+                    rule_info: JSON.stringify(ruleInfo)
+                })
+            });
+
+            if (response.ok) {
+                alert('Regla actualizada con éxito');
+                window.location.href = '/views/rules';
+            } else {
+                alert('Error al actualizar la regla');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un problema al intentar actualizar la regla');
+        }
+    }
+    </script>
+</body>
+</html>
