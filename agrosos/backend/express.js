@@ -5,6 +5,9 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import plotsRoutes from './routes/plotsRoutes.js';
 import usersRoutes from './routes/usersRoutes.js';
+import usersViewsRoutes from './routes/views-routes/usersViewsRoutes.js';
+import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
+import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
 import sensorsRoutes from './routes/sensorsRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import cropRoutes from './routes/cropRoutes.js';
@@ -25,7 +28,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 dotenv.config();
 
 sequelize.sync();
@@ -33,19 +38,6 @@ sequelize.sync();
 // Setting the view engine to ejs
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-app.get('/api/header', (req, res) => {
-  res.json({
-      logo: '/static/images/logo.png',
-      menuItems: [
-          { path: '/plot-list', icon: 'fa-home', label: 'Inicio' },
-          { path: '/accesibility', icon: 'fa-universal-access', label: 'Accesibilidad' },
-          { path: '/advices', icon: 'fa-lightbulb', label: 'Consejos' },
-          { path: '/notifications', icon: 'fa-bell', label: 'Notificaciones' },
-          { path: '/terms-conditions', icon: 'fa-book', label: 'Términos y condiciones' }
-      ]
-  });
-});
 
 // Plot routes
 app.use("/api/plots", plotsRoutes);
@@ -75,6 +67,12 @@ app.use('/api/rules', rulesRoutes);
 app.use("/api/irrigation_schedule", irrigationScheduleRoutes);
 
 app.use('/views/rules', rulesRoutes);
+
+app.use('/views/users', usersViewsRoutes);
+
+app.use('/views/plot-list', plotListViewsRoutes);
+
+app.use('/views/create-plot', createPlotViewRoute);
 
 const PORT = 3000;
 app.listen(PORT, () => {

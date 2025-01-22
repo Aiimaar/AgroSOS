@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="http://localhost:3000/css/view-header.css">
+  <title>Header</title>
+</head>
+<body>
+  <div class="app-container" onclick="handleOutsideClick(event)">
+    <header class="header">
+      <img src="http://localhost:3000/img/logo.png" alt="Logo Planta" class="plant-icon">
+      <button class="header-menu-button" onclick="openMenu(event)">
+        <img src="http://localhost:3000/icon/bars.png" alt="icono barras" class="bars-icon">
+      </button>
+      <div class="header-desktop-menu">
+        <ul>
+          <li><a href="/plot-list"><span>Inicio</span></a></li>
+          <li><a href="/accesibility"><span>Accesibilidad</span></a></li>
+          <li><a href="/advices"><span>Consejos</span></a></li>
+          <li><a href="/notifications"><span>Notificaciones</span></a></li>
+          <li><a href="/terms-conditions"><span>Términos y condiciones</span></a></li>
+        </ul>
+      </div>
+    </header>
+    <div class="side-menu" id="sideMenu">
+      <button class="side-close-button" onclick="closeMenu()">
+        <!-- Icono de cerrar -->
+      </button>
+      <ul class="side-menu-items">
+        <li><a href="/plot-list" onclick="closeMenu()"><span>Inicio</span></a></li>
+        <li><a href="/notifications" onclick="closeMenu()"><span>Notificaciones</span></a></li>
+        <li><a href="/advices" onclick="closeMenu()"><span>Consejos</span></a></li>
+        <li><a href="/terms-conditions" onclick="closeMenu()"><span>Términos y condiciones</span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const sideMenu = document.getElementById('sideMenu');
+
+    function openMenu(event) {
+      // Prevenimos que el clic en el botón cierre el menú
+      event.stopPropagation();
+      sideMenu.classList.add('open');
+    }
+
+    function closeMenu() {
+      sideMenu.classList.remove('open');
+    }
+
+    function handleOutsideClick(event) {
+      // Cierra el menú si se hace clic fuera del menú
+      if (sideMenu.classList.contains('open') && !event.target.closest('.side-menu') && !event.target.closest('.header-menu-button')) {
+        closeMenu();
+      }
+    }
+  </script>
+</body>
+</html>
