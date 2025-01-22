@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Regla</title>
-    <link rel="stylesheet" href="/path/to/your/css/edit-rule-comp.css">
+    <link rel="stylesheet" href="/css/views-edit-rule.css">
 </head>
 <body>
     <div class="view-edit-rule-form-container">
@@ -18,7 +18,7 @@
         </select>
 
         <label for="view-sensorType">Sensor:</label>
-        <select id="view-sensorType" value="<%= sensorType %>" aria-label="Selecciona un sensor">
+        <select id="view-sensorType" value="<%= sensorType %>" aria-label="Selecciona un sensor" onchange="handleSensorChange()">
             <option value="">Selecciona un sensor</option>
             <option value="Humedad" <%= sensorType === "Humedad" ? "selected" : "" %>>Humedad</option>
             <option value="Temperatura" <%= sensorType === "Temperatura" ? "selected" : "" %>>Temperatura</option>
@@ -26,39 +26,37 @@
             <option value="Temperatura del terreno" <%= sensorType === "Temperatura del terreno" ? "selected" : "" %>>Temperatura del terreno</option>
         </select>
 
-        <% if (sensorType === "Temperatura") { %>
-        <div class="view-edit-rule-conditions">
+        <div id="temperature-conditions" style="<%= sensorType === 'Temperatura' ? '' : 'display: none;' %>">
+
             <h3>Condiciones de Temperatura</h3>
-            <ul>
+            <ul id="temperature-conditions-list">
                 <% temperatureConditions.forEach((cond, index) => { %>
                     <li>
                         <%= cond.operator %> <%= cond.value %>°C
-                        <button class="view-delete-condition-button" aria-label="Eliminar condición de temperatura <%= cond.operator %> <%= cond.value %>°C">
+                        <button class="view-delete-condition-button" aria-label="Eliminar condición de temperatura <%= cond.operator %> <%= cond.value %>°C" onclick="deleteCondition('temperature', '<%= index %>')">
                             Eliminar
                         </button>
                     </li>
                 <% }) %>
             </ul>
-            <button class="view-edit-rule-conditions-button" aria-label="Añadir condición de temperatura">Añadir</button>
+            <button class="view-edit-rule-conditions-button" aria-label="Añadir condición de temperatura" onclick="addCondition('temperature')">Añadir</button>
         </div>
-        <% } %>
 
-        <% if (sensorType === "Humedad") { %>
-        <div class="view-edit-rule-conditions">
+        <div id="humidity-conditions" style="<%= sensorType === 'Humedad' ? '' : 'display: none;' %>">
+
             <h3>Condiciones de Humedad</h3>
-            <ul>
+            <ul id="humidity-conditions-list">
                 <% humidityConditions.forEach((cond, index) => { %>
                     <li>
                         <%= cond.operator %> <%= cond.value %>%
-                        <button class="view-delete-condition-button" aria-label="Eliminar condición de humedad <%= cond.operator %> <%= cond.value %>%">
+                        <button class="view-delete-condition-button" aria-label="Eliminar condición de humedad <%= cond.operator %> <%= cond.value %>%" onclick="deleteCondition('humidity', '<%= index %>')">
                             Eliminar
                         </button>
                     </li>
                 <% }) %>
             </ul>
-            <button class="view-edit-rule-conditions-button" aria-label="Añadir condición de humedad">Añadir</button>
+            <button class="view-edit-rule-conditions-button" aria-label="Añadir condición de humedad" onclick="addCondition('humidity')">Añadir</button>
         </div>
-        <% } %>
 
         <label for="view-actuatorType">Actuador:</label>
         <select id="view-actuatorType" value="<%= actuatorType %>" aria-label="Selecciona un actuador">
@@ -81,46 +79,89 @@
     </div>
 
     <script>
-    async function viewHandleUpdateRule() {
-        const cropId = document.getElementById('view-cropId').value;
-        const sensorType = document.getElementById('view-sensorType').value;
-        const actuatorType = document.getElementById('view-actuatorType').value;
-        const selectedAction = document.getElementById('view-selectedAction').value;
-
-        const ruleInfo = {
-            AND: [
-                {
-                    sensors: [{ type: sensorType }],
-                    conditions: [], // Añade las condiciones correspondientes
-                    actions: [selectedAction],
-                    actuators: [{ type: actuatorType }]
-                }
-            ]
-        };
-
-        try {
-            const response = await fetch(`/views/edit-rule/<%= rule.id %>`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    crop_id: cropId,
-                    rule_info: JSON.stringify(ruleInfo)
-                })
-            });
-
-            if (response.ok) {
-                alert('Regla actualizada con éxito');
-                window.location.href = '/views/rules';
-            } else {
-                alert('Error al actualizar la regla');
+        async function viewHandleUpdateRule() {
+            const cropId = document.getElementById('view-cropId').value;
+            const sensorType = document.getElementById('view-sensorType').value;
+            const actuatorType = document.getElementById('view-actuatorType').value;
+            const selectedAction = document.getElementById('view-selectedAction').value;
+        
+            let conditions = [];
+            if (sensorType === 'Temperatura') {
+                conditions = [...document.querySelectorAll('#temperature-conditions-list li')].map(li => {
+                    const operator = li.querySelector('.operator').textContent.trim();
+                    const value = li.querySelector('.value').textContent.trim().slice(0, -1);
+                    return { operator, value };
+                });
+            } else if (sensorType === 'Humedad') {
+                conditions = [...document.querySelectorAll('#humidity-conditions-list li')].map(li => {
+                    const operator = li.querySelector('.operator').textContent.trim();
+                    const value = li.querySelector('.value').textContent.trim().slice(0, -1);
+                    return { operator, value };
+                });
             }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Hubo un problema al intentar actualizar la regla');
+        
+            const ruleInfo = {
+                AND: [
+                    {
+                        sensors: [{ type: sensorType }],
+                        conditions: conditions,
+                        actions: [selectedAction],
+                        actuators: [{ type: actuatorType }]
+                    }
+                ]
+            };
+        
+            try {
+                const response = await fetch(`/views/edit-rule/<%= rule.id %>`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        crop_id: cropId,
+                        rule_info: JSON.stringify(ruleInfo)
+                    })
+                });
+        
+                if (response.ok) {
+                    alert('Regla actualizada con éxito');
+                    window.location.href = '/views/rules';
+                } else {
+                    alert('Error al actualizar la regla');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Hubo un problema al intentar actualizar la regla');
+            }
         }
-    }
-    </script>
+        
+        function handleSensorChange() {
+            const sensorType = document.getElementById('view-sensorType').value;
+            document.getElementById('temperature-conditions').style.display = sensorType === 'Temperatura' ? 'block' : 'none';
+            document.getElementById('humidity-conditions').style.display = sensorType === 'Humedad' ? 'block' : 'none';
+        }
+        
+        function addCondition(type) {
+            const conditionsList = document.getElementById(type === 'temperature' ? 'temperature-conditions-list' : 'humidity-conditions-list');
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <input class="operator" type="text" placeholder="Operador">
+                <input class="value" type="text" placeholder="Valor">
+                <button class="view-delete-condition-button" aria-label="Eliminar condición" onclick="this.parentElement.remove()">Eliminar</button>
+            `;
+            conditionsList.appendChild(li);
+        }
+        
+        function deleteCondition(type, index) {
+            const conditionsList = document.getElementById(type === 'temperature' ? 'temperature-conditions-list' : 'humidity-conditions-list');
+            conditionsList.removeChild(conditionsList.children[index]);
+        }
+        
+        // Mostrar las condiciones iniciales si ya existen
+        document.addEventListener('DOMContentLoaded', function() {
+            handleSensorChange();
+        });
+        </script>
+        
 </body>
 </html>

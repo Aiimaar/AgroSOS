@@ -10,31 +10,32 @@
 </head>
 
 <body>
-  <div id="view-existing-rules-container">
-    <button class="view-existing-rule-back-button" onclick="window.location.href='/settings'">
-      <i class="fas fa-arrow-left"></i>
-    </button>
-    <div class="view-existing-rule-header">
-      <h1 class="view-existing-rule-title">
-        <i class="fas fa-clipboard-list view-icon-list" aria-hidden="true"></i> Reglas
-      </h1>
-    </div>
-    <div class="view-existing-rule-cards-container" role="region" aria-live="polite">
-      <% if (rules.length === 0) { %>
-      <div class="view-no-rules-message">
-        <h2>Añadir regla</h2>
-        <img src="../public/img/plusCircleOutlined.png" alt="Añadir una nueva regla" />
-
+  <div id="view-existing-rules-container-all">
+    <div id="view-existing-rules-container">
+      <button class="view-existing-rule-back-button" onclick="window.location.href='/settings'">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="view-existing-rule-header">
+        <h1 class="view-existing-rule-title">
+          <i class="fas fa-clipboard-list view-icon-list" aria-hidden="true"></i> Reglas
+        </h1>
       </div>
-      <% } else { %>
-      <% rules.forEach(function(rule) { %>
-      <% const crop = crops.find(c => c.id === rule.crop_id); %>
-      <div class="view-existing-rule-card" role="article" aria-labelledby="view-rule-<%= rule.id %>">
-        <div class="view-existing-rule-card-info">
-          <p><strong>Nombre:</strong> <%= rule.name %></p>
-          <p><strong>Cultivo:</strong> <%= crop ? crop.name : "Cultivo no encontrado" %></p>
-          <p><strong>Condiciones:</strong>
-            <% try {
+      <div class="view-existing-rule-cards-container" role="region" aria-live="polite">
+        <% if (rules.length === 0) { %>
+        <div class="view-no-rules-message">
+          <h2>Añadir regla</h2>
+          <img src="../public/img/plusCircleOutlined.png" alt="Añadir una nueva regla" />
+
+        </div>
+        <% } else { %>
+        <% rules.forEach(function(rule) { %>
+        <% const crop = crops.find(c => c.id === rule.crop_id); %>
+        <div class="view-existing-rule-card" role="article" aria-labelledby="view-rule-<%= rule.id %>">
+          <div class="view-existing-rule-card-info">
+            <p><strong>Nombre:</strong> <%= rule.name %></p>
+            <p><strong>Cultivo:</strong> <%= crop ? crop.name : "Cultivo no encontrado" %></p>
+            <p><strong>Condiciones:</strong>
+              <% try {
               const ruleInfo = JSON.parse(rule.rule_info);
               let formattedInfo = '';
               if (ruleInfo.AND && Array.isArray(ruleInfo.AND)) {
@@ -73,36 +74,37 @@
                 });
               }
             %>
-            <%= formattedInfo %>
-            <% } catch (error) {
+              <%= formattedInfo %>
+              <% } catch (error) {
               console.error('Error al parsear la información de la regla:', error); %>Información no válida<% } %>
-          </p>
+            </p>
+          </div>
+          <div class="view-existing-rule-card-actions">
+            <button class="view-existing-rule-edit-button" onclick="window.location.href='./edit-rule/<%= rule.id %>'" aria-label="Editar regla <%= rule.name %>">
+              <i class="fas fa-edit" aria-hidden="true"></i>
+            </button>
+            <button class="view-existing-rule-delete-button" onclick="showModal('<%= rule.id %>')" aria-label="Eliminar regla <%= rule.name %>">
+              <i class="fas fa-trash-alt" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
-        <div class="view-existing-rule-card-actions">
-          <button class="view-existing-rule-edit-button" onclick="window.location.href='./edit-rule/<%= rule.id %>'" aria-label="Editar regla <%= rule.name %>">
-            <i class="fas fa-edit" aria-hidden="true"></i>
-          </button>
-          <button class="view-existing-rule-delete-button" onclick="showModal('<%= rule.id %>')" aria-label="Eliminar regla <%= rule.name %>">
-            <i class="fas fa-trash-alt" aria-hidden="true"></i>
-          </button>
-        </div>
+        <% }) %>
+        <% } %>
       </div>
-      <% }) %>
+      <% if (rules.length > 0) { %>
+      <button class="view-add-rule-button-circle" onclick="window.location.href='/add-rule'" aria-label="Añadir una nueva regla">
+        <img src="/img/plusCircleOutlined.png" alt="Añadir una nueva regla" />
+      </button>
       <% } %>
     </div>
-    <% if (rules.length > 0) { %>
-    <button class="view-add-rule-button-circle" onclick="window.location.href='/add-rule'" aria-label="Añadir una nueva regla">
-      <img src="/img/plusCircleOutlined.png" alt="Añadir una nueva regla" />
-    </button>
-    <% } %>
-  </div>
-  <!-- Modal -->
-  <div id="view-deleteModal" class="view-modal">
-    <div class="view-modal-content">
-      <span class="view-close">&times;</span>
-      <p>¿Estás seguro de que quieres eliminar esta regla?</p>
-      <button id="view-confirmDelete">Eliminar</button>
-      <button id="view-cancelDelete">Cancelar</button>
+    <!-- Modal -->
+    <div id="view-deleteModal" class="view-modal">
+      <div class="view-modal-content">
+        <span class="view-close">&times;</span>
+        <p>¿Estás seguro de que quieres eliminar esta regla?</p>
+        <button id="view-confirmDelete">Eliminar</button>
+        <button id="view-cancelDelete">Cancelar</button>
+      </div>
     </div>
   </div>
   <script>
