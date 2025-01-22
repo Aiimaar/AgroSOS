@@ -131,30 +131,25 @@ export const createRule = async (req, res) => {
   }
 };
 
-export const updateRule = async (req, res) => {
+// controllers/rulesController.js
+export const updateRuleView = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { name, crop_id, technician_id, rule_info } = req.body;
-    const rule = await Rule.findByPk(id);
-    if (!rule) {
-      return res
-        .status(404)
-        .render("error", { message: "Regla no encontrada" });
-    }
-    rule.name = name || rule.name;
-    rule.crop_id = crop_id || rule.crop_id;
-    rule.technician_id = technician_id || rule.technician_id;
-    rule.rule_info = rule_info || rule.rule_info;
-    await rule.save();
-    const crops = await getAllCrops();
-    res.render("rule", { rule, crops });
+      const { id } = req.params;
+      const { crop_id, rule_info } = req.body;
+      const rule = await Rule.findByPk(id);
+      if (!rule) {
+          return res.status(404).render("error", { message: "Regla no encontrada" });
+      }
+      rule.crop_id = crop_id || rule.crop_id;
+      rule.rule_info = rule_info || rule.rule_info;
+      await rule.save();
+      res.status(200).send('Regla actualizada con éxito');
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .render("error", { message: "Error al actualizar la regla" });
+      console.error("Error al actualizar la regla:", error);
+      res.status(500).send('Error al actualizar la regla');
   }
 };
+
 
 export const deleteRule = async (req, res) => {
   console.log(

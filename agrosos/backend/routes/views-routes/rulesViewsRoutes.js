@@ -7,13 +7,13 @@ const router = express.Router();
 router.get('/', rulesViewsController.getAllRules);
 
 // Ruta para obtener una regla por ID (para editar)
-router.get('/edit-rule/:id', rulesViewsController.getRuleById); // Ajuste aquí
+router.get('/edit-rule/:id', rulesViewsController.getRuleById);
 
 // Ruta para crear una nueva regla
 router.post('/', rulesViewsController.createRule);
 
-// Ruta para actualizar una regla existente
-router.put('/:id', rulesViewsController.updateRule);
+// Ruta para actualizar una regla existente (ajuste aquí)
+router.put('/edit-rule/:id', rulesViewsController.updateRuleView);
 
 // Ruta para eliminar una regla
 router.delete('/:id', rulesViewsController.deleteRule);
