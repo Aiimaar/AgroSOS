@@ -7,6 +7,7 @@ import plotsRoutes from './routes/plotsRoutes.js';
 import usersRoutes from './routes/usersRoutes.js';
 import usersViewsRoutes from './routes/views-routes/usersViewsRoutes.js';
 import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
+import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
 import sensorsRoutes from './routes/sensorsRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import cropRoutes from './routes/cropRoutes.js';
@@ -27,6 +28,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/', express.static(path.join(__dirname, 'public')));
 dotenv.config();
@@ -67,6 +69,8 @@ app.use("/api/irrigation_schedule", irrigationScheduleRoutes);
 app.use('/views/users', usersViewsRoutes);
 
 app.use('/views/plot-list', plotListViewsRoutes);
+
+app.use('/views/create-plot', createPlotViewRoute);
 
 const PORT = 3000;
 app.listen(PORT, () => {

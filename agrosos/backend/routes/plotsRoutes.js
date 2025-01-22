@@ -1,8 +1,6 @@
 import express from 'express';
 import multer from 'multer';
 import * as plotController from '../controllers/plotController.js';
-import { authenticateToken } from '../middleware/authenticateToken.js';
-
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -15,10 +13,10 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get("/", authenticateToken, plotController.getPlots);
-router.post("/", authenticateToken, upload.single('image'), plotController.createPlot);
-router.put("/:id", authenticateToken, upload.single('image'), plotController.updatePlot);
-router.delete("/:id", authenticateToken, plotController.deletePlot);
-router.get("/user/:userId", authenticateToken, plotController.getPlotsByUserId);
+router.get("/", plotController.getPlots);
+router.post("/", upload.single('image'), plotController.createPlot);
+router.put("/:id", upload.single('image'), plotController.updatePlot);
+router.delete("/:id", plotController.deletePlot);
+router.get("/user/:userId", plotController.getPlotsByUserId);
 
 export default router;
