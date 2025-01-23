@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./humidity-component.css";
 import { useState } from "react";
-import { useDarkMode } from './path-to-your-DarkModeProvider'; // Asegúrate de ajustar la ruta según tu estructura de proyecto
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de proyecto
 
 function HumidityComponent() {
   const [value, setValue] = useState(23);
