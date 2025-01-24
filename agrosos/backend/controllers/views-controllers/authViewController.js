@@ -5,10 +5,12 @@ import bcrypt from 'bcrypt'; // Para comparar contraseñas hasheadas
 export const renderLogin = (req, res) => {
   const user = req.session.user || null; // Verifica si hay un usuario en la sesión
   if (user) {
-    return res.render('login', { user, error: null }); // Pasa el usuario a la vista
+    return res.redirect('/views/userList'); // Redirige si el usuario ya está autenticado
   }
   res.render('login', { user: null, error: null }); // Si no hay usuario, pasa null
 };
+
+
 
 
 // Manejar el inicio de sesión
