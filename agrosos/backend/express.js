@@ -18,6 +18,7 @@ import session from 'express-session';
 import SequelizeStore from 'connect-session-sequelize';
 import { isAuthenticated } from './middleware/isAuthenticated.js';
 
+
 dotenv.config();
 
 const app = express();
