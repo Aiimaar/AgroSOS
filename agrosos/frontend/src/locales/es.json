@@ -108,5 +108,26 @@
   "thursday": "Jueves",
   "friday": "Viernes",
   "saturday": "Sábado",
-  "sunday": "Domingo"
+  "sunday": "Domingo",
+
+  "temperature": "Temperatura",
+  "operator_less_than": "<",
+  "operator_equal": "=",
+  "operator_greater_than": ">",
+  "min_temp": "-10°C",
+  "max_temp": "40°C",
+
+  "humidity": "Humedad",
+  "min_humidity": "-10%",
+  "max_humidity": "40%",
+
+  "soilTemperature": "Temperatura de suelo",
+  "soilHumidity": "Humedad del suelo",
+  "linked_sensors": "Sensores enlazados",
+  "temperature_sensor": "Sensor de temperatura del aire",
+  "humidity_sensor": "Sensor de humedad del aire",
+  "soil_temperature_sensor": "Sensor de temperatura del suelo",
+  "soil_humidity_sensor": "Sensor de humedad del suelo",
+  "add_sensor": "Agregar sensor",
+  "remove_sensor": "Quitar sensor"
 }

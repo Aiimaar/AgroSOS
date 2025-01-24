@@ -1,14 +1,49 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./humidity-component.css";
-import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 function HumidityComponent() {
+  const { t, i18n } = useTranslation();  // Usamos useTranslation
   const [value, setValue] = useState(23);
   const [operator, setOperator] = useState("=");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const location = useLocation();
+
+  // Fetch language preference from the server
+  useEffect(() => {
+    const fetchLanguage = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await axios.get("http://localhost:3000/api/users/1/language", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const fetchedLanguage = response.data.language || "es"; // Por defecto "es"
+        if (fetchedLanguage !== i18n.language) {
+          i18n.changeLanguage(fetchedLanguage); // Cambiar el idioma si es necesario
+        }
+      } catch (error) {
+        console.log("Error fetching language:", error);
+        i18n.changeLanguage("es"); // Establecer idioma por defecto si falla la carga
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLanguage();
+  }, [i18n]);
+
+  if (loading) {
+    return <div>{t("loading")}</div>; // Mostrar mensaje de carga
+  }
 
   const handleHumidityChange = (e) => {
     setValue(e.target.value);
@@ -41,25 +76,25 @@ function HumidityComponent() {
       <div className="humidity-component-arrow" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} className="humidity-component-arrow-icon" />
       </div>
-      <h1>Humedad</h1>
+      <h1>{t('humidity')}</h1>  {/* Reemplazamos el texto estático por la traducción */}
       <div className="humidity-controls">
         <button
           className={`humidity-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
         >
-          {"<"}
+          {t('operator_less_than')}  {/* Reemplazamos los operadores */}
         </button>
         <button
           className={`humidity-button-equal ${operator === "=" ? "active" : ""}`}
           onClick={() => handleComparisonChange("=")}
         >
-          {"="}
+          {t('operator_equal')}
         </button>
         <button
           className={`humidity-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
         >
-          {">"}
+          {t('operator_greater_than')}
         </button>
       </div>
       <div className="humidity-display">
@@ -74,13 +109,13 @@ function HumidityComponent() {
           onChange={handleHumidityChange}
         />
         <div className="humidity-limits">
-          <span>-10%</span>
-          <span>40%</span>
+          <span>{t('min_humidity')}</span>  {/* Reemplazamos los límites de humedad */}
+          <span>{t('max_humidity')}</span>
         </div>
       </div>
       <div className="humidity-apply">
         <button className="humidity-apply-button" onClick={handleApplyCondition}>
-          Aplicar condición
+          {t('apply_condition')}  {/* Reemplazamos el texto de aplicar condición */}
         </button>
       </div>
     </div>

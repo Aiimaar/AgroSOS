@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // Importa el hook useTranslation
 import "./sensor-content-component.css";
 import airTemp from "./image58.png";
 import airHu from "./image57.png";
@@ -9,77 +10,46 @@ import add from "./image50.png";
 import quit from "./image51.png";
 
 function Sensors() {
-    const [showRemoveButtons, setShowRemoveButtons] = useState(false);
+  const { t } = useTranslation();  // Usamos useTranslation para obtener la función t
 
-    const handleQuitClick = () => {
-        setShowRemoveButtons(true);
-    };
+  const sensors = [
+    { name: t("temperature"), img: airTemp, altText: t("temperature_sensor") },
+    { name: t("humidity"), img: airHu, altText: t("humidity_sensor") },
+    { name: t("soilTemperature"), img: plotTemp, altText: t("soil_temperature_sensor") },
+    { name: t("soilHumidity"), img: plotHu, altText: t("soil_humidity_sensor") },
+  ];
 
-    const handleSensorsLinkedClick = () => {
-        setShowRemoveButtons(false);
-    };
-
-    return (
-        <div id="sensor-content-container">
-            <div className="sensorList">
-                <div className="sensor-content-list">
-                    <img src={airTemp} alt="Icono de sensor de temperatura del aire" className="airTemp" />
-                    <p>Temperatura</p>
-                    <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Temperatura">
-                            <img src={add} alt="Icono para agregar un sensor de temperatura" className="add" />
-                        </Link>
-                        <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="Icono para quitar el sensor de temperatura" className="quit" />
-                        </Link>
-                    </div>
-                </div>
-                <div className="sensor-content-list">
-                    <img src={airHu} alt="Icono de sensor de humedad del aire" className="airHu" />
-                    <p>Humedad</p>
-                    <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Humedad">
-                            <img src={add} alt="Icono para agregar un sensor de humedad" className="add" />
-                        </Link>
-                        <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="Icono para quitar el sensor de humedad" className="quit" />
-                        </Link>
-                    </div>
-                </div>
-                <div className="sensor-content-list">
-                    <img src={plotTemp} alt="Icono de sensor de temperatura del terreno" className="plotTemp" />
-                    <p>Temperatura de terreno</p>
-                    <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Temperatura%20de%20terreno">
-                            <img src={add} alt="Icono para agregar un sensor de temperatura de terreno" className="add" />
-                        </Link>
-                        <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="Icono para quitar el sensor de temperatura del terreno" className="quit" />
-                        </Link>
-                    </div>
-                </div>
-                <div className="sensor-content-list">
-                    <img src={plotHu} alt="Icono de sensor de humedad del terreno" className="plotHu" />
-                    <p>Humedad del terreno</p>
-                    <div className="sensor-content-buttons">
-                        <Link to="/add-sensor?name=Humedad%20del%20terreno">
-                            <img src={add} alt="Icono para agregar un sensor de humedad del terreno" className="add" />
-                        </Link>
-                        <Link to="/sensor-enla?showDelete=true">
-                            <img src={quit} alt="Icono para quitar el sensor de humedad del terreno" className="quit" />
-                        </Link>
-                    </div>
-                </div>
+  return (
+    <div id="sensor-content-container">
+      <div className="sensorList">
+        {sensors.map((sensor) => (
+          <div className="sensor-content-list" key={sensor.name}>
+            <img
+              src={sensor.img}
+              alt={sensor.altText}
+              className={`${sensor.name.toLowerCase().replace(" ", "")}`}
+            />
+            <p>{sensor.name}</p>
+            <div className="sensor-content-buttons">
+              <Link to={`/add-sensor?name=${encodeURIComponent(sensor.name)}`}>
+                <img src={add} alt={t("add_sensor")} className="add" />
+              </Link>
+              <Link to="/sensor-enla?showDelete=true">
+                <img src={quit} alt={t("remove_sensor")} className="quit" />
+              </Link>
             </div>
-            <div className="enla">
-                <Link to="/sensor-enla">
-                    <button className="button-enla">
-                        <p className="enla-p">Sensores enlazados</p>
-                    </button>
-                </Link>
-            </div>
-        </div>
-    );
+          </div>
+        ))}
+      </div>
+      <div className="enla">
+        <Link to="/sensor-enla">
+          <button className="button-enla">
+            <p className="enla-p">{t("linked_sensors")}</p>
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
 }
 
 export default Sensors;

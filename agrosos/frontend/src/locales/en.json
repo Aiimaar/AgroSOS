@@ -80,7 +80,7 @@
 
   "no_valid_token": "No valid token found. Please log in.",
   "no_selected_plot": "No plot selected.",
-  "crop_in_plot": "Crop in the plot",
+  "crop_in_plot": "Crops in the plot",
   "no_crop_in_plot": "No crop in this plot.",
   "temperature_humidity_evolution": "Temperature and Humidity Evolution",
   "tasks": "Tasks",
@@ -108,6 +108,29 @@
   "thursday": "Thursday",
   "friday": "Friday",
   "saturday": "Saturday",
-  "sunday": "Sunday"
+  "sunday": "Sunday",
+
+  "temperature": "Temperature",
+  "operator_less_than": "<",
+  "operator_equal": "=",
+  "operator_greater_than": ">",
+  "min_temp": "-10°C",
+  "max_temp": "40°C",
+
+  "humidity": "Humidity",
+  "min_humidity": "-10%",
+  "max_humidity": "40%",
+
+ 
+  
+  "soilTemperature": "Soil Temperature",
+  "soilHumidity": "Soil Humidity",
+  "temperature_sensor": "Air temperature sensor",
+  "humidity_sensor": "Air humidity sensor",
+  "soil_temperature_sensor": "Soil temperature sensor",
+  "soil_humidity_sensor": "Soil humidity sensor",
+  "add_sensor": "Add sensor",
+  "remove_sensor": "Remove sensor",
+  "linked_sensors": "Linked Sensors"
 }
 
