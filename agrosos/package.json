@@ -2,7 +2,6 @@
   "name": "agrosos",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,12 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.4.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@iconify/react": "^5.0.2",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -46,6 +47,7 @@
     "eslint-plugin-react-refresh": "^0.4.13",
     "globals": "^15.11.0",
     "jest": "^29.7.0",
+    "sequelize-cli": "^6.6.2",
     "vite": "^5.4.9"
   }
 }
