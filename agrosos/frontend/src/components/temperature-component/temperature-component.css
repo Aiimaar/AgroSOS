@@ -1,235 +1,219 @@
 #temperature-component-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    width: 90vw;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  height: 100vh;
+  width: 90vw;
+  justify-content: center;
+  gap: 20px;
+  margin-top: -1em;
 }
 
+#temperature-component-container.dark-mode {
+  background-color: #333;
+  color: #f9f9f9;
+}
 .temperature-component-arrow {
-    align-self: flex-start;
-    margin-top: 2em;
-    margin-left: 2em;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 2em;
+  margin-left: 2em;
 }
-
+.temperature-component-arrow-icon {
+  font-size: 24px;
+  color: #333;
+}
 h1 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
-
 .temperature-controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
-
-.temperature-button, .temperature-button-equal {
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    border-radius: 30px;
-    padding: 11px;
-    border: none;
-    width: 35vw;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #5EA71E;
-    color: white;
-    transition: background-color 0.3s ease;
+.temperature-button,
+.temperature-button-equal {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
+  padding: 11px;
+  border: none;
+  width: 35vw;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #5ea71e;
+  color: white;
+  transition: background-color 0.3s ease;
 }
-
 .temperature-button {
-    width: 15vw;
+  width: 15vw;
 }
-
-.temperature-button.active, .temperature-button-equal.active {
-    background-color: #3C750F; /* Color más oscuro */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
-    transform: scale(1.05); /* Efecto de agrandamiento sutil */
+.temperature-button.active,
+.temperature-button-equal.active {
+  background-color: #3c750f;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
 }
-
-
 .temperature-display {
-    width: 20vw;
-    padding: 10px;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    font-size: 20px;
-    margin-bottom: 20px;
+  width: 20vw;
+  padding: 10px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  font-size: 20px;
+  margin-bottom: 20px;
 }
-
 .temperature-slider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    width: 90%;
-    position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 90%;
+  position: relative;
 }
-
 .temperature-slider input[type="range"] {
-    width: 100%;
-    -webkit-appearance: none;
-    border-radius: 16px;
-    appearance: none;
-    height: 8px;
-    background: #5EA71E;
-    outline: none;
-    opacity: 0.7;
-    transition: opacity .2s;
+  width: 100%;
+  -webkit-appearance: none;
+  border-radius: 16px;
+  appearance: none;
+  height: 8px;
+  background: #5ea71e;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
 }
-
 .temperature-slider input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #52921B;
-    cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #52921b;
+  cursor: pointer;
 }
-
 .temperature-slider input[type="range"]::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #52921B;
-    cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #52921b;
+  cursor: pointer;
 }
-
 .temperature-limits {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    position: absolute;
-    top: 20px;
-    font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  top: 20px;
+  font-size: 12px;
 }
-
 .temperature-limits span {
-    font-size: 14px;
+  font-size: 14px;
 }
-
 .temperature-options {
-    display: flex;
-    flex-direction: column;
-    margin-top: 2em;
-    gap: 20px;
-    align-items: flex-start;
-    width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2em;
+  gap: 20px;
+  align-items: flex-start;
+  width: 90%;
 }
-
 .temperature-option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
-
 .temperature-option input {
-    width: 20px;
-    height: 20px;
-    margin-left: auto;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
 }
-
 .temperature-option span {
-    font-size: 16px;
-    margin-right: auto;
+  font-size: 16px;
+  margin-right: auto;
 }
-
-.temperature-apply{
-    display: flex;
-    margin-top: 1em;
+.temperature-apply {
+  display: flex;
+  margin-top: 1em;
 }
-
-.temperature-apply-button{
-    padding: 15px;
-    border-radius: 30px;
-    font-size: 15px;
-    color: white;
-    border: none;
-    width: 35vw;
-    background-color: #5EA71E;
+.temperature-apply-button {
+  padding: 15px;
+  border-radius: 30px;
+  font-size: 15px;
+  color: white;
+  border: none;
+  width: 35vw;
+  background-color: #5ea71e;
 }
 
 /* Ajustes para pantallas de tablet entre 768px y 1024px */
 @media (min-width: 768px) and (max-width: 1024px) {
-    /* Contenedor principal */
-    #temperature-component-container {
-      width: 85vw; /* Aumenta el ancho del contenedor */
-      margin-top: 10%; /* Ajusta el margen superior para centrar el componente */
-    }
-  
-    /* Flecha de retroceso */
-    .temperature-component-arrow {
-      margin-left: 1.5em;
-      margin-top: 1.5em;
-    }
-  
-    /* Título */
-    h1 {
-      font-size: 22px; /* Ajusta el tamaño de la fuente */
-      margin-bottom: 15px;
-    }
-  
-    /* Controles de temperatura */
-    .temperature-controls {
-      flex-direction: column; /* Apila los botones verticalmente */
-      gap: 15px; /* Espaciado entre los botones */
-    }
-  
-    .temperature-button, .temperature-button-equal {
-      width: 35vw; /* Ajusta el tamaño de los botones */
-      padding: 12px;
-      font-size: 18px;
-    }
-  
-    /* Estado activo de los botones */
-    .temperature-button.active, .temperature-button-equal.active {
-      transform: scale(1.05); /* Efecto de agrandamiento sutil */
-    }
-  
-    /* Display de temperatura */
-    .temperature-display {
-      width: 30vw; /* Aumenta el ancho para mejor visibilidad */
-      font-size: 18px;
-    }
-  
-    /* Ajustes para el deslizador */
-    .temperature-slider input[type="range"] {
-      height: 10px; /* Hace el deslizador más grueso */
-    }
-  
-    .temperature-slider input[type="range"]::-webkit-slider-thumb {
-      width: 25px; /* Hace el pulgar del deslizador más grande */
-      height: 25px;
-    }
-  
-    .temperature-slider input[type="range"]::-moz-range-thumb {
-      width: 25px; /* Ajuste para Firefox */
-      height: 25px;
-    }
-  
-    /* Límites del deslizador */
-    .temperature-limits span {
-      font-size: 14px; /* Ajuste para aumentar la legibilidad */
-    }
-  
-    /* Botón de aplicar condición */
-    .temperature-apply-button {
-      width: 35vw; /* Ajusta el tamaño del botón */
-      padding: 15px;
-      font-size: 16px;
-    }
-  
-    /* Asegura que todo esté alineado correctamente */
-    .temperature-slider {
-      flex-direction: column;
-      gap: 15px;
-    }
+  #temperature-component-container {
+    width: 85vw;
+    margin-top: 10%;
   }
-  
+
+  .temperature-component-arrow {
+    margin-left: 1.5em;
+    margin-top: 1.5em;
+  }
+
+  h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .temperature-controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .temperature-button,
+  .temperature-button-equal {
+    width: 35vw;
+    padding: 12px;
+    font-size: 18px;
+  }
+
+  .temperature-button.active,
+  .temperature-button-equal.active {
+    transform: scale(1.05);
+  }
+
+  .temperature-display {
+    width: 30vw;
+    font-size: 18px;
+  }
+
+  .temperature-slider input[type="range"] {
+    height: 10px;
+  }
+
+  .temperature-slider input[type="range"]::-webkit-slider-thumb {
+    width: 25px;
+    height: 25px;
+  }
+
+  .temperature-slider input[type="range"]::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+  }
+
+  .temperature-limits span {
+    font-size: 14px;
+  }
+
+  .temperature-apply-button {
+    width: 35vw;
+    padding: 15px;
+    font-size: 16px;
+  }
+
+  .temperature-slider {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

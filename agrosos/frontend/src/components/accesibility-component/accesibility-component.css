@@ -2,14 +2,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100vh;
   align-items: center;
   margin: 0 auto;
-  margin-top: 20%;
+}
+
+#container-accesibility.dark-mode {
+  background-color: #333; /* Negro no muy oscuro */
+  color: #fff;
 }
 
 .arrow-container {
+  margin-top: -10em;
   align-self: flex-start;
-  margin-top: 2em;
   margin-left: 2em;
 }
 
@@ -18,15 +23,32 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #000;
+  color: #000000;
   margin-bottom: 1.5em;
   display: flex;
   align-items: center;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.dark-mode .accesibility-arrow {
+  color: #ffffff;
+}
+
+.accesibility-arrow:focus,
+.accesibility-arrow:hover {
+  color: #007acc; /* Mejor contraste para el enfoque */
+  transform: scale(1.1); /* Efecto visual para hover/focus */
+  outline: 2px solid #007acc; /* Resaltado al navegar con teclado */
+}
+
+#container-accesibility.dark-mode .accesibility-p {
+  color: #fff;
 }
 
 .accesibility-text {
   margin-top: 0.5em;
   margin-bottom: 5em;
+  text-align: center; /* Mejor alineación del texto */
 }
 
 .accesibility-p {
@@ -34,23 +56,32 @@
   color: black;
   font-weight: bold;
   margin-bottom: 10px;
+  cursor: pointer;
+  line-height: 1.6; /* Mejora la legibilidad */
 }
 
 .accesibility-size {
   border-bottom: 1px solid green;
-  width: 70vw;
+  width: 50vw;
   text-align: center;
 }
 
 .accesibility-tuto {
+  border-bottom: 1px solid green;
+  width: 50vw;
+  text-align: center;
   margin-top: 10px;
+}
+
+.accesibility-dark-mode {
+  margin-top: 0.5em;
 }
 
 @media only screen and (min-width: 768px) {
   .arrow-container {
     align-self: flex-start;
     margin-left: 6em;
-    margin-top: 2em;
+    margin-top: -9em;
   }
 
   .accesibility-text {

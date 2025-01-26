@@ -10,6 +10,7 @@ import fondo5 from "../../components/plot-list-comp/fondo5.jpg";
 import AddPlotComponent from "../add-plot-component/add-plot-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 function PlotListComp() {
   const [plots, setPlots] = useState([]);
@@ -20,6 +21,7 @@ function PlotListComp() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [plotToDelete, setPlotToDelete] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   const defaultImages = [fondo1, fondo2, fondo3, fondo4, fondo5];
   const imageMap = {};
@@ -48,11 +50,14 @@ function PlotListComp() {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:3000/api/plots/user/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:3000/api/plots/user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setPlots(response.data);
       fetchSensorAverages(response.data, token);
     } catch (error) {
@@ -184,8 +189,10 @@ function PlotListComp() {
   const handlePlotClick = (plotId, plotName) => {
     localStorage.setItem("selectedPlotId", plotId);
     localStorage.setItem("selectedPlotName", plotName);
+    console.log("Plot selected:", { plotId, plotName }); // Agrega este log
     navigate("/inside-a-plot");
   };
+  
 
   return (
     <>
@@ -194,7 +201,7 @@ function PlotListComp() {
       ) : (
         <>
           {showDeleteModal && (
-            <div className="modal-overlay">
+            <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-delete-modal">
                 <h3>¿Deseas eliminar este terreno?</h3>
                 <div className="modal-actions">
@@ -210,7 +217,7 @@ function PlotListComp() {
           )}
 
           {editPlot && (
-            <div className="modal-overlay">
+            <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-edit-modal">
                 <h3>Editar Terreno</h3>
                 <form
@@ -259,7 +266,11 @@ function PlotListComp() {
                   key={plot.id}
                   className="plot-card"
                   tabIndex="0"
+                  role="button"
                   onClick={() => handlePlotClick(plot.id, plot.name)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handlePlotClick(plot.id, plot.name);
+                  }}
                   style={{ backgroundColor: plot.color || "transparent" }}
                 >
                   {plot.image ? (
@@ -283,9 +294,16 @@ function PlotListComp() {
                       <div
                         className="plot-list-button plot-list-edit-button"
                         tabIndex="0"
+                        role="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleEditPlot(plot);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.stopPropagation();
+                            handleEditPlot(plot);
+                          }
                         }}
                       >
                         <FontAwesomeIcon icon={faPen} />
@@ -293,9 +311,16 @@ function PlotListComp() {
                       <div
                         className="plot-list-button plot-list-delete-button"
                         tabIndex="0"
+                        role="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           confirmDeletePlot(plot.id);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.stopPropagation();
+                            confirmDeletePlot(plot.id);
+                          }
                         }}
                       >
                         <FontAwesomeIcon icon={faTrash} />

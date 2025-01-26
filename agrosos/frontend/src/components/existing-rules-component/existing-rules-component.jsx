@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faClipboardList, faEdit, faTrashAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faClipboardList,
+  faEdit,
+  faTrashAlt,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./existing-rules-component.css";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function ExistingRulesComponent() {
   const [rules, setRules] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleToDelete, setRuleToDelete] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
-  // Función para obtener el token
   const getToken = () => {
-    return localStorage.getItem("authToken"); // Cambia si usas sessionStorage u otro método
+    return localStorage.getItem("authToken");
   };
 
-  // Configuración de Axios para incluir el token
   const axiosInstance = axios.create({
     baseURL: "http://localhost:3000/api",
     headers: {
@@ -45,13 +51,50 @@ function ExistingRulesComponent() {
     if (selectedRule) {
       const ruleInfo = JSON.parse(selectedRule.rule_info);
 
-      sessionStorage.setItem("selectedAction", JSON.stringify(ruleInfo.AND?.[0]?.actions || []));
-      sessionStorage.setItem("sensorType", JSON.stringify(ruleInfo.AND?.[0]?.sensors?.[0]?.type || null));
-      sessionStorage.setItem("soilHumidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilHumidity") || []));
-      sessionStorage.setItem("soilTemperatureConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilTemperature") || []));
-      sessionStorage.setItem("temperatureConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "temperature") || []));
-      sessionStorage.setItem("humidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "humidity") || []));
-      sessionStorage.setItem("cropId", JSON.stringify(selectedRule.crop || null));
+      sessionStorage.setItem(
+        "selectedAction",
+        JSON.stringify(ruleInfo.AND?.[0]?.actions || [])
+      );
+      sessionStorage.setItem(
+        "sensorType",
+        JSON.stringify(ruleInfo.AND?.[0]?.sensors?.[0]?.type || null)
+      );
+      sessionStorage.setItem(
+        "soilHumidityConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "soilHumidity"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "soilTemperatureConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "soilTemperature"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "temperatureConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "temperature"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "humidityConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "humidity"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "cropId",
+        JSON.stringify(selectedRule.crop || null)
+      );
     }
 
     navigate(`/edit-rule/${ruleId}`);
@@ -74,7 +117,9 @@ function ExistingRulesComponent() {
       .delete(`/rules/${ruleToDelete}`)
       .then((response) => {
         console.log("Regla eliminada con éxito:", response.data);
-        setRules((prevRules) => prevRules.filter((rule) => rule.id !== ruleToDelete));
+        setRules((prevRules) =>
+          prevRules.filter((rule) => rule.id !== ruleToDelete)
+        );
         closeModal();
       })
       .catch((error) => {
@@ -90,66 +135,63 @@ function ExistingRulesComponent() {
 
   const formatRuleInfo = (info) => {
     if (!info) return null;
-  
+
     try {
       const parsedInfo = JSON.parse(info);
-  
+
       let formattedInfo = "";
-  
+
       if (parsedInfo.AND && Array.isArray(parsedInfo.AND)) {
-        parsedInfo.AND.forEach((conditionGroup, index) => {
+        parsedInfo.AND.forEach((conditionGroup) => {
           if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "temperature") {
                 formattedInfo += `Temperatura ${condition.operator} ${condition.value}°C`;
               }
             });
           }
-
           if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "humidity") {
                 formattedInfo += `Humedad ${condition.operator} ${condition.value}%`;
               }
             });
           }
-
           if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "soilTemperature") {
                 formattedInfo += `Temperatura del terreno ${condition.operator} ${condition.value}°C`;
               }
             });
           }
-
           if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "soilHumidity") {
                 formattedInfo += `Humedad del terreno ${condition.operator} ${condition.value}%`;
               }
             });
           }
-  
+
           if (conditionGroup.actions && Array.isArray(conditionGroup.actions)) {
-            conditionGroup.actions.forEach((action, actionIndex) => {
+            conditionGroup.actions.forEach((action) => {
               formattedInfo += ` | Acción: ${action}`;
             });
           }
-  
+
           if (conditionGroup.sensors && Array.isArray(conditionGroup.sensors)) {
-            conditionGroup.sensors.forEach((sensor, sensorIndex) => {
+            conditionGroup.sensors.forEach((sensor) => {
               formattedInfo += ` | Sensor: ${sensor.type}`;
             });
           }
-  
+
           if (conditionGroup.actuators && Array.isArray(conditionGroup.actuators)) {
-            conditionGroup.actuators.forEach((actuator, actuatorIndex) => {
+            conditionGroup.actuators.forEach((actuator) => {
               formattedInfo += ` | Actuador: ${actuator.type}`;
             });
           }
         });
       }
-  
+
       return formattedInfo || "Información no disponible";
     } catch (error) {
       console.error("Error al parsear la información de la regla:", error);
@@ -158,49 +200,61 @@ function ExistingRulesComponent() {
   };
 
   return (
-    <div id="existing-rules-container">
-      <button className="existing-rule-back-button" onClick={() => navigate("/settings")}>
+    <div id="existing-rules-container" className={darkMode ? "dark-mode" : ""}>
+      <button
+        className="existing-rule-back-button"
+        onClick={() => navigate("/settings")}
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <div className="existing-rule-header">
         <h1 className="existing-rule-title">
-          <FontAwesomeIcon icon={faClipboardList} className="icon-list" />
+          <FontAwesomeIcon icon={faClipboardList} className="icon-list" aria-hidden="true" />
           Reglas
         </h1>
       </div>
 
-      <div className="existing-rule-cards-container">
+      <div className="existing-rule-cards-container" role="region" aria-live="polite">
         {rules.length === 0 ? (
           <div className="no-rules-message">
             <h2>Añadir regla</h2>
             <button
               className="add-rule-button"
               onClick={() => navigate("/add-rule")}
+              aria-label="Añadir una nueva regla"
             >
-              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon icon={faPlus} aria-hidden="true" />
             </button>
           </div>
         ) : (
           rules.map((rule) => (
-            <div className="existing-rule-card" key={rule.id}>
+            <div className="existing-rule-card" key={rule.id} tabIndex="0" role="article" aria-labelledby={`rule-${rule.id}`}>
               <div className="existing-rule-card-info">
-                <p><strong>Nombre:</strong> {rule.name}</p>
-                <p><strong>Cultivo:</strong> {rule.crop}</p>
-                <p><strong>Condiciones:</strong> {formatRuleInfo(rule.rule_info)}</p>
+                <p>
+                  <strong>Nombre:</strong> {rule.name}
+                </p>
+                <p>
+                  <strong>Cultivo:</strong> {rule.crop}
+                </p>
+                <p>
+                  <strong>Condiciones:</strong> {formatRuleInfo(rule.rule_info)}
+                </p>
               </div>
 
               <div className="existing-rule-card-actions">
                 <button
                   className="existing-rule-edit-button"
                   onClick={() => handleEdit(rule.id)}
+                  aria-label={`Editar regla ${rule.name}`}
                 >
-                  <FontAwesomeIcon icon={faEdit} />
+                  <FontAwesomeIcon icon={faEdit} aria-hidden="true" />
                 </button>
                 <button
                   className="existing-rule-delete-button"
                   onClick={() => openModal(rule.id)}
+                  aria-label={`Eliminar regla ${rule.name}`}
                 >
-                  <FontAwesomeIcon icon={faTrashAlt} />
+                  <FontAwesomeIcon icon={faTrashAlt} aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -212,18 +266,33 @@ function ExistingRulesComponent() {
         <button
           className="add-rule-button-circle"
           onClick={() => navigate("/add-rule")}
+          aria-label="Añadir una nueva regla"
         >
-          <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={faPlus} aria-hidden="true" />
         </button>
       )}
 
       {isModalOpen && (
         <div className="existing-rule-modal-overlay" onClick={closeModal}>
-          <div className="existing-rule-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="existing-rule-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2>¿Estás seguro de que deseas eliminar esta regla?</h2>
             <div className="existing-rule-modal-buttons">
-              <button className="existing-rule-modal-button existing-rule-modal-confirm" onClick={handleDelete}>Aceptar</button>
-              <button className="existing-rule-modal-button existing-rule-modal-cancel" onClick={closeModal}>Cancelar</button>
+              <button
+                className="existing-rule-modal-button existing-rule-modal-confirm"
+                onClick={handleDelete}
+              >
+                Aceptar
+              </button>
+              <button
+                className="existing-rule-modal-button existing-rule-modal-cancel"
+                onClick={closeModal}
+                aria-label="Cancelar eliminación de la regla"
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>

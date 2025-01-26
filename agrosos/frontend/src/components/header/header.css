@@ -1,3 +1,4 @@
+/* Estilo original para el header */
 .header {
   display: flex;
   gap: 20px;
@@ -10,6 +11,7 @@
   top: 0;
   position: fixed;
   z-index: 1000;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Añadir transición */
 }
 
 .plant-icon {
@@ -113,6 +115,34 @@
   color: black;
 }
 
+/* Estilo para el modo oscuro */
+.dark-mode .header {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
+.dark-mode .header-menu-button {
+  color: white; /* Botón de menú claro */
+}
+
+.dark-mode .header-desktop-menu li a {
+  color: white; /* Enlaces claros */
+}
+
+.dark-mode .side-menu {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
+.dark-mode .side-menu-items li a {
+  color: white; /* Enlaces claros */
+}
+
+.dark-mode .side-close-button {
+  color: white; /* Botón de cerrar claro */
+}
+
+/* Responsivo */
 @media only screen and (min-width: 768px) {
   .header-menu-button {
     display: none;
@@ -127,11 +157,11 @@
   }
 
   .header-desktop-menu li a {
-    font-weight: bold; /* Asegurarnos de que el texto esté en negrita también aquí */
-    font-size: 14px; /* Asegurarnos de que el tamaño del texto se mantenga reducido también aquí */
+    font-weight: bold;
+    font-size: 14px;
   }
 
   .header-desktop-menu li a svg {
-    display: none; /* Ocultar iconos en resolución 768px y superiores */
+    display: none;
   }
 }

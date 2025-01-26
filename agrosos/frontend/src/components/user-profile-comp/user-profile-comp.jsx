@@ -1,10 +1,10 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCamera, FaPen } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./user-profile-comp.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const UserProfileComp = () => {
   const [userData, setUserData] = useState({
@@ -20,6 +20,7 @@ const UserProfileComp = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -56,21 +57,18 @@ const UserProfileComp = () => {
     try {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
-  
-      // Actualizar el campo editado en el objeto local
+
       const updatedData = {
-        ...userData, // Incluye todos los datos existentes
-        [editingField]: fieldValue, // Actualiza solo el campo editado
+        ...userData,
+        [editingField]: fieldValue,
       };
-  
-      // Enviar todos los datos al backend
+
       await axios.put(
         `http://localhost:3000/api/users/${userId}`,
         updatedData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-  
-      // Actualizar el estado local con los nuevos datos
+
       setUserData(updatedData);
       setIsModalOpen(false);
       setEditingField(null);
@@ -79,8 +77,6 @@ const UserProfileComp = () => {
       alert("Error al guardar los cambios.");
     }
   };
-  
-  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -132,17 +128,18 @@ const UserProfileComp = () => {
   };
 
   const modal = isModalOpen && (
-    <div className="modal-overlay">
-      <div className="modal">
+    <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
+      <div className={`modal ${darkMode ? "dark-mode" : ""}`}>
         <h3>Editar {editingField}</h3>
         <input
           type={editingField === "email" ? "email" : "text"}
+          aria-label={`Editar ${editingField}`}
           value={fieldValue}
           onChange={(e) => setFieldValue(e.target.value)}
-          className="modal-input"
+          className={`modal-input ${darkMode ? "dark-mode" : ""}`}
         />
         <div className="modal-buttons">
-          <button onClick={handleSave} className="modal-save-button">
+          <button onClick={handleSave} className={`modal-save-button ${darkMode ? "dark-mode" : ""}`}>
             Guardar
           </button>
           <button
@@ -150,7 +147,7 @@ const UserProfileComp = () => {
               setIsModalOpen(false);
               setEditingField(null);
             }}
-            className="modal-cancel-button"
+            className={`modal-cancel-button ${darkMode ? "dark-mode" : ""}`}
           >
             Cancelar
           </button>
@@ -158,18 +155,25 @@ const UserProfileComp = () => {
       </div>
     </div>
   );
+  
 
   return (
-    <div className="user-profile-container">
+    <div className={`user-profile-container ${darkMode ? 'dark-mode' : ''}`}>
       <div className="profile-pic-container">
         <img
           src={userData.profile_image || "/default-profile.png"}
-          alt="profile"
+          alt="Imagen de perfil"
           className="profile-pic"
+          role="img"
+          aria-label="Imagen de perfil del usuario"
         />
         <div
           className="camera-icon"
+          role="button"
+          aria-label="Cambiar imagen de perfil"
+          tabIndex="0"
           onClick={() => document.getElementById("imageUpload").click()}
+          onKeyDown={(e) => e.key === "Enter" && document.getElementById("imageUpload").click()}
         >
           <FaCamera />
         </div>
@@ -179,35 +183,51 @@ const UserProfileComp = () => {
           accept="image/*"
           onChange={handleImageChange}
           style={{ display: "none" }}
+          aria-label="Seleccionar imagen"
         />
         {isImageSelected && (
           <button
             onClick={handleImageUpload}
             className="upload-button"
             disabled={isUploading}
+            aria-label="Subir imagen seleccionada"
           >
             Subir Imagen
           </button>
         )}
       </div>
       <div className="form-field">
-        <label>Nombre</label>
+        <label htmlFor="name">Nombre</label>
         <div className="input-container">
-          <input value={userData.name} readOnly className="input-field" />
-          <FaPen className="edit-icon" onClick={() => handleEditClick("name")} />
+          <input id="name" value={userData.name} readOnly className="input-field" />
+          <FaPen
+            className="edit-icon"
+            role="button"
+            aria-label="Editar nombre"
+            tabIndex="0"
+            onClick={() => handleEditClick("name")}
+            onKeyDown={(e) => e.key === "Enter" && handleEditClick("name")}
+          />
         </div>
       </div>
       <div className="form-field">
-        <label>Email</label>
+        <label htmlFor="email">Email</label>
         <div className="input-container">
-          <input value={userData.email} readOnly className="input-field" />
-          <FaPen className="edit-icon" onClick={() => handleEditClick("email")} />
+          <input id="email" value={userData.email} readOnly className="input-field" />
+          <FaPen
+            className="edit-icon"
+            role="button"
+            aria-label="Editar email"
+            tabIndex="0"
+            onClick={() => handleEditClick("email")}
+            onKeyDown={(e) => e.key === "Enter" && handleEditClick("email")}
+          />
         </div>
       </div>
-      <button onClick={handleLogout} className="logout-button">
+      <button onClick={handleLogout} className="logout-button" aria-label="Cerrar sesión">
         Cerrar Sesión
       </button>
-      <button onClick={() => navigate(-1)} className="go-back-button">
+      <button onClick={() => navigate(-1)} className="go-back-button" aria-label="Volver a la página anterior">
         Volver
       </button>
       {ReactDOM.createPortal(modal, document.body)}

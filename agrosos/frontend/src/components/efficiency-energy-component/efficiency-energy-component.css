@@ -16,6 +16,11 @@
   position: absolute;
   left: 30px;
   z-index: 1;
+  outline: none; /* Elimina el contorno predeterminado */
+}
+
+.efficiency-back-button:focus {
+  outline: 3px solid #4caf50; /* Agrega un contorno verde al foco para mejorar la accesibilidad */
 }
 
 .efficiency-back-button .back-icon {
@@ -62,33 +67,33 @@
 
 @media (min-width: 768px) and (max-width: 1024px) {
 
-.efficiency-energy-container {
-  padding: 20px;
-  max-width: 85%;
-  margin: 20px auto;
-  margin-top: 80px;
-}
+  .efficiency-energy-container {
+    padding: 20px;
+    max-width: 85%;
+    margin: 20px auto;
+    margin-top: 80px;
+  }
 
-.efficiency-energy-header {
-  margin-top: 20px;
-  margin-bottom: 15px;
-  text-align: center;
-}
+  .efficiency-energy-header {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
 
-.efficiency-energy-header h2 {
-  font-size: 2.2em;
-}
+  .efficiency-energy-header h2 {
+    font-size: 2.2em;
+  }
 
-.efficiency-energy-txt {
-  padding: 20px;
-  font-size: 1.2em;
-}
+  .efficiency-energy-txt {
+    padding: 20px;
+    font-size: 1.2em;
+  }
 
-.efficiency-energy-txt h3 {
-  font-size: 1.7em;
-}
+  .efficiency-energy-txt h3 {
+    font-size: 1.7em;
+  }
 
-.efficiency-energy-txt p {
-  font-size: 1.1em;
-}
+  .efficiency-energy-txt p {
+    font-size: 1.1em;
+  }
 }

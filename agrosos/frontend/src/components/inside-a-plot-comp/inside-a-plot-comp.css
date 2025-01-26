@@ -9,6 +9,14 @@
   background-color: #ffffff;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .plot-details {
+  margin-top: 1em;
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+  margin-bottom: 2em;
+}
+
 .crops-section {
   margin-top: 10px;
   padding: 15px;
@@ -29,6 +37,16 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .evolution-section,
+.dark-mode .climate-section,
+.dark-mode .actions-section,
+.dark-mode .irrigation-frecuency-section,
+.dark-mode .tasks-section {
+  background-color: #555; /* Fondo oscuro */
+  color: rgb(255, 255, 255); /* Texto claro */
+}
+
 .crops-section h3,
 .evolution-section h3,
 .climate-section h3,
@@ -41,6 +59,16 @@
   color: #30590c;
   text-align: left;
   margin-top: 0;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .crops-section h3,
+.dark-mode .evolution-section h3,
+.dark-mode .climate-section h3,
+.dark-mode .inside-a-plot-actions-section h3,
+.dark-mode .irrigation-frecuency-section h3,
+.dark-mode .tasks-section h3 {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .crops {
@@ -67,6 +95,12 @@
   color: #888;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .evolution-section .chart-placeholder {
+  background-color: #666; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 .climate-section .climate-stats {
   display: flex;
   justify-content: space-around;
@@ -81,9 +115,19 @@
   color: #30590c;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .climate-stats p {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 .climate-stats p span {
   font-size: 12px;
   color: #888;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .climate-stats p span {
+  color: #ccc; /* Texto claro en modo oscuro */
 }
 
 .inside-a-plot-actions-section {
@@ -99,6 +143,12 @@
   padding: 15px;
   margin-bottom: 20px;
   height: 15vh;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .inside-a-plot-actions-section {
+  background-color: #555; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .inside-a-plot-actions-section h3 {
@@ -131,6 +181,15 @@
   opacity: 0.9;
 }
 
+/* Estilos específicos para la sección de Frecuencia de Riego */
+.irrigation-frecuency-section {
+  background-color: #f8f2ee;
+  width: 100%;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .tasks-section {
   width: 100%;
   margin-top: 0.5em;
@@ -155,6 +214,7 @@
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+  color: #333;
   background-color: #fff;
   padding: 10px;
   border-radius: 8px;
@@ -170,7 +230,6 @@
   color: #43a047;
 }
 
-/* Estilo para el input de las tareas */
 .tasks-section input {
   width: calc(100% - 90px);
   padding: 10px;
@@ -179,11 +238,10 @@
   font-size: 14px;
 }
 
-/* Estilo para el botón de agregar tarea */
 .tasks-section button {
   padding: 10px 20px;
   background-color: #43a047;
-  color: white;
+  color: rgb(0, 0, 0);
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -195,13 +253,10 @@
   background-color: #388e3c;
 }
 
-/* Estilos específicos para la sección de Frecuencia de Riego */
-.irrigation-frecuency-section {
-  background-color: #f8f2ee;
-  width: 100%;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Estilos para el modo oscuro */
+.dark-mode .irrigation-frecuency-section {
+  background-color: #555; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .irrigation-frecuency-title {
@@ -213,12 +268,23 @@
   margin-top: 0;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .irrigation-frecuency-title {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 .irrigation-frecuency-p,
 .irrigation-frecuency-p2 {
   font-size: 14px;
   color: #666;
   margin-bottom: 15px;
   text-align: left;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .irrigation-frecuency-p,
+.dark-mode .irrigation-frecuency-p2 {
+  color: #ccc; /* Texto claro en modo oscuro */
 }
 
 .irrigation-frecuency-calendar {
@@ -242,9 +308,19 @@
   transition: transform 0.2s ease;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .irrigation-frecuency-calendar-icon {
+  color: white; /* Icono claro en modo oscuro */
+}
+
 .irrigation-frecuency-calendar-icon.selected {
   transform: scale(1.2);
   color: #43a047;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .irrigation-frecuency-calendar-icon.selected {
+  color: #43a047; /* Color de icono seleccionado en modo oscuro */
 }
 
 .irrigation-frecuency-day-label {
@@ -252,6 +328,12 @@
   color: #30590c;
   margin-top: 3px;
 }
+
+/* Estilos para el modo oscuro */
+.dark-mode .irrigation-frecuency-day-label {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 
 /* Estilos para el Modal */
 .clock-popup {
@@ -286,6 +368,12 @@
   animation: fadeIn 0.3s ease;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .clock-popup-content {
+  background-color: #555; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -315,6 +403,13 @@
   transition: border-color 0.3s ease;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .clock-popup-content input {
+  color: white; /* Texto claro */
+  background-color: #666; /* Fondo oscuro */
+  border-color: #ccc; /* Borde claro */
+}
+
 .clock-popup-content input:focus {
   outline: none;
   border-color: #43a047;
@@ -335,6 +430,12 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .select-time-button {
+  background-color: #43a047; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
+}
+
 .select-time-container {
   display: flex;
   flex-direction: column;
@@ -343,7 +444,8 @@
   margin-top: 10px;
 }
 
-#irrigation-frecuency-component{
+
+#irrigation-frecuency-component {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -366,7 +468,13 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.inside-a-plot-error-message{
+/* Estilos para el modo oscuro */
+.dark-mode .select-time-main-button-selected {
+  background-color: #388e3c; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
+}
+
+.inside-a-plot-error-message {
   margin: 0 auto;
 }
 
@@ -382,6 +490,12 @@
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .select-time-main-button-unselected {
+  background-color: #388e3c; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
 }
 
 .select-time-main-button:hover {
@@ -414,6 +528,12 @@
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .irrigation-frecuency-pro {
+  background-color: #388e3c; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
 }
 
 .irrigation-frecuency-pro:hover {
