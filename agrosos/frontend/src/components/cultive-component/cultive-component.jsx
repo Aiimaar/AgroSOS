@@ -8,8 +8,12 @@ function CultiveComponent() {
             <img 
                 src={cultive} 
                 alt="Imagen de cultivo de planta" 
-                className="cultive"
+                className="cultive" 
+                aria-describedby="cultive-description"
             />
+            <p id="cultive-description" className="sr-only">
+                Imagen que representa el cultivo, utilizada como parte del diseño de la página.
+            </p>
         </div>
     );
 }

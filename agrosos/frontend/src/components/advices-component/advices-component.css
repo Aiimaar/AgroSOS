@@ -11,6 +11,12 @@
   position: relative; /* Asegura que los elementos dentro puedan ser posicionados de forma absoluta */
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .advices-page .advices-container {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 /* Header con la flecha y el título */
 .advices-page .advices-header {
   margin-top: 10%;
@@ -36,6 +42,10 @@
   margin-left: 2em;
 }
 
+.dark-mode .advices-page .back-button {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 /* Título */
 .advices-page .advices-title {
   font-size: 24px;
@@ -45,6 +55,10 @@
   align-items: center; /* Centra la bombilla verticalmente con el texto */
   justify-content: center;
   flex-grow: 1;
+}
+
+.dark-mode .advices-page .advices-title {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 /* Icono de bombilla */
@@ -77,9 +91,18 @@
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
+.dark-mode .advices-page .advice-card {
+  background-color: green; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
+}
+
 .advices-page .advice-card:hover {
   background-color: #45a049;
   transform: translateY(-5px);
+}
+
+.dark-mode .advices-page .advice-card:hover {
+  background-color: #589dbe; /* Color hover diferente en modo oscuro */
 }
 
 @media only screen and (min-width: 768px) {
@@ -92,6 +115,23 @@
   }
 
   .advices-page .advices-cards {
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 70%;
+  }
+
+  .dark-mode .advices-page .advices-container {
+    margin-top: 15%;
+  }
+
+  .dark-mode .advices-page .back-button {
+    margin-left: 4em;
+  }
+
+  .dark-mode .advices-page .advices-cards {
     margin-top: 1%;
     display: flex;
     flex-direction: column;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./register-form-comp.css";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const RegisterFormComp = ({ onRegister }) => {
   const [name, setName] = useState("");
@@ -13,6 +14,7 @@ const RegisterFormComp = ({ onRegister }) => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,39 +55,75 @@ const RegisterFormComp = ({ onRegister }) => {
   };
 
   return (
-    <div className="register-form-container">
-      <form onSubmit={handleSubmit} className="register-form">
+    <div className={`register-form-container ${darkMode ? 'dark-mode' : ''}`} aria-labelledby="register-form-title">
+      <form onSubmit={handleSubmit} className="register-form" aria-describedby="form-instructions">
+        <h1 id="register-form-title">Registro</h1>
+        <p id="form-instructions">
+          Completa los campos para crear tu cuenta. Todos los campos son obligatorios.
+        </p>
+        <label htmlFor="name-input">Nombre</label>
         <input
+          id="name-input"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Nombre"
           required
+          aria-required="true"
         />
+        <label htmlFor="email-input">Correo electrónico</label>
         <input
+          id="email-input"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Correo electrónico"
           required
+          aria-required="true"
         />
+        <label htmlFor="password-input">Contraseña</label>
         <input
+          id="password-input"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Contraseña"
           required
+          aria-required="true"
         />
+        <label htmlFor="confirm-password-input">Confirmar contraseña</label>
         <input
+          id="confirm-password-input"
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirmar contraseña"
           required
+          aria-required="true"
         />
-        {errorMessage && <p className="register-form-error-message">{errorMessage}</p>}
-        {successMessage && <p className="register-form-success-message">{successMessage}</p>}
-        <button type="submit" className="register-form-submit-button">
+        {errorMessage && (
+          <p
+            className="register-form-error-message"
+            role="alert"
+            aria-live="assertive"
+          >
+            {errorMessage}
+          </p>
+        )}
+        {successMessage && (
+          <p
+            className="register-form-success-message"
+            role="status"
+            aria-live="polite"
+          >
+            {successMessage}
+          </p>
+        )}
+        <button
+          type="submit"
+          className="register-form-submit-button"
+          aria-label="Crear cuenta"
+        >
           Crear cuenta
         </button>
       </form>

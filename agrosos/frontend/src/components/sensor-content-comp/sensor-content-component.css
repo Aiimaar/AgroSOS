@@ -1,13 +1,26 @@
-body{
+body {
   background-color: white;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode body {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 #sensor-content-container {
   width: 90vw;
   display: flex;
   flex-direction: column;
+  height: 100vh;
   align-items: center;
   margin: 0 auto;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode #sensor-content-container {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .sensorList {
@@ -42,6 +55,12 @@ body{
   justify-content: center;
   text-align: center;
   line-height: 40px;
+  color: black;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .sensor-content-list p {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .sun {
@@ -61,17 +80,17 @@ body{
   height: 46px;
 }
 
-.enla{
+.enla {
   display: flex;
   margin-top: 2.5em;
 }
 
-.enla-p{
+.enla-p {
   color: white;
   font-size: 15px;
 }
 
-.button-enla{
+.button-enla {
   border-radius: 30px;
   width: 45vw;
   border: none;
@@ -79,8 +98,19 @@ body{
   height: 5vh;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .button-enla {
+  background-color: green; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
   #sensor-content-container {
+    width: 100%;
+    max-width: 70vw;
+  }
+
+  .dark-mode #sensor-content-container {
     width: 100%;
     max-width: 70vw;
   }

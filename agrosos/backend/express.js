@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url';
 import plotsRoutes from './routes/plotsRoutes.js';
 import usersRoutes from './routes/usersRoutes.js';
 import userListViewsRoutes from './routes/views-routes/userListViewsRoutes.js';
+import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
+import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
 import sensorsRoutes from './routes/sensorsRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import cropRoutes from './routes/cropRoutes.js';
@@ -34,7 +36,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/', express.static(path.join(__dirname, 'public')));
+dotenv.config();
 
 // Configura el almacenamiento de sesiones en Sequelize
 const SequelizeSessionStore = SequelizeStore(session.Store);
@@ -43,6 +48,12 @@ const sessionStore = new SequelizeSessionStore({
 });
 
 await sessionStore.sync();
+// Setting the view engine to ejs
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Plot routes
+app.use("/api/plots", plotsRoutes);
 
 // Configura express-session
 app.use(
@@ -93,8 +104,13 @@ app.use((err, req, res, next) => {
   res.status(500).send('Error en el servidor');
 });
 
-// Inicia el servidor
-const PORT = process.env.PORT || 3000;
+app.use('/views/rules', rulesRoutes);
+
+app.use('/views/plot-list', plotListViewsRoutes);
+
+app.use('/views/create-plot', createPlotViewRoute);
+
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
