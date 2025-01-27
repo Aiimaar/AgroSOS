@@ -76,13 +76,6 @@ app.use(
   })
 );
 
-// Configura el motor de vistas
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// Sincroniza Sequelize
-await sequelize.sync();
-
 // Configura las rutas de la API
 app.use('/api/plots', plotsRoutes);
 app.use('/api/users', usersRoutes);
@@ -97,9 +90,9 @@ app.use('/api/irrigation_schedule', irrigationScheduleRoutes);
 // Configura las rutas de vistas
 app.use('/views/auth', authViewRoutes);
 app.use('/views/userList', isAuthenticated, userListViewsRoutes);
-
-// Rutas estáticas
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/views/rules', rulesRoutes);
+app.use('/views/plot-list', plotListViewsRoutes);
+app.use('/views/create-plot', createPlotViewRoute);
 
 // Manejo de errores
 app.use((req, res) => {
@@ -110,13 +103,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Error en el servidor');
 });
-
-// Inicia el servidor
-app.use('/views/rules', rulesRoutes);
-
-app.use('/views/plot-list', plotListViewsRoutes);
-
-app.use('/views/create-plot', createPlotViewRoute);
 
 const PORT = 3000;
 app.listen(PORT, () => {

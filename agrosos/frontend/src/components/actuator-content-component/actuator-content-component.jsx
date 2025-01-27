@@ -7,17 +7,12 @@ import add from "./image50.png";
 import quit from "./image51.png";
 import nutrition from "./image61.png";
 import vent from "./Group1.png";
-<<<<<<< HEAD
 import { useTranslation } from "react-i18next"; // Importa el hook useTranslation
+import { useDarkMode } from '../../context/DarkModeContext';
 
 function ActuatorContentComponent() {
   const { t } = useTranslation(); // Obtén la función de traducción
-=======
-import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
-
-function ActuatorContentComponent() {
-  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
->>>>>>> develop
+  const { darkMode } = useDarkMode();
 
   const actuators = [
     { name: t("irrigation"), img: irrigation, altText: t("irrigation_image") },
@@ -25,6 +20,7 @@ function ActuatorContentComponent() {
     { name: t("crop_covering"), img: nutrition, altText: t("crop_covering_image") },
     { name: t("window_opening"), img: vector, altText: t("window_opening_image") },
   ];
+
 
   return (
     <div id="actuator-container" className={darkMode ? 'dark-mode' : ''}>
@@ -40,19 +36,11 @@ function ActuatorContentComponent() {
             />
             <p>{actuator.name}</p>
             <div className="actuator-buttons">
-<<<<<<< HEAD
-              <Link to={`/add-actuator?name=${actuator.name}`}>
+              <Link to={`/add-actuator?name=${actuator.name}`} aria-label={`Añadir actuador ${actuator.name}`}>
                 <img src={add} alt={t("add_actuator")} className="add" />
               </Link>
-              <Link to="/actuator-enla?showDelete=true">
-                <img src={quit} alt={t("delete_actuator")} className="quit" />
-=======
-              <Link to={`/add-actuator?name=${actuator.name}`} aria-label={`Añadir actuador ${actuator.name}`}>
-                <img src={add} alt="Añadir actuador" className="add" />
-              </Link>
               <Link to="/actuator-enla?showDelete=true" aria-label={`Eliminar actuador ${actuator.name}`}>
-                <img src={quit} alt="Eliminar actuador" className="quit" />
->>>>>>> develop
+                <img src={quit} alt={t("delete_actuator")} className="quit" />
               </Link>
             </div>
           </div>

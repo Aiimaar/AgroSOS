@@ -74,20 +74,11 @@ function SoilHumidityComponent() {
       <div className="soil-humidity-component-arrow" onClick={() => navigate(-1)}>
         <FaArrowLeft className="soil-humidity-component-arrow-icon" role="button" tabIndex="0" aria-label="Volver a la página anterior" />
       </div>
-<<<<<<< HEAD
-      <h1>{t("soil_humidity")}</h1>
-      <div className="soil-humidity-controls">
-=======
-      <h1 id="soil-humidity-title">Humedad del Terreno</h1>
-      <div
-        className="soil-humidity-controls"
-        role="group"
-        aria-labelledby="comparison-buttons-title"
-      >
-        <p id="comparison-buttons-title" className="visually-hidden">
+      <h1 id="soil-humidity-title">{t("soil_humidity")}</h1>
+      <div className="soil-humidity-controls" role="group" aria-labelledby="comparison-buttons-title">
+      <p id="comparison-buttons-title" className="visually-hidden">
           Botones para seleccionar comparación
         </p>
->>>>>>> develop
         <button
           className={`soil-humidity-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
