@@ -9,6 +9,11 @@
   </head>
   <body>
     <div class="user-list-container">
+      <!-- Formulario para cerrar sesión (botón en la parte superior derecha) -->
+      <form action="/views/auth/logout" method="POST" style="position: absolute; top: 20px; right: 20px;">
+        <button type="submit" class="logout-button">Cerrar sesión</button>
+      </form>
+
       <button class="user-list-back-button" onclick="window.history.back()" aria-label="Volver a la página anterior">
         <i class="fas fa-arrow-left"></i>
       </button>
@@ -40,6 +45,7 @@
         <div class="user-list-divider"></div>
         <% }); %>
       </div>
+
       <div class="user-list-arrow-buttons">
         <% if (currentPage > 1) { %>
         <button class="user-list-arrow-button user-list-arrow-left" onclick="prevPage()" aria-label="Página anterior">
@@ -47,6 +53,8 @@
         </button>
         <% } else { %>
         <div style="width: 40px"></div>
+        <% } %> 
+        <% if (indexOfLastUser < totalUsers) { %>
         <% } %> <% if (indexOfLastUser < totalUsers) { %>
         <button class="user-list-arrow-button user-list-arrow-right" onclick="nextPage()" aria-label="Página siguiente">
           <img src="/icon/right-arrow.svg" alt="Página siguiente" />

@@ -19,6 +19,7 @@ import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';
 import session from 'express-session';
 import SequelizeStore from 'connect-session-sequelize';
 import { isAuthenticated } from './middleware/isAuthenticated.js';
+import authViewRoutes from './routes/views-routes/authViewRoutes.js';
 
 
 dotenv.config();
@@ -36,6 +37,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// **Middleware para procesar datos de formularios HTML**
+app.use(express.urlencoded({ extended: true })); // <-- Agregado para manejar datos "x-www-form-urlencoded"
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -89,6 +95,7 @@ app.use('/api/rules', rulesRoutes);
 app.use('/api/irrigation_schedule', irrigationScheduleRoutes);
 
 // Configura las rutas de vistas
+app.use('/views/auth', authViewRoutes);
 app.use('/views/userList', isAuthenticated, userListViewsRoutes);
 
 // Rutas estáticas
@@ -104,6 +111,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Error en el servidor');
 });
 
+// Inicia el servidor
 app.use('/views/rules', rulesRoutes);
 
 app.use('/views/plot-list', plotListViewsRoutes);
