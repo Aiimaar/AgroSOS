@@ -11,6 +11,7 @@ import fondo5 from "../../components/plot-list-comp/fondo5.jpg";
 import AddPlotComponent from "../add-plot-component/add-plot-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 function PlotListComp() {
   const { t, i18n } = useTranslation(); // Obtén las funciones de traducción
@@ -22,6 +23,7 @@ function PlotListComp() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [plotToDelete, setPlotToDelete] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   const defaultImages = [fondo1, fondo2, fondo3, fondo4, fondo5];
   const imageMap = {};
@@ -61,11 +63,14 @@ function PlotListComp() {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:3000/api/plots/user/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:3000/api/plots/user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setPlots(response.data);
       fetchSensorAverages(response.data, token);
     } catch (error) {
@@ -197,8 +202,10 @@ function PlotListComp() {
   const handlePlotClick = (plotId, plotName) => {
     localStorage.setItem("selectedPlotId", plotId);
     localStorage.setItem("selectedPlotName", plotName);
+    console.log("Plot selected:", { plotId, plotName }); // Agrega este log
     navigate("/inside-a-plot");
   };
+  
 
   return (
     <>
@@ -207,7 +214,7 @@ function PlotListComp() {
       ) : (
         <>
           {showDeleteModal && (
-            <div className="modal-overlay">
+            <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-delete-modal">
                 <h3>{t("confirm_delete_plot")}</h3>
                 <div className="modal-actions">
@@ -223,7 +230,7 @@ function PlotListComp() {
           )}
 
           {editPlot && (
-            <div className="modal-overlay">
+            <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-edit-modal">
                 <h3>{t("edit_plot")}</h3>
                 <form

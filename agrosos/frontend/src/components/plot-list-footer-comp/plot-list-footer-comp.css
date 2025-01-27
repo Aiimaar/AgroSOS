@@ -1,36 +1,46 @@
 .plot-list-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    padding: 10px 0;
-    z-index: 100;
-  }
-  
-  .plot-list-img-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
-  .plot-list-img {
-    color: #5EA71E;
-    text-decoration: none;
-  }
-  
-  .plot-list-create-plot-img-container img {
-    width: 50px;
-    height: 50px;
-  }
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 10px 0;
+  z-index: 100;
+}
 
-  .plot-list-user-img-container img {
-    width: 30px;
-    height: 30px;
-  }
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-footer {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
 
-  .plot-list-config-img-container img {
-    width: 30px;
-    height: 30px;
-  }
-  
+.plot-list-img-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.plot-list-img {
+  color: #5EA71E;
+  text-decoration: none;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-img {
+  color: #77a3d3; /* Color diferente en modo oscuro */
+}
+
+.plot-list-create-plot-img-container img {
+  width: 50px;
+  height: 50px;
+}
+
+.plot-list-user-img-container img {
+  width: 30px;
+  height: 30px;
+}
+
+.plot-list-config-img-container img {
+  width: 30px;
+  height: 30px;
+}

@@ -1,49 +1,78 @@
 #notifications-component-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 7em auto;
-    width: 80vw;
-  }
-  
-  .notifications-component-button-arrow {
-    font-size: 20px;
-    align-self: flex-start;
-    margin-left: 2em;
-    border: none;
-    background-color: white;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  height: 100vh;
+  width: 80vw;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode #notifications-component-container {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
+.notifications-component-button-arrow {
+  font-size: 20px;
+  align-self: flex-start;
+  margin-left: 2em;
+  border: none;
+  background-color: white;
+}
+
+.dark-mode .notifications-component-button-arrow {
+  color: white; /* Texto claro en modo oscuro */
+  background-color: #555; /* Fondo oscuro */
+}
+
+.notifications-component-notification {
+  width: 80vw;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background-color: #5ea71e;
+  padding: 15px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.dark-mode .notifications-component-notification {
+  background-color: green; /* Fondo diferente en modo oscuro */
+  color: black; /* Texto oscuro para que se vea bien */
+}
+
+.notifications-component-h1 {
+  margin-top: 1em;
+}
+
+.dark-mode .notifications-component-h1 {
+  color: white; /* Texto claro en modo oscuro */
+}
+
+.notifications-component-p {
+  color: black;
+  font-weight: bold;
+}
+
+.dark-mode .notifications-component-p {
+  color: white; /* Texto claro en modo oscuro */
+}
+
+.notifications-component-notification-alert {
+  position: absolute;
+  top: -5px;
+  right: 10px;
+  width: 15px;
+  height: 15px;
+}
+
+@media only screen and (min-width: 768px) {
   .notifications-component-notification {
-    width: 80vw;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    background-color: #5ea71e;
-    padding: 15px;
-    border-radius: 20px;
-    position: relative;
+    width: 50vw;
   }
-  
-  .notifications-component-h1 {
-    margin-top: 1em;
+
+  .dark-mode .notifications-component-notification {
+    width: 50vw;
   }
-  
-  .notifications-component-p {
-    color: black;
-    font-weight: bold;
-  }
-  
-  .notifications-component-notification-alert {
-    position: absolute;
-    top: -5px;
-    right: 10px;
-    width: 15px;
-    height: 15px;
-  }
-  
-  @media only screen and (min-width: 768px) {
-    .notifications-component-notification {
-      width: 50vw;
-    }
-  }
+}

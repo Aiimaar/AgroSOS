@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faHome, faBell, faBook, faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faHome, faBell, faBook, faLightbulb, faUniversalAccess } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "./side-menu-comp.css";
 
@@ -21,6 +21,12 @@ function SideMenuComp({ isOpen, onClose }) {
           <Link to="/notifications" onClick={onClose}>
             <FontAwesomeIcon icon={faBell} />
             <span>Notificaciones</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/accesibility" onClick={onClose}>
+            <FontAwesomeIcon icon={faUniversalAccess} />
+            <span>Accesibilidad</span>
           </Link>
         </li>
         <li>

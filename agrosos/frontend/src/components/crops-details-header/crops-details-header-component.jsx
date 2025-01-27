@@ -14,6 +14,7 @@ const CropsDetailsHeaderComponent = ({ cropImage = ajo, onBack }) => {
       <button
         className="crop-details-back-button"
         onClick={onBack || (() => navigate("/advices"))} // Usa onBack si está definido, de lo contrario navigate
+        aria-label="Volver a la página de consejos" // Descripción para los usuarios de lectores de pantalla
       >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
@@ -23,14 +24,16 @@ const CropsDetailsHeaderComponent = ({ cropImage = ajo, onBack }) => {
             src={cropImage}
             alt="Imagen del cultivo de ajo"
             className="crop-image"
-          /> {/* Usa cropImage dinámicamente */}
+            aria-describedby="crop-title" // Relaciona la imagen con el título del cultivo
+          />
         </div>
-        <h1 className="crop-title">AJO</h1>
+        <h1 className="crop-title" id="crop-title">AJO</h1> {/* Agrega id para referencia desde otros elementos */}
         <div className="chart-image-container">
           <img
             src={graficaAjo}
             alt="Gráfico de rendimiento del cultivo de ajo"
             className="chart-image"
+            aria-labelledby="crop-title" // Relaciona la gráfica con el título del cultivo
           />
         </div>
       </div>

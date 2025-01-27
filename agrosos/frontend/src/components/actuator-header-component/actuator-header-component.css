@@ -1,0 +1,19 @@
+/* Modo oscuro para el contenedor del encabezado */
+.dark-mode .headerGrey-inside-a-plot {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
+/* Modo oscuro para los elementos de la cabecera */
+.dark-mode .headerGreyItemContainer {
+  border-color: #555; /* Borde oscuro */
+}
+
+.dark-mode .header-p {
+  color: white; /* Texto claro */
+}
+
+.dark-mode .headerGreyItem,
+.dark-mode .headerGreyBoldItem {
+  filter: brightness(0.8); /* Oscurecer las imágenes ligeramente */
+}
