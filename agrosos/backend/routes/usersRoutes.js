@@ -32,4 +32,11 @@ router.put("/:id", authenticateToken, upload.single('profile_image'), userContro
 // Ruta para eliminar el usuario
 router.delete("/:id", authenticateToken, userController.deleteUser);
 
+// Ruta para actualizar el idioma del usuario
+router.put("/:id/language", authenticateToken, userController.updateUserLanguage);
+
+// Ruta para obtener el idioma del usuario
+router.get("/:id/language", authenticateToken, userController.getUserLanguage);
+
+
 export default router;
