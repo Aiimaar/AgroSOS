@@ -44,7 +44,6 @@ export const getPlots = async (req, res) => {
       error: null,
       updatePlot: true,
     });
-    res.redirect("/plot-list");
   } catch (error) {
     console.error("Error fetching plots:", error);
     res.render("plot-list", {

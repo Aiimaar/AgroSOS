@@ -71,20 +71,12 @@ function SoilTemperatureComponent() {
 
   return (
     <div id="soil-temperature-component-container">
-<<<<<<< HEAD
-      <div className="soil-temperature-component-arrow" onClick={() => navigate(-1)}>
+      <div className="soil-temperature-component-arrow" aria-label="Regresar a la página anterior" onClick={() => navigate(-1)}>
         <FaArrowLeft className="soil-humidity-component-arrow-icon" />
       </div>
       <h1>{t("soil_temperature")}</h1>
-      <div className="soil-temperature-controls">
-=======
-      <div className="soil-temperature-component-arrow" aria-label="Regresar a la página anterior">
-        <FaArrowLeft className="soil-humidity-component-arrow-icon" />
-      </div>
-      <h1>Temperatura del Terreno</h1>
       <div className="soil-temperature-controls" role="group" aria-labelledby="comparison-controls">
-        <h2 id="comparison-controls" className="sr-only">Controles de comparación de temperatura</h2>
->>>>>>> develop
+      <h2 id="comparison-controls" className="sr-only">Controles de comparación de temperatura</h2>
         <button
           className={`soil-temperature-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
