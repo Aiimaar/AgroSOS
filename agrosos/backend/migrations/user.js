@@ -32,6 +32,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      language: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: 'es',
+      },
     });
 
     // Relación: 'Users' tiene una relación uno a muchos con 'Rules'
