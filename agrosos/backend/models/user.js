@@ -23,8 +23,13 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  language: {  // Nuevo campo para el idioma
+    type: DataTypes.STRING,
+    allowNull: true,  // El idioma puede ser opcional, aunque podrías hacerlo obligatorio
+    defaultValue: 'es', // Por defecto, el idioma es español
+  },
 }, {
-    timestamps: false,
+  timestamps: false,
 });
 
 export default User;

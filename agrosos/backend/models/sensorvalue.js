@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
-import Sensor from './sensor.js';
 
 const SensorValue = sequelize.define('SensorValue', {
   sensor_id: {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import "./plot-list-comp.css";
 import fondo1 from "../../components/plot-list-comp/fondo1.jpg";
 import fondo2 from "../../components/plot-list-comp/fondo2.jpg";
@@ -13,6 +14,7 @@ import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useDarkMode } from "../../context/DarkModeContext";
 
 function PlotListComp() {
+  const { t, i18n } = useTranslation(); // Obtén las funciones de traducción
   const [plots, setPlots] = useState([]);
   const [sensorAverages, setSensorAverages] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,7 +32,18 @@ function PlotListComp() {
 
   useEffect(() => {
     fetchData();
+    console.log("Idioma actual al cargar el componente:", i18n.language); // Verificar idioma al cargar
+
+    // Si el idioma es español y quieres cambiarlo a inglés automáticamente
+    if (i18n.language === "es") {
+      i18n.changeLanguage("en");
+      console.log("Idioma cambiado a inglés automáticamente");
+    }
   }, []);
+
+  useEffect(() => {
+    console.log("Idioma actualizado:", i18n.language); // Detectar cambios en el idioma
+  }, [i18n.language]);
 
   useEffect(() => {
     if (showDeleteModal || editPlot) {
@@ -62,7 +75,7 @@ function PlotListComp() {
       fetchSensorAverages(response.data, token);
     } catch (error) {
       console.error("Error al obtener la lista de terrenos:", error);
-      setErrorMessage("Error al cargar los terrenos. Verifica tu sesión.");
+      setErrorMessage(t("error_message_loading_plots"));
     }
   };
 
@@ -203,13 +216,13 @@ function PlotListComp() {
           {showDeleteModal && (
             <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-delete-modal">
-                <h3>¿Deseas eliminar este terreno?</h3>
+                <h3>{t("confirm_delete_plot")}</h3>
                 <div className="modal-actions">
                   <button type="submit" onClick={handleDeletePlot}>
-                    Eliminar
+                    {t("delete")}
                   </button>
                   <button type="button" onClick={cancelDelete}>
-                    Cancelar
+                    {t("cancel")}
                   </button>
                 </div>
               </div>
@@ -219,7 +232,7 @@ function PlotListComp() {
           {editPlot && (
             <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-edit-modal">
-                <h3>Editar Terreno</h3>
+                <h3>{t("edit_plot")}</h3>
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -227,7 +240,7 @@ function PlotListComp() {
                   }}
                 >
                   <label>
-                    Nombre:
+                    {t("name")}:
                     <input
                       type="text"
                       name="name"
@@ -236,7 +249,7 @@ function PlotListComp() {
                     />
                   </label>
                   <label>
-                    Tamaño:
+                    {t("size")}:
                     <input
                       type="number"
                       name="size"
@@ -244,9 +257,9 @@ function PlotListComp() {
                       onChange={handleEditFormChange}
                     />
                   </label>
-                  <button type="submit">Guardar</button>
+                  <button type="submit">{t("save")}</button>
                   <button type="button" onClick={() => setEditPlot(null)}>
-                    Cancelar
+                    {t("cancel")}
                   </button>
                 </form>
               </div>
@@ -254,7 +267,7 @@ function PlotListComp() {
           )}
 
           <div className="plot-list-welcome">
-            <h3>Buenos días!</h3>
+            <h3>{t("good_morning")}</h3>
           </div>
           <div className="plot-list-container">
             {errorMessage && (
@@ -276,7 +289,7 @@ function PlotListComp() {
                   {plot.image ? (
                     <img
                       src={`http://localhost:3000/uploads/${plot.image}`}
-                      alt={`Imagen del terreno ${plot.name}`}
+                      alt={`${t("plot_image")} ${plot.name}`}
                       className="plot-image"
                     />
                   ) : plot.color ? (
@@ -284,7 +297,7 @@ function PlotListComp() {
                   ) : (
                     <img
                       src={assignDefaultImage(plot.id)}
-                      alt={`Imagen predeterminada del terreno ${plot.name}`}
+                      alt={`${t("default_plot_image")} ${plot.name}`}
                       className="plot-image"
                     />
                   )}

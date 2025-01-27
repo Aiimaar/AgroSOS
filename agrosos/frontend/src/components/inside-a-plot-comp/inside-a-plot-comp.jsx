@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next"; // Importamos useTranslation
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +10,9 @@ import { useNavigate } from "react-router-dom";
 import "./inside-a-plot-comp.css";
 import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
+
 const InsideAPlotComp = ({ plotId }) => {
+  const { t, i18n } = useTranslation(); // Accedemos a las funciones de i18next
   const navigate = useNavigate();
   const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
   const [crop, setCrop] = useState(null);
@@ -29,20 +32,23 @@ const InsideAPlotComp = ({ plotId }) => {
   const [localPlotId, setLocalPlotId] = useState(null);
 
   const days = [
-    { name: "Monday", label: "Lunes" },
-    { name: "Tuesday", label: "Martes" },
-    { name: "Wednesday", label: "Miércoles" },
-    { name: "Thursday", label: "Jueves" },
-    { name: "Friday", label: "Viernes" },
-    { name: "Saturday", label: "Sábado" },
-    { name: "Sunday", label: "Domingo" },
+    { name: "Monday", label: t("monday") },
+    { name: "Tuesday", label: t("tuesday") },
+    { name: "Wednesday", label: t("wednesday") },
+    { name: "Thursday", label: t("thursday") },
+    { name: "Friday", label: t("friday") },
+    { name: "Saturday", label: t("saturday") },
+    { name: "Sunday", label: t("sunday") },
   ];
 
   useEffect(() => {
     const storedPlotId = localStorage.getItem("selectedPlotId");
     const token = localStorage.getItem("authToken");
+
+    console.log("Idioma actual:", i18n.language);
+
     if (!token) {
-      alert("No tienes un token válido. Inicia sesión.");
+      alert(t("no_valid_token"));
       navigate("/login");
       return;
     }
@@ -50,7 +56,7 @@ const InsideAPlotComp = ({ plotId }) => {
       setLocalPlotId(storedPlotId);
       fetchData(storedPlotId, token);
     } else {
-      setError("No se encontró un terreno seleccionado.");
+      setError(t("no_selected_plot"));
     }
 
     const savedTasks = JSON.parse(localStorage.getItem("tasks"));
@@ -62,7 +68,7 @@ const InsideAPlotComp = ({ plotId }) => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [i18n.language]);
 
   const fetchData = async (plotId, token) => {
     try {
@@ -97,12 +103,10 @@ const InsideAPlotComp = ({ plotId }) => {
     } catch (error) {
       console.error("Error al obtener datos:", error);
       if (error.response && error.response.status === 401) {
-        alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
+        alert(t("session_expired"));
         navigate("/login");
       } else {
-        setError(
-          "Error al cargar los datos. Por favor, inténtalo de nuevo más tarde."
-        );
+        setError(t("data_load_error"));
       }
     }
   };
@@ -148,21 +152,20 @@ const InsideAPlotComp = ({ plotId }) => {
 
   const handleProgramarRiego = async () => {
     if (!localPlotId) {
-      alert("El ID del terreno no está definido.");
+      alert(t("plot_id_not_defined"));
       return;
     }
 
     if (selectedDays.length > 0 && selectedTime) {
       try {
-        // Asegúrate de que 'selectedDays' sea un array (no string) y 'selectedTime' esté bien formateado
         const irrigationSchedule = {
           plotId: localPlotId,
           startDate: new Date().toISOString(),
           endDate: new Date(
             new Date().setMonth(new Date().getMonth() + 1)
           ).toISOString(),
-          days: selectedDays, // Debe ser un array, no un string
-          time: selectedTime, // Asegúrate de que 'selectedTime' esté en formato 'HH:MM'
+          days: selectedDays,
+          time: selectedTime,
         };
 
         console.log("Datos enviados al backend:", irrigationSchedule);
@@ -178,13 +181,13 @@ const InsideAPlotComp = ({ plotId }) => {
         );
 
         console.log("Programación de riego guardada:", response.data);
-        alert("Riego programado exitosamente.");
+        alert(t("irrigation_scheduled_success"));
       } catch (error) {
         console.error("Error al guardar la programación de riego:", error);
-        alert("Hubo un error al guardar la programación de riego.");
+        alert(t("irrigation_schedule_error"));
       }
     } else {
-      alert("Selecciona al menos un día y una hora para programar el riego.");
+      alert(t("select_day_and_time"));
     }
   };
 
@@ -202,7 +205,7 @@ const InsideAPlotComp = ({ plotId }) => {
     <div className={`plot-details ${darkMode ? "dark-mode" : ""}`}>
       {error && <p className="inside-a-plot-error-message">{error}</p>}
       <section className="crops-section">
-        <h3>Cultivo en el terreno</h3>
+        <h3>{t("crop_in_plot")}</h3>
         {crop ? (
           <div className="crop-details">
             <img
@@ -213,7 +216,7 @@ const InsideAPlotComp = ({ plotId }) => {
             />
           </div>
         ) : (
-          <p className="no-crops" aria-live="polite">No hay cultivo registrado en este terreno.</p>
+          <p className="no-crops" aria-live="polite">{t("no_crop_in_plot")}</p>
         )}
       </section>
 
@@ -221,14 +224,14 @@ const InsideAPlotComp = ({ plotId }) => {
         <div id="inside-a-plot-comp-left">
           <div className="inside-a-plot-comp-left">
             <section className="evolution-section" aria-labelledby="evolution-section-title">
-              <h3 id="evolution-section-title">Evolución Temperatura / Humedad</h3>
+              <h3 id="evolution-section-title">{t("temperature_humidity_evolution")}</h3>
               <EvolutionGraph plotId={plotId} />
             </section>
           </div>
 
           <div className="inside-a-plot-comp-left">
             <section className="tasks-section" aria-labelledby="tasks-section-title">
-              <h3 id="tasks-section-title">Tareas</h3>
+              <h3 id="tasks-section-title">{t("tasks")}</h3>
               <ul className="task-list" aria-live="polite">
                 {tasks.map((task, index) => (
                   <li key={index}>{task}</li>
@@ -240,11 +243,11 @@ const InsideAPlotComp = ({ plotId }) => {
                   id="new-task-input"
                   type="text"
                   value={newTask}
-                  placeholder="Añadir tarea completada..."
+                  placeholder={t("add_completed_task")}
                   onChange={(e) => setNewTask(e.target.value)}
                 />
                 <button onClick={handleAddTask} className="add-task-button">
-                  Añadir
+                  {t("add")}
                 </button>
               </div>
             </section>
@@ -254,7 +257,7 @@ const InsideAPlotComp = ({ plotId }) => {
         <div id="inside-a-plot-comp-right">
           <div className="inside-a-plot-comp-right">
             <section className="climate-section" aria-labelledby="climate-section-title">
-              <h3 id="climate-section-title">Clima</h3>
+              <h3 id="climate-section-title">{t("climate")}</h3>
               {sensorValues.length > 0 ? (
                 <div className="climate-stats" aria-live="polite">
                   {["temperature", "soil_temperature", "humidity", "soil_humidity"].map((sensorType) => {
@@ -275,7 +278,7 @@ const InsideAPlotComp = ({ plotId }) => {
                   })}
                 </div>
               ) : (
-                <p>No hay sensores registrados.</p>
+                <p>{t("no_sensors")}</p>
               )}
             </section>
           </div>
@@ -284,9 +287,9 @@ const InsideAPlotComp = ({ plotId }) => {
             <section className="irrigation-frecuency-section" aria-labelledby="irrigation-section-title">
               <div id="irrigation-frecuency-component">
                 <h3 id="irrigation-section-title" className="irrigation-frecuency-title">
-                  Frecuencia de riego
+                  {t("irrigation_frequency")}
                 </h3>
-                <p className="irrigation-frecuency-p">Días de riego</p>
+                <p className="irrigation-frecuency-p">{t("irrigation_days")}</p>
                 <div className="irrigation-frecuency-calendar" role="list">
                   {days.map((day) => (
                     <div
@@ -323,8 +326,8 @@ const InsideAPlotComp = ({ plotId }) => {
                     aria-controls="clock-popup"
                   >
                     {selectedTime
-                      ? `Hora seleccionada: ${selectedTime}`
-                      : "Seleccionar hora"}
+                      ? `${t("selected_time")}: ${selectedTime}`
+                      : t("select_time")}
                   </button>
                 </div>
 
@@ -362,10 +365,10 @@ const InsideAPlotComp = ({ plotId }) => {
                         className="select-time-button"
                         onClick={handleTimeSelect}
                       >
-                        Confirmar hora
+                        {t("confirm_time")}
                       </button>
                       <button className="irrigation-frecuency-pro">
-                        Programar riego
+                        {t("schedule_irrigation")}
                       </button>
                     </div>
                   </div>
@@ -375,7 +378,7 @@ const InsideAPlotComp = ({ plotId }) => {
                   className="irrigation-frecuency-pro"
                   onClick={handleProgramarRiego}
                 >
-                  Programar riego
+                  {t("schedule_irrigation")}
                 </button>
               </div>
             </section>
@@ -383,13 +386,13 @@ const InsideAPlotComp = ({ plotId }) => {
 
           <div className="inside-a-plot-comp-left">
             <section className="inside-a-plot-actions-section" aria-labelledby="actions-section-title">
-              <h3 id="actions-section-title">Acciones</h3>
+              <h3 id="actions-section-title">{t("actions")}</h3>
               <div className="inside-a-plot-actions-buttons-container">
                 <button className="inside-a-plot-action-button" aria-label="Activar riego">
-                  Activar Riego
+                  {t("activate_irrigation")}
                 </button>
                 <button className="inside-a-plot-action-button" aria-label="Desactivar riego">
-                  Desactivar Riego
+                  {t("deactivate_irrigation")}
                 </button>
               </div>
             </section>
@@ -403,15 +406,15 @@ const InsideAPlotComp = ({ plotId }) => {
 const getSensorLabel = (sensorType) => {
   switch (sensorType) {
     case "temperature":
-      return "Temperatura";
+      return "Temperature";
     case "soil_temperature":
-      return "Temperatura del terreno";
+      return "Soil Temperature";
     case "humidity":
-      return "Humedad";
+      return "Humidity";
     case "soil_humidity":
-      return "Humedad del terreno";
+      return "Soil Humidity";
     default:
-      return "Desconocido";
+      return "";
   }
 };
 

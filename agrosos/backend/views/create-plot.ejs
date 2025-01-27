@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost:3000/css/view-create-plot.css" />
+    <title>Crear Nuevo Terreno</title>
+</head>
+<body>
+    <form
+        action="/api/plots"
+        method="POST"
+        enctype="multipart/form-data"
+        class="create-plot-form"
+        aria-labelledby="create-plot-form-title"
+    >
+        <h2 id="create-plot-form-title" class="create-plot-form-title">Crear Nuevo Terreno</h2>
+
+        <input type="hidden" name="user_id" value="127" />
+        <input type="hidden" name="default_image" id="default-image-field" value="" />
+
+        <div class="create-plot-form-group">
+            <label for="name" class="create-plot-form-label">Nombre del terreno*</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                class="create-plot-form-input"
+                aria-required="true"
+            />
+        </div>
+
+        <div class="create-plot-form-group">
+            <label for="size" class="create-plot-form-label">Dimensiones del terreno*</label>
+            <div class="size-unit-container">
+                <input
+                    type="number"
+                    id="size"
+                    name="size"
+                    class="create-plot-form-input"
+                    aria-required="true"
+                />
+                <select id="unit" name="unit" class="create-plot-form-select" aria-required="true">
+                    <option value="m2">m²</option>
+                    <option value="ha">ha</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="create-plot-form-group">
+            <label for="image-option" class="create-plot-form-label">Personaliza tu terreno*</label>
+            <select
+                id="image-option"
+                name="imageOption"
+                class="create-plot-form-select"
+                aria-required="true"
+            >
+                <option value="upload">Subir imagen</option>
+                <option value="default">Imagen predeterminada</option>
+                <option value="solid-color">Color sólido</option>
+            </select>
+        </div>
+
+        <!-- Contenedor de subir imagen -->
+        <div id="upload-container" class="hidden">
+            <label for="file-input" class="create-plot-form-label">Sube una foto:</label>
+            <input
+                id="file-input"
+                type="file"
+                name="image"
+                accept="image/*"
+                class="create-plot-form-input"
+            />
+        </div>
+
+        <!-- Contenedor de color sólido -->
+        <div id="color-picker-container" class="hidden">
+            <label for="color-picker" class="create-plot-form-label">Selecciona un color:</label>
+            <input
+                type="color"
+                id="color-picker"
+                name="color"
+                value="#ff0000"
+                class="create-plot-form-input"
+            />
+        </div>
+
+        <!-- Mensaje para imagen predeterminada -->
+        <div id="default-image-container" class="hidden">
+            <p>Se utilizará la imagen predeterminada.</p>
+        </div>
+
+        <div class="create-plot-form-buttons">
+            <button type="submit" id="create-plot-submit-button" class="create-plot-submit-button">
+                Crear Terreno
+            </button>
+            <a href="/views/plot-list" class="create-plot-cancel-button">Cancelar</a>
+        </div>
+    </form>
+
+    <!-- Importar el archivo JavaScript -->
+    <script src="http://localhost:3000/js/create-plot.js"></script>
+</body>
+</html>

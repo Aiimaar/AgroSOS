@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import "./actual-plot-comp.css";
-import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useDarkMode } from "../../context/DarkModeContext"; 
+import { useTranslation } from 'react-i18next'; // Importamos el hook useTranslation
 
 function ActualPlotComp() {
   const [plotName, setPlotName] = useState(null);
-  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
+  const { t } = useTranslation();
+  const { darkMode, toggleDarkMode } = useDarkMode(); 
 
   useEffect(() => {
     const storedPlotName = localStorage.getItem('selectedPlotName');
