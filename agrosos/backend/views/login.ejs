@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/view-login.css">
+</head>
+<body>
+  <div class="login-form-container">
+    <h1>Iniciar Sesión</h1>
+
+    <% if (error) { %>
+      <p class="error-message"><%= error %></p>
+    <% } %>
+
+    <!-- Formulario de login -->
+    <form action="/views/auth/login" method="POST" class="login-form">
+      <input type="email" id="email" name="email" placeholder="Correo electrónico" required />
+      <input type="password" id="password" name="password" placeholder="Contraseña" required />
+      <button type="submit" class="submit-button">Ingresar</button>
+    </form>
+  </div>
+</body>
+</html>
