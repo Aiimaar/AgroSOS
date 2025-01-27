@@ -216,38 +216,23 @@ const InsideAPlotComp = ({ plotId }) => {
             />
           </div>
         ) : (
-<<<<<<< HEAD
-          <p className="no-crops">{t("no_crop_in_plot")}</p>
-=======
-          <p className="no-crops" aria-live="polite">No hay cultivo registrado en este terreno.</p>
->>>>>>> develop
+          <p className="no-crops" aria-live="polite">{t("no_crop_in_plot")}</p>
         )}
       </section>
 
       <section id="inside-a-plot-comp-global">
         <div id="inside-a-plot-comp-left">
           <div className="inside-a-plot-comp-left">
-<<<<<<< HEAD
-            <section className="evolution-section">
-              <h3>{t("temperature_humidity_evolution")}</h3>
-=======
             <section className="evolution-section" aria-labelledby="evolution-section-title">
-              <h3 id="evolution-section-title">Evolución Temperatura / Humedad</h3>
->>>>>>> develop
+              <h3 id="evolution-section-title">{t("temperature_humidity_evolution")}</h3>
               <EvolutionGraph plotId={plotId} />
             </section>
           </div>
 
           <div className="inside-a-plot-comp-left">
-<<<<<<< HEAD
-            <section className="tasks-section">
-              <h3>{t("tasks")}</h3>
-              <ul className="task-list">
-=======
             <section className="tasks-section" aria-labelledby="tasks-section-title">
-              <h3 id="tasks-section-title">Tareas</h3>
+              <h3 id="tasks-section-title">{t("tasks")}</h3>
               <ul className="task-list" aria-live="polite">
->>>>>>> develop
                 {tasks.map((task, index) => (
                   <li key={index}>{task}</li>
                 ))}
@@ -271,13 +256,8 @@ const InsideAPlotComp = ({ plotId }) => {
 
         <div id="inside-a-plot-comp-right">
           <div className="inside-a-plot-comp-right">
-<<<<<<< HEAD
-            <section className="climate-section">
-              <h3>{t("climate")}</h3>
-=======
             <section className="climate-section" aria-labelledby="climate-section-title">
-              <h3 id="climate-section-title">Clima</h3>
->>>>>>> develop
+              <h3 id="climate-section-title">{t("climate")}</h3>
               {sensorValues.length > 0 ? (
                 <div className="climate-stats" aria-live="polite">
                   {["temperature", "soil_temperature", "humidity", "soil_humidity"].map((sensorType) => {
@@ -306,19 +286,11 @@ const InsideAPlotComp = ({ plotId }) => {
           <div className="inside-a-plot-comp-right">
             <section className="irrigation-frecuency-section" aria-labelledby="irrigation-section-title">
               <div id="irrigation-frecuency-component">
-<<<<<<< HEAD
-                <h3 className="irrigation-frecuency-title">
+                <h3 id="irrigation-section-title" className="irrigation-frecuency-title">
                   {t("irrigation_frequency")}
                 </h3>
                 <p className="irrigation-frecuency-p">{t("irrigation_days")}</p>
-                <div className="irrigation-frecuency-calendar">
-=======
-                <h3 id="irrigation-section-title" className="irrigation-frecuency-title">
-                  Frecuencia de riego
-                </h3>
-                <p className="irrigation-frecuency-p">Días de riego</p>
                 <div className="irrigation-frecuency-calendar" role="list">
->>>>>>> develop
                   {days.map((day) => (
                     <div
                       key={day.name}
@@ -396,11 +368,7 @@ const InsideAPlotComp = ({ plotId }) => {
                         {t("confirm_time")}
                       </button>
                       <button className="irrigation-frecuency-pro">
-<<<<<<< HEAD
                         {t("schedule_irrigation")}
-=======
-                        Programar riego
->>>>>>> develop
                       </button>
                     </div>
                   </div>
@@ -417,25 +385,14 @@ const InsideAPlotComp = ({ plotId }) => {
           </div>
 
           <div className="inside-a-plot-comp-left">
-<<<<<<< HEAD
-            <section className="inside-a-plot-actions-section">
-              <h3>{t("actions")}</h3>
-              <div className="inside-a-plot-actions-buttons-container">
-                <button className="inside-a-plot-action-button">
-                  {t("activate_irrigation")}
-                </button>
-                <button className="inside-a-plot-action-button">
-                  {t("deactivate_irrigation")}
-=======
             <section className="inside-a-plot-actions-section" aria-labelledby="actions-section-title">
-              <h3 id="actions-section-title">Acciones</h3>
+              <h3 id="actions-section-title">{t("actions")}</h3>
               <div className="inside-a-plot-actions-buttons-container">
                 <button className="inside-a-plot-action-button" aria-label="Activar riego">
-                  Activar Riego
+                  {t("activate_irrigation")}
                 </button>
                 <button className="inside-a-plot-action-button" aria-label="Desactivar riego">
-                  Desactivar Riego
->>>>>>> develop
+                  {t("deactivate_irrigation")}
                 </button>
               </div>
             </section>
