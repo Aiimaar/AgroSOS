@@ -21,6 +21,7 @@ import SequelizeStore from 'connect-session-sequelize';
 import { isAuthenticated } from './middleware/isAuthenticated.js';
 import authViewRoutes from './routes/views-routes/authViewRoutes.js';
 
+
 dotenv.config();
 
 const app = express();
