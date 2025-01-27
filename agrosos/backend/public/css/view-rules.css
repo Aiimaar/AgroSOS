@@ -1,16 +1,16 @@
-#view-existing-rules-container-all{
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+/* public/css/view-rules.css */
 
 /* Estilos para el contenedor principal */
 #view-existing-rules-container {
-  height: auto;
+  display: flex;
   justify-content: center;
+  margin: 0 auto;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que el contenedor ocupe al menos toda la altura de la pantalla */
+  align-items: center;
+  margin: 0 auto;
   padding: 20px;
+  box-sizing: border-box; /* Incluye el padding en el ancho y alto total */
 }
 
 /* Estilos para el botón de retroceso */
@@ -22,6 +22,7 @@
   font-size: 20px;
   cursor: pointer;
   margin-bottom: 20px;
+  color: #333; /* Color de texto accesible */
 }
 
 .view-existing-rule-back-button:focus {
@@ -42,17 +43,14 @@
   color: #333;
 }
 
-.view-icon-list {
-  margin-right: 10px;
-  color: #555;
-}
-
 /* Estilos para las tarjetas de reglas */
 .view-existing-rule-cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
   justify-items: center;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 1200px; /* Ancho máximo para evitar que se estire demasiado */
 }
 
 .view-existing-rule-card {
@@ -63,13 +61,21 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 220px;
+  justify-content: flex-start; /* Cambiar de space-between a flex-start */
+  height: auto; /* Permitir que la tarjeta crezca según el contenido */
   width: 100%;
   max-width: 320px;
   position: relative;
+  box-sizing: border-box;
+  padding-bottom: 60px; /* Aseguramos que haya suficiente espacio para los botones */
 }
 
+
+.view-existing-rule-card:focus-within {
+  outline: 2px solid #FFD700;
+}
+
+/* Información de la tarjeta */
 .view-existing-rule-card-info p {
   margin: 5px 0;
   color: #fff;
@@ -77,13 +83,18 @@
 }
 
 /* Estilos para los botones de acción */
+/* Estilos para los botones de acción */
 .view-existing-rule-card-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center; /* Alineación central */
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  left: 50%; /* Posicionamiento desde el centro horizontal */
+  transform: translateX(-50%); /* Ajuste para centrar */
   gap: 10px;
+  width: auto; /* Elimina el ancho completo */
+  padding: 0; /* Elimina el padding */
+  box-sizing: border-box;
 }
 
 .view-existing-rule-edit-button,
@@ -111,79 +122,62 @@
   transform: scale(1.1);
 }
 
+
+/* Botón para agregar regla */
+.view-add-rule-button,
 .view-add-rule-button-circle {
-  border: none;
   margin-top: 2em;
-  background-color: white;
-}
-
-/* Asegúrate de que el modal esté oculto por defecto */
-.view-modal {
-  display: none; /* Inicialmente oculto */
+  background-color: #fff;
+  color: #3b873e;
+  font-size: 1.5rem;
+  width: 50px;
   align-items: center;
-  margin: 0 auto;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #3b873e;
+  display: flex;
   justify-content: center;
-  position: fixed; /* Fija en la pantalla */
-  z-index: 1; /* Asegúrate de que el modal se muestre encima de todo */
-  left: 0;
-  top: 0;
-  width: 100%; /* Ancho completo */
-  height: 100%; /* Alto completo */
-  overflow: auto; /* Si el contenido es grande, se agrega desplazamiento */
-  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro con opacidad */
-}
-
-/* Estilo del contenido del modal */
-.view-modal-content {
-  background-color: #fff; /* Fondo blanco */
-  margin: 15% auto; /* Centrado vertical y horizontal */
-  padding: 20px;
-  border: 1px solid #888; /* Borde gris */
-  width: 80%; /* Ancho ajustado según sea necesario */
-  max-width: 500px; /* Ancho máximo */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra */
-}
-
-/* Estilo del botón de cierre */
-.view-close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.view-close:hover,
-.view-close:focus {
-  color: black;
-  text-decoration: none;
+  margin: 0 auto;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: fixed; /* Posicionamiento fijo */
+  bottom: 20px; /* Distancia desde la parte inferior */
+  right: 20px; /* Distancia desde la derecha */
 }
 
-/* Estilo de los botones dentro del modal */
-.view-modal-content button {
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#view-confirmDelete {
-  background-color: green; /* Verde para eliminar */
+.view-add-rule-button:hover,
+.view-add-rule-button-circle:hover {
+  background-color: #3b873e;
   color: #fff;
 }
 
-#view-confirmDelete:hover {
-  background-color: rgb(0, 97, 0); /* Verde oscuro al pasar el mouse */
+.view-add-rule-button:focus,
+.view-add-rule-button-circle:focus {
+  outline: 2px solid #FFD700;
+  transform: scale(1.1);
 }
 
-#view-cancelDelete {
-  background-color: #ccc; /* Gris para cancelar */
+/* Mensaje sin reglas */
+.view-no-rules-message {
+  text-align: center;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#view-cancelDelete:hover {
-  background-color: #aaa; /* Gris oscuro al pasar el mouse */
+.view-no-rules-message h2 {
+  margin-bottom: 1em;
+}
+
+/*Media queries para responsive design*/
+@media (max-width: 768px) {
+  .view-existing-rule-cards-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ajusta el ancho mínimo en pantallas más pequeñas */
+  }
+  .view-existing-rule-card {
+    height: auto; /* Permite que la tarjeta crezca verticalmente según el contenido */
+    min-height: 220px;
+    max-width: 90%;
+  }
 }

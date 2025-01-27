@@ -91,7 +91,7 @@ app.use('/api/irrigation_schedule', irrigationScheduleRoutes);
 // Configura las rutas de vistas
 app.use('/views/auth', authViewRoutes);
 app.use('/views/userList', isAuthenticated, userListViewsRoutes);
-app.use('/views/rules', rulesRoutes);
+app.use('/views/rules', rulesViewsRoutes);
 app.use('/views/plot-list', plotListViewsRoutes);
 app.use('/views/create-plot', createPlotViewRoute);
 
@@ -104,10 +104,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Error en el servidor');
 });
-
-// Rutas de vistas para reglas
-app.use('/views/rules', rulesViewsRoutes);
-app.use('/views', rulesViewsRoutes); // Asegúrate de que esta línea esté configurada correctamente
 
 // Iniciar servidor
 const PORT = 3000;

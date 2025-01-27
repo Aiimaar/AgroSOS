@@ -1,62 +1,44 @@
-import models from "../models/index.js";
+import models from "../../models/index.js";
 
-const { Rule } = models;
+const { Rule, Crop } = models;
 
-// Obtener todas las reglas
+const formatRuleInfo = (ruleInfo) => {
+  // Implementa la lógica para formatear la información de la regla
+  return `Condiciones: ${ruleInfo}`;
+};
+
 export const getAllRules = async (req, res) => {
   try {
     const rules = await Rule.findAll();
-    console.log(rules);
+    const crops = await Crop.findAll();
     if (rules.length === 0) {
-      return res.status(404).send('No rules found');
+      return res.status(404).json({ message: 'No rules found' });
     }
-    res.render("rules", { rules });
+    res.render('rules.ejs', { rules, crops, formatRuleInfo });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error al obtener las reglas');
+    res.status(500).json({ message: 'Error al obtener las reglas' });
   }
 };
 
-// Obtener una regla por ID
 export const getRuleById = async (req, res) => {
   try {
-    const { id } = req.params; // Obtener el ID de la regla desde los parámetros de la URL
-    const rule = await Rule.findByPk(id); // Buscar la regla por su ID
+    const { id } = req.params;
+    const rule = await Rule.findByPk(id);
 
     if (!rule) {
-      return res.status(404).send('Rule not found'); // Si no existe, enviar un 404
+      return res.status(404).json({ message: 'Rule not found' });
     }
 
-    res.render("rule", { rule }); // Si existe, devolver la regla
+    const crops = await Crop.findAll();
+
+    res.render('edit-rule.ejs', { rule, crops, formatRuleInfo });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error retrieving the rule'); // Manejar errores del servidor
+    res.status(500).json({ message: 'Error retrieving the rule' });
   }
 };
 
-// Obtener reglas por crop_id
-export const getRulesByCrop = async (req, res) => {
-  try {
-    const { crop_id } = req.query; // Obtener el crop_id desde el query
-
-    if (!crop_id) {
-      return res.status(400).send('crop_id is required');  // Si no hay crop_id, devolver un error
-    }
-
-    const rules = await Rule.findAll({ where: { crop_id } }); // Buscar reglas por crop_id
-
-    if (rules.length === 0) {
-      return res.status(404).send('No rules found for this crop');
-    }
-
-    res.render("rules", { rules }); // Devolver las reglas encontradas
-  } catch (error) {
-    console.error('Error retrieving rules:', error);
-    res.status(500).send('Error retrieving rules');
-  }
-};
-
-// Crear una nueva regla
 export const createRule = async (req, res) => {
   try {
     const { name, crop_id, technician_id, rule_info } = req.body;
@@ -66,22 +48,21 @@ export const createRule = async (req, res) => {
       technician_id,
       rule_info,
     });
-    res.status(201).render("rule", { rule: newRule });
+    res.redirect('/');
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error al crear la regla');
+    res.status(500).json({ message: 'Error al crear la regla' });
   }
 };
 
-// Actualizar una regla
-export const updateRule = async (req, res) => {
+export const updateRuleView = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, crop_id, technician_id, rule_info } = req.body;
-    
+
     const rule = await Rule.findByPk(id);
     if (!rule) {
-      return res.status(404).send('Regla no encontrada');
+      return res.status(404).json({ message: 'Regla no encontrada' });
     }
 
     rule.name = name || rule.name;
@@ -90,26 +71,28 @@ export const updateRule = async (req, res) => {
     rule.rule_info = rule_info || rule.rule_info;
 
     await rule.save();
-    res.render("rule", { rule });
+    res.redirect('/');
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error al actualizar la regla');
+    res.status(500).json({ message: 'Error al actualizar la regla' });
   }
 };
 
-// Eliminar una regla
 export const deleteRule = async (req, res) => {
+  console.log("llegamos a DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
   try {
     const { id } = req.params;
     const rule = await Rule.findByPk(id);
     if (!rule) {
-      return res.status(404).send('Regla no encontrada');
+      return res.status(404).json({ message: 'Regla no encontrada' });
     }
 
     await rule.destroy();
-    res.status(204).send('Regla eliminada exitosamente');
+    res.status(200).json({ message: 'Regla eliminada exitosamente' });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error al eliminar la regla');
+    res.status(500).json({ message: 'Error al eliminar la regla' });
   }
 };
+
+
