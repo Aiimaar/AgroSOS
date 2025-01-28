@@ -3,14 +3,9 @@ import models from "../../models/index.js";
 const { Rule, Crop } = models;
 
 const formatRuleInfo = (ruleInfo) => {
-  // Si ruleInfo es un objeto, convierte a una cadena JSON legible
-  if (typeof ruleInfo === 'object') {
-    return JSON.stringify(ruleInfo, null, 2); // Se agrega un formato bonito con indentación
-  }
-  
-  return `Condiciones: ${ruleInfo}`; // Si es un texto simple, lo maneja como antes
+  // Implementa la lógica para formatear la información de la regla
+  return `Condiciones: ${ruleInfo}`;
 };
-
 
 export const getAllRules = async (req, res) => {
   try {
@@ -37,42 +32,12 @@ export const getRuleById = async (req, res) => {
 
     const crops = await Crop.findAll();
 
-    // Verificar si rule_info ya es un objeto y no necesita parseo
-    let temperatureConditions = [];
-    let humidityConditions = [];
-    let actuatorType = ''; // Inicializamos el actuador como vacío
-
-    // Verificar si rule_info es una cadena JSON válida
-    if (rule.rule_info && typeof rule.rule_info === 'string') {
-      try {
-        const ruleInfo = JSON.parse(rule.rule_info); // Intentamos parsear solo si es una cadena JSON
-        temperatureConditions = ruleInfo.temperatureConditions || [];
-        humidityConditions = ruleInfo.humidityConditions || [];
-        actuatorType = ruleInfo.actuatorType || ''; // Extraemos actuatorType de rule_info
-      } catch (error) {
-        console.error('Error al parsear rule_info:', error);
-        // Si el parseo falla, podemos asignar valores por defecto o dejar vacío
-      }
-    }
-
-    res.render('edit-rule.ejs', {
-      rule,
-      crops,
-      cropId: rule.crop_id,
-      sensorType: rule.sensorType, // Si ya lo habías configurado
-      temperatureConditions, // Pasar las condiciones de temperatura
-      humidityConditions, // Pasar las condiciones de humedad
-      actuatorType, // Pasar el tipo de actuador
-    });
+    res.render('edit-rule.ejs', { rule, crops, formatRuleInfo });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error retrieving the rule' });
   }
 };
-
-
-
-
 
 export const createRule = async (req, res) => {
   try {
@@ -83,12 +48,14 @@ export const createRule = async (req, res) => {
       technician_id,
       rule_info,
     });
+    console.log('New Rule created:', newRule); // Aquí puedes usar newRule
     res.redirect('/');
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al crear la regla' });
   }
 };
+
 
 export const updateRuleView = async (req, res) => {
   try {
@@ -114,7 +81,7 @@ export const updateRuleView = async (req, res) => {
 };
 
 export const deleteRule = async (req, res) => {
-  console.log("llegamos a DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+  console.log("llegamos a DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
   try {
     const { id } = req.params;
     const rule = await Rule.findByPk(id);
@@ -129,3 +96,5 @@ export const deleteRule = async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar la regla' });
   }
 };
+
+

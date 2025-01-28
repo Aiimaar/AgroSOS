@@ -4,9 +4,8 @@ import * as rulesViewsController from '../../controllers/views-controllers/rules
 const router = express.Router();
 
 router.get('/', rulesViewsController.getAllRules);
-router.get('/edit-rule/:id', rulesViewsController.getRuleById);
 router.post('/', rulesViewsController.createRule);
-router.put('/edit-rule/:id', rulesViewsController.updateRuleView);
+router.put('/:id', rulesViewsController.updateRuleView);
 router.delete('/:id', rulesViewsController.deleteRule);
 
 export default router;

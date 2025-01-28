@@ -7,11 +7,12 @@
 </head>
 <body>
 
-<div class="edit-rule-form-container">
+<div class="view-edit-rule-form-container">
   <h2>Editar Regla</h2>
-  <label for="cropId">Cultivo:</label>
+  
+  <label for="view-cropId">Cultivo:</label>
   <select
-    id="cropId"
+    id="view-cropId"
     aria-label="Selecciona el cultivo"
   >
     <option value="">Selecciona un cultivo</option>
@@ -20,29 +21,28 @@
     <% }) %>
   </select>
 
-  <label for="sensorType">Sensor:</label>
-<select
-  id="sensorType"
-  aria-label="Selecciona un sensor"
-  onchange="handleSensorChange(event)"
->
-  <option value="">Selecciona un sensor</option>
-  <option value="Humedad" <%= sensorType === 'Humedad' ? 'selected' : '' %>>Humedad</option>
-  <option value="Temperatura" <%= sensorType === 'Temperatura' ? 'selected' : '' %>>Temperatura</option>
-  <option value="Humedad del terreno" <%= sensorType === 'Humedad del terreno' ? 'selected' : '' %>>Humedad del terreno</option>
-  <option value="Temperatura del terreno" <%= sensorType === 'Temperatura del terreno' ? 'selected' : '' %>>Temperatura del terreno</option>
-</select>
-
+  <label for="view-sensorType">Sensor:</label>
+  <select
+    id="view-sensorType"
+    aria-label="Selecciona un sensor"
+    onchange="handleSensorChange(event)"
+  >
+    <option value="">Selecciona un sensor</option>
+    <option value="Humedad" <%= sensorType === 'Humedad' ? 'selected' : '' %>>Humedad</option>
+    <option value="Temperatura" <%= sensorType === 'Temperatura' ? 'selected' : '' %>>Temperatura</option>
+    <option value="Humedad del terreno" <%= sensorType === 'Humedad del terreno' ? 'selected' : '' %>>Humedad del terreno</option>
+    <option value="Temperatura del terreno" <%= sensorType === 'Temperatura del terreno' ? 'selected' : '' %>>Temperatura del terreno</option>
+  </select>
 
   <% if (sensorType === "Temperatura") { %>
-    <div class="edit-rule-conditions">
+    <div class="view-edit-rule-conditions">
       <h3>Condiciones de Temperatura</h3>
       <ul>
         <% temperatureConditions.forEach(function(cond, index) { %>
           <li>
             <%= cond.operator %> <%= cond.value %>°C
             <button
-              class="delete-condition-button"
+              class="view-delete-condition-button"
               onclick="handleDeleteCondition('temperature', <%= index %>)"
               aria-label="Eliminar condición de temperatura <%= cond.operator %> <%= cond.value %>°C"
             >
@@ -52,7 +52,7 @@
         <% }) %>
       </ul>
       <button
-        class="edit-rule-conditions-button"
+        class="view-edit-rule-conditions-button"
         onclick="navigateTo('/temperature')"
         aria-label="Añadir condición de temperatura"
       >
@@ -62,14 +62,14 @@
   <% } %>
 
   <% if (sensorType === "Humedad") { %>
-    <div class="edit-rule-conditions">
+    <div class="view-edit-rule-conditions">
       <h3>Condiciones de Humedad</h3>
       <ul>
         <% humidityConditions.forEach(function(cond, index) { %>
           <li>
             <%= cond.operator %> <%= cond.value %>%
             <button
-              class="delete-condition-button"
+              class="view-delete-condition-button"
               onclick="handleDeleteCondition('humidity', <%= index %>)"
               aria-label="Eliminar condición de humedad <%= cond.operator %> <%= cond.value %>%"
             >
@@ -79,7 +79,7 @@
         <% }) %>
       </ul>
       <button
-        class="edit-rule-conditions-button"
+        class="view-edit-rule-conditions-button"
         onclick="navigateTo('/humidity')"
         aria-label="Añadir condición de humedad"
       >
@@ -88,17 +88,12 @@
     </div>
   <% } %>
 
-  <% const actuatorActionMap = {
-    'Riego': ['Activar Riego', 'Desactivar Riego'],
-    'Ventilación': ['Activar Ventilación', 'Desactivar Ventilación'],
-    'Cobertura de cultivos': ['Cubrir cultivos con lona semi-transparente', 'Cubrir cultivos con lona opaca', 'Destapar cultivos'],
-    'Apertura de ventanas': ['Abrir ventanas', 'Cerrar ventanas']
-  }; %>
-
-  <label for="actuatorType">Actuador:</label>
+  <!-- Mapeo de actuadores -->
+  <label for="view-actuatorType">Actuador:</label>
   <select
-    id="actuatorType"
+    id="view-actuatorType"
     aria-label="Selecciona un actuador"
+    onchange="handleActuatorChange(event)"
   >
     <option value="">Selecciona un actuador</option>
     <% Object.keys(actuatorActionMap).forEach(function(actuator) { %>
@@ -106,9 +101,9 @@
     <% }) %>
   </select>
 
-  <label for="selectedAction">Acción:</label>
+  <label for="view-selectedAction">Acción:</label>
   <select
-    id="selectedAction"
+    id="view-selectedAction"
     aria-label="Selecciona una acción"
   >
     <option value="">Selecciona una acción</option>
@@ -118,7 +113,7 @@
   </select>
 
   <button
-    class="edit-rule-update-button"
+    class="view-edit-rule-update-button"
     onclick="handleUpdateRule()"
     aria-label="Actualizar la regla"
   >
@@ -127,76 +122,69 @@
 </div>
 
 <script>
-  const actuatorActionMap = {
-    'Riego': ['Activar Riego', 'Desactivar Riego'],
-    'Ventilación': ['Activar Ventilación', 'Desactivar Ventilación'],
-    'Cobertura de cultivos': ['Cubrir cultivos con lona semi-transparente', 'Cubrir cultivos con lona opaca', 'Destapar cultivos'],
-    'Apertura de ventanas': ['Abrir ventanas', 'Cerrar ventanas']
-  };
+// Mapeo de actuadores (Definido en el script para la vista)
+const actuatorActionMap = {
+  'Riego': ['Activar Riego', 'Desactivar Riego'],
+  'Ventilación': ['Activar Ventilación', 'Desactivar Ventilación'],
+  'Cobertura de cultivos': ['Cubrir cultivos con lona semi-transparente', 'Cubrir cultivos con lona opaca', 'Destapar cultivos'],
+  'Apertura de ventanas': ['Abrir ventanas', 'Cerrar ventanas']
+};
 
-  document.addEventListener('DOMContentLoaded', (event) => {
-    const cropId = '<%= cropId %>';
-    const sensorType = '<%= sensorType %>';
-    const actuatorType = '<%= actuatorType %>';
-    const selectedAction = '<%= typeof selectedAction !== "undefined" ? selectedAction : "" %>';
+document.addEventListener('DOMContentLoaded', () => {
+  // Aquí se capturan los valores pasados por el servidor (pueden venir de la respuesta del controlador)
+  const cropId = '<%= cropId %>';
+  const sensorType = '<%= sensorType %>';
+  const actuatorType = '<%= actuatorType %>';
+  const selectedAction = '<%= selectedAction %>';
 
-    document.getElementById('cropId').value = cropId;
-    document.getElementById('sensorType').value = sensorType;
-    document.getElementById('actuatorType').value = actuatorType;
+  // Establecer valores por defecto en los selects
+  document.getElementById('view-cropId').value = cropId;
+  document.getElementById('view-sensorType').value = sensorType;
+  document.getElementById('view-actuatorType').value = actuatorType;
 
-    const actions = actuatorActionMap[actuatorType] || [];
-    const selectedActionElement = document.getElementById('selectedAction');
-    selectedActionElement.innerHTML = '<option value="">Selecciona una acción</option>';
-    actions.forEach((action) => {
-      const option = document.createElement('option');
-      option.value = action;
-      option.text = action;
-      if (action === selectedAction) {
-        option.selected = true;
-      }
-      selectedActionElement.appendChild(option);
-    });
+  // Llenar el select de "Acción" dependiendo del actuador seleccionado
+  const actions = actuatorActionMap[actuatorType] || [];
+  const selectedActionElement = document.getElementById('view-selectedAction');
+  selectedActionElement.innerHTML = '<option value="">Selecciona una acción</option>';
+  actions.forEach((action) => {
+    const option = document.createElement('option');
+    option.value = action;
+    option.text = action;
+    if (action === selectedAction) {
+      option.selected = true;
+    }
+    selectedActionElement.appendChild(option);
   });
+});
 
-  function handleCropChange(event) {
-    // Actualizar el cultivo
-  }
+// Funciones para manejar cambios de los selects
+function handleSensorChange(event) {
+  const sensorType = event.target.value;
+  document.getElementById('view-sensorType').value = sensorType;
+  // Actualizar el sensor seleccionado
+}
 
-  function handleSensorChange(event) {
-    const sensorType = event.target.value;
-    document.getElementById('sensorType').value = sensorType;
-    // Actualizar el sensor seleccionado
-  }
+function handleActuatorChange(event) {
+  const actuatorType = event.target.value;
+  document.getElementById('view-actuatorType').value = actuatorType;
+  const actions = actuatorActionMap[actuatorType] || [];
+  const selectedActionElement = document.getElementById('view-selectedAction');
+  selectedActionElement.innerHTML = '<option value="">Selecciona una acción</option>';
+  actions.forEach((action) => {
+    const option = document.createElement('option');
+    option.value = action;
+    option.text = action;
+    selectedActionElement.appendChild(option);
+  });
+}
 
-  function handleActuatorChange(event) {
-    const actuatorType = event.target.value;
-    document.getElementById('actuatorType').value = actuatorType;
-    const actions = actuatorActionMap[actuatorType] || [];
-    const selectedActionElement = document.getElementById('selectedAction');
-    selectedActionElement.innerHTML = '<option value="">Selecciona una acción</option>';
-    actions.forEach((action) => {
-      const option = document.createElement('option');
-      option.value = action;
-      option.text = action;
-      selectedActionElement.appendChild(option);
-    });
-  }
+function handleActionChange(event) {
+  document.getElementById('view-selectedAction').value = event.target.value;
+}
 
-  function handleActionChange(event) {
-    document.getElementById('selectedAction').value = event.target.value;
-  }
-
-  function handleDeleteCondition(type, index) {
-    // Lógica para eliminar la condición
-  }
-
-  function navigateTo(path) {
-    window.location.href = path;
-  }
-
-  function handleUpdateRule() {
-    // Lógica para actualizar la regla
-  }
+function handleUpdateRule() {
+  // Lógica para actualizar la regla
+}
 </script>
 
 </body>

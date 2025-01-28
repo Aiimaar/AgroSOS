@@ -8,7 +8,6 @@
   flex-direction: column;
   min-height: 100vh; /* Asegura que el contenedor ocupe al menos toda la altura de la pantalla */
   align-items: center;
-  margin: 0 auto;
   padding: 20px;
   box-sizing: border-box; /* Incluye el padding en el ancho y alto total */
 }
@@ -70,7 +69,6 @@
   padding-bottom: 60px; /* Aseguramos que haya suficiente espacio para los botones */
 }
 
-
 .view-existing-rule-card:focus-within {
   outline: 2px solid #FFD700;
 }
@@ -82,7 +80,6 @@
   font-size: 1rem;
 }
 
-/* Estilos para los botones de acción */
 /* Estilos para los botones de acción */
 .view-existing-rule-card-actions {
   display: flex;
@@ -121,7 +118,6 @@
   outline: 2px solid #FFD700;
   transform: scale(1.1);
 }
-
 
 /* Botón para agregar regla */
 .view-add-rule-button,
@@ -168,6 +164,68 @@
 
 .view-no-rules-message h2 {
   margin-bottom: 1em;
+}
+
+/* Estilos para el modal */
+#view-existing-rule-modal-overlay {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  width: 90vw;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que el modal esté encima de todo el contenido */
+}
+
+.view-existing-rule-modal-content {
+  background-color: #fff;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 90%;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.view-existing-rule-modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.view-existing-rule-modal-button {
+  background-color: #3b873e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.view-existing-rule-modal-button:hover {
+  background-color: #2d6a2c;
+}
+
+.view-existing-rule-modal-cancel {
+  background-color: #f44336; /* Color rojo para cancelar */
+}
+
+.view-existing-rule-modal-cancel:hover {
+  background-color: #d32f2f;
+}
+
+/* Agrega un efecto de desvanecimiento al abrir y cerrar el modal */
+#view-existing-rule-modal-overlay {
+  transition: opacity 0.3s ease;
 }
 
 /*Media queries para responsive design*/

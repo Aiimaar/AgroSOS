@@ -14,6 +14,8 @@
     <div class="view-existing-rule-header">
       <h1 class="view-existing-rule-title">&#128221; Reglas</h1>
     </div>
+
+    <!-- Lista de reglas -->
     <div class="view-existing-rule-cards-container">
       <% if (rules.length === 0) { %>
       <div class="view-no-rules-message">
@@ -30,7 +32,7 @@
           <p><strong>Condiciones:</strong> <%= formatRuleInfo(rule.rule_info) %></p>
         </div>
         <div class="view-existing-rule-card-actions">
-          <button class="view-existing-rule-edit-button" onclick="window.location.href='/views/rules/edit-rule/<%= rule.id %>'"> &#9998; </button>
+          <button class="view-existing-rule-edit-button" onclick="openEditModal(<%= rule.id %>, '<%= crop ? crop.id : '' %>', '<%= rule.sensor %>', '<%= rule.actuator %>', '<%= rule.actuator_options %>')"> &#9998; </button>
           <button class="view-existing-rule-delete-button" onclick="openModal(<%= rule.id %>)"> &#128465; </button>
         </div>
       </div>
@@ -38,9 +40,66 @@
       <% } %>
     </div>
 
-    <% if (rules.length > 0) { %>
-    <button class="view-add-rule-button-circle" onclick="window.location.href=''">+</button>
-    <% } %>
+    <!-- Formulario de edición de regla -->
+    <div id="edit-rule-modal-overlay" style="display: none;">
+      <div class="view-existing-rule-modal-content">
+        <h2>Modificar Regla</h2>
+        <form id="edit-rule-form" onsubmit="updateRule(event)">
+          <!-- Cultivo -->
+          <label for="crop">Cultivo:</label>
+          <select id="crop" name="crop" required>
+            <% crops.forEach(function(crop) { %>
+            <option value="<%= crop.id %>"><%= crop.name %></option>
+            <% }) %>
+          </select>
+
+          <!-- Sensor -->
+          <label for="sensor">Sensor:</label>
+          <select id="sensor" name="sensor" required onchange="toggleConditions()">
+            <option value="temperatura">Temperatura</option>
+            <option value="humedad">Humedad</option>
+            <option value="temperatura_terreno">Temperatura del terreno</option>
+            <option value="humedad_terreno">Humedad del terreno</option>
+          </select>
+
+          <!-- Condiciones (solo se muestra si el sensor es temperatura o humedad) -->
+          <div id="conditions-container" style="display: none;">
+            <label for="operator">Operador:</label>
+            <select id="operator" name="operator" required>
+              <option value="<"><</option>
+              <option value="=">=</option>
+              <option value=">">></option>
+            </select>
+
+            <label for="value">Valor:</label>
+            <input type="number" id="value" name="value" required>
+
+            <label for="unit">Unidad:</label>
+            <input type="text" id="unit" name="unit" required>
+          </div>
+
+          <!-- Actuador -->
+          <label for="actuator">Actuador:</label>
+          <select id="actuator" name="actuator" required>
+            <option value="riego">Riego</option>
+            <option value="ventilacion">Ventilación</option>
+            <option value="cobertura_cultivos">Cobertura de cultivos</option>
+            <option value="apertura_ventanas">Apertura de ventanas</option>
+          </select>
+
+          <!-- Opciones de Actuador -->
+          <label for="actuator-options">Opciones:</label>
+          <select id="actuator-options" name="actuator-options" required>
+            <!-- Las opciones cambiarán según el actuador seleccionado -->
+          </select>
+
+          <button type="submit">Guardar Cambios</button>
+        </form>
+
+
+        <button onclick="closeEditModal()">Cancelar</button>
+      </div>
+    </div>
 
     <div id="view-existing-rule-modal-overlay" style="display: none;">
       <div class="view-existing-rule-modal-content">
@@ -51,9 +110,77 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <script>
+    async function updateRule(event) {
+  event.preventDefault();
+
+  const ruleId = ruleIdToEdit;
+  const cropId = document.getElementById('crop').value;
+  const sensor = document.getElementById('sensor').value;
+  const actuator = document.getElementById('actuator').value;
+  const actuatorOptions = document.getElementById('actuator-options').value;
+  const operator = document.getElementById('operator').value;
+  const value = document.getElementById('value').value;
+  const unit = document.getElementById('unit').value;
+
+  const ruleInfo = {
+    "AND": [{
+      "conditions": [{
+        "type": sensor,
+        "value": parseFloat(value),
+        "operator": operator
+      }],
+      "actions": [actuatorOptions],
+      "sensors": [{
+        "type": sensor
+      }],
+      "actuators": [{
+        "type": actuator
+      }]
+    }]
+  };
+
+  const data = {
+    crop_id: cropId,
+    rule_info: JSON.stringify(ruleInfo),
+  };
+
+  try {
+    const response = await fetch(`http://localhost:3000/views/rules/${ruleId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      console.error('Error al actualizar la regla');
+    }
+  } catch (error) {
+    console.error('Error al actualizar la regla:', error);
+  }
+}
+
+document.getElementById('actuator').addEventListener('change', function() {
+  updateActuatorOptions();
+});
+
+    function openEditModal(ruleId, cropId, sensor, actuator, actuatorOptions) {
+      ruleIdToEdit = ruleId;
+      document.getElementById('crop').value = cropId;
+      document.getElementById('sensor').value = sensor;
+      document.getElementById('actuator').value = actuator;
+      updateActuatorOptions(actuatorOptions, actuator); // Asegurarse de que las opciones se actualicen correctamente
+      updateConditions(sensor);
+      document.getElementById('edit-rule-modal-overlay').style.display = 'block';
+    }
+
     let ruleIdToDelete = null;
 
     function openModal(ruleId) {
@@ -85,7 +212,111 @@
         console.error('Error al eliminar la regla:', error);
       }
     }
+
+    // Función para cerrar el modal de edición
+    function closeEditModal() {
+      document.getElementById('edit-rule-modal-overlay').style.display = 'none';
+      ruleIdToEdit = null;
+    }
+
+    // Función para actualizar las opciones del actuador
+    function updateActuatorOptions(selectedOption = '', actuator = '') {
+      let selectedActuator = actuator || document.getElementById('actuator').value;
+      let options = [];
+
+      switch (selectedActuator) {
+        case 'riego':
+          options = [{
+              value: 'activar_riego',
+              label: 'Activar riego'
+            },
+            {
+              value: 'desactivar_riego',
+              label: 'Desactivar riego'
+            },
+          ];
+          break;
+        case 'ventilacion':
+          options = [{
+              value: 'activar_ventilacion',
+              label: 'Activar ventilación'
+            },
+            {
+              value: 'desactivar_ventilacion',
+              label: 'Desactivar ventilación'
+            },
+          ];
+          break;
+        case 'cobertura_cultivos':
+          options = [{
+              value: 'cubrir_lona_semi_transparente',
+              label: 'Cubrir cultivos con lona semi-transparente'
+            },
+            {
+              value: 'cubrir_lona_opaca',
+              label: 'Cubrir cultivos con lona opaca'
+            },
+            {
+              value: 'destapar_cultivos',
+              label: 'Destapar cultivos'
+            },
+          ];
+          break;
+        case 'apertura_ventanas':
+          options = [{
+              value: 'abrir_ventanas',
+              label: 'Abrir ventanas'
+            },
+            {
+              value: 'cerrar_ventanas',
+              label: 'Cerrar ventanas'
+            },
+          ];
+          break;
+        default:
+          options = [];
+      }
+
+      // Limpiar las opciones actuales
+      const actuatorOptionsSelect = document.getElementById('actuator-options');
+      actuatorOptionsSelect.innerHTML = '';
+
+      // Añadir las nuevas opciones
+      options.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option.value;
+        opt.textContent = option.label;
+        actuatorOptionsSelect.appendChild(opt);
+      });
+
+      // Establecer la opción preseleccionada
+      if (selectedOption) {
+        actuatorOptionsSelect.value = selectedOption;
+      }
+    }
+
+
+    // Función para mostrar/ocultar el contenedor de condiciones
+    function toggleConditions() {
+      const sensor = document.getElementById('sensor').value;
+      updateConditions(sensor);
+    }
+
+    // Función para actualizar las condiciones basadas en el sensor
+    function updateConditions(sensor) {
+      const conditionsContainer = document.getElementById('conditions-container');
+      const unitInput = document.getElementById('unit');
+
+      if (sensor === 'temperatura' || sensor === 'temperatura_terreno') {
+        conditionsContainer.style.display = 'block';
+      } else if (sensor === 'humedad' || sensor === 'humedad_terreno') {
+        conditionsContainer.style.display = 'block';
+      } else {
+        conditionsContainer.style.display = 'none';
+      }
+    }
   </script>
+
 </body>
 
 </html>
