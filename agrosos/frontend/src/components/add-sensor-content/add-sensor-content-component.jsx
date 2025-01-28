@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./add-sensor-content-component.css";
 import lock from "./icon_lock_locked_.png";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 function AddSensor() {
     const [searchParams] = useSearchParams();
@@ -11,6 +12,7 @@ function AddSensor() {
     const token = localStorage.getItem("authToken");
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(""); // Estado para mensajes de éxito
+    const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
     const sensorNames = {
         "Temperatura": "temperature",
@@ -68,10 +70,10 @@ function AddSensor() {
     };
 
     return (
-        <div className="container-add-sensor">
+        <div className={`container-add-sensor ${darkMode ? 'dark-mode' : ''}`}>
             <div className="form-add-sensor">
-                <h1 className="sensor-form-title">Enlazar sensor</h1>
-                <form className="sensor-form" onSubmit={handleSubmit}>
+                <h1 className="sensor-form-title" aria-live="polite">Enlazar sensor</h1>
+                <form className="sensor-form" onSubmit={handleSubmit} aria-labelledby="sensor-form-title">
                     <div className="form-group-sensor-name">
                         <label htmlFor="sensor-name-input" className="label-sensor-name">
                             Nombre del sensor
@@ -83,10 +85,15 @@ function AddSensor() {
                                 className="input-sensor-name"
                                 value={sensorName}
                                 readOnly
+                                aria-readonly="true"
+                                aria-describedby="sensor-name-description"
                             />
                             {/* Añadido texto alternativo descriptivo */}
                             <img src={lock} alt="Icono de candado que indica que el nombre del sensor está bloqueado para edición" className="lock-icon" />
                         </div>
+                        <span id="sensor-name-description" className="sr-only">
+                            Este campo está bloqueado y solo muestra el nombre del sensor.
+                        </span>
                     </div>
                     <div className="form-group-sensor-code">
                         <label htmlFor="sensor-code-input" className="label-sensor-code">
@@ -99,16 +106,22 @@ function AddSensor() {
                             placeholder="Ingrese el código"
                             value={sensorCode}
                             onChange={(e) => setSensorCode(e.target.value)}
+                            aria-required="true"
+                            aria-invalid={error ? "true" : "false"}
+                            aria-describedby="sensor-code-error"
                         />
+                        {error && <p id="sensor-code-error" className="error-message">{error}</p>}
                     </div>
                     {error && <p className="error-message">{error}</p>}
                     {successMessage && <p className="sensor-success-message">{successMessage}</p>} {/*Muestra mensaje de éxito*/}
                     <div className="add-sensor-content-buttons">
-                        <button type="submit" className="btn-enla">
+                        <button type="submit" className="btn-enla" aria-label="Enlazar sensor">
                             Enlazar
                         </button>
                         <Link to="/sensors">
-                            <button className="btn-back">Volver</button>
+                            <button className="btn-back" aria-label="Volver a la lista de sensores">
+                                Volver
+                            </button>
                         </Link>
                     </div>
                 </form>

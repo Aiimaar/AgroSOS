@@ -8,9 +8,11 @@ import quit from "./image51.png";
 import nutrition from "./image61.png";
 import vent from "./Group1.png";
 import { useTranslation } from "react-i18next"; // Importa el hook useTranslation
+import { useDarkMode } from '../../context/DarkModeContext';
 
 function ActuatorContentComponent() {
   const { t } = useTranslation(); // Obtén la función de traducción
+  const { darkMode } = useDarkMode();
 
   const actuators = [
     { name: t("irrigation"), img: irrigation, altText: t("irrigation_image") },
@@ -19,22 +21,25 @@ function ActuatorContentComponent() {
     { name: t("window_opening"), img: vector, altText: t("window_opening_image") },
   ];
 
+
   return (
-    <div id="actuator-container">
+    <div id="actuator-container" className={darkMode ? 'dark-mode' : ''}>
+      <h2 id="actuator-list" className="sr-only">Lista de actuadores</h2>
       <div className="actuatorList">
         {actuators.map((actuator) => (
-          <div className="list" key={actuator.name}>
+          <div className="list" key={actuator.name} role="listitem">
             <img
               src={actuator.img}
-              alt={actuator.altText}
+              alt={`Imagen de ${actuator.name}`}
               className="actuator-content-component-img"
+              aria-hidden="true"
             />
             <p>{actuator.name}</p>
             <div className="actuator-buttons">
-              <Link to={`/add-actuator?name=${actuator.name}`}>
+              <Link to={`/add-actuator?name=${actuator.name}`} aria-label={`Añadir actuador ${actuator.name}`}>
                 <img src={add} alt={t("add_actuator")} className="add" />
               </Link>
-              <Link to="/actuator-enla?showDelete=true">
+              <Link to="/actuator-enla?showDelete=true" aria-label={`Eliminar actuador ${actuator.name}`}>
                 <img src={quit} alt={t("delete_actuator")} className="quit" />
               </Link>
             </div>
@@ -42,7 +47,7 @@ function ActuatorContentComponent() {
         ))}
       </div>
       <div className="enla">
-        <Link to="/actuator-enla">
+        <Link to="/actuator-enla" aria-label="Ver actuadores enlazados">
           <button className="button-enla">
             <p className="enla-p">{t("linked_actuators")}</p>
           </button>

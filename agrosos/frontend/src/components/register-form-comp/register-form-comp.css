@@ -1,6 +1,17 @@
+.register-form-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 90vw;
+  margin: -7em auto;
+  justify-content: center;
+  text-align: center;
+}
+
 .register-form {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   align-items: center;
   gap: 15px;
   width: 300px;
@@ -9,7 +20,12 @@
   border-radius: 15px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   max-width: 390px;
-  margin: 0 auto;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .register-form {
+  background-color: #444; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .register-form input {
@@ -21,15 +37,33 @@
   outline: none;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .register-form input {
+  background-color: #666; /* Fondo oscuro */
+  color: white; /* Texto claro */
+  border: 1px solid #999; /* Borde claro */
+}
+
 .register-form input:focus {
   border-color: #4CAF50;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .register-form input:focus {
+  border-color: #77a3d3; /* Borde diferente en modo oscuro */
+  box-shadow: 0 0 5px rgba(119, 163, 211, 0.4); /* Sombra diferente en modo oscuro */
 }
 
 .register-form .register-form-error-message {
   color: red;
   font-size: 14px;
   margin-top: -5px;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .register-form .register-form-error-message {
+  color: #ff6f6f; /* Color diferente en modo oscuro */
 }
 
 .register-form .register-form-submit-button {

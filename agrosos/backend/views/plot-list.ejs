@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="http://localhost:3000/css/view-plot-list.css"
+    />
+    <title>Lista de Terrenos</title>
+  </head>
+  <body>
+    <!-- Modal para eliminar terreno -->
+    <div class="modal-overlay" id="delete-modal">
+      <div class="plot-list-delete-modal">
+        <h3>¿Deseas eliminar este terreno?</h3>
+        <div class="modal-actions">
+          <button type="button" id="delete-confirm-button" onclick="deletePlot()">Eliminar</button>
+          <button type="button" id="delete-cancel-button" onclick="cancelDelete()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para editar terreno -->
+    <% if (updatePlot) { %>
+    <div class="modal-overlay" id="edit-modal">
+      <div class="plot-list-edit-modal">
+        <h3>Editar Terreno</h3>
+        <form id="edit-form">
+          <label>
+            Nombre:
+            <input type="text" id="edit-name" name="name" required />
+          </label>
+          <label>
+            Tamaño:
+            <input type="number" id="edit-size" name="size" required />
+          </label>
+          <div class="modal-actions">
+            <button type="submit" id="edit-submit-button">Guardar</button>
+            <button type="button" id="edit-cancel-button" onclick="cancelEdit()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Mensaje de bienvenida -->
+    <div class="plot-list-welcome">
+      <h3>¡Buenos días!</h3>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="plot-list-container">
+      <% if (error) { %>
+      <p class="plot-list-error-message"><%= error %></p>
+      <% } %>
+
+      <div class="plot-list">
+        <% plots.forEach(plot => { %>
+          <div
+            class="plot-card"
+            tabindex="0"
+            role="button"
+            data-id="<%= plot.id %>"
+            data-size="<%= plot.size %>"
+            onclick="selectPlot('<%= plot.id %>', '<%= plot.name %>')"
+          >
+            <% if (plot.image) { %>
+            <img
+              src="http://localhost:3000/uploads/<%= plot.image %>"
+              alt="Imagen del terreno <%= plot.name %>"
+              class="plot-image"
+            />
+            <% } else if (plot.color) { %>
+            <div
+              class="plot-image"
+              style="background-color: <%= plot.color %>"
+            ></div>
+            <% } else { %>
+            <img
+              src="http://localhost:3000/uploads/default-plot.jpg"
+              alt="Imagen predeterminada del terreno <%= plot.name %>"
+              class="plot-image"
+            />
+            <% } %>
+            <div class="terrain-name"><%= plot.name %></div>
+            <div class="card-footer">
+              <div class="plot-list-actions">
+                <div
+                  class="plot-list-button plot-list-edit-button"
+                  id="edit-button-<%= plot.id %>"
+                  onclick="event.stopPropagation(); updatePlot('<%= plot.id %>')"
+                >
+                  ✏️
+                </div>
+                <div
+                  class="plot-list-button plot-list-delete-button"
+                  id="delete-button-<%= plot.id %>"
+                  onclick="event.stopPropagation(); confirmDelete('<%= plot.id %>')"
+                >
+                  🗑️
+                </div>
+              </div>
+              <div class="plot-list-info">
+                <div class="plot-list-info-item">
+                  <span role="img" aria-label="temperature">🌡️</span>
+                  <span
+                    ><%= sensorAverages[plot.id]?.temperature || '--' %>°C</span
+                  >
+                </div>
+                <div class="plot-list-info-item">
+                  <span role="img" aria-label="humidity">💧</span>
+                  <span><%= sensorAverages[plot.id]?.humidity || '--' %>%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+    </div>
+
+    <div class="add-plot-button" id="add-plot-button" onclick="window.location.href='http://localhost:3000/views/create-plot'">
+      <span>+</span>
+    </div>
+
+    <script src="http://localhost:3000/js/plot-list.js"></script>
+  </body>
+</html>

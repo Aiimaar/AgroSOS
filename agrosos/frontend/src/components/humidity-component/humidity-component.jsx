@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "./humidity-component.css";
-import { useTranslation } from "react-i18next";
-import axios from "axios";
+import { useState } from "react";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de proyecto
 
 function HumidityComponent() {
   const { t, i18n } = useTranslation();  // Usamos useTranslation
   const [value, setValue] = useState(23);
   const [operator, setOperator] = useState("=");
-  const [loading, setLoading] = useState(true);
+  const { darkMode } = useDarkMode();
   const navigate = useNavigate();
 
   // Fetch language preference from the server
@@ -72,41 +72,50 @@ function HumidityComponent() {
   };
 
   return (
-    <div id="humidity-component-container">
+    <div id="humidity-component-container" className={darkMode ? 'dark-mode' : ''} aria-labelledby="humidity-component-title">
       <div className="humidity-component-arrow" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} className="humidity-component-arrow-icon" />
       </div>
-      <h1>{t('humidity')}</h1>  {/* Reemplazamos el texto estático por la traducción */}
+      <h1 id="humidity-component-title">Humedad</h1>
       <div className="humidity-controls">
         <button
           className={`humidity-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
+          aria-pressed={operator === "<"}
         >
           {t('operator_less_than')}  {/* Reemplazamos los operadores */}
         </button>
         <button
           className={`humidity-button-equal ${operator === "=" ? "active" : ""}`}
           onClick={() => handleComparisonChange("=")}
+          aria-pressed={operator === "="}
         >
           {t('operator_equal')}
         </button>
         <button
           className={`humidity-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
+          aria-pressed={operator === ">"}
         >
           {t('operator_greater_than')}
         </button>
       </div>
       <div className="humidity-display">
-        <span className="humidity-indicator">{value}%</span>
+        <span className="humidity-indicator" id="humidity-indicator">{value}%</span>
       </div>
       <div className="humidity-slider">
+        <label htmlFor="humidity-slider" className="sr-only">Deslizador de humedad</label>
         <input
+          id="humidity-slider"
           type="range"
           min="-10"
           max="40"
           value={value}
           onChange={handleHumidityChange}
+          aria-valuenow={value}
+          aria-valuemin="-10"
+          aria-valuemax="40"
+          aria-labelledby="humidity-indicator"
         />
         <div className="humidity-limits">
           <span>{t('min_humidity')}</span>  {/* Reemplazamos los límites de humedad */}
@@ -114,8 +123,12 @@ function HumidityComponent() {
         </div>
       </div>
       <div className="humidity-apply">
-        <button className="humidity-apply-button" onClick={handleApplyCondition}>
-          {t('apply_condition')}  {/* Reemplazamos el texto de aplicar condición */}
+        <button
+          className="humidity-apply-button"
+          onClick={handleApplyCondition}
+          aria-label="Aplicar condición de humedad"
+        >
+          Aplicar condición
         </button>
       </div>
     </div>

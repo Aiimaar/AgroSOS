@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCamera, FaPen } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./user-profile-comp.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
 const UserProfileComp = () => {
   const [userData, setUserData] = useState({
@@ -19,6 +20,7 @@ const UserProfileComp = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -126,22 +128,18 @@ const UserProfileComp = () => {
   };
 
   const modal = isModalOpen && (
-    <div
-      className="modal-overlay"
-      aria-hidden={!isModalOpen}
-      aria-labelledby="edit-modal-title"
-    >
-      <div className="modal">
-        <h3 id="edit-modal-title">Editar {editingField}</h3>
+    <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
+      <div className={`modal ${darkMode ? "dark-mode" : ""}`}>
+        <h3>Editar {editingField}</h3>
         <input
           type={editingField === "email" ? "email" : "text"}
           aria-label={`Editar ${editingField}`}
           value={fieldValue}
           onChange={(e) => setFieldValue(e.target.value)}
-          className="modal-input"
+          className={`modal-input ${darkMode ? "dark-mode" : ""}`}
         />
         <div className="modal-buttons">
-          <button onClick={handleSave} className="modal-save-button">
+          <button onClick={handleSave} className={`modal-save-button ${darkMode ? "dark-mode" : ""}`}>
             Guardar
           </button>
           <button
@@ -149,7 +147,7 @@ const UserProfileComp = () => {
               setIsModalOpen(false);
               setEditingField(null);
             }}
-            className="modal-cancel-button"
+            className={`modal-cancel-button ${darkMode ? "dark-mode" : ""}`}
           >
             Cancelar
           </button>
@@ -157,14 +155,17 @@ const UserProfileComp = () => {
       </div>
     </div>
   );
+  
 
   return (
-    <div className="user-profile-container">
+    <div className={`user-profile-container ${darkMode ? 'dark-mode' : ''}`}>
       <div className="profile-pic-container">
         <img
           src={userData.profile_image || "/default-profile.png"}
-          alt="profile"
+          alt="Imagen de perfil"
           className="profile-pic"
+          role="img"
+          aria-label="Imagen de perfil del usuario"
         />
         <div
           className="camera-icon"
@@ -182,12 +183,14 @@ const UserProfileComp = () => {
           accept="image/*"
           onChange={handleImageChange}
           style={{ display: "none" }}
+          aria-label="Seleccionar imagen"
         />
         {isImageSelected && (
           <button
             onClick={handleImageUpload}
             className="upload-button"
             disabled={isUploading}
+            aria-label="Subir imagen seleccionada"
           >
             Subir Imagen
           </button>
@@ -221,10 +224,10 @@ const UserProfileComp = () => {
           />
         </div>
       </div>
-      <button onClick={handleLogout} className="logout-button">
+      <button onClick={handleLogout} className="logout-button" aria-label="Cerrar sesión">
         Cerrar Sesión
       </button>
-      <button onClick={() => navigate(-1)} className="go-back-button">
+      <button onClick={() => navigate(-1)} className="go-back-button" aria-label="Volver a la página anterior">
         Volver
       </button>
       {ReactDOM.createPortal(modal, document.body)}

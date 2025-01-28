@@ -177,3 +177,51 @@
     font-size: 13px;
   }
 }
+
+/* Estilos específicos para pantallas móviles */
+@media (max-width: 768px) {
+  .add-rule-form-container {
+    padding: 15px;
+  }
+
+  .add-rule-form-title {
+    font-size: 20px;
+  }
+
+  .add-rule-label {
+    font-size: 14px;
+  }
+
+  .add-rule-select {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .add-rule-conditions {
+    padding: 6px;
+  }
+
+  .add-rule-conditions h3 {
+    font-size: 14px;
+  }
+
+  .add-rule-conditions li {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .add-rule-form-submit-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .add-rule-conditions-button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .delete-condition-button {
+    padding: 3px 6px;
+    font-size: 12px;
+  }
+}
