@@ -91,8 +91,8 @@ app.use('/api/irrigation_schedule', irrigationScheduleRoutes);
 app.use('/views/auth', authViewRoutes);
 app.use('/views/userList', isAuthenticated, userListViewsRoutes);
 app.use('/views/rules', rulesRoutes);
-app.use('/views/plot-list', plotListViewsRoutes);
-app.use('/views/create-plot', createPlotViewRoute);
+app.use('/views/plot-list', isAuthenticated, plotListViewsRoutes);
+app.use('/views/create-plot', isAuthenticated, createPlotViewRoute);
 
 // Manejo de errores
 app.use((req, res) => {
