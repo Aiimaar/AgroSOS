@@ -30,7 +30,7 @@
           <p><strong>Condiciones:</strong> <%= formatRuleInfo(rule.rule_info) %></p>
         </div>
         <div class="view-existing-rule-card-actions">
-          <button class="view-existing-rule-edit-button" onclick="window.location.href='/edit-rule/<%= rule.id %>'"> &#9998; </button>
+          <button class="view-existing-rule-edit-button" onclick="window.location.href='/views/rules/edit-rule/<%= rule.id %>'"> &#9998; </button>
           <button class="view-existing-rule-delete-button" onclick="openModal(<%= rule.id %>)"> &#128465; </button>
         </div>
       </div>
