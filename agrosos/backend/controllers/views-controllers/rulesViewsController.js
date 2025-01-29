@@ -41,20 +41,27 @@ export const getRuleById = async (req, res) => {
 
 export const createRule = async (req, res) => {
   try {
-    const { name, crop_id, technician_id, rule_info } = req.body;
+    const { name, crop_id, rule_info } = req.body;
+
+    // Asignamos directamente el technician_id a 93
+    const technician_id = 93;
+
+    // Crear la nueva regla
     const newRule = await Rule.create({
       name,
       crop_id,
-      technician_id,
+      technician_id, // Usamos el technician_id con el valor 93
       rule_info,
     });
-    console.log('New Rule created:', newRule); // Aquí puedes usar newRule
-    res.redirect('/');
+
+    console.log('Nueva regla creada:', newRule); // Para ver los detalles de la nueva regla
+    res.redirect('/'); // Redirige a la página principal o a donde sea necesario
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al crear la regla' });
   }
 };
+
 
 
 export const updateRuleView = async (req, res) => {
@@ -73,7 +80,8 @@ export const updateRuleView = async (req, res) => {
     rule.rule_info = rule_info || rule.rule_info;
 
     await rule.save();
-    res.redirect('/');
+    console.log('lleguéeeeeeeeeeeeee');
+    res.redirect('/views/rules');
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al actualizar la regla' });

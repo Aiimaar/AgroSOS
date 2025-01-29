@@ -91,6 +91,10 @@ function ExistingRulesComponent() {
           ) || []
         )
       );
+
+      // Agregar console.log para depuración
+      console.log("Crop ID:", selectedRule.crop);
+
       sessionStorage.setItem(
         "cropId",
         JSON.stringify(selectedRule.crop || null)
@@ -134,69 +138,74 @@ function ExistingRulesComponent() {
   };
 
   const formatRuleInfo = (info) => {
-  if (!info) return "Información no disponible";
+    if (!info) return "Información no disponible";
 
-  let parsedInfo;
+    let parsedInfo;
 
-  // Verifica si ya es un objeto o necesita parsearse
-  if (typeof info === "string") {
-    try {
-      parsedInfo = JSON.parse(info);
-    } catch (error) {
-      console.error("Error al parsear la información de la regla:", error);
+    // Verifica si ya es un objeto o necesita parsearse
+    if (typeof info === "string") {
+      try {
+        parsedInfo = JSON.parse(info);
+      } catch (error) {
+        console.error("Error al parsear la información de la regla:", error);
+        return "Información no válida";
+      }
+    } else if (typeof info === "object") {
+      parsedInfo = info;
+    } else {
       return "Información no válida";
     }
-  } else if (typeof info === "object") {
-    parsedInfo = info;
-  } else {
-    return "Información no válida";
-  }
 
-  // Formatea la información de las condiciones y acciones
-  let formattedInfo = "";
+    // Formatea la información de las condiciones y acciones
+    let formattedInfo = "";
 
-  if (parsedInfo.AND && Array.isArray(parsedInfo.AND)) {
-    parsedInfo.AND.forEach((conditionGroup) => {
-      if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-        conditionGroup.conditions.forEach((condition) => {
-          if (condition.type === "temperature") {
-            formattedInfo += `Temperatura ${condition.operator} ${condition.value}°C `;
-          }
-          if (condition.type === "humidity") {
-            formattedInfo += `Humedad ${condition.operator} ${condition.value}% `;
-          }
-          if (condition.type === "soilTemperature") {
-            formattedInfo += `Temperatura del terreno ${condition.operator} ${condition.value}°C `;
-          }
-          if (condition.type === "soilHumidity") {
-            formattedInfo += `Humedad del terreno ${condition.operator} ${condition.value}% `;
-          }
-        });
-      }
+    if (parsedInfo.AND && Array.isArray(parsedInfo.AND)) {
+      parsedInfo.AND.forEach((conditionGroup) => {
+        if (
+          conditionGroup.conditions &&
+          Array.isArray(conditionGroup.conditions)
+        ) {
+          conditionGroup.conditions.forEach((condition) => {
+            if (condition.type === "temperature") {
+              formattedInfo += `Temperatura ${condition.operator} ${condition.value}°C `;
+            }
+            if (condition.type === "humidity") {
+              formattedInfo += `Humedad ${condition.operator} ${condition.value}% `;
+            }
+            if (condition.type === "soilTemperature") {
+              formattedInfo += `Temperatura del terreno ${condition.operator} ${condition.value}°C `;
+            }
+            if (condition.type === "soilHumidity") {
+              formattedInfo += `Humedad del terreno ${condition.operator} ${condition.value}% `;
+            }
+          });
+        }
 
-      if (conditionGroup.actions && Array.isArray(conditionGroup.actions)) {
-        conditionGroup.actions.forEach((action) => {
-          formattedInfo += `| Acción: ${action} `;
-        });
-      }
+        if (conditionGroup.actions && Array.isArray(conditionGroup.actions)) {
+          conditionGroup.actions.forEach((action) => {
+            formattedInfo += `| Acción: ${action} `;
+          });
+        }
 
-      if (conditionGroup.sensors && Array.isArray(conditionGroup.sensors)) {
-        conditionGroup.sensors.forEach((sensor) => {
-          formattedInfo += `| Sensor: ${sensor.type} `;
-        });
-      }
+        if (conditionGroup.sensors && Array.isArray(conditionGroup.sensors)) {
+          conditionGroup.sensors.forEach((sensor) => {
+            formattedInfo += `| Sensor: ${sensor.type} `;
+          });
+        }
 
-      if (conditionGroup.actuators && Array.isArray(conditionGroup.actuators)) {
-        conditionGroup.actuators.forEach((actuator) => {
-          formattedInfo += `| Actuador: ${actuator.type} `;
-        });
-      }
-    });
-  }
+        if (
+          conditionGroup.actuators &&
+          Array.isArray(conditionGroup.actuators)
+        ) {
+          conditionGroup.actuators.forEach((actuator) => {
+            formattedInfo += `| Actuador: ${actuator.type} `;
+          });
+        }
+      });
+    }
 
-  return formattedInfo.trim() || "Información no disponible";
-};
-
+    return formattedInfo.trim() || "Información no disponible";
+  };
 
   return (
     <div id="existing-rules-container" className={darkMode ? "dark-mode" : ""}>
@@ -208,12 +217,20 @@ function ExistingRulesComponent() {
       </button>
       <div className="existing-rule-header">
         <h1 className="existing-rule-title">
-          <FontAwesomeIcon icon={faClipboardList} className="icon-list" aria-hidden="true" />
+          <FontAwesomeIcon
+            icon={faClipboardList}
+            className="icon-list"
+            aria-hidden="true"
+          />
           Reglas
         </h1>
       </div>
 
-      <div className="existing-rule-cards-container" role="region" aria-live="polite">
+      <div
+        className="existing-rule-cards-container"
+        role="region"
+        aria-live="polite"
+      >
         {rules.length === 0 ? (
           <div className="no-rules-message">
             <h2>Añadir regla</h2>
@@ -227,7 +244,13 @@ function ExistingRulesComponent() {
           </div>
         ) : (
           rules.map((rule) => (
-            <div className="existing-rule-card" key={rule.id} tabIndex="0" role="article" aria-labelledby={`rule-${rule.id}`}>
+            <div
+              className="existing-rule-card"
+              key={rule.id}
+              tabIndex="0"
+              role="article"
+              aria-labelledby={`rule-${rule.id}`}
+            >
               <div className="existing-rule-card-info">
                 <p>
                   <strong>Nombre:</strong> {rule.name}
