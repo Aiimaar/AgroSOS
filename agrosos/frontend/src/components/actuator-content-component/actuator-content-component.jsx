@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./actuator-content-component.css";
 import vector from "./Vector.png";
@@ -9,10 +9,24 @@ import nutrition from "./image61.png";
 import vent from "./Group1.png";
 import { useTranslation } from "react-i18next"; // Importa el hook useTranslation
 import { useDarkMode } from '../../context/DarkModeContext';
+import axios from "axios";
 
 function ActuatorContentComponent() {
-  const { t } = useTranslation(); // Obtén la función de traducción
+  const { t, i18n } = useTranslation(); // Obtén la función de traducción y el objeto i18n
   const { darkMode } = useDarkMode();
+  const [loading, setLoading] = useState(true);
+
+  // Obtener idioma desde localStorage
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem('language') || 'es'; // Obtén el idioma desde localStorage o usa 'es' como valor por defecto
+
+    i18n.changeLanguage(storedLanguage); // Cambia el idioma en i18next
+    setLoading(false); // Finaliza el estado de carga
+  }, [i18n]);
+
+  if (loading) {
+    return <div>{t("loading")}</div>; // Muestra "loading" mientras se carga el idioma
+  }
 
   const actuators = [
     { name: t("irrigation"), img: irrigation, altText: t("irrigation_image") },
@@ -20,7 +34,6 @@ function ActuatorContentComponent() {
     { name: t("crop_covering"), img: nutrition, altText: t("crop_covering_image") },
     { name: t("window_opening"), img: vector, altText: t("window_opening_image") },
   ];
-
 
   return (
     <div id="actuator-container" className={darkMode ? 'dark-mode' : ''}>

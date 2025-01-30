@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import "./inside-a-plot-comp.css";
 import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
-
 const InsideAPlotComp = ({ plotId }) => {
   const { t, i18n } = useTranslation(); // Accedemos a las funciones de i18next
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ const InsideAPlotComp = ({ plotId }) => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [i18n.language]);
+  }, []); // Remover dependencia de i18n.language
 
   const fetchData = async (plotId, token) => {
     try {
@@ -238,7 +237,7 @@ const InsideAPlotComp = ({ plotId }) => {
                 ))}
               </ul>
               <div className="task-input">
-                <label htmlFor="new-task-input">Añadir tarea completada:</label>
+                <label htmlFor="new-task-input">{t("add_completed_task")}</label>
                 <input
                   id="new-task-input"
                   type="text"

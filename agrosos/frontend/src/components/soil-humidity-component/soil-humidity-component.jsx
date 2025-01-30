@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import "./soil-humidity-component.css";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
 
 function SoilHumidityComponent() {
   const { t, i18n } = useTranslation();  // Obtén las funciones de traducción
@@ -13,31 +12,17 @@ function SoilHumidityComponent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchLanguage = async () => {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-      try {
-        const response = await axios.get("http://localhost:3000/api/users/1/language", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+    const savedLanguage = localStorage.getItem("language");  // Obtener el idioma desde localStorage
 
-        const fetchedLanguage = response.data.language || "es";
-        if (fetchedLanguage !== i18n.language) {
-          i18n.changeLanguage(fetchedLanguage);
-        }
+    if (savedLanguage) {
+      console.log("Idioma recuperado desde localStorage:", savedLanguage);  // Log para verificar el idioma
+      i18n.changeLanguage(savedLanguage);  // Cambiar el idioma
+    } else {
+      console.log("No se encontró idioma en localStorage, usando idioma por defecto.");
+      i18n.changeLanguage("es");  // En caso de no encontrar idioma, usar español por defecto
+    }
 
-      } catch (error) {
-        console.log("Error fetching language:", error);
-        i18n.changeLanguage("es");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLanguage();
+    setLoading(false); // Ya no es necesario esperar por una solicitud al servidor
   }, [i18n]);
 
   const handleSoilHumidityChange = (e) => {
@@ -72,18 +57,15 @@ function SoilHumidityComponent() {
   return (
     <div id="soil-humidity-component-container" aria-labelledby="soil-humidity-title" role="region">
       <div className="soil-humidity-component-arrow" onClick={() => navigate(-1)}>
-        <FaArrowLeft className="soil-humidity-component-arrow-icon" role="button" tabIndex="0" aria-label="Volver a la página anterior" />
+        <FaArrowLeft className="soil-humidity-component-arrow-icon" role="button" tabIndex="0" aria-label={t("comparison_less_than")} />
       </div>
       <h1 id="soil-humidity-title">{t("soil_humidity")}</h1>
       <div className="soil-humidity-controls" role="group" aria-labelledby="comparison-buttons-title">
-      <p id="comparison-buttons-title" className="visually-hidden">
-          Botones para seleccionar comparación
-        </p>
         <button
           className={`soil-humidity-button ${operator === "<" ? "active" : ""}`}
           onClick={() => handleComparisonChange("<")}
           aria-pressed={operator === "<"}
-          aria-label="Menor que"
+          aria-label={t("comparison_less_than")}
         >
           {"<"}
         </button>
@@ -91,7 +73,7 @@ function SoilHumidityComponent() {
           className={`humidity-button-equal ${operator === "=" ? "active" : ""}`}
           onClick={() => handleComparisonChange("=")}
           aria-pressed={operator === "="}
-          aria-label="Igual a"
+          aria-label={t("comparison_equal")}
         >
           {"="}
         </button>
@@ -99,7 +81,7 @@ function SoilHumidityComponent() {
           className={`humidity-button ${operator === ">" ? "active" : ""}`}
           onClick={() => handleComparisonChange(">")}
           aria-pressed={operator === ">"}
-          aria-label="Mayor que"
+          aria-label={t("comparison_greater_than")}
         >
           {">"}
         </button>
@@ -108,7 +90,7 @@ function SoilHumidityComponent() {
         className="soil-humidity-display"
         role="status"
         aria-live="polite"
-        aria-label={`Valor de humedad del terreno: ${value}%`}
+        aria-label={`${t("soil_humidity_value_label")}: ${value}%`}
       >
         <span className="soil-humidity-indicator">{value}%</span>
       </div>
@@ -117,9 +99,6 @@ function SoilHumidityComponent() {
         role="group"
         aria-labelledby="slider-label"
       >
-        <label id="slider-label" htmlFor="soil-humidity-range">
-          Control deslizante de humedad del terreno
-        </label>
         <input
           id="soil-humidity-range"
           type="range"
@@ -130,7 +109,7 @@ function SoilHumidityComponent() {
           aria-valuemin="-10"
           aria-valuemax="40"
           aria-valuenow={value}
-          aria-label={`Humedad del terreno: ${value}%`}
+          aria-label={`${t("soil_humidity_value_label")}: ${value}%`}
         />
         <div
           className="soil-humidity-limits"
@@ -144,7 +123,7 @@ function SoilHumidityComponent() {
         <button
           className="soil-humidity-apply-button"
           onClick={handleApplyCondition}
-          aria-label="Aplicar condición de humedad del terreno"
+          aria-label={t("apply_condition")}
         >
           {t("apply_condition")}
         </button>

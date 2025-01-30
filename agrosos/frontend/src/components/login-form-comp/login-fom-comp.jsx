@@ -12,10 +12,10 @@ const LoginFormComp = ({ onLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Codificar las credenciales en Base64
     const credentials = btoa(`${email}:${password}`);
-  
+
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/login",
@@ -27,24 +27,41 @@ const LoginFormComp = ({ onLogin }) => {
           },
         }
       );
-  
+
       const { token, userId, role } = response.data;
       console.log(response.data);
+
+      // Almacenar en localStorage los datos de autenticación
       localStorage.setItem("authToken", token);
       localStorage.setItem("userId", userId);
       localStorage.setItem("role", role);
-  
+
+      // Solicitar el idioma del usuario
+      const languageResponse = await axios.get(
+        `http://localhost:3000/api/users/${userId}/language`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pasar el token en el header para autenticar
+          },
+        }
+      );
+
+      const { language } = languageResponse.data; // Recuperar el idioma de la respuesta
+      console.log("Idioma recibido:", language);
+
+      // Almacenar el idioma en localStorage
+      localStorage.setItem("language", language);
+
       if (typeof onLogin === "function") {
         onLogin();
       }
-  
+
       navigate("/plot-list");
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
       setErrorMessage("Error en el inicio de sesión. Intenta de nuevo más tarde.");
     }
   };
-  
 
   return (
     <div className="login-form-container">

@@ -3,39 +3,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "./efficiency-energy-component.css";
+import { useTranslation } from 'react-i18next'; // Asegúrate de tener configurado i18n
 
 function EfficiencyEnergyComponent() {
   const navigate = useNavigate();
+  const { t } = useTranslation(); // Usar el hook para traducir textos
 
   return (
     <>
       <button
         className="efficiency-back-button"
         onClick={() => navigate("/advices")}
-        aria-label="Volver a la página de consejos"
+        aria-label={t('back_to_advices')} // Traducción
       >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
 
       <div className="efficiency-energy-container" aria-labelledby="efficiency-header">
         <div className="efficiency-energy-header">
-          <h2 id="efficiency-header">Eficiencia Energética</h2>
+          <h2 id="efficiency-header">{t('efficiency_energy')}</h2> {/* Traducción */}
         </div>
         <div className="efficiency-energy-txt" role="document">
-          <h3>1. Energía Renovable</h3>
-          <p>
-            Considera la instalación de paneles solares o turbinas eólicas para
-            reducir la dependencia de fuentes de energía no renovables. Utiliza
-            biogás producido a partir de desechos agrícolas como fuente de
-            energía.
-          </p>
+          <h3>{t('renewable_energy')}</h3> {/* Traducción */}
+          <p>{t('renewable_energy_description')}</p> {/* Traducción */}
 
-          <h3>2. Optimización del Uso de Energía</h3>
-          <p>
-            Implementa prácticas de eficiencia energética, como el uso de
-            bombillas LED y equipos eficientes. Monitorea y gestiona el consumo
-            de energía para identificar áreas de mejora y reducir costos.
-          </p>
+          <h3>{t('energy_optimization')}</h3> {/* Traducción */}
+          <p>{t('energy_optimization_description')}</p> {/* Traducción */}
         </div>
       </div>
     </>

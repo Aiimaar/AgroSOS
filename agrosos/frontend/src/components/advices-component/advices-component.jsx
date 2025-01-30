@@ -2,11 +2,13 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // Importar useTranslation para internacionalización
 import "./advices-component.css";
-import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useDarkMode } from '../../context/DarkModeContext';
 
 function AdvicesComponent() {
-  const navigate = useNavigate(); // Inicializar useNavigate
+  const { t } = useTranslation(); // Inicializar useTranslation
+  const navigate = useNavigate();
   const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   // Función para manejar el clic en una tarjeta
@@ -21,7 +23,7 @@ function AdvicesComponent() {
         <button
           className="back-button"
           onClick={() => navigate(-1)}
-          aria-label="Volver a la página anterior"
+          aria-label={t("back_button_label")}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
@@ -30,7 +32,7 @@ function AdvicesComponent() {
         <div className="advices-header">
           <h1 className="advices-title" aria-live="polite">
             <FontAwesomeIcon icon={faLightbulb} className="icon-lightbulb" />
-            Consejos
+            {t("advice_header_title")}
           </h1>
         </div>
 
@@ -44,37 +46,37 @@ function AdvicesComponent() {
             className="advice-card"
             onClick={() => handleCardClick("/soil-management")}
             role="button"
-            aria-label="Ir a la gestión del suelo"
+            aria-label={t("soil_management")}
             tabIndex="0"
           >
-            Gestión del suelo
+            {t("soil_management")}
           </div>
           <div
             className="advice-card"
             onClick={() => handleCardClick("/crop-management")}
             role="button"
-            aria-label="Ir al manejo de cultivos"
+            aria-label={t("crop_management")}
             tabIndex="0"
           >
-            Manejo de cultivos
+            {t("crop_management")}
           </div>
           <div
             className="advice-card"
             onClick={() => handleCardClick("/sustainability")}
             role="button"
-            aria-label="Ir a sostenibilidad y medio ambiente"
+            aria-label={t("sustainability")}
             tabIndex="0"
           >
-            Sostenibilidad y Medio Ambiente
+            {t("sustainability")}
           </div>
           <div
             className="advice-card"
             onClick={() => handleCardClick("/energy-efficiency")}
             role="button"
-            aria-label="Ir a eficiencia energética"
+            aria-label={t("energy_efficiency")}
             tabIndex="0"
           >
-            Eficiencia Energética
+            {t("energy_efficiency")}
           </div>
         </div>
       </div>
