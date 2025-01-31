@@ -313,6 +313,8 @@
   "go_to_actuators_page": "Go to Actuators page",
   "actuators_image_alt": "Representative image of Actuators",
   "actuators3": "Actuators",
+  "soilTemperature": "Soil temperature",
+  "soilHumidity": "Soil humidity",
 
   "select_action_option": "Select a action",
   "edit_rule": "Edit Rule",
@@ -387,5 +389,11 @@
   "createAccount": "Create Account",
   "passwordsDoNotMatch": "Passwords do not match.",
   "registrationSuccessful": "Registration successful!",
-  "registrationError": "Error during registration. Please check the data and try again."
+  "registrationError": "Error during registration. Please check the data and try again.",
+
+  "Select_time": "Select time",
+  "login": "Log In",
+  "login_error": "Login failed. Please try again later.",
+  "no_account": "Don't have an account yet?",
+  "create_account": "Create Account"
 }

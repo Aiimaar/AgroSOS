@@ -302,7 +302,7 @@
   "crop_image_alt": "Imagen del cultivo de ajo",
   "crop_title": "AJO",
   "chart_image_alt": "Gráfico de rendimiento del cultivo de ajo",
-
+  "sensors3": "Sensores",
   "error_fetching_crops": "Error al obtener los cultivos.",
   "no_selected_plot2": "No hay un terreno seleccionado.",
   "crop_assigned_successfully": "Cultivo asignado con éxito.",
@@ -312,6 +312,7 @@
 
   "select_action_option": "Selecciona una acción",
   "edit_rule": "Editar Regla",
+  "actuators3": "Actuadores",
   "select_crop": "Selecciona un cultivo",
   "select_crop_option": "Selecciona un cultivo",
   "sensor": "Sensor",
@@ -332,11 +333,13 @@
   "renewable_energy_description": "Considera la instalación de paneles solares o turbinas eólicas para reducir la dependencia de fuentes de energía no renovables. Utiliza biogás producido a partir de desechos agrícolas como fuente de energía.",
   "energy_optimization": "2. Optimización del Uso de Energía",
   "energy_optimization_description": "Implementa prácticas de eficiencia energética, como el uso de bombillas LED y equipos eficientes. Monitorea y gestiona el consumo de energía para identificar áreas de mejora y reducir costos.",
+  "soilTemperature": "Temperatura del suelo",
+  "soilHumidity": "Humedad del suelo",
 
   "back_to_settings": "Volver a la configuración",
   "add_rule_button_label": "Añadir una nueva regla",
   "rule_name": "Nombre",
-  "crop": "Cultivo",
+  "crop": "Cultivos",
   "conditions": "Condiciones",
   "delete_rule": "Eliminar regla",
   "confirm_delete_rule": "¿Estás seguro de que deseas eliminar esta regla?",
@@ -384,5 +387,11 @@
   "createAccount": "Crear cuenta",
   "passwordsDoNotMatch": "Las contraseñas no coinciden.",
   "registrationSuccessful": "¡Registro exitoso!",
-  "registrationError": "Error al registrar. Revisa los datos e inténtalo de nuevo."
+  "registrationError": "Error al registrar. Revisa los datos e inténtalo de nuevo.",
+
+  "Select_time": "Seleccionar hora",
+  "login": "Iniciar Sesión",
+  "login_error": "Error en el inicio de sesión. Intenta de nuevo más tarde.",
+  "no_account": "¿Aún no tienes cuenta?",
+  "create_account": "Crear cuenta"
 }
