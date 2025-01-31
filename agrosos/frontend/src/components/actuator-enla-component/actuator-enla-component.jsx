@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "react-i18next"; // Importamos useTranslation
+import { useTranslation } from "react-i18next"; 
 import "./actuator-enla-component.css";
-import { useDarkMode } from "../../context/DarkModeContext"; // Ajusta la ruta según tu estructura de archivos
+import { useDarkMode } from "../../context/DarkModeContext"; 
 
 function ActuatorEnlaComponent() {
     const [linkedActuators, setLinkedActuators] = useState([]);
@@ -16,9 +16,8 @@ function ActuatorEnlaComponent() {
     const { darkMode } = useDarkMode();
     const { t, i18n } = useTranslation();
 
-    // Obtener idioma desde localStorage y aplicarlo a i18n
     useEffect(() => {
-        const storedLanguage = localStorage.getItem("language") || "es"; // Español por defecto
+        const storedLanguage = localStorage.getItem("language") || "es"; 
         i18n.changeLanguage(storedLanguage);
     }, [i18n]);
 

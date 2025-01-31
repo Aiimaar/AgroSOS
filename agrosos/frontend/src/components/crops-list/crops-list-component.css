@@ -66,12 +66,14 @@ body, html {
   color: white; /* Texto claro en modo oscuro */
 }
 
+
 .crop-text {
+  font-size: 15px;
   margin-left: auto;
   text-align: left;
   padding-right: 20px;
   position: relative;
-  top: 20px;
+  top: 10px;
   line-height: 1;
 }
 

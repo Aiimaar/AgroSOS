@@ -13,7 +13,9 @@ function AccesibilityComponent() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { darkMode, toggleDarkMode } = useDarkMode();
-  const [language, setLanguage] = useState(localStorage.getItem("language") || "es");
+  const [language, setLanguage] = useState(
+    localStorage.getItem("language") || "es"
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -24,7 +26,6 @@ function AccesibilityComponent() {
       return;
     }
 
-    // Recuperar el idioma desde localStorage (sin llamar a la API)
     i18n.changeLanguage(language);
   }, [i18n, language]);
 
@@ -38,7 +39,6 @@ function AccesibilityComponent() {
       return;
     }
 
-    // Actualiza el idioma en la aplicación
     setLanguage(selectedLanguage);
     i18n.changeLanguage(selectedLanguage);
     localStorage.setItem("language", selectedLanguage);
@@ -51,14 +51,21 @@ function AccesibilityComponent() {
       );
       console.log("Idioma actualizado en el backend:", selectedLanguage);
     } catch (error) {
-      console.error("Error al actualizar el idioma:", error.response?.data || error.message);
+      console.error(
+        "Error al actualizar el idioma:",
+        error.response?.data || error.message
+      );
     }
   };
 
   return (
     <div id="container-accesibility" className={darkMode ? "dark-mode" : ""}>
       <div className="arrow-container">
-        <button className="accesibility-arrow" onClick={() => navigate(-1)} aria-label="Volver">
+        <button
+          className="accesibility-arrow"
+          onClick={() => navigate(-1)}
+          aria-label="Volver"
+        >
           <FontAwesomeIcon icon={faArrowLeft} aria-hidden="true" />
         </button>
       </div>
@@ -73,17 +80,22 @@ function AccesibilityComponent() {
       <div className="accesibility-tuto" id="app-tutorial-label" role="note">
         <p className="accesibility-p">{t("tutorial")}</p>
       </div>
-      <div className="language-selector">
-        <label htmlFor="language-select">{t("select_language")}</label>
-        <select id="language-select" onChange={handleLanguageChange} value={language}>
-          <option value="es">{t("spanish")}</option>
-          <option value="en">{t("english")}</option>
-        </select>
-      </div>
+
       <div className="accesibility-dark-mode">
         <p className="accesibility-p" onClick={toggleDarkMode}>
           {darkMode ? t("light_mode") : t("dark_mode")}
         </p>
+      </div>
+      <div className="language-selector">
+        <label htmlFor="language-select">{t("select_language")}</label>
+        <select
+          id="language-select"
+          onChange={handleLanguageChange}
+          value={language}
+        >
+          <option value="es">{t("spanish")}</option>
+          <option value="en">{t("english")}</option>
+        </select>
       </div>
     </div>
   );
