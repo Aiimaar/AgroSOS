@@ -206,6 +206,7 @@ function ExistingRulesComponent() {
       <button
         className="existing-rule-back-button"
         onClick={() => navigate("/settings")}
+        aria-label="Flecha para volver atrás"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
