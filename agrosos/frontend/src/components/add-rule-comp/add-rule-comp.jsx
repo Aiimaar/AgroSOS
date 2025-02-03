@@ -1,22 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useTranslation } from "react-i18next";  // <-- IMPORTANTE: importar useTranslation
+import { useTranslation } from "react-i18next"; // <-- IMPORTANTE: importar useTranslation
 import "./add-rule-comp.css";
 import { useDarkMode } from "../../context/DarkModeContext";
 
 const AddRuleComp = () => {
-  const { t, i18n } = useTranslation();  // <-- IMPORTANTE: obtener t e i18n
+  const { t, i18n } = useTranslation(); // <-- IMPORTANTE: obtener t e i18n
   const [cropId, setCropId] = useState(sessionStorage.getItem("cropId") || "");
   const [crops, setCrops] = useState([]);
-  const [sensorType, setSensorType] = useState(sessionStorage.getItem("sensorType") || "");
-  const [actuatorType, setActuatorType] = useState(sessionStorage.getItem("actuatorType") || "");
+  const [sensorType, setSensorType] = useState(
+    sessionStorage.getItem("sensorType") || ""
+  );
+  const [actuatorType, setActuatorType] = useState(
+    sessionStorage.getItem("actuatorType") || ""
+  );
   const [availableActions, setAvailableActions] = useState([]);
-  const [selectedAction, setSelectedAction] = useState(sessionStorage.getItem("selectedAction") || "");
-  const [temperatureConditions, setTemperatureConditions] = useState(JSON.parse(sessionStorage.getItem("temperatureConditions")) || []);
-  const [humidityConditions, setHumidityConditions] = useState(JSON.parse(sessionStorage.getItem("humidityConditions")) || []);
-  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || []);
-  const [soilHumidityConditions, setSoilHumidityConditions] = useState(JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || []);
+  const [selectedAction, setSelectedAction] = useState(
+    sessionStorage.getItem("selectedAction") || ""
+  );
+  const [temperatureConditions, setTemperatureConditions] = useState(
+    JSON.parse(sessionStorage.getItem("temperatureConditions")) || []
+  );
+  const [humidityConditions, setHumidityConditions] = useState(
+    JSON.parse(sessionStorage.getItem("humidityConditions")) || []
+  );
+  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(
+    JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || []
+  );
+  const [soilHumidityConditions, setSoilHumidityConditions] = useState(
+    JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || []
+  );
   const [ruleNumber, setRuleNumber] = useState(1);
   const navigate = useNavigate();
   const technicianId = localStorage.getItem("userId");
@@ -24,21 +38,20 @@ const AddRuleComp = () => {
   const { darkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
-      const storedLanguage = localStorage.getItem("language");
-      i18n.changeLanguage(storedLanguage || "es"); // Usa español por defecto
+    const storedLanguage = localStorage.getItem("language");
+    i18n.changeLanguage(storedLanguage || "es"); // Usa español por defecto
   }, []);
 
   const actuatorActionMap = {
     Riego: [t("activate_irrigation"), t("deactivate_irrigation")],
     Ventilación: [t("activate_ventilation"), t("deactivate_ventilation")],
     "Cobertura de cultivos": [
-        t("cover_crops_with_translucent_tarp"),
-        t("cover_crops_with_opaque_tarp"),
-        t("uncover_crops"),
+      t("cover_crops_with_translucent_tarp"),
+      t("cover_crops_with_opaque_tarp"),
+      t("uncover_crops"),
     ],
     "Apertura de ventanas": [t("open_windows"), t("close_windows")],
   };
-
 
   useEffect(() => {
     // Recuperar el idioma del localStorage
@@ -163,23 +176,23 @@ const AddRuleComp = () => {
           conditions: [
             ...temperatureConditions.map((cond) => ({
               type: "temperature",
-              value: cond.temperature,
-              operator: cond.comparison,
+              value: cond.value, // <-- Acceder a la propiedad 'value'
+              operator: cond.operator,
             })),
             ...humidityConditions.map((cond) => ({
               type: "humidity",
-              value: cond.humidity,
-              operator: cond.comparison,
+              value: cond.value, // <-- Acceder a la propiedad 'value'
+              operator: cond.operator,
             })),
             ...soilTemperatureConditions.map((cond) => ({
               type: "soilTemperature",
-              value: cond.soilTemperature,
-              operator: cond.comparison,
+              value: cond.value, // <-- Acceder a la propiedad 'value'
+              operator: cond.operator,
             })),
             ...soilHumidityConditions.map((cond) => ({
               type: "soilHumidity",
-              value: cond.soilHumidity,
-              operator: cond.comparison,
+              value: cond.value, // <-- Acceder a la propiedad 'value'
+              operator: cond.operator,
             })),
           ],
           actions: [selectedAction],
@@ -190,6 +203,14 @@ const AddRuleComp = () => {
     };
 
     try {
+      console.log("Información de la regla que se va a enviar:", {
+        // <-- console.log añadido
+        name: ruleName,
+        crop_id: cropId,
+        technician_id: technicianId,
+        rule_info: JSON.stringify(ruleInfo),
+      });
+
       await axios.post(
         "http://localhost:3000/api/rules",
         {
@@ -238,7 +259,7 @@ const AddRuleComp = () => {
       <h2 className="add-rule-form-title">{t("add_rule")}</h2>
 
       <label className="add-rule-label" htmlFor="add-rule-crop">
-      {t("crop_2")}
+        {t("crop_2")}
       </label>
       <select
         id="add-rule-crop"
@@ -274,14 +295,17 @@ const AddRuleComp = () => {
         aria-label="Selecciona un tipo de sensor"
       >
         <option value="">{t("select_sensor_option")}</option>
-        <option value="Temperature">{t("temperature_sensor")}</option>
-        <option value="Humidity">{t("humidity_sensor")}</option>
-        <option value="SoilTemperature">{t("soil_temperature_sensor")}</option>
-        <option value="SoilHumidity">{t("soil_humidity_sensor")}</option>
+        <option value="Temperature">{t("temperature_sensor")}</option>{" "}
+        {/* Valor corregido */}
+        <option value="Humedad">{t("humidity_sensor")}</option>
+        <option value="Temperatura del terreno">
+          {t("soil_temperature_sensor")}
+        </option>
+        <option value="Humedad del terreno">{t("soil_humidity_sensor")}</option>
       </select>
 
       {/* Condiciones y botones para cada tipo de sensor */}
-      {sensorType === "Temperatura" && (
+      {sensorType === "Temperature" && (
         <div className="add-rule-conditions">
           <h3>Condiciones de Temperatura</h3>
           <ul>
