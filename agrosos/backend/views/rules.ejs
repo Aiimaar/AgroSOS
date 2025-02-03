@@ -29,7 +29,7 @@
         <div class="view-existing-rule-card-info">
           <p><strong>Nombre:</strong> <%= rule.name %></p>
           <p><strong>Cultivo:</strong> <%= crop ? crop.name : 'Cultivo no encontrado' %></p>
-          <p><strong>Condiciones:</strong> <%= formatRuleInfo(rule.rule_info) %></p>
+          <p><strong>Condiciones:</strong> <%= (rule.rule_info) %></p>
         </div>
         <div class="view-existing-rule-card-actions">
           <button class="view-existing-rule-edit-button" onclick="openEditModal(<%= rule.id %>, '<%= crop ? crop.id : '' %>', '<%= rule.sensor %>', '<%= rule.actuator %>', '<%= rule.actuator_options %>')"> &#9998; </button>
@@ -43,7 +43,7 @@
 
     <div id="add-rule-modal-overlay" class="modal-overlay" style="display: none;">
       <div class="modal-content">
-        <h2>Añadir Regla</h2>
+        <h2>Añadir Reglita</h2>
         <form id="add-rule-form" onsubmit="addRule(event)">
           <label for="add-rule-name">Nombre de la Regla:</label>
           <input type="text" id="add-rule-name" name="name" required>
@@ -183,69 +183,71 @@
 
     // Función para manejar el envío del formulario de añadir regla
     async function addRule(event) {
-  event.preventDefault();
+      event.preventDefault();
 
-  try {
-    // Usar el technician_id predeterminado de 2
-    const technicianId = 93;  // ID de técnico predeterminado
+      try {
+        // Usar el technician_id predeterminado de 2
+        const technicianId = 93; // ID de técnico predeterminado
 
-    // Obtener el resto de los valores del formulario
-    const name = document.getElementById('add-rule-name').value;
-    const cropId = document.getElementById('add-crop').value;
-    const sensor = document.getElementById('add-sensor').value;
-    const actuator = document.getElementById('add-actuator').value;
-    const actuatorOptions = document.getElementById('add-actuator-options').value;
-    const operator = document.getElementById('add-operator').value;
-    const value = document.getElementById('add-value').value;
-    const unit = document.getElementById('add-unit').value;
+        // Obtener el resto de los valores del formulario
+        const name = document.getElementById('add-rule-name').value;
+        const cropId = document.getElementById('add-crop').value;
+        const sensor = document.getElementById('add-sensor').value;
+        const actuator = document.getElementById('add-actuator').value;
+        const actuatorOptions = document.getElementById('add-actuator-options').value;
+        const operator = document.getElementById('add-operator').value;
+        const value = document.getElementById('add-value').value;
+        const unit = document.getElementById('add-unit').value;
 
-    const ruleInfo = {
-      "AND": [{
-        "conditions": [{
-          "type": sensor,
-          "value": parseFloat(value),
-          "operator": operator
-        }],
-        "actions": [actuatorOptions],
-        "sensors": [{
-          "type": sensor
-        }],
-        "actuators": [{
-          "type": actuator
-        }]
-      }]
-    };
+        const ruleInfo = {
+          "AND": [{
+            "conditions": [{
+              "type": sensor,
+              "value": parseFloat(value),
+              "operator": operator
+            }],
+            "actions": [actuatorOptions],
+            "sensors": [{
+              "type": sensor
+            }],
+            "actuators": [{
+              "type": actuator
+            }]
+          }]
+        };
 
-    // Construir los datos para enviar
-    const data = {
-      name: name,
-      crop_id: cropId,
-      technician_id: technicianId,  // Usar el technician_id predeterminado
-      rule_info: JSON.stringify(ruleInfo)
-    };
+        // Construir los datos para enviar
+        const data = {
+          name: name,
+          crop_id: cropId,
+          technician_id: technicianId, // Usar el technician_id predeterminado
+          rule_info: JSON.stringify(ruleInfo)
+        };
 
-    // Enviar la solicitud POST
-    const response = await fetch('http://localhost:3000/views/rules', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
+        // Enviar la solicitud POST
+        const response = await fetch('http://localhost:3000/views/rules', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
 
-    if (response.ok) {
-      alert('Regla añadida correctamente.');
-      window.location.reload();
-    } else {
-      const errorResponse = await response.json();
-      console.error('Error al añadir la regla:', errorResponse);
-      alert('No se pudo añadir la regla. Por favor, intente de nuevo.');
+        window.location.href ="/views/rules";
+
+        if (response.ok) {
+          alert('Regla añadida correctamente.');
+          window.location.reload();
+        } else {
+          const errorResponse = await response.json();
+          console.error('Error al añadir la regla:', errorResponse);
+          alert('No se pudo añadir la regla. Por favor, intente de nuevo.');
+        }
+      } catch (error) {
+        console.error('Error al añadir la regla:', error);
+        alert('Ocurrió un error al añadir la regla. Por favor, intente de nuevo.');
+      }
     }
-  } catch (error) {
-    console.error('Error al añadir la regla:', error);
-    alert('Ocurrió un error al añadir la regla. Por favor, intente de nuevo.');
-  }
-}
 
 
 
@@ -382,6 +384,8 @@
           },
           body: JSON.stringify(data),
         });
+
+        window.location.href ="/views/rules";
 
         if (response.ok) {
           window.location.reload();

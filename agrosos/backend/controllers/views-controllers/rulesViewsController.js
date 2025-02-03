@@ -55,7 +55,7 @@ export const createRule = async (req, res) => {
     });
 
     console.log('Nueva regla creada:', newRule); // Para ver los detalles de la nueva regla
-    res.redirect('/'); // Redirige a la página principal o a donde sea necesario
+    res.redirect('/views/rules'); // Redirige a la página principal o a donde sea necesario
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al crear la regla' });
