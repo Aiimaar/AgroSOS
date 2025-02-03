@@ -1,50 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";  // <-- IMPORTANTE: importar useTranslation
 import "./add-rule-comp.css";
-import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const AddRuleComp = () => {
+  const { t, i18n } = useTranslation();  // <-- IMPORTANTE: obtener t e i18n
   const [cropId, setCropId] = useState(sessionStorage.getItem("cropId") || "");
   const [crops, setCrops] = useState([]);
-  const [sensorType, setSensorType] = useState(
-    sessionStorage.getItem("sensorType") || ""
-  );
-  const [actuatorType, setActuatorType] = useState(
-    sessionStorage.getItem("actuatorType") || ""
-  );
+  const [sensorType, setSensorType] = useState(sessionStorage.getItem("sensorType") || "");
+  const [actuatorType, setActuatorType] = useState(sessionStorage.getItem("actuatorType") || "");
   const [availableActions, setAvailableActions] = useState([]);
-  const [selectedAction, setSelectedAction] = useState(
-    sessionStorage.getItem("selectedAction") || ""
-  );
-  const [temperatureConditions, setTemperatureConditions] = useState(
-    JSON.parse(sessionStorage.getItem("temperatureConditions")) || []
-  );
-  const [humidityConditions, setHumidityConditions] = useState(
-    JSON.parse(sessionStorage.getItem("humidityConditions")) || []
-  );
-  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(
-    JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || []
-  );
-  const [soilHumidityConditions, setSoilHumidityConditions] = useState(
-    JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || []
-  );
+  const [selectedAction, setSelectedAction] = useState(sessionStorage.getItem("selectedAction") || "");
+  const [temperatureConditions, setTemperatureConditions] = useState(JSON.parse(sessionStorage.getItem("temperatureConditions")) || []);
+  const [humidityConditions, setHumidityConditions] = useState(JSON.parse(sessionStorage.getItem("humidityConditions")) || []);
+  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || []);
+  const [soilHumidityConditions, setSoilHumidityConditions] = useState(JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || []);
   const [ruleNumber, setRuleNumber] = useState(1);
   const navigate = useNavigate();
   const technicianId = localStorage.getItem("userId");
   const authToken = localStorage.getItem("authToken");
-  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
+  useEffect(() => {
+      const storedLanguage = localStorage.getItem("language");
+      i18n.changeLanguage(storedLanguage || "es"); // Usa español por defecto
+  }, []);
 
   const actuatorActionMap = {
-    Riego: ["Activar Riego", "Desactivar Riego"],
-    Ventilación: ["Activar Ventilación", "Desactivar Ventilación"],
+    Riego: [t("activate_irrigation"), t("deactivate_irrigation")],
+    Ventilación: [t("activate_ventilation"), t("deactivate_ventilation")],
     "Cobertura de cultivos": [
-      "Cubrir cultivos con lona semi-transparente",
-      "Cubrir cultivos con lona opaca",
-      "Destapar cultivos",
+        t("cover_crops_with_translucent_tarp"),
+        t("cover_crops_with_opaque_tarp"),
+        t("uncover_crops"),
     ],
-    "Apertura de ventanas": ["Abrir ventanas", "Cerrar ventanas"],
+    "Apertura de ventanas": [t("open_windows"), t("close_windows")],
   };
+
+
+  useEffect(() => {
+    // Recuperar el idioma del localStorage
+    const storedLanguage = localStorage.getItem("language");
+
+    if (storedLanguage) {
+      i18n.changeLanguage(storedLanguage);
+    } else {
+      i18n.changeLanguage("es"); // Usar el idioma por defecto si no hay configuración previa
+    }
+  }, [i18n]);
 
   useEffect(() => {
     const fetchCrops = async () => {
@@ -148,10 +153,10 @@ const AddRuleComp = () => {
       alert("Por favor, completa todos los campos antes de añadir la regla.");
       return;
     }
-  
+
     const cropName = localStorage.getItem("cropName") || "Cultivo";
     const ruleName = `Regla ${ruleNumber} ${cropName}`;
-  
+
     const ruleInfo = {
       AND: [
         {
@@ -183,7 +188,7 @@ const AddRuleComp = () => {
         },
       ],
     };
-  
+
     try {
       await axios.post(
         "http://localhost:3000/api/rules",
@@ -191,7 +196,7 @@ const AddRuleComp = () => {
           name: ruleName,
           crop_id: cropId,
           technician_id: technicianId,
-          rule_info: ruleInfo, // No es necesario stringify
+          rule_info: JSON.stringify(ruleInfo),
         },
         {
           headers: {
@@ -199,9 +204,9 @@ const AddRuleComp = () => {
           },
         }
       );
-  
+
       setRuleNumber(ruleNumber + 1);
-  
+
       setCropId("");
       setSensorType("");
       setActuatorType("");
@@ -210,7 +215,7 @@ const AddRuleComp = () => {
       setHumidityConditions([]);
       setSoilTemperatureConditions([]);
       setSoilHumidityConditions([]);
-  
+
       sessionStorage.removeItem("cropId");
       sessionStorage.removeItem("sensorType");
       sessionStorage.removeItem("actuatorType");
@@ -220,223 +225,222 @@ const AddRuleComp = () => {
       sessionStorage.removeItem("soilTemperatureConditions");
       sessionStorage.removeItem("soilHumidityConditions");
       localStorage.removeItem("cropName");
-  
+
       alert("Regla añadida con éxito.");
     } catch (error) {
       console.error("Error al añadir la regla:", error);
       alert("Hubo un problema al añadir la regla.");
     }
   };
-  
 
   return (
-    <div id="add-rule-container-all">
-      <div className="add-rule-form-container">
-        <h2 className="add-rule-form-title">Añadir Regla</h2>
+    <div className="add-rule-form-container">
+      <h2 className="add-rule-form-title">{t("add_rule")}</h2>
 
-        <label className="add-rule-label" htmlFor="add-rule-crop">
-          Cultivo:
-        </label>
-        <select
-          id="add-rule-crop"
-          className="add-rule-select"
-          value={cropId}
-          onChange={(e) => {
-            const selectedCropId = e.target.value;
-            setCropId(selectedCropId);
+      <label className="add-rule-label" htmlFor="add-rule-crop">
+      {t("crop_2")}
+      </label>
+      <select
+        id="add-rule-crop"
+        className="add-rule-select"
+        value={cropId}
+        onChange={(e) => {
+          const selectedCropId = e.target.value;
+          setCropId(selectedCropId);
 
-            const selectedCropName =
-              crops.find((crop) => crop.id === Number(selectedCropId))?.name ||
-              "";
-            localStorage.setItem("cropName", selectedCropName);
-          }}
-          aria-label="Selecciona un cultivo"
-        >
-          <option value="">Selecciona un cultivo</option>
-          {crops.map((crop) => (
-            <option key={crop.id} value={crop.id}>
-              {crop.name}
-            </option>
-          ))}
-        </select>
-
-        <label className="add-rule-label" htmlFor="add-rule-sensor">
-          Sensor:
-        </label>
-        <select
-          id="add-rule-sensor"
-          className="add-rule-select"
-          value={sensorType}
-          onChange={(e) => setSensorType(e.target.value)}
-          aria-label="Selecciona un tipo de sensor"
-        >
-          <option value="">Selecciona un sensor</option>
-          <option value="Humedad">Humedad</option>
-          <option value="Temperatura">Temperatura</option>
-          <option value="Humedad del terreno">Humedad del terreno</option>
-          <option value="Temperatura del terreno">
-            Temperatura del terreno
+          const selectedCropName =
+            crops.find((crop) => crop.id === Number(selectedCropId))?.name ||
+            "";
+          localStorage.setItem("cropName", selectedCropName);
+        }}
+        aria-label="Selecciona un cultivo"
+      >
+        <option value="">{t("select_a_crop")}</option>
+        {crops.map((crop) => (
+          <option key={crop.id} value={crop.id}>
+            {crop.name}
           </option>
-        </select>
+        ))}
+      </select>
 
-        {/* Condiciones y botones para cada tipo de sensor */}
-        {sensorType === "Temperatura" && (
-          <div className="add-rule-conditions">
-            <h3>Condiciones de Temperatura</h3>
-            <ul>
-              {temperatureConditions.map((cond, index) => (
-                <li key={index}>
-                  {cond.operator} {cond.value}°C
-                  <button
-                    className="delete-condition-button"
-                    onClick={() => handleDeleteCondition("temperature", index)}
-                    aria-label="Eliminar condición de temperatura"
-                  >
-                    Eliminar
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <button
-              className="add-rule-conditions-button"
-              onClick={() => navigate("/temperature")}
-              aria-label="Añadir condición de temperatura"
-            >
-              Añadir
-            </button>
-          </div>
-        )}
+      <label className="add-rule-label" htmlFor="add-rule-sensor">
+        Sensor:
+      </label>
+      <select
+        id="add-rule-sensor"
+        className="add-rule-select"
+        value={sensorType}
+        onChange={(e) => setSensorType(e.target.value)}
+        aria-label="Selecciona un tipo de sensor"
+      >
+        <option value="">{t("select_sensor_option")}</option>
+        <option value="Temperature">{t("temperature_sensor")}</option>
+        <option value="Humidity">{t("humidity_sensor")}</option>
+        <option value="SoilTemperature">{t("soil_temperature_sensor")}</option>
+        <option value="SoilHumidity">{t("soil_humidity_sensor")}</option>
+      </select>
 
-        {sensorType === "Humedad" && (
-          <div className="add-rule-conditions">
-            <h3>Condiciones de Humedad</h3>
-            <ul>
-              {humidityConditions.map((cond, index) => (
-                <li key={index}>
-                  {cond.operator} {cond.value}%
-                  <button
-                    className="delete-condition-button"
-                    onClick={() => handleDeleteCondition("humidity", index)}
-                    aria-label="Eliminar condición de humedad"
-                  >
-                    Eliminar
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <button
-              className="add-rule-conditions-button"
-              onClick={() => navigate("/humidity")}
-              aria-label="Añadir condición de humedad"
-            >
-              Añadir
-            </button>
-          </div>
-        )}
+      {/* Condiciones y botones para cada tipo de sensor */}
+      {sensorType === "Temperatura" && (
+        <div className="add-rule-conditions">
+          <h3>Condiciones de Temperatura</h3>
+          <ul>
+            {temperatureConditions.map((cond, index) => (
+              <li key={index}>
+                {cond.operator} {cond.value}°C
+                <button
+                  className="delete-condition-button"
+                  onClick={() => handleDeleteCondition("temperature", index)}
+                  aria-label="Eliminar condición de temperatura"
+                >
+                  Eliminar
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="add-rule-conditions-button"
+            onClick={() => navigate("/temperature")}
+            aria-label="Añadir condición de temperatura"
+          >
+            Añadir
+          </button>
+        </div>
+      )}
 
-        {sensorType === "Temperatura del terreno" && (
-          <div className="add-rule-conditions">
-            <h3>Condiciones de Temperatura del terreno</h3>
-            <ul>
-              {soilTemperatureConditions.map((cond, index) => (
-                <li key={index}>
-                  {cond.operator} {cond.value}°C
-                  <button
-                    className="delete-condition-button"
-                    onClick={() =>
-                      handleDeleteCondition("soilTemperature", index)
-                    }
-                    aria-label="Eliminar condición de temperatura del terreno"
-                  >
-                    Eliminar
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <button
-              className="add-rule-conditions-button"
-              onClick={() => navigate("/soil-temperature")}
-              aria-label="Añadir condición de temperatura del terreno"
-            >
-              Añadir
-            </button>
-          </div>
-        )}
+      {sensorType === "Humedad" && (
+        <div className="add-rule-conditions">
+          <h3>Condiciones de Humedad</h3>
+          <ul>
+            {humidityConditions.map((cond, index) => (
+              <li key={index}>
+                {cond.operator} {cond.value}%
+                <button
+                  className="delete-condition-button"
+                  onClick={() => handleDeleteCondition("humidity", index)}
+                  aria-label="Eliminar condición de humedad"
+                >
+                  Eliminar
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="add-rule-conditions-button"
+            onClick={() => navigate("/humidity")}
+            aria-label="Añadir condición de humedad"
+          >
+            Añadir
+          </button>
+        </div>
+      )}
 
-        {sensorType === "Humedad del terreno" && (
-          <div className="add-rule-conditions">
-            <h3>Condiciones de Humedad del terreno</h3>
-            <ul>
-              {soilHumidityConditions.map((cond, index) => (
-                <li key={index}>
-                  {cond.operator} {cond.value}%
-                  <button
-                    className="delete-condition-button"
-                    onClick={() => handleDeleteCondition("soilHumidity", index)}
-                    aria-label="Eliminar condición de humedad del terreno"
-                  >
-                    Eliminar
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <button
-              className="add-rule-conditions-button"
-              onClick={() => navigate("/soil-humidity")}
-              aria-label="Añadir condición de humedad del terreno"
-            >
-              Añadir
-            </button>
-          </div>
-        )}
+      {sensorType === "Temperatura del terreno" && (
+        <div className="add-rule-conditions">
+          <h3>Condiciones de Temperatura del terreno</h3>
+          <ul>
+            {soilTemperatureConditions.map((cond, index) => (
+              <li key={index}>
+                {cond.operator} {cond.value}°C
+                <button
+                  className="delete-condition-button"
+                  onClick={() =>
+                    handleDeleteCondition("soilTemperature", index)
+                  }
+                  aria-label="Eliminar condición de temperatura del terreno"
+                >
+                  Eliminar
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="add-rule-conditions-button"
+            onClick={() => navigate("/soil-temperature")}
+            aria-label="Añadir condición de temperatura del terreno"
+          >
+            Añadir
+          </button>
+        </div>
+      )}
 
-        <label className="add-rule-label" htmlFor="add-rule-actuator">
-          Actuador:
-        </label>
-        <select
-          id="add-rule-actuator"
-          className="add-rule-select"
-          value={actuatorType}
-          onChange={handleActuatorChange}
-          aria-label="Selecciona un actuador"
-        >
-          <option value="">Selecciona un actuador</option>
-          <option value="Riego">Riego</option>
-          <option value="Ventilación">Ventilación</option>
-          <option value="Cobertura de cultivos">Cobertura de cultivos</option>
-          <option value="Apertura de ventanas">Apertura de ventanas</option>
-        </select>
+      {sensorType === "Humedad del terreno" && (
+        <div className="add-rule-conditions">
+          <h3>Condiciones de Humedad del terreno</h3>
+          <ul>
+            {soilHumidityConditions.map((cond, index) => (
+              <li key={index}>
+                {cond.operator} {cond.value}%
+                <button
+                  className="delete-condition-button"
+                  onClick={() => handleDeleteCondition("soilHumidity", index)}
+                  aria-label="Eliminar condición de humedad del terreno"
+                >
+                  Eliminar
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="add-rule-conditions-button"
+            onClick={() => navigate("/soil-humidity")}
+            aria-label="Añadir condición de humedad del terreno"
+          >
+            Añadir
+          </button>
+        </div>
+      )}
 
-        {availableActions.length > 0 && (
-          <div>
-            <label className="add-rule-label" htmlFor="add-rule-actions">
-              Acción:
-            </label>
-            <select
-              id="add-rule-actions"
-              className="add-rule-select"
-              value={selectedAction}
-              onChange={(e) => setSelectedAction(e.target.value)}
-              aria-label="Selecciona una acción"
-            >
-              <option value="">Selecciona una acción</option>
-              {availableActions.map((action, index) => (
-                <option key={index} value={action}>
-                  {action}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+      <label className="add-rule-label" htmlFor="add-rule-actuator">
+        Actuador:
+      </label>
+      <select
+        id="add-rule-actuator"
+        className="add-rule-select"
+        value={actuatorType}
+        onChange={handleActuatorChange}
+        aria-label="Selecciona un actuador"
+      >
+        <option value="">{t("select_actuator_option")}</option>
+        <option value="Riego">{t("irrigation_actuator")}</option>
+        <option value="Ventilación">{t("ventilation_actuator")}</option>
+        <option value="Cobertura de cultivos">
+          {t("crop_cover_actuator")}
+        </option>
+        <option value="Apertura de ventanas">
+          {t("window_opening_actuator")}
+        </option>
+      </select>
 
-        <button
-          className="add-rule-form-submit-button"
-          onClick={handleAddRule}
-          aria-label="Añadir regla"
-        >
-          Añadir Regla
-        </button>
-      </div>
+      {availableActions.length > 0 && (
+        <div>
+          <label className="add-rule-label" htmlFor="add-rule-actions">
+            Acción:
+          </label>
+          <select
+            id="add-rule-actions"
+            className="add-rule-select"
+            value={selectedAction}
+            onChange={(e) => setSelectedAction(e.target.value)}
+            aria-label="Selecciona una acción"
+          >
+            <option value="">Selecciona una acción</option>
+            {availableActions.map((action, index) => (
+              <option key={index} value={action}>
+                {action}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      <button
+        className="add-rule-form-submit-button"
+        onClick={handleAddRule}
+        aria-label={t("add_rule_button")}
+      >
+        {t("add_rule_button")}
+      </button>
     </div>
   );
 };

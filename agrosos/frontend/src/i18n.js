@@ -1,7 +1,10 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import en from './locales/en.json';  // Archivo de traducciones en inglés
-import es from './locales/es.json';  // Archivo de traducciones en español
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import en from "./locales/en.json";  // Archivo de traducción en inglés
+import es from "./locales/es.json";  // Archivo de traducción en español
+
+// Detectar el idioma desde localStorage o usar uno por defecto
+const storedLanguage = localStorage.getItem('language') || 'es'; // 'es' como idioma por defecto
 
 i18n
   .use(initReactI18next)
@@ -14,10 +17,15 @@ i18n
         translation: es,
       },
     },
-    lng: 'es', // Establece el idioma por defecto
-    fallbackLng: 'es', // Si no hay traducción, usa el idioma por defecto
+    lng: storedLanguage, // Usar el idioma almacenado en localStorage
+    fallbackLng: 'es', // Idioma de respaldo si no hay traducción
     interpolation: {
-      escapeValue: false, // React ya hace escape de los valores
+      escapeValue: false, // React maneja el escape de valores
+    },
+    detection: {
+      // Desactivamos la detección automática para evitar que el idioma cambie sin control
+      order: [],
+      caches: [],
     },
   });
 

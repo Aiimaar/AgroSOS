@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de proyecto
+import { useDarkMode } from "../../context/DarkModeContext";
+import { useTranslation } from "react-i18next"; // Importamos useTranslation
 import "./edit-rule-comp.css";
 
 const EditRuleComp = () => {
   const { darkMode } = useDarkMode();
   const { ruleId } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation(); // Usamos el hook para la traducción
   const [rule, setRule] = useState(null);
   const [crops, setCrops] = useState([]);
   const [cropId, setCropId] = useState("");
@@ -40,14 +42,14 @@ const EditRuleComp = () => {
   });
 
   const actuatorActionMap = {
-    Riego: ["Activar Riego", "Desactivar Riego"],
-    Ventilación: ["Activar Ventilación", "Desactivar Ventilación"],
+    Riego: [t("activate_irrigation"), t("deactivate_irrigation")],
+    Ventilación: [t("activate_ventilation"), t("deactivate_ventilation")],
     "Cobertura de cultivos": [
-      "Cubrir cultivos con lona semi-transparente",
-      "Cubrir cultivos con lona opaca",
-      "Destapar cultivos",
+      t("cover_crops_semi_transparent"),
+      t("cover_crops_opaque"),
+      t("uncover_crops"),
     ],
-    "Apertura de ventanas": ["Abrir ventanas", "Cerrar ventanas"],
+    "Apertura de ventanas": [t("open_windows"), t("close_windows")],
   };
 
   const token = localStorage.getItem("authToken");
@@ -204,27 +206,27 @@ const EditRuleComp = () => {
         }
       );
 
-      alert("Regla actualizada con éxito.");
+      alert(t("rule_updated_successfully"));
       navigate("/rules");
     } catch (error) {
       console.error("Error updating rule:", error);
-      alert("Error al actualizar la regla.");
+      alert(t("error_updating_rule"));
     }
   };
 
-  if (!rule) return <p className={darkMode ? 'dark-mode' : ''}>Cargando...</p>;
+  if (!rule) return <p className={darkMode ? 'dark-mode' : ''}>{t('loading')}</p>;
 
   return (
     <div className={`edit-rule-form-container ${darkMode ? 'dark-mode' : ''}`}>
-      <h2>Editar Regla</h2>
-      <label htmlFor="cropId">Cultivo:</label>
+      <h2>{t('edit_rule')}</h2>
+      <label htmlFor="cropId">{t('crop')}:</label>
       <select
         id="cropId"
         value={cropId}
         onChange={(e) => setCropId(e.target.value)}
-        aria-label="Selecciona el cultivo"
+        aria-label={t('select_crop')}
       >
-        <option value="">Selecciona un cultivo</option>
+        <option value="">{t('select_crop_option')}</option>
         {crops.map((crop) => (
           <option key={crop.id} value={crop.id}>
             {crop.name}
@@ -232,23 +234,24 @@ const EditRuleComp = () => {
         ))}
       </select>
 
-      <label htmlFor="sensorType">Sensor:</label>
+      <label htmlFor="sensorType">{t('sensor')}:</label>
       <select
         id="sensorType"
         value={sensorType}
         onChange={(e) => setSensorType(e.target.value)}
-        aria-label="Selecciona un sensor"
+        aria-label={t('select_sensor')}
       >
-        <option value="">Selecciona un sensor</option>
-        <option value="Humedad">Humedad</option>
-        <option value="Temperatura">Temperatura</option>
-        <option value="Humedad del terreno">Humedad del terreno</option>
-        <option value="Temperatura del terreno">Temperatura del terreno</option>
+        <option value="">{t('select_sensor_option')}</option>
+        <option value="Humedad">{t('humidity')}</option>
+        <option value="Temperatura">{t('temperature')}</option>
+        <option value="Humedad del terreno">{t('soil_humidity')}</option>
+        <option value="Temperatura del terreno">{t('soil_temperature')}</option>
       </select>
 
+      {/* Condiciones de sensor */}
       {sensorType === "Temperatura" && (
         <div className="edit-rule-conditions">
-          <h3>Condiciones de Temperatura</h3>
+          <h3>{t('temperature_conditions')}</h3>
           <ul>
             {temperatureConditions.map((cond, index) => (
               <li key={index}>
@@ -256,9 +259,9 @@ const EditRuleComp = () => {
                 <button
                   className="delete-condition-button"
                   onClick={() => handleDeleteCondition("temperature", index)}
-                  aria-label={`Eliminar condición de temperatura ${cond.operator} ${cond.value}°C`}
+                  aria-label={`${t('delete_condition')} ${cond.operator} ${cond.value}°C`}
                 >
-                  Eliminar
+                  {t('delete')}
                 </button>
               </li>
             ))}
@@ -266,16 +269,16 @@ const EditRuleComp = () => {
           <button
             className="edit-rule-conditions-button"
             onClick={() => navigate("/temperature")}
-            aria-label="Añadir condición de temperatura"
+            aria-label={t('add_temperature_condition')}
           >
-            Añadir
+            {t('add')}
           </button>
         </div>
       )}
 
       {sensorType === "Humedad" && (
         <div className="edit-rule-conditions">
-          <h3>Condiciones de Humedad</h3>
+          <h3>{t('humidity_conditions')}</h3>
           <ul>
             {humidityConditions.map((cond, index) => (
               <li key={index}>
@@ -283,9 +286,9 @@ const EditRuleComp = () => {
                 <button
                   className="delete-condition-button"
                   onClick={() => handleDeleteCondition("humidity", index)}
-                  aria-label={`Eliminar condición de humedad ${cond.operator} ${cond.value}%`}
+                  aria-label={`${t('delete_condition')} ${cond.operator} ${cond.value}%`}
                 >
-                  Eliminar
+                  {t('delete')}
                 </button>
               </li>
             ))}
@@ -293,21 +296,21 @@ const EditRuleComp = () => {
           <button
             className="edit-rule-conditions-button"
             onClick={() => navigate("/humidity")}
-            aria-label="Añadir condición de humedad"
+            aria-label={t('add_humidity_condition')}
           >
-            Añadir
+            {t('add')}
           </button>
         </div>
       )}
 
-      <label htmlFor="actuatorType">Actuador:</label>
+      <label htmlFor="actuatorType">{t('actuator')}:</label>
       <select
         id="actuatorType"
         value={actuatorType}
         onChange={handleActuatorChange}
-        aria-label="Selecciona un actuador"
+        aria-label={t('select_actuator')}
       >
-        <option value="">Selecciona un actuador</option>
+        <option value="">{t('select_actuator_option')}</option>
         {Object.keys(actuatorActionMap).map((actuator) => (
           <option key={actuator} value={actuator}>
             {actuator}
@@ -315,14 +318,14 @@ const EditRuleComp = () => {
         ))}
       </select>
 
-      <label htmlFor="selectedAction">Acción:</label>
+      <label htmlFor="selectedAction">{t('action')}:</label>
       <select
         id="selectedAction"
         value={selectedAction}
         onChange={(e) => setSelectedAction(e.target.value)}
-        aria-label="Selecciona una acción"
+        aria-label={t('select_action')}
       >
-        <option value="">Selecciona una acción</option>
+        <option value="">{t('select_action_option')}</option>
         {availableActions.map((action, index) => (
           <option key={index} value={action}>
             {action}
@@ -333,9 +336,9 @@ const EditRuleComp = () => {
       <button
         className="edit-rule-update-button"
         onClick={handleUpdateRule}
-        aria-label="Actualizar la regla"
+        aria-label={t('update_rule')}
       >
-        Actualizar Regla
+        {t('update_rule')}
       </button>
     </div>
   );

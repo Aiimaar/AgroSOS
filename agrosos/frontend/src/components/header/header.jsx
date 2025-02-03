@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -12,11 +12,21 @@ import {
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
 import "./header.css";
-import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useDarkMode } from "../../context/DarkModeContext"; // Ajusta la ruta si es necesario
+import { useTranslation } from "react-i18next"; // Importa el hook
 
 function Header() {
+  const { t, i18n } = useTranslation(); // Accede a 'i18n' para cambiar el idioma
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { darkMode, toggleDarkMode } = useDarkMode();
+
+  // Aseguramos que el idioma se configure correctamente al inicio
+  useEffect(() => {
+    // Si no hay idioma en localStorage, establece uno predeterminado
+    if (!localStorage.getItem('language')) {
+      localStorage.setItem('language', 'en');
+    }
+  }, []);
 
   const openMenu = () => {
     setIsMenuOpen(true);
@@ -32,6 +42,11 @@ function Header() {
     }
   };
 
+  const handleLanguageChange = (lang) => {
+    i18n.changeLanguage(lang); // Cambia el idioma globalmente
+    localStorage.setItem("language", lang); // Guarda el idioma en el localStorage
+  };
+
   return (
     <div
       className={`app-container ${darkMode ? "dark-mode" : ""}`}
@@ -41,68 +56,72 @@ function Header() {
         <Link to={"/plot-list"}>
           <img src={logo} alt="Logo Planta" className="plant-icon" />
         </Link>
-        <button className="header-menu-button" onClick={openMenu}>
+        <button aria-label="Menú desplegable" className="header-menu-button" onClick={openMenu}>
           <FontAwesomeIcon icon={faBars} size="2xl" />
         </button>
-        <nav className="header-desktop-menu" aria-label="Menú principal">
+        <nav className="header-desktop-menu" aria-label={t("mainMenu")}>
           <ul>
             <li>
-              <Link to="/plot-list" aria-label="Ir a la página de inicio">
+              <Link to="/plot-list" aria-label={t("goToHomePage")}>
                 <FontAwesomeIcon icon={faHome} />
-                <span>Inicio</span>
+                <span>{t("home")}</span>
               </Link>
             </li>
             <li>
               <Link
                 to="/accesibility"
-                aria-label="Acceder a la página de accesibilidad"
+                aria-label={t("goToAccessibilityPage")}
               >
                 <FontAwesomeIcon icon={faUniversalAccess} />
-                <span>Accesibilidad</span>
+                <span>{t("accessibility")}</span>
               </Link>
             </li>
             <li>
-              <Link to="/advices" aria-label="Ir a la sección de consejos">
+              <Link to="/advices" aria-label={t("goToAdvicesPage")}>
                 <FontAwesomeIcon icon={faLightbulb} />
-                <span>Consejos</span>
+                <span>{t("advices")}</span>
               </Link>
             </li>
             <li>
-              <Link
-                to="/notifications"
-                aria-label="Ir a la sección de notificaciones"
-              >
+              <Link to="/notifications" aria-label={t("goToNotificationsPage")}>
                 <FontAwesomeIcon icon={faBell} />
-                <span>Notificaciones</span>
+                <span>{t("notifications")}</span>
               </Link>
             </li>
             <li>
               <Link
                 to="/terms-conditions"
-                aria-label="Ir a los términos y condiciones"
+                aria-label={t("goToTermsConditionsPage")}
               >
                 <FontAwesomeIcon icon={faBook} />
-                <span>Términos y condiciones</span>
+                <span>{t("terms_and_conditions")}</span>
               </Link>
             </li>
           </ul>
         </nav>
       </header>
       <button onClick={toggleDarkMode} className="toggle-dark-mode">
-        {darkMode ? "Desactivar Modo Oscuro" : "Activar Modo Oscuro"}
+        {darkMode ? t("deactivateDarkMode") : t("activateDarkMode")}
       </button>
+
+      {/* Botón para cambiar el idioma */}
+      <button onClick={() => handleLanguageChange("es")}>Español</button>
+      <button onClick={() => handleLanguageChange("en")}>English</button>
+
       <SideMenu isOpen={isMenuOpen} onClose={closeMenu} />
     </div>
   );
 }
 
 function SideMenu({ isOpen, onClose }) {
+  const { t } = useTranslation(); // Hook para traducciones
+
   return (
     <div className={`side-menu ${isOpen ? "open" : ""}`}>
       <button
         className="side-close-button"
         onClick={onClose}
-        aria-label="Cerrar el menú lateral"
+        aria-label={t("closeMenu")}
       >
         <FontAwesomeIcon icon={faTimes} size="2xl" />
       </button>
@@ -111,46 +130,46 @@ function SideMenu({ isOpen, onClose }) {
           <Link
             to="/plot-list"
             onClick={onClose}
-            aria-label="Ir a la página de inicio"
+            aria-label={t("goToHomePage")}
           >
             <FontAwesomeIcon icon={faHome} />
-            <span>Inicio</span>
+            <span>{t("home")}</span>
           </Link>
         </li>
         <li>
           <Link
             to="/notifications"
             onClick={onClose}
-            aria-label="Ir a la sección de notificaciones"
+            aria-label={t("goToNotificationsPage")}
           >
             <FontAwesomeIcon icon={faBell} />
-            <span>Notificaciones</span>
+            <span>{t("notifications")}</span>
           </Link>
         </li>
         <li>
           <Link to="/accesibility" onClick={onClose}>
             <FontAwesomeIcon icon={faUniversalAccess} />
-            <span>Accesibilidad</span>
+            <span>{t("accessibility")}</span>
           </Link>
         </li>
         <li>
           <Link
             to="/advices"
             onClick={onClose}
-            aria-label="Ir a la sección de consejos"
+            aria-label={t("goToAdvicesPage")}
           >
             <FontAwesomeIcon icon={faLightbulb} />
-            <span>Consejos</span>
+            <span>{t("advices")}</span>
           </Link>
         </li>
         <li>
           <Link
             to="/terms-conditions"
             onClick={onClose}
-            aria-label="Ir a los términos y condiciones"
+            aria-label={t("goToTermsConditionsPage")}
           >
             <FontAwesomeIcon icon={faBook} />
-            <span>Términos y condiciones</span>
+            <span>{t("terms_and_conditions")}</span>
           </Link>
         </li>
       </ul>

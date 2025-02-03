@@ -2,17 +2,19 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next'; // Importamos el hook useTranslation para la internacionalización
 import "./soil-management-component.css";
 
 function SoilManagementComponent() {
   const navigate = useNavigate();
+  const { t } = useTranslation(); // Obtenemos la función t para traducir
 
   return (
     <>
       <button
         className="soil-back-button"
         onClick={() => navigate("/advices")}
-        aria-label="Volver a la página de consejos"
+        aria-label={t("back_to_advices")}
       >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
@@ -23,7 +25,7 @@ function SoilManagementComponent() {
         aria-labelledby="soil-management-title"
       >
         <div className="soil-management-header">
-          <h2 id="soil-management-title">Gestión del suelo</h2>
+          <h2 id="soil-management-title">{t("soil_management")}</h2>
         </div>
 
         <div
@@ -32,33 +34,22 @@ function SoilManagementComponent() {
           aria-labelledby="soil-management-instructions"
         >
           <p id="soil-management-instructions" className="visually-hidden">
-            Instrucciones detalladas para la gestión del suelo.
+            {t("soil_management_instructions")}
           </p>
 
           <section aria-labelledby="soil-test-title">
-            <h3 id="soil-test-title">1. Pruebas de Suelo</h3>
-            <p>
-              Realiza pruebas de suelo regularmente para conocer el pH y los
-              niveles de nutrientes. Ajusta el pH del suelo según los
-              requerimientos de tus cultivos.
-            </p>
+            <h3 id="soil-test-title">{t("soil_tests")}</h3>
+            <p>{t("soil_tests_description")}</p>
           </section>
 
           <section aria-labelledby="crop-rotation-title">
-            <h3 id="crop-rotation-title">2. Rotación de Cultivos</h3>
-            <p>
-              Implementa una rotación de cultivos para evitar la depleción de
-              nutrientes y reducir plagas y enfermedades. Alterna cultivos de
-              raíces profundas con aquellos de raíces superficiales.
-            </p>
+            <h3 id="crop-rotation-title">{t("crop_rotation")}</h3>
+            <p>{t("crop_rotation_description")}</p>
           </section>
 
           <section aria-labelledby="fertilization-title">
-            <h3 id="fertilization-title">3. Fertilización</h3>
-            <p>
-              Utiliza fertilizantes orgánicos siempre que sea posible. Aplica
-              fertilizantes según los resultados de las pruebas de suelo.
-            </p>
+            <h3 id="fertilization-title">{t("fertilization")}</h3>
+            <p>{t("fertilization_description")}</p>
           </section>
         </div>
       </div>

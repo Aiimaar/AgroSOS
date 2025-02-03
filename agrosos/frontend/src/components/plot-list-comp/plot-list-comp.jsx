@@ -31,18 +31,19 @@ function PlotListComp() {
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
+    // Obtener el idioma del localStorage y establecerlo
+    const savedLanguage = localStorage.getItem("language");
+    if (savedLanguage && savedLanguage !== i18n.language) {
+      i18n.changeLanguage(savedLanguage);
+    }
     fetchData();
     console.log("Idioma actual al cargar el componente:", i18n.language); // Verificar idioma al cargar
-
-    // Si el idioma es español y quieres cambiarlo a inglés automáticamente
-    if (i18n.language === "es") {
-      i18n.changeLanguage("en");
-      console.log("Idioma cambiado a inglés automáticamente");
-    }
   }, []);
 
   useEffect(() => {
     console.log("Idioma actualizado:", i18n.language); // Detectar cambios en el idioma
+    // Guardar el idioma en localStorage cuando cambie
+    localStorage.setItem("language", i18n.language);
   }, [i18n.language]);
 
   useEffect(() => {
@@ -205,7 +206,6 @@ function PlotListComp() {
     console.log("Plot selected:", { plotId, plotName }); // Agrega este log
     navigate("/inside-a-plot");
   };
-  
 
   return (
     <>
@@ -214,14 +214,14 @@ function PlotListComp() {
       ) : (
         <>
           {showDeleteModal && (
-            <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
+            <div role="delete-modal" className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-delete-modal">
                 <h3>{t("confirm_delete_plot")}</h3>
                 <div className="modal-actions">
-                  <button type="submit" onClick={handleDeletePlot}>
+                  <button role="button" type="submit" onClick={handleDeletePlot}>
                     {t("delete")}
                   </button>
-                  <button type="button" onClick={cancelDelete}>
+                  <button role="button" type="button" onClick={cancelDelete}>
                     {t("cancel")}
                   </button>
                 </div>
@@ -271,7 +271,7 @@ function PlotListComp() {
           </div>
           <div className="plot-list-container">
             {errorMessage && (
-              <p className="plot-list-error-message">{errorMessage}</p>
+              <p role="alert" className="plot-list-error-message">{errorMessage}</p>
             )}
             <div className="plot-list">
               {plots.map((plot) => (

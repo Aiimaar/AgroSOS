@@ -3,36 +3,34 @@
   flex-direction: column;
   margin: 0 auto;
   text-align: center;
-  width: 90vw;
+  width: 93vw;
   height: 100vh;
-  max-width: 600px; /* Limitar el ancho máximo */
+  max-width: 600px; 
   justify-content: center;
   padding: 20px;
-  border-radius: 8px; /* Borde redondeado al contenedor */
-  background-color: #f9f9f9; /* Mejor contraste y accesibilidad */
+  border-radius: 8px;
+  background-color: #f9f9f9; 
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode #actuator-enla-container {
   margin-top: 2em;
-  background-color: #333; /* Fondo oscuro */
-  color: white; /* Texto claro */
+  background-color: #333; 
+  color: white; 
 }
 
 .actuator-enla-button-arrow {
   align-self: flex-start;
   margin-left: 1em;
-  margin-top: -25em;
+  margin-top: -20em;
   margin-bottom: 1em;
   border: none;
-  background-color: transparent; /* Fondo transparente */
+  background-color: transparent;
   cursor: pointer;
   font-size: 20px;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .actuator-enla-button-arrow {
-  color: white; /* Texto claro en modo oscuro */
+  color: white;
 }
 
 .enla-title {
@@ -44,9 +42,8 @@
   text-align: center;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .enla-title {
-  color: white; /* Texto claro en modo oscuro */
+  color: white; 
 }
 
 .linked-actuators-list {
@@ -59,16 +56,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between; /* Espacio entre el texto y el botón */
-  border-radius: 5px;
+  justify-content: space-between;
+  border-radius: 12px;
   padding: 15px 20px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3); 
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .actuator-item {
-  background-color: #555; /* Fondo más oscuro para los elementos del actuador */
-  color: white; /* Texto claro en modo oscuro */
+  background-color: #555; 
+  color: white; 
 }
 
 .actuator-item:hover {
@@ -83,9 +79,8 @@
   flex-grow: 1;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .actuator-item p {
-  color: white; /* Texto claro en modo oscuro */
+  color: white; 
 }
 
 .actuator-item strong {
@@ -93,9 +88,8 @@
   font-weight: 600;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .actuator-item strong {
-  color: white; /* Texto claro en modo oscuro */
+  color: white; 
 }
 
 .delete-actuator-button {
@@ -119,9 +113,8 @@
   margin-top: 20px;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .no-actuators-message {
-  color: #ccc; /* Texto claro en modo oscuro */
+  color: #ccc;
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
