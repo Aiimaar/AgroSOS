@@ -214,14 +214,14 @@ function PlotListComp() {
       ) : (
         <>
           {showDeleteModal && (
-            <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
+            <div role="delete-modal" className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-delete-modal">
                 <h3>{t("confirm_delete_plot")}</h3>
                 <div className="modal-actions">
-                  <button type="submit" onClick={handleDeletePlot}>
+                  <button role="button" type="submit" onClick={handleDeletePlot}>
                     {t("delete")}
                   </button>
-                  <button type="button" onClick={cancelDelete}>
+                  <button role="button" type="button" onClick={cancelDelete}>
                     {t("cancel")}
                   </button>
                 </div>
@@ -271,7 +271,7 @@ function PlotListComp() {
           </div>
           <div className="plot-list-container">
             {errorMessage && (
-              <p className="plot-list-error-message">{errorMessage}</p>
+              <p role="alert" className="plot-list-error-message">{errorMessage}</p>
             )}
             <div className="plot-list">
               {plots.map((plot) => (
