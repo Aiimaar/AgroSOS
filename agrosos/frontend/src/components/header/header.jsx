@@ -41,7 +41,7 @@ function Header() {
         <Link to={"/plot-list"}>
           <img src={logo} alt="Logo Planta" className="plant-icon" />
         </Link>
-        <button className="header-menu-button" onClick={openMenu}>
+        <button aria-label="Menú desplegable" className="header-menu-button" onClick={openMenu}>
           <FontAwesomeIcon icon={faBars} size="2xl" />
         </button>
         <nav className="header-desktop-menu" aria-label="Menú principal">
