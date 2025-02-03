@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./plot-list-footer-comp.css";
 import userProfileIcon from "./user-profile-icon.png";
-import addPlotIcon from "./add-plot-icon.png";
+import addPlotIcon from "./add-user-icon.png";
 import configIcon from "./config-icon.png";
 import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
