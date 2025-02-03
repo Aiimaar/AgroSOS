@@ -171,7 +171,7 @@ const UserList = () => {
 
   return (
     <div className={`user-list-container ${darkMode ? 'dark-mode' : ''}`}>
-      <button className="user-list-back-button" onClick={() => navigate(-1)}>
+      <button aria-label="Flecha para volver atrás" className="user-list-back-button" onClick={() => navigate(-1)}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="user-list-title" id="user-list-title">

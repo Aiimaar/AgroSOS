@@ -34,7 +34,7 @@ function Sensors() {
 
     return (
         <div id="sensor-content-container" className={darkMode ? 'dark-mode' : ''}>
-            <div className="sensorList">
+            <div className="sensorList" role="list" aria-label="Lista de sensores">
                 {sensors.map((sensor) => (
                     <div className="sensor-content-list" key={sensor.name} role="listitem">
                         <img src={sensor.img} alt={sensor.altText} className="sensor-img" />
