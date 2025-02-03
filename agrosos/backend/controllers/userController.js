@@ -66,17 +66,17 @@ export const createUser = async (req, res) => {
 // En el controlador userController.js
 export const updateUser = async (req, res) => {
   try {
-    const userId = req.params.id;
-    const { name, email, ...extraFields } = req.body; // Extraer solo los campos permitidos
+    const userId = req.user.id;  // Obtener el userId desde req.user, que proviene del token
+    const { name, email, language, ...extraFields } = req.body; // Extraer solo los campos permitidos
 
     // Verificar si se envían campos no permitidos
     if (Object.keys(extraFields).length > 0) {
       return res.status(400).json({
-        message: "Solo se permite actualizar 'name' y 'email'.",
+        message: "Solo se permite actualizar 'name', 'email' y 'language'.",
       });
     }
 
-    // Verificar si 'name' o 'email' existen y no están vacíos
+    // Verificar si 'name', 'email' o 'language' existen y no están vacíos
     if (name !== undefined && name.trim() === "") {
       return res.status(400).json({
         message: "El campo 'name' no puede estar vacío.",
@@ -87,19 +87,26 @@ export const updateUser = async (req, res) => {
         message: "El campo 'email' no puede estar vacío.",
       });
     }
+    if (language !== undefined && language.trim() === "") {
+      return res.status(400).json({
+        message: "El campo 'language' no puede estar vacío.",
+      });
+    }
 
-    // Obtener el usuario existente
+    // Obtener el usuario existente usando el userId del token
     const existingUser = await User.findByPk(userId);
 
     if (!existingUser) {
       return res.status(404).json({ message: "Usuario no encontrado." });
     }
 
-    // Actualizar solo 'name' y 'email' si se proporcionan y no son vacíos
+    // Actualizar los campos proporcionados: 'name', 'email' y 'language'
     const updatedFields = {};
     if (name !== undefined) updatedFields.name = name;
     if (email !== undefined) updatedFields.email = email;
+    if (language !== undefined) updatedFields.language = language;
 
+    // Actualizamos solo los campos permitidos (name, email, language)
     const updatedUser = await existingUser.update(updatedFields);
 
     // Responder con los datos actualizados
@@ -107,12 +114,14 @@ export const updateUser = async (req, res) => {
       id: updatedUser.id,
       name: updatedUser.name,
       email: updatedUser.email,
+      language: updatedUser.language,
     });
   } catch (error) {
     console.error("Error al actualizar el usuario:", error.message);
     res.status(500).json({ message: "Error al actualizar el usuario." });
   }
 };
+
 
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -133,7 +142,6 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error: "Error al eliminar el usuario" });
   }
 };
-
 
 export const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -163,5 +171,53 @@ export const getUserById = async (req, res) => {
   } catch (error) {
     console.error("Error al obtener usuario:", error);
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const getUserLanguage = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findByPk(userId, {
+      attributes: ['language'],  // Solo devuelve el idioma
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado.' });
+    }
+
+    res.status(200).json({ language: user.language });
+  } catch (error) {
+    console.error('Error al obtener el idioma del usuario:', error.message);
+    res.status(500).json({ message: 'Error al obtener el idioma del usuario.' });
+  }
+};
+
+
+export const updateUserLanguage = async (req, res) => {
+  const { language } = req.body;  // Obtén el 'language' de los datos del cuerpo
+
+  try {
+    const userId = req.params.id;  // Obtén el 'id' del parámetro de la ruta (a diferencia del token en este caso)
+
+    // Verificar si el idioma es válido (puedes agregar más validaciones si lo deseas)
+    if (!language) {
+      return res.status(400).json({ message: "El idioma es requerido." });
+    }
+
+    // Buscar al usuario por ID
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado." });
+    }
+
+    // Actualizar el idioma
+    user.language = language;
+    await user.save();
+
+    res.status(200).json({ message: "Idioma actualizado correctamente.", user });
+  } catch (error) {
+    console.error("Error al actualizar el idioma:", error.message);
+    res.status(500).json({ message: "Error al actualizar el idioma." });
   }
 };

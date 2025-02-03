@@ -1,39 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // Importamos useTranslation
 import "./sustainability-and-environment-component.css";
 
 function SustainabilityAndEnvironmentComponent() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation(); // Hook de traducción
+
+  // Obtener idioma desde localStorage y aplicarlo a i18n
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem("language") || "es"; // Español por defecto
+    i18n.changeLanguage(storedLanguage);
+  }, [i18n]);
 
   return (
     <>
-      <button className="sustainability-back-button" onClick={() => navigate("/advices")}>
+      <button
+        className="sustainability-back-button"
+        onClick={() => navigate("/advices")}
+        aria-label={t("back_to_advices")}
+      >
         <FontAwesomeIcon icon={faArrowLeft} className="back-icon" />
       </button>
       <div className="sustainability-container">
         <div className="sustainability-header">
-          <h2>Sostenibilidad y medio ambiente</h2>
+          <h2 id="sustainability-header">{t("sustainability_title")}</h2>
         </div>
 
         <div className="sustainability-txt">
-          <h3>1. Conservación</h3>
-          <p>
-            Implementa prácticas de conservación de agua como la captura de agua
-            de lluvia. Recicla el agua utilizada siempre que sea posible.
-          </p>
-          <h3>2. Agricultura Orgánica</h3>
-          <p>
-            Reduce el uso de pesticidas y fertilizantes sintéticos. Promueve la
-            biodiversidad plantando setos y manteniendo áreas de hábitat
-            natural.
-          </p>
-          <h3>3. Gestión de Residuos</h3>
-          <p>
-            Compostaje de residuos orgánicos para crear fertilizante natural.
-            Recicla y reutiliza materiales cuando sea posible.
-          </p>
+          <h3 id="conservation" tabIndex="0">{t("conservation_title")}</h3>
+          <p>{t("conservation_text")}</p>
+
+          <h3 id="organic-farming" tabIndex="0">{t("organic_farming_title")}</h3>
+          <p>{t("organic_farming_text")}</p>
+
+          <h3 id="waste_management" tabIndex="0">{t("waste_management_title")}</h3>
+          <p>{t("waste_management_text")}</p>
         </div>
       </div>
     </>

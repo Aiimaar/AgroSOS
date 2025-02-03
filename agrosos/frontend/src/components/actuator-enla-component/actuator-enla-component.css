@@ -3,20 +3,34 @@
   flex-direction: column;
   margin: 0 auto;
   text-align: center;
-  width: 90vw;
-  max-width: 600px; /* Limitar el ancho máximo */
+  width: 93vw;
+  height: 100vh;
+  max-width: 600px; 
   justify-content: center;
   padding: 20px;
-  border-radius: 8px; /* Borde redondeado al contenedor */
+  border-radius: 8px;
+  background-color: #f9f9f9; 
+}
+
+.dark-mode #actuator-enla-container {
+  margin-top: 2em;
+  background-color: #333; 
+  color: white; 
 }
 
 .actuator-enla-button-arrow {
   align-self: flex-start;
   margin-left: 1em;
+  margin-top: -20em;
+  margin-bottom: 1em;
   border: none;
-  background-color: transparent; /* Fondo transparente */
+  background-color: transparent;
   cursor: pointer;
   font-size: 20px;
+}
+
+.dark-mode .actuator-enla-button-arrow {
+  color: white;
 }
 
 .enla-title {
@@ -26,6 +40,10 @@
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.dark-mode .enla-title {
+  color: white; 
 }
 
 .linked-actuators-list {
@@ -38,10 +56,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between; /* Espacio entre el texto y el botón */
-  border-radius: 5px;
+  justify-content: space-between;
+  border-radius: 12px;
   padding: 15px 20px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3); 
+}
+
+.dark-mode .actuator-item {
+  background-color: #555; 
+  color: white; 
 }
 
 .actuator-item:hover {
@@ -56,9 +79,17 @@
   flex-grow: 1;
 }
 
+.dark-mode .actuator-item p {
+  color: white; 
+}
+
 .actuator-item strong {
   color: #333;
   font-weight: 600;
+}
+
+.dark-mode .actuator-item strong {
+  color: white; 
 }
 
 .delete-actuator-button {
@@ -82,13 +113,17 @@
   margin-top: 20px;
 }
 
+.dark-mode .no-actuators-message {
+  color: #ccc;
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
   #actuator-enla-container {
       width: 50vw;
   }
 
   .actuator-enla-button-arrow {
-      margin-top: 1em;
+      margin-top: -30em;
   }
 
   .delete-actuator-button {

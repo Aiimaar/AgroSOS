@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faClipboardList, faEdit, faTrashAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faClipboardList,
+  faEdit,
+  faTrashAlt,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useTranslation } from "react-i18next"; // Importamos useTranslation para manejar los textos traducidos
 import "./existing-rules-component.css";
 
 function ExistingRulesComponent() {
@@ -10,13 +18,13 @@ function ExistingRulesComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleToDelete, setRuleToDelete] = useState(null);
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
+  const { t } = useTranslation(); // Función de traducción
 
-  // Función para obtener el token
   const getToken = () => {
-    return localStorage.getItem("authToken"); // Cambia si usas sessionStorage u otro método
+    return localStorage.getItem("authToken");
   };
 
-  // Configuración de Axios para incluir el token
   const axiosInstance = axios.create({
     baseURL: "http://localhost:3000/api",
     headers: {
@@ -33,11 +41,11 @@ function ExistingRulesComponent() {
       .catch((error) => {
         console.error("Error al obtener las reglas:", error);
         if (error.response && error.response.status === 401) {
-          alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
+          alert(t("session_expired"));
           navigate("/login");
         }
       });
-  }, []);
+  }, [t, navigate]);
 
   const handleEdit = (ruleId) => {
     const selectedRule = rules.find((rule) => rule.id === ruleId);
@@ -45,13 +53,50 @@ function ExistingRulesComponent() {
     if (selectedRule) {
       const ruleInfo = JSON.parse(selectedRule.rule_info);
 
-      sessionStorage.setItem("selectedAction", JSON.stringify(ruleInfo.AND?.[0]?.actions || []));
-      sessionStorage.setItem("sensorType", JSON.stringify(ruleInfo.AND?.[0]?.sensors?.[0]?.type || null));
-      sessionStorage.setItem("soilHumidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilHumidity") || []));
-      sessionStorage.setItem("soilTemperatureConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "soilTemperature") || []));
-      sessionStorage.setItem("temperatureConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "temperature") || []));
-      sessionStorage.setItem("humidityConditions", JSON.stringify(ruleInfo.AND?.[0]?.conditions?.filter(cond => cond.type === "humidity") || []));
-      sessionStorage.setItem("cropId", JSON.stringify(selectedRule.crop || null));
+      sessionStorage.setItem(
+        "selectedAction",
+        JSON.stringify(ruleInfo.AND?.[0]?.actions || [])
+      );
+      sessionStorage.setItem(
+        "sensorType",
+        JSON.stringify(ruleInfo.AND?.[0]?.sensors?.[0]?.type || null)
+      );
+      sessionStorage.setItem(
+        "soilHumidityConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "soilHumidity"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "soilTemperatureConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "soilTemperature"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "temperatureConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "temperature"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "humidityConditions",
+        JSON.stringify(
+          ruleInfo.AND?.[0]?.conditions?.filter(
+            (cond) => cond.type === "humidity"
+          ) || []
+        )
+      );
+      sessionStorage.setItem(
+        "cropId",
+        JSON.stringify(selectedRule.crop || null)
+      );
     }
 
     navigate(`/edit-rule/${ruleId}`);
@@ -73,134 +118,146 @@ function ExistingRulesComponent() {
     axiosInstance
       .delete(`/rules/${ruleToDelete}`)
       .then((response) => {
-        console.log("Regla eliminada con éxito:", response.data);
-        setRules((prevRules) => prevRules.filter((rule) => rule.id !== ruleToDelete));
+        console.log(t("rule_deleted_successfully"), response.data);
+        setRules((prevRules) =>
+          prevRules.filter((rule) => rule.id !== ruleToDelete)
+        );
         closeModal();
       })
       .catch((error) => {
         console.error("Error al eliminar la regla:", error);
         if (error.response && error.response.status === 401) {
-          alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
+          alert(t("session_expired"));
           navigate("/login");
         } else {
-          alert("Hubo un problema al eliminar la regla. Intenta nuevamente.");
+          alert(t("error_deleting_rule"));
         }
       });
   };
 
   const formatRuleInfo = (info) => {
-    if (!info) return null;
-  
+    if (!info) return t("rule_info_not_available");
+
     try {
       const parsedInfo = JSON.parse(info);
-  
+
       let formattedInfo = "";
-  
+
       if (parsedInfo.AND && Array.isArray(parsedInfo.AND)) {
-        parsedInfo.AND.forEach((conditionGroup, index) => {
+        parsedInfo.AND.forEach((conditionGroup) => {
           if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "temperature") {
-                formattedInfo += `Temperatura ${condition.operator} ${condition.value}°C`;
+                formattedInfo += `${t("temperature")} ${condition.operator} ${condition.value}°C`;
               }
             });
           }
-
           if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "humidity") {
-                formattedInfo += `Humedad ${condition.operator} ${condition.value}%`;
+                formattedInfo += `${t("humidity")} ${condition.operator} ${condition.value}%`;
               }
             });
           }
-
           if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
+            conditionGroup.conditions.forEach((condition) => {
               if (condition.type === "soilTemperature") {
-                formattedInfo += `Temperatura del terreno ${condition.operator} ${condition.value}°C`;
+                formattedInfo += `${t("soilTemperature")} ${condition.operator} ${condition.value}°C`;
+              }
+            });
+          }
+          if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
+            conditionGroup.conditions.forEach((condition) => {
+              if (condition.type === "soilHumidity") {
+                formattedInfo += `${t("soilHumidity")} ${condition.operator} ${condition.value}%`;
               }
             });
           }
 
-          if (conditionGroup.conditions && Array.isArray(conditionGroup.conditions)) {
-            conditionGroup.conditions.forEach((condition, conditionIndex) => {
-              if (condition.type === "soilHumidity") {
-                formattedInfo += `Humedad del terreno ${condition.operator} ${condition.value}%`;
-              }
-            });
-          }
-  
           if (conditionGroup.actions && Array.isArray(conditionGroup.actions)) {
-            conditionGroup.actions.forEach((action, actionIndex) => {
-              formattedInfo += ` | Acción: ${action}`;
+            conditionGroup.actions.forEach((action) => {
+              formattedInfo += ` | ${t("action")}: ${action}`;
             });
           }
-  
+
           if (conditionGroup.sensors && Array.isArray(conditionGroup.sensors)) {
-            conditionGroup.sensors.forEach((sensor, sensorIndex) => {
-              formattedInfo += ` | Sensor: ${sensor.type}`;
+            conditionGroup.sensors.forEach((sensor) => {
+              formattedInfo += ` | ${t("sensor")}: ${sensor.type}`;
             });
           }
-  
+
           if (conditionGroup.actuators && Array.isArray(conditionGroup.actuators)) {
-            conditionGroup.actuators.forEach((actuator, actuatorIndex) => {
-              formattedInfo += ` | Actuador: ${actuator.type}`;
+            conditionGroup.actuators.forEach((actuator) => {
+              formattedInfo += ` | ${t("actuator")}: ${actuator.type}`;
             });
           }
         });
       }
-  
-      return formattedInfo || "Información no disponible";
+
+      return formattedInfo || t("information_not_available");
     } catch (error) {
       console.error("Error al parsear la información de la regla:", error);
-      return "Información no válida";
+      return t("invalid_rule_info");
     }
   };
 
   return (
-    <div id="existing-rules-container">
-      <button className="existing-rule-back-button" onClick={() => navigate("/settings")}>
+    <div id="existing-rules-container" className={darkMode ? "dark-mode" : ""}>
+      <button
+        className="existing-rule-back-button"
+        onClick={() => navigate("/settings")}
+        aria-label="Flecha para volver atrás"
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <div className="existing-rule-header">
         <h1 className="existing-rule-title">
-          <FontAwesomeIcon icon={faClipboardList} className="icon-list" />
-          Reglas
+          <FontAwesomeIcon icon={faClipboardList} className="icon-list" aria-hidden="true" />
+          {t("rules")}
         </h1>
       </div>
 
-      <div className="existing-rule-cards-container">
+      <div className="existing-rule-cards-container" role="region" aria-live="polite">
         {rules.length === 0 ? (
           <div className="no-rules-message">
-            <h2>Añadir regla</h2>
+            <h2>{t("no_rules_message_add")}</h2>
             <button
               className="add-rule-button"
               onClick={() => navigate("/add-rule")}
+              aria-label={t("add_rule_button_label")}
             >
-              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon icon={faPlus} aria-hidden="true" />
             </button>
           </div>
         ) : (
           rules.map((rule) => (
-            <div className="existing-rule-card" key={rule.id}>
+            <div className="existing-rule-card" key={rule.id} tabIndex="0" role="article" aria-labelledby={`rule-${rule.id}`}>
               <div className="existing-rule-card-info">
-                <p><strong>Nombre:</strong> {rule.name}</p>
-                <p><strong>Cultivo:</strong> {rule.crop}</p>
-                <p><strong>Condiciones:</strong> {formatRuleInfo(rule.rule_info)}</p>
+                <p>
+                  <strong>{t("rule_name")}:</strong> {rule.name}
+                </p>
+                <p>
+                  <strong>{t("crop")}:</strong> {rule.crop}
+                </p>
+                <p>
+                  <strong>{t("conditions")}:</strong> {formatRuleInfo(rule.rule_info)}
+                </p>
               </div>
 
               <div className="existing-rule-card-actions">
                 <button
                   className="existing-rule-edit-button"
                   onClick={() => handleEdit(rule.id)}
+                  aria-label={t("edit_rule")}
                 >
-                  <FontAwesomeIcon icon={faEdit} />
+                  <FontAwesomeIcon icon={faEdit} aria-hidden="true" />
                 </button>
                 <button
                   className="existing-rule-delete-button"
                   onClick={() => openModal(rule.id)}
+                  aria-label={t("delete_rule")}
                 >
-                  <FontAwesomeIcon icon={faTrashAlt} />
+                  <FontAwesomeIcon icon={faTrashAlt} aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -212,18 +269,33 @@ function ExistingRulesComponent() {
         <button
           className="add-rule-button-circle"
           onClick={() => navigate("/add-rule")}
+          aria-label={t("add_rule_button_label")}
         >
-          <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={faPlus} aria-hidden="true" />
         </button>
       )}
 
       {isModalOpen && (
         <div className="existing-rule-modal-overlay" onClick={closeModal}>
-          <div className="existing-rule-modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>¿Estás seguro de que deseas eliminar esta regla?</h2>
+          <div
+            className="existing-rule-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>{t("confirm_delete_rule")}</h2>
             <div className="existing-rule-modal-buttons">
-              <button className="existing-rule-modal-button existing-rule-modal-confirm" onClick={handleDelete}>Aceptar</button>
-              <button className="existing-rule-modal-button existing-rule-modal-cancel" onClick={closeModal}>Cancelar</button>
+              <button
+                className="existing-rule-modal-button existing-rule-modal-confirm"
+                onClick={handleDelete}
+              >
+                {t("accept")}
+              </button>
+              <button
+                className="existing-rule-modal-button existing-rule-modal-cancel"
+                onClick={closeModal}
+                aria-label={t("cancel")}
+              >
+                {t("cancel")}
+              </button>
             </div>
           </div>
         </div>

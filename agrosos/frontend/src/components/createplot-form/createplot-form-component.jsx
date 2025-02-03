@@ -4,8 +4,11 @@ import plot from "./ImagewithFixedRatio.png";
 import pre from "./image29.png";
 import { useNavigate } from "react-router-dom";
 import "./createplot-form-component.css";
+import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useTranslation } from "react-i18next"; // Importar useTranslation
 
 const CreatePlotForm = () => {
+  const { t } = useTranslation(); // Usar el hook useTranslation
   const [name, setName] = useState("");
   const [size, setSize] = useState("");
   const [unit, setUnit] = useState("m2");
@@ -18,12 +21,13 @@ const CreatePlotForm = () => {
   const [success, setSuccess] = useState(false);
   const token = localStorage.getItem("authToken");
   const userId = localStorage.getItem("userId");
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const navigate = useNavigate();
 
   const validateForm = () => {
     if (!name || !size || (imageOption === "upload" && !image) || !userId) {
-      setError("Por favor, completa todos los campos obligatorios.");
+      setError(t("error_message2"));
       return false;
     }
     return true;
@@ -41,21 +45,21 @@ const CreatePlotForm = () => {
     e.preventDefault();
     if (!validateForm() || loading) return;
     setLoading(true);
-  
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("size", size);
     formData.append("unit", unit);
-  
+
     // Verificar y añadir farmer_id
     if (userId) {
       formData.append("user_id", userId);
     } else {
-      setError("Error: No se encontró el ID del usuario. Intenta iniciar sesión de nuevo.");
+      setError(t("error_message2"));
       setLoading(false);
       return;
     }
-  
+
     try {
       if (imageOption === "upload" && image) {
         formData.append("image", image);
@@ -64,19 +68,19 @@ const CreatePlotForm = () => {
       } else if (imageOption === "solid-color") {
         formData.append("color", color);
       }
-  
+
       console.log("Contenido de FormData antes del envío:");
       for (let pair of formData.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`);
       }
-  
+
       await axios.post("http://localhost:3000/api/plots", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       // Resetear el formulario
       setName("");
       setSize("");
@@ -85,11 +89,11 @@ const CreatePlotForm = () => {
       setImageName("");
       setError("");
       setSuccess(true);
-  
+
       // Navegar a la lista de terrenos
       navigate("/plot-list");
     } catch (error) {
-      setError("Error al crear el terreno.");
+      setError(t("error_message2"));
       console.error(error);
     } finally {
       setLoading(false);
@@ -101,40 +105,42 @@ const CreatePlotForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="create-plot-form">
-      <h2 className="create-plot-form-title">Crear Nuevo Terreno</h2>
+    <form onSubmit={handleSubmit} className={`create-plot-form ${darkMode ? 'dark-mode' : ''}`}>
+      <h2 className="create-plot-form-title">{t("create_plot_form_title")}</h2>
       {error && <p className="create-plot-error-message">{error}</p>}
       {success && (
-        <p className="create-plot-success-message">
-          Terreno creado exitosamente!
+        <p role="status" className="create-plot-success-message">
+          {t("success_message2")}
         </p>
       )}
       <div className="create-plot-form-group">
-        <label className="create-plot-form-label">
-          Nombre del terreno*
-        </label>
+        <label htmlFor="name" className="create-plot-form-label">{t("name_label2")}</label>
         <input
           type="text"
+          id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="create-plot-form-input"
+          aria-required="true"
         />
       </div>
       <div className="create-plot-form-group">
-        <label className="create-plot-form-label">
-          Dimensiones del terreno*
-        </label>
+        <label htmlFor="size" className="create-plot-form-label">{t("size_label")}</label>
         <div className="size-unit-container">
           <input
             type="number"
+            id="size"
             value={size}
             onChange={(e) => setSize(e.target.value)}
             className="create-plot-form-input"
+            aria-required="true"
           />
           <select
+            id="unit"
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
             className="create-plot-form-select"
+            aria-required="true"
           >
             <option value="m2">m²</option>
             <option value="ha">ha</option>
@@ -142,35 +148,42 @@ const CreatePlotForm = () => {
         </div>
       </div>
       <div className="create-plot-form-group">
-        <label className="create-plot-form-label">
-          Personaliza tu terreno*
-        </label>
+        <label htmlFor="image-option" className="create-plot-form-label">{t("upload_image")}</label>
         <select
+          id="image-option"
           value={imageOption}
           onChange={(e) => setImageOption(e.target.value)}
           className="create-plot-form-select"
+          aria-required="true"
         >
-          <option value="upload">Subir imagen</option>
-          <option value="default">Imagen predeterminada</option>
-          <option value="solid-color">Color sólido</option>
+          <option value="upload">{t("upload_image")}</option>
+          <option value="default">{t("default_image")}</option>
+          <option value="solid-color">{t("solid_color")}</option>
         </select>
       </div>
       {imageOption === "upload" && (
         <div
           className="create-plot-upload-container"
           onClick={() => document.getElementById("file-input").click()}
+          role="button"
+          aria-label={t("upload_image")}
         >
-          <img src={plot} alt="Ícono de subir" />
-          <p>Sube una foto</p>
-          <input id="file-input" type="file" onChange={handleImageChange} />
+          <img src={plot} alt="Ícono de subir imagen" />
+          <p>{t("upload_image")}</p>
+          <input
+            id="file-input"
+            type="file"
+            onChange={handleImageChange}
+            aria-label={t("upload_image")}
+          />
         </div>
       )}
       {imageOption === "upload" && imageName && (
         <div className="create-plot-image-preview-container">
-          <p>Vista previa de la imagen seleccionada:</p>
+          <p>{t("upload_image")}: {imageName}</p>
           <img
             src={URL.createObjectURL(image)}
-            alt="Vista previa"
+            alt="Vista previa de la imagen subida"
             className="image-preview"
             style={{ objectFit: "cover", width: "100%", height: "auto" }}
           />
@@ -178,26 +191,25 @@ const CreatePlotForm = () => {
       )}
       {imageOption === "default" && (
         <div className="create-plot-default-image-container">
-          <p>Se utilizará la siguiente imagen predeterminada:</p>
+          <p>{t("default_image")}</p>
           <img
             src={pre}
-            alt="Imagen predeterminada"
+            alt="Imagen predeterminada de terreno"
             className="image-preview"
           />
         </div>
       )}
       {imageOption === "solid-color" && (
         <div className="create-plot-color-picker-container">
-          <label htmlFor="create-plot-color-picker">
-            Seleccionar color:
-          </label>
+          <label htmlFor="create-plot-color-picker">{t("select_color")}</label>
           <input
             type="color"
             id="color-picker"
             value={color}
             onChange={(e) => setColor(e.target.value)}
+            aria-label={t("select_color")}
           />
-          <p>El color seleccionado será el fondo del terreno.</p>
+          <p>{t("color_description")}</p>
         </div>
       )}
       <div className="create-plot-form-buttons">
@@ -205,15 +217,16 @@ const CreatePlotForm = () => {
           type="submit"
           disabled={loading}
           className="create-plot-submit-button"
+          aria-live="polite"
         >
-          {loading ? "Cargando..." : "Crear Terreno"}
+          {loading ? t("loading_button2") : t("create_button2")}
         </button>
         <button
           type="button"
           onClick={handleCancel}
           className="create-plot-cancel-button"
         >
-          Cancelar
+          {t("cancel_button2")}
         </button>
       </div>
     </form>

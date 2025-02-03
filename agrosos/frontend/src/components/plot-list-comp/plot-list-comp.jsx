@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import "./plot-list-comp.css";
 import fondo1 from "../../components/plot-list-comp/fondo1.jpg";
 import fondo2 from "../../components/plot-list-comp/fondo2.jpg";
@@ -10,8 +11,10 @@ import fondo5 from "../../components/plot-list-comp/fondo5.jpg";
 import AddPlotComponent from "../add-plot-component/add-plot-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 function PlotListComp() {
+  const { t, i18n } = useTranslation(); // Obtén las funciones de traducción
   const [plots, setPlots] = useState([]);
   const [sensorAverages, setSensorAverages] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,6 +23,7 @@ function PlotListComp() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [plotToDelete, setPlotToDelete] = useState(null);
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   const defaultImages = [fondo1, fondo2, fondo3, fondo4, fondo5];
   const imageMap = {};
@@ -27,8 +31,20 @@ function PlotListComp() {
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
+    // Obtener el idioma del localStorage y establecerlo
+    const savedLanguage = localStorage.getItem("language");
+    if (savedLanguage && savedLanguage !== i18n.language) {
+      i18n.changeLanguage(savedLanguage);
+    }
     fetchData();
+    console.log("Idioma actual al cargar el componente:", i18n.language); // Verificar idioma al cargar
   }, []);
+
+  useEffect(() => {
+    console.log("Idioma actualizado:", i18n.language); // Detectar cambios en el idioma
+    // Guardar el idioma en localStorage cuando cambie
+    localStorage.setItem("language", i18n.language);
+  }, [i18n.language]);
 
   useEffect(() => {
     if (showDeleteModal || editPlot) {
@@ -48,16 +64,19 @@ function PlotListComp() {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:3000/api/plots/user/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:3000/api/plots/user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setPlots(response.data);
       fetchSensorAverages(response.data, token);
     } catch (error) {
       console.error("Error al obtener la lista de terrenos:", error);
-      setErrorMessage("Error al cargar los terrenos. Verifica tu sesión.");
+      setErrorMessage(t("error_message_loading_plots"));
     }
   };
 
@@ -184,6 +203,7 @@ function PlotListComp() {
   const handlePlotClick = (plotId, plotName) => {
     localStorage.setItem("selectedPlotId", plotId);
     localStorage.setItem("selectedPlotName", plotName);
+    console.log("Plot selected:", { plotId, plotName }); // Agrega este log
     navigate("/inside-a-plot");
   };
 
@@ -194,15 +214,15 @@ function PlotListComp() {
       ) : (
         <>
           {showDeleteModal && (
-            <div className="modal-overlay">
+            <div role="delete-modal" className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-delete-modal">
-                <h3>¿Deseas eliminar este terreno?</h3>
+                <h3>{t("confirm_delete_plot")}</h3>
                 <div className="modal-actions">
-                  <button type="submit" onClick={handleDeletePlot}>
-                    Eliminar
+                  <button role="button" type="submit" onClick={handleDeletePlot}>
+                    {t("delete")}
                   </button>
-                  <button type="button" onClick={cancelDelete}>
-                    Cancelar
+                  <button role="button" type="button" onClick={cancelDelete}>
+                    {t("cancel")}
                   </button>
                 </div>
               </div>
@@ -210,9 +230,9 @@ function PlotListComp() {
           )}
 
           {editPlot && (
-            <div className="modal-overlay">
+            <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-edit-modal">
-                <h3>Editar Terreno</h3>
+                <h3>{t("edit_plot")}</h3>
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -220,7 +240,7 @@ function PlotListComp() {
                   }}
                 >
                   <label>
-                    Nombre:
+                    {t("name")}:
                     <input
                       type="text"
                       name="name"
@@ -229,7 +249,7 @@ function PlotListComp() {
                     />
                   </label>
                   <label>
-                    Tamaño:
+                    {t("size")}:
                     <input
                       type="number"
                       name="size"
@@ -237,9 +257,9 @@ function PlotListComp() {
                       onChange={handleEditFormChange}
                     />
                   </label>
-                  <button type="submit">Guardar</button>
+                  <button type="submit">{t("save")}</button>
                   <button type="button" onClick={() => setEditPlot(null)}>
-                    Cancelar
+                    {t("cancel")}
                   </button>
                 </form>
               </div>
@@ -247,11 +267,11 @@ function PlotListComp() {
           )}
 
           <div className="plot-list-welcome">
-            <h3>Buenos días!</h3>
+            <h3>{t("good_morning")}</h3>
           </div>
           <div className="plot-list-container">
             {errorMessage && (
-              <p className="plot-list-error-message">{errorMessage}</p>
+              <p role="alert" className="plot-list-error-message">{errorMessage}</p>
             )}
             <div className="plot-list">
               {plots.map((plot) => (
@@ -259,13 +279,17 @@ function PlotListComp() {
                   key={plot.id}
                   className="plot-card"
                   tabIndex="0"
+                  role="button"
                   onClick={() => handlePlotClick(plot.id, plot.name)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handlePlotClick(plot.id, plot.name);
+                  }}
                   style={{ backgroundColor: plot.color || "transparent" }}
                 >
                   {plot.image ? (
                     <img
                       src={`http://localhost:3000/uploads/${plot.image}`}
-                      alt={`Imagen del terreno ${plot.name}`}
+                      alt={`${t("plot_image")} ${plot.name}`}
                       className="plot-image"
                     />
                   ) : plot.color ? (
@@ -273,7 +297,7 @@ function PlotListComp() {
                   ) : (
                     <img
                       src={assignDefaultImage(plot.id)}
-                      alt={`Imagen predeterminada del terreno ${plot.name}`}
+                      alt={`${t("default_plot_image")} ${plot.name}`}
                       className="plot-image"
                     />
                   )}
@@ -283,9 +307,16 @@ function PlotListComp() {
                       <div
                         className="plot-list-button plot-list-edit-button"
                         tabIndex="0"
+                        role="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleEditPlot(plot);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.stopPropagation();
+                            handleEditPlot(plot);
+                          }
                         }}
                       >
                         <FontAwesomeIcon icon={faPen} />
@@ -293,9 +324,16 @@ function PlotListComp() {
                       <div
                         className="plot-list-button plot-list-delete-button"
                         tabIndex="0"
+                        role="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           confirmDeletePlot(plot.id);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.stopPropagation();
+                            confirmDeletePlot(plot.id);
+                          }
                         }}
                       >
                         <FontAwesomeIcon icon={faTrash} />

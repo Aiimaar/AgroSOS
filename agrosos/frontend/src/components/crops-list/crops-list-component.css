@@ -1,14 +1,20 @@
 body, html {
   margin: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
 .crops-list {
   width: 100%;
   max-width: 600px;
+  height: 100vh;
   margin: 2em auto;
   padding: 20px 0;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .crops-list {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .crop-item {
@@ -51,15 +57,23 @@ body, html {
   justify-content: center;
   cursor: pointer;
   position: relative;
-  top: -17px;  
+  top: -17px;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .info-icon {
+  background-color: #555; /* Fondo diferente en modo oscuro */
+  color: white; /* Texto claro en modo oscuro */
+}
+
+
 .crop-text {
-  margin-left: auto; 
-  text-align: left; 
+  font-size: 15px;
+  margin-left: auto;
+  text-align: left;
   padding-right: 20px;
   position: relative;
-  top: 20px;
+  top: 10px;
   line-height: 1;
 }
 
@@ -70,17 +84,32 @@ body, html {
   color: #333;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .harvest-title {
+  color: white; /* Texto claro en modo oscuro */
+}
+
 .harvest-subtitle {
   font-size: 0.8em;
   color: #777;
   text-align: right;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .harvest-subtitle {
+  color: #ccc; /* Texto claro en modo oscuro */
+}
+
 .divider {
-  width: 90%; 
+  width: 90%;
   height: 1px;
-  background-color: #288528; 
-  margin: 12px auto 0; 
+  background-color: #288528;
+  margin: 12px auto 0;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .divider {
+  background-color: #777; /* Color diferente en modo oscuro */
 }
 
 @media only screen and (min-width: 768px) {

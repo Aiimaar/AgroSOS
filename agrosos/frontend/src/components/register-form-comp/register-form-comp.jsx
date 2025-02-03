@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./register-form-comp.css";
+import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useTranslation } from 'react-i18next';  // Importar useTranslation
 
 const RegisterFormComp = ({ onRegister }) => {
+  const { t } = useTranslation();  // Usar el hook useTranslation para acceder a las traducciones
+
   const [name, setName] = useState("");
   const [role, setRole] = useState("Farmer");
   const [email, setEmail] = useState("");
@@ -13,12 +17,13 @@ const RegisterFormComp = ({ onRegister }) => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setErrorMessage("Las contraseñas no coinciden.");
+      setErrorMessage(t('passwordsDoNotMatch'));  // Usar traducción para mensaje de error
       return;
     }
 
@@ -34,7 +39,7 @@ const RegisterFormComp = ({ onRegister }) => {
       localStorage.setItem("authToken", token);
 
       setErrorMessage("");
-      setSuccessMessage("¡Registro exitoso!");
+      setSuccessMessage(t('registrationSuccessful'));  // Usar traducción para mensaje de éxito
 
       setName("");
       setEmail("");
@@ -47,46 +52,82 @@ const RegisterFormComp = ({ onRegister }) => {
 
       navigate("/login");
     } catch (error) {
-      console.error("Error al registrar:", error);
-      setErrorMessage("Error al registrar. Revisa los datos e inténtalo de nuevo.");
+      console.error("Error during registration:", error);
+      setErrorMessage(t('registrationError'));  // Usar traducción para mensaje de error
     }
   };
 
   return (
-    <div className="register-form-container">
-      <form onSubmit={handleSubmit} className="register-form">
+    <div className={`register-form-container ${darkMode ? 'dark-mode' : ''}`} aria-labelledby="register-form-title">
+      <form onSubmit={handleSubmit} className="register-form" aria-describedby="form-instructions">
+        <h1 id="register-form-title">{t('register')}</h1>  {/* Usar traducción para el título */}
+        <p id="form-instructions">
+          {t('formInstructions')}  {/* Usar traducción para las instrucciones */}
+        </p>
+        <label htmlFor="name-input">{t('name2')}</label>  {/* Usar traducción para el label */}
         <input
+          id="name-input"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Nombre"
+          placeholder={t('name')}
           required
+          aria-required="true"
         />
+        <label htmlFor="email-input">{t('email')}</label>  {/* Usar traducción para el label */}
         <input
+          id="email-input"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Correo electrónico"
+          placeholder={t('email')}
           required
+          aria-required="true"
         />
+        <label htmlFor="password-input">{t('password')}</label>  {/* Usar traducción para el label */}
         <input
+          id="password-input"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña"
+          placeholder={t('password')}
           required
+          aria-required="true"
         />
+        <label htmlFor="confirm-password-input">{t('confirmPassword')}</label>  {/* Usar traducción para el label */}
         <input
+          id="confirm-password-input"
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirmar contraseña"
+          placeholder={t('confirmPassword')}
           required
+          aria-required="true"
         />
-        {errorMessage && <p className="register-form-error-message">{errorMessage}</p>}
-        {successMessage && <p className="register-form-success-message">{successMessage}</p>}
-        <button type="submit" className="register-form-submit-button">
-          Crear cuenta
+        {errorMessage && (
+          <p
+            className="register-form-error-message"
+            role="alert"
+            aria-live="assertive"
+          >
+            {errorMessage}
+          </p>
+        )}
+        {successMessage && (
+          <p
+            className="register-form-success-message"
+            role="status"
+            aria-live="polite"
+          >
+            {successMessage}
+          </p>
+        )}
+        <button
+          type="submit"
+          className="register-form-submit-button"
+          aria-label={t('createAccount')}
+        >
+          {t('createAccount')}  {/* Usar traducción para el botón */}
         </button>
       </form>
     </div>

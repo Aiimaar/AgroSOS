@@ -2,14 +2,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100vh;
   align-items: center;
   margin: 0 auto;
-  margin-top: 20%;
+}
+
+#container-accesibility.dark-mode {
+  background-color: #333;
+  color: #fff;
 }
 
 .arrow-container {
+  margin-top: -10em;
   align-self: flex-start;
-  margin-top: 2em;
   margin-left: 2em;
 }
 
@@ -18,15 +23,32 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #000;
+  color: #000000;
   margin-bottom: 1.5em;
   display: flex;
   align-items: center;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.dark-mode .accesibility-arrow {
+  color: #ffffff;
+}
+
+.accesibility-arrow:focus,
+.accesibility-arrow:hover {
+  color: #007acc;
+  transform: scale(1.1);
+  outline: 2px solid #007acc;
+}
+
+#container-accesibility.dark-mode .accesibility-p {
+  color: #fff;
 }
 
 .accesibility-text {
   margin-top: 0.5em;
   margin-bottom: 5em;
+  text-align: center;
 }
 
 .accesibility-p {
@@ -34,23 +56,69 @@
   color: black;
   font-weight: bold;
   margin-bottom: 10px;
+  cursor: pointer;
+  line-height: 1.6;
 }
 
 .accesibility-size {
   border-bottom: 1px solid green;
-  width: 70vw;
+  width: 50vw;
   text-align: center;
 }
 
 .accesibility-tuto {
+  border-bottom: 1px solid green;
+  width: 50vw;
+  text-align: center;
   margin-top: 10px;
+}
+
+.language-selector {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-selector label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50;
+  margin-bottom: 5px;
+}
+
+.language-selector select {
+  padding: 10px;
+  font-size: 18px;
+  color: #333;
+  border: 2px solid #4caf50;
+  border-radius: 20px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  width: 200px;
+}
+
+.language-selector select:hover {
+  background-color: #f1f1f1;
+}
+
+.language-selector select:focus {
+  border-color: #45a049;
+  outline: none;
+}
+
+.accesibility-dark-mode {
+  margin-top: 0.5em;
+  border-bottom: 1px solid green;
 }
 
 @media only screen and (min-width: 768px) {
   .arrow-container {
     align-self: flex-start;
     margin-left: 6em;
-    margin-top: 2em;
+    margin-top: -9em;
   }
 
   .accesibility-text {
@@ -70,5 +138,10 @@
     border-bottom: 1px solid green;
     width: 50vw;
     text-align: center;
+  }
+
+  .language-selector select {
+    font-size: 22px;
+    width: 250px;
   }
 }

@@ -24,9 +24,15 @@ html {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
-  margin-top: 25px;
+  height: 100vh;
+  margin-top: -14em;
   margin-bottom: 80px;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-container {
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .plot-card {
@@ -50,6 +56,11 @@ html {
   display: block;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .plot-card {
+  background-color: #444; /* Fondo oscuro */
+}
+
 .terrain-name {
   position: absolute;
   top: 10px;
@@ -60,6 +71,12 @@ html {
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
   border-radius: 8px;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .terrain-name {
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo claro */
+  color: #ccc; /* Texto claro */
 }
 
 .card-footer {
@@ -74,6 +91,12 @@ html {
   backdrop-filter: blur(4px);
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .card-footer {
+  background-color: rgba(0, 0, 0, 0.3); /* Fondo oscuro */
+  color: white; /* Texto claro */
 }
 
 .plot-list-actions {
@@ -93,6 +116,12 @@ html {
   cursor: pointer;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-button {
+  background-color: #555; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 .plot-list-button svg {
   font-size: 13px; 
 }
@@ -101,10 +130,22 @@ html {
   background-color: #333;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-edit-button {
+  background-color: #555; /* Fondo oscuro */
+}
+
 .plot-list-delete-button {
   background-color: #fff;
   color: #333;
   border: 1px solid #ccc;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-delete-button {
+  background-color: #444; /* Fondo oscuro */
+  color: white; /* Texto claro */
+  border: 1px solid #777; /* Borde claro */
 }
 
 .plot-list-info {
@@ -112,6 +153,11 @@ html {
   align-items: center;
   gap: 10px;
   color: #333;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-info {
+  color: white; /* Texto claro */
 }
 
 .plot-list-info-item {
@@ -123,6 +169,12 @@ html {
   background-color: rgba(255, 255, 255, 0.6);
   padding: 5px 10px;
   border-radius: 15px;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-info-item {
+  background-color: rgba(255, 255, 255, 0.3); /* Fondo claro */
+  color: #fff; /* Texto claro */
 }
 
 .plot-list-edit-modal,
@@ -140,11 +192,23 @@ html {
   text-align: center;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-edit-modal,
+.dark-mode .plot-list-delete-modal {
+  background: #555; /* Fondo oscuro */
+  color: white; /* Texto claro */
+}
+
 .plot-list-edit-modal h3 {
   font-size: 20px;
   color: #333;
   margin-bottom: 20px;
   font-weight: 600;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-edit-modal h3 {
+  color: white; /* Texto claro */
 }
 
 .plot-list-edit-modal form {
@@ -161,6 +225,11 @@ html {
   text-align: left;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-edit-modal label {
+  color: #ccc; /* Texto claro */
+}
+
 .plot-list-edit-modal input {
   width: 100%;
   padding: 10px 15px;
@@ -171,10 +240,22 @@ html {
   transition: all 0.2s ease;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-edit-modal input {
+  background-color: #666; /* Fondo oscuro */
+  color: white; /* Texto claro */
+  border: 1px solid #999; /* Borde claro */
+}
+
 .plot-list-edit-modal input:focus {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-edit-modal input:focus {
+  border-color: #77a3d3; /* Borde diferente en modo oscuro */
 }
 
 .plot-list-edit-modal button {
@@ -233,8 +314,21 @@ html {
   background-color: #bbb;
 }
 
+/* Estilos para el modo oscuro */
+.dark-mode .plot-list-edit-modal button[type="button"],
+.dark-mode .plot-list-delete-modal button[type="button"] {
+  background-color: #777; /* Fondo diferente en modo oscuro */
+  color: white; /* Texto claro */
+}
+
+.dark-mode .plot-list-edit-modal button[type="button"]:hover,
+.dark-mode .plot-list-delete-modal button[type="button"]:hover {
+  background-color: #666; /* Fondo diferente en modo oscuro */
+}
+
 @media only screen and (min-width: 768px) {
   .plot-list-container {
+    margin-top: 3em;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -287,7 +381,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3000;
+  z-index: 5000;
 }
 
 .modal {

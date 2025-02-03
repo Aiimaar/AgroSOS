@@ -1,21 +1,33 @@
 #sensor-enla-container {
-  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   width: 90vw;
+  height: 100vh;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
 }
 
+.dark-mode #sensor-enla-container {
+  background-color: #333; 
+  color: white; 
+}
+
 .sensor-enla-button-arrow {
-  margin-top: 2em;
   align-self: flex-start;
-  margin-left: 2em;
+  margin-left: 1em;
+  margin-top: -10em;
+  margin-bottom: 1em;
   border: none;
-  background-color: white;
+  background-color: transparent;
+  cursor: pointer;
   font-size: 20px;
-  cursor: pointer; /* Añadido cursor pointer */
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .sensor-enla-button-arrow {
+  color: white; /* Texto claro en modo oscuro */
+  background-color: #555; /* Fondo oscuro */
 }
 
 .enla-title {
@@ -25,6 +37,11 @@
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+}
+
+/* Estilos para el modo oscuro */
+.dark-mode .enla-title {
+  color: white; /* Texto claro en modo oscuro */
 }
 
 .linked-sensors-list {
@@ -39,15 +56,20 @@
 
 .sensor-item {
   display: flex;
-  justify-content: space-between; /* Espacio entre el texto y el botón */
+  justify-content: space-between; 
   align-items: center;
-  width: 100%;
+  width: 95%;
   background-color: #ffffff;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 15px 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3); 
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dark-mode .sensor-item {
+  background-color: #555; 
+  color: white; 
 }
 
 .sensor-item:hover {
@@ -57,14 +79,22 @@
 
 .sensor-item p {
   margin: 0;
-  font-size: 16px; /* Aumentado el tamaño de la fuente */
+  font-size: 16px;
   color: #555;
-  flex-grow: 1; /* Permite que el texto se expanda */
+  flex-grow: 1; 
+}
+
+.dark-mode .sensor-item p {
+  color: white; 
 }
 
 .sensor-item strong {
   color: #333;
   font-weight: 600;
+}
+
+.dark-mode .sensor-item strong {
+  color: white; /
 }
 
 .delete-sensor-button {
@@ -76,8 +106,8 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Transición suave */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  transition: background-color 0.3s ease; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
 }
 
 .no-sensors-message {
@@ -87,14 +117,18 @@
   margin-top: 20px;
 }
 
+.dark-mode .no-sensors-message {
+  color: #ccc; 
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
   .sensor-item {
-      max-width: 70vw; /* Ajustado para tablets */
+      max-width: 70vw; 
   }
 
   .sensor-enla-button-arrow {
-      margin-top: 3em;
-      margin-left: 5em; /* Ajustado margen izquierdo */
+      margin-top: -15em;
+      margin-left: 5em; 
   }
 
   .linked-sensors-list {
@@ -105,7 +139,7 @@
 
 @media (min-width: 1025px) {
   .linked-sensors-list {
-      max-width: 800px; /* Ancho máximo para escritorios */
+      max-width: 800px; 
   }
 
   .sensor-enla-button-arrow {

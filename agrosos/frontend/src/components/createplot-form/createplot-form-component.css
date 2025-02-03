@@ -4,17 +4,20 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: Arial, sans-serif;
   background-color: #f7f7f7;
 }
-
+.dark-mode body {
+  background-color: #222; /* Fondo oscuro para el modo oscuro */
+}
 .create-plot-form {
   display: flex;
   flex-direction: column;
   gap: 1.5em;
   width: 90%;
+  height: auto;
+  height: 76vh;
   max-width: 400px;
   justify-content: center;
   align-items: center;
@@ -24,20 +27,27 @@ body {
   background-color: #f0eded;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
+.dark-mode .create-plot-form {
+  background-color: #444; /* Fondo oscuro para el modo oscuro */
+  color: white; /* Texto claro para el modo oscuro */
+}
 .create-plot-form-title {
   text-align: center;
   font-size: 1.5em;
   color: #333333;
 }
-
+.dark-mode .create-plot-form-title {
+  color: white; /* Texto claro para el modo oscuro */
+}
 .create-plot-form-label {
   font-weight: bold;
   font-size: 14px;
   margin-bottom: 0.5em;
   color: #555555;
 }
-
+.dark-mode .create-plot-form-label {
+  color: #ccc; /* Texto más claro para el modo oscuro */
+}
 .create-plot-form-input,
 .create-plot-form-select {
   width: 100%;
@@ -49,20 +59,23 @@ body {
   background-color: #f9f9f9;
   transition: border 0.3s ease;
 }
-
+.dark-mode .create-plot-form-input,
+.dark-mode .create-plot-form-select {
+  background-color: #555; /* Fondo más oscuro para el modo oscuro */
+  border: 1px solid rgb(122, 122, 122); /* Borde más oscuro para el modo oscuro */
+  color: #ccc; /* Texto más claro para el modo oscuro */
+}
 .create-plot-form-input:focus,
 .create-plot-form-select:focus {
   border: 1px solid #5ea71e;
   outline: none;
 }
-
 .create-plot-form-buttons {
   display: flex;
   justify-content: space-between;
   gap: 1em;
   margin-top: 1em;
 }
-
 .create-plot-submit-button,
 .create-plot-cancel-button {
   width: 48%;
@@ -75,27 +88,27 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .create-plot-submit-button {
   background-color: #5ea71e;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
-
 .create-plot-cancel-button {
   background-color: #5ea71e;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
-
 .create-plot-submit-button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
-
+.dark-mode .create-plot-submit-button,
+.dark-mode .create-plot-cancel-button {
+  background-color: green; /* Fondo más oscuro para el modo oscuro */
+  color: #ccc; /* Texto más claro para el modo oscuro */
+}
 .create-plot-form-group {
   width: 100%;
   padding: 0 10px;
 }
-
 .create-plot-upload-container {
   display: flex;
   flex-direction: column;
@@ -112,7 +125,11 @@ body {
   cursor: pointer;
   padding: 10px;
 }
-
+.dark-mode .create-plot-upload-container {
+  background-color: #444; /* Fondo más oscuro para el modo oscuro */
+  border: 1px solid rgb(122, 122, 122); /* Borde más oscuro para el modo oscuro */
+  color: #ccc; /* Texto más claro para el modo oscuro */
+}
 .create-plot-upload-container img {
   width: 40%;
   height: auto;
@@ -120,51 +137,42 @@ body {
   margin-bottom: 0.5em;
   opacity: 0.7;
 }
-
 .create-plot-upload-container:hover {
   border-color: #5ea71e;
 }
-
 .create-plot-upload-container p {
   margin-top: 0.5em;
   font-size: 0.9em;
 }
-
 .create-plot-upload-container input[type="file"] {
   display: none;
 }
-
 .create-plot-default-image-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
 }
-
 .create-plot-default-image-container img {
   border-radius: 8px;
   margin-top: 1em;
   width: 80%;
 }
-
 .create-plot-color-picker-container {
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
-
 #color-picker {
   width: calc(100% - 20px);
   height: 4vh;
   margin: 0 auto;
 }
-
 .size-unit-container {
   display: flex;
   align-items: center;
   gap: 1em;
 }
-
 .size-unit-container select {
   width: auto;
   padding: 0.8em;
@@ -174,23 +182,24 @@ body {
   background-color: #f9f9f9;
   transition: border 0.3s ease;
 }
-
+.dark-mode .size-unit-container select {
+  background-color: #555; /* Fondo más oscuro para el modo oscuro */
+  border: 1px solid rgb(122, 122, 122); /* Borde más oscuro para el modo oscuro */
+  color: #ccc; /* Texto más claro para el modo oscuro */
+}
 .size-unit-container select:focus {
   border: 1px solid #5ea71e;
   outline: none;
 }
-
 .create-plot-image-preview-container {
   width: 100%;
   padding: 10px;
   text-align: center;
 }
-
 .image-preview {
   margin-top: 1em;
   border-radius: 5px;
 }
-
 .create-plot-error-message {
   color: red;
   font-weight: bold;
