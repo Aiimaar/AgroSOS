@@ -207,7 +207,7 @@ function ExistingRulesComponent() {
         className="existing-rule-back-button"
         onClick={() => navigate("/settings")}
       >
-        <FontAwesomeIcon icon={faArrowLeft} aria-label="Flecha para ir a la página anterior"/>
+        <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <div className="existing-rule-header">
         <h1 className="existing-rule-title">
