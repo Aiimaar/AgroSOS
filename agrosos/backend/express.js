@@ -10,6 +10,7 @@ import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
 import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
 import sensorsRoutes from './routes/sensorsRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js';
 import cropRoutes from './routes/cropRoutes.js';
 import sensorValueRoutes from './routes/sensorValueRoutes.js';
 import dotenv from 'dotenv';
@@ -90,7 +91,7 @@ app.use('/api/irrigation_schedule', irrigationScheduleRoutes);
 // Configura las rutas de vistas
 app.use('/views/auth', authViewRoutes);
 app.use('/views/userList', isAuthenticated, userListViewsRoutes);
-app.use('/views/rules', rulesRoutes);
+app.use('/views/rules', isAuthenticated, rulesViewsRoutes);
 app.use('/views/plot-list', isAuthenticated, plotListViewsRoutes);
 app.use('/views/create-plot', isAuthenticated, createPlotViewRoute);
 
@@ -104,6 +105,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Error en el servidor');
 });
 
+// Iniciar servidor
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);

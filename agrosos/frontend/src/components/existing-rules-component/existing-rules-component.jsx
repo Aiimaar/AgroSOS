@@ -15,6 +15,7 @@ import "./existing-rules-component.css";
 
 function ExistingRulesComponent() {
   const [rules, setRules] = useState([]);
+  const [crops, setCrops] = useState([]); // Estado para almacenar los cultivos
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ruleToDelete, setRuleToDelete] = useState(null);
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ function ExistingRulesComponent() {
   });
 
   useEffect(() => {
+    // Obtener reglas
     axiosInstance
       .get("/rules")
       .then((response) => {
@@ -45,14 +47,25 @@ function ExistingRulesComponent() {
           navigate("/login");
         }
       });
+
+    // Obtener cultivos
+    axiosInstance
+      .get("/crops")
+      .then((response) => {
+        setCrops(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los cultivos:", error);
+        // Manejar el error, por ejemplo, mostrando un mensaje al usuario
+      });
   }, [t, navigate]);
 
   const handleEdit = (ruleId) => {
     const selectedRule = rules.find((rule) => rule.id === ruleId);
-
+  
     if (selectedRule) {
       const ruleInfo = JSON.parse(selectedRule.rule_info);
-
+  
       sessionStorage.setItem(
         "selectedAction",
         JSON.stringify(ruleInfo.AND?.[0]?.actions || [])
@@ -98,7 +111,7 @@ function ExistingRulesComponent() {
         JSON.stringify(selectedRule.crop || null)
       );
     }
-
+  
     navigate(`/edit-rule/${ruleId}`);
   };
 
@@ -201,6 +214,25 @@ function ExistingRulesComponent() {
     }
   };
 
+  const getCropName = (rule) => {
+    try {
+      const ruleInfo = JSON.parse(rule.rule_info);
+  
+      // Obtener crop_id directamente del objeto rule, no de ruleInfo.AND
+      const cropId = rule.crop_id; 
+  
+      if (cropId) {
+        const crop = crops.find((c) => c.id === parseInt(cropId)); // Convertir cropId a entero
+        return crop ? crop.name : t("unknown_crop");
+      } else {
+        return t("unknown_crop");
+      }
+    } catch (error) {
+      console.error("Error al obtener el nombre del cultivo:", error);
+      return t("error_getting_crop_name");
+    }
+  };
+
   return (
     <div id="existing-rules-container" className={darkMode ? "dark-mode" : ""}>
       <button
@@ -237,7 +269,7 @@ function ExistingRulesComponent() {
                   <strong>{t("rule_name")}:</strong> {rule.name}
                 </p>
                 <p>
-                  <strong>{t("crop")}:</strong> {rule.crop}
+                  <strong>{t("crop")}:</strong> {getCropName(rule)}
                 </p>
                 <p>
                   <strong>{t("conditions")}:</strong> {formatRuleInfo(rule.rule_info)}
