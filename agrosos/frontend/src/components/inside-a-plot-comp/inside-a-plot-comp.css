@@ -171,7 +171,7 @@
   font-weight: bold;
   border: none;
   border-radius: 16px;
-  background-color: #43a047;
+  background-color: #3b873e;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -227,7 +227,7 @@
 
 .tasks-section li::after {
   content: "✔️";
-  color: #43a047;
+  color: #3b873e;
 }
 
 .tasks-section input {
@@ -241,7 +241,7 @@
 .tasks-section button {
   margin-left: 10px;
   padding: 10px 15px;
-  background-color: #43a047;
+  background-color: #3b873e;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 8px;
@@ -316,12 +316,12 @@
 
 .irrigation-frecuency-calendar-icon.selected {
   transform: scale(1.2);
-  color: #43a047;
+  color: #3b873e;
 }
 
 /* Estilos para el modo oscuro */
 .dark-mode .irrigation-frecuency-calendar-icon.selected {
-  color: #43a047; /* Color de icono seleccionado en modo oscuro */
+  color: #3b873e; /* Color de icono seleccionado en modo oscuro */
 }
 
 .irrigation-frecuency-day-label {
@@ -413,7 +413,7 @@
 
 .clock-popup-content input:focus {
   outline: none;
-  border-color: #43a047;
+  border-color: #3b873e;
 }
 
 .select-time-button {
@@ -425,7 +425,7 @@
   font-weight: bold;
   border: none;
   border-radius: 16px;
-  background-color: #43a047;
+  background-color: #3b873e;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -433,7 +433,7 @@
 
 /* Estilos para el modo oscuro */
 .dark-mode .select-time-button {
-  background-color: #43a047; /* Fondo diferente en modo oscuro */
+  background-color: #3b873e; /* Fondo diferente en modo oscuro */
   color: black; /* Texto oscuro para que se vea bien */
 }
 
@@ -463,7 +463,7 @@
   font-weight: bold;
   border: none;
   border-radius: 16px;
-  background-color: #43a047;
+  background-color: #3b873e;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -477,6 +477,7 @@
 
 .inside-a-plot-error-message {
   margin: 0 auto;
+  font-weight: bold;
 }
 
 .select-time-main-button-unselected {
@@ -487,7 +488,7 @@
   font-weight: bold;
   border: none;
   border-radius: 16px;
-  background-color: #43a047;
+  background-color: #3b873e;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -522,7 +523,7 @@
   align-items: center;
   justify-content: center;
   margin: 0.5em auto;
-  background-color: #43a047;
+  background-color: #3b873e;
   color: white;
   border: none;
   border-radius: 16px;
