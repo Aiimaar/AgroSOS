@@ -41,6 +41,10 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
+app.get("/api/status", (req, res) => {
+  res.status(200).json({ message: "API funcionando" });
+});
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -93,6 +97,14 @@ app.use((err, req, res, next) => {
   res.status(500).send('Error en el servidor');
 });
 
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  });
+}
+
+export default app;
 // **Configuración de WebSockets**
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
