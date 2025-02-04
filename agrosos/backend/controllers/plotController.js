@@ -71,7 +71,7 @@ export const deletePlot = async (req, res) => {
   const { id } = req.params;
   try {
     await Plot.destroy({ where: { id } });
-    res.status(204).send();
+    res.status(200).send();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
