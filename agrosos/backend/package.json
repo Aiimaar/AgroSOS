@@ -12,7 +12,8 @@
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage",
     "test:frontend": "vitest",
-    "test:backend": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+    "test:backend": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "start": "node express.js"
   },
   "dependencies": {
     "@faker-js/faker": "^9.4.0",
