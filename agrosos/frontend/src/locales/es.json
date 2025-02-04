@@ -95,6 +95,7 @@
   "default_plot_image": "Imagen predeterminada del terreno",
   "error_message_loading_plots": "Error al cargar los terrenos. Por favor, intenta nuevamente más tarde.",
   "plot_list": "Lista de terrenos",
+  "add_plot": "Crear un terreno",
 
   "monday": "Lunes",
   "tuesday": "Martes",

@@ -1,3 +1,4 @@
+import React from "react";
 import AdvicesComponent from "../../components/advices-component/advices-component";
 import Header from "../../components/header/header";
 
