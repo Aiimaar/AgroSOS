@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // Importamos useTranslation
 import "./login-form-comp.css";
 
 const LoginFormComp = ({ onLogin }) => {
+  const { t } = useTranslation(); // Accedemos a la función de traducción
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -12,10 +14,9 @@ const LoginFormComp = ({ onLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Codificar las credenciales en Base64
+
     const credentials = btoa(`${email}:${password}`);
-  
+
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/login",
@@ -27,24 +28,35 @@ const LoginFormComp = ({ onLogin }) => {
           },
         }
       );
-  
+
       const { token, userId, role } = response.data;
-      console.log(response.data);
       localStorage.setItem("authToken", token);
       localStorage.setItem("userId", userId);
       localStorage.setItem("role", role);
-  
+
+      // Obtener el idioma del usuario
+      const languageResponse = await axios.get(
+        `http://localhost:3000/api/users/${userId}/language`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const { language } = languageResponse.data;
+      localStorage.setItem("language", language);
+
       if (typeof onLogin === "function") {
         onLogin();
       }
-  
+
       navigate("/plot-list");
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
-      setErrorMessage("Error en el inicio de sesión. Intenta de nuevo más tarde.");
+      setErrorMessage(t("login_error"));
     }
   };
-  
 
   return (
     <div className="login-form-container">
@@ -53,26 +65,26 @@ const LoginFormComp = ({ onLogin }) => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Correo electrónico"
+          placeholder={t("email")}
           required
         />
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña"
+          placeholder={t("password")}
           required
         />
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         <button type="submit" className="submit-button">
-          Iniciar Sesión
+          {t("login")}
         </button>
       </form>
 
       <div className="register-link">
-        <p>¿Aún no tienes cuenta?</p>
+        <p>{t("no_account")}</p>
         <Link to="/register" className="create-account-button">
-          Crear cuenta
+          {t("create_account")}
         </Link>
       </div>
     </div>

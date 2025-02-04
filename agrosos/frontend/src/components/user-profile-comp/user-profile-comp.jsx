@@ -4,15 +4,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./user-profile-comp.css";
-import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useDarkMode } from "../../context/DarkModeContext";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 const UserProfileComp = () => {
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    profile_image: "",
-  });
-
+  const [userData, setUserData] = useState({ name: "", email: "", profile_image: "" });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingField, setEditingField] = useState(null);
   const [fieldValue, setFieldValue] = useState("");
@@ -20,7 +17,7 @@ const UserProfileComp = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -28,12 +25,14 @@ const UserProfileComp = () => {
         const userId = localStorage.getItem("userId");
         const token = localStorage.getItem("authToken");
 
-        const response = await axios.get(
-          `http://localhost:3000/api/users/${userId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        if (!userId || !token) {
+          console.error("Faltan credenciales de autenticación.");
+          return;
+        }
+
+        const response = await axios.get(`${API_URL}/api/users/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         setUserData({
           name: response.data.name || "",
@@ -58,16 +57,11 @@ const UserProfileComp = () => {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
 
-      const updatedData = {
-        ...userData,
-        [editingField]: fieldValue,
-      };
+      const updatedData = { ...userData, [editingField]: fieldValue };
 
-      await axios.put(
-        `http://localhost:3000/api/users/${userId}`,
-        updatedData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await axios.put(`${API_URL}/api/users/${userId}`, updatedData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       setUserData(updatedData);
       setIsModalOpen(false);
@@ -96,21 +90,11 @@ const UserProfileComp = () => {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
 
-      const response = await axios.put(
-        `http://localhost:3000/api/users/${userId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.put(`${API_URL}/api/users/${userId}`, formData, {
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
+      });
 
-      setUserData((prev) => ({
-        ...prev,
-        profile_image: response.data.profile_image,
-      }));
+      setUserData((prev) => ({ ...prev, profile_image: response.data.profile_image }));
       setImageFile(null);
       setIsImageSelected(false);
     } catch (error) {
@@ -124,6 +108,7 @@ const UserProfileComp = () => {
   const handleLogout = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("authToken");
+    localStorage.removeItem("language"); // ✅ Eliminar preferencia de idioma al cerrar sesión
     navigate("/login");
   };
 
@@ -139,7 +124,7 @@ const UserProfileComp = () => {
           className={`modal-input ${darkMode ? "dark-mode" : ""}`}
         />
         <div className="modal-buttons">
-          <button onClick={handleSave} className={`modal-save-button ${darkMode ? "dark-mode" : ""}`}>
+          <button onClick={handleSave} className="modal-save-button">
             Guardar
           </button>
           <button
@@ -147,7 +132,7 @@ const UserProfileComp = () => {
               setIsModalOpen(false);
               setEditingField(null);
             }}
-            className={`modal-cancel-button ${darkMode ? "dark-mode" : ""}`}
+            className="modal-cancel-button"
           >
             Cancelar
           </button>
@@ -155,10 +140,9 @@ const UserProfileComp = () => {
       </div>
     </div>
   );
-  
 
   return (
-    <div className={`user-profile-container ${darkMode ? 'dark-mode' : ''}`}>
+    <div className={`user-profile-container ${darkMode ? "dark-mode" : ""}`}>
       <div className="profile-pic-container">
         <img
           src={userData.profile_image || "/default-profile.png"}
@@ -192,7 +176,7 @@ const UserProfileComp = () => {
             disabled={isUploading}
             aria-label="Subir imagen seleccionada"
           >
-            Subir Imagen
+            {isUploading ? "Subiendo..." : "Subir Imagen"}
           </button>
         )}
       </div>

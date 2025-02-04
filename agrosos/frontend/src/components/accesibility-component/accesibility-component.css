@@ -8,7 +8,7 @@
 }
 
 #container-accesibility.dark-mode {
-  background-color: #333; /* Negro no muy oscuro */
+  background-color: #333;
   color: #fff;
 }
 
@@ -36,9 +36,9 @@
 
 .accesibility-arrow:focus,
 .accesibility-arrow:hover {
-  color: #007acc; /* Mejor contraste para el enfoque */
-  transform: scale(1.1); /* Efecto visual para hover/focus */
-  outline: 2px solid #007acc; /* Resaltado al navegar con teclado */
+  color: #007acc;
+  transform: scale(1.1);
+  outline: 2px solid #007acc;
 }
 
 #container-accesibility.dark-mode .accesibility-p {
@@ -48,7 +48,7 @@
 .accesibility-text {
   margin-top: 0.5em;
   margin-bottom: 5em;
-  text-align: center; /* Mejor alineación del texto */
+  text-align: center;
 }
 
 .accesibility-p {
@@ -57,7 +57,7 @@
   font-weight: bold;
   margin-bottom: 10px;
   cursor: pointer;
-  line-height: 1.6; /* Mejora la legibilidad */
+  line-height: 1.6;
 }
 
 .accesibility-size {
@@ -73,7 +73,6 @@
   margin-top: 10px;
 }
 
-/* Estilos para el selector de idioma con un desplegable */
 .language-selector {
   margin-top: 30px;
   display: flex;
@@ -85,7 +84,7 @@
 .language-selector label {
   font-size: 18px;
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
   margin-bottom: 5px;
 }
 
@@ -93,12 +92,12 @@
   padding: 10px;
   font-size: 18px;
   color: #333;
-  border: 2px solid #4CAF50;
-  border-radius: 5px;
+  border: 2px solid #4caf50;
+  border-radius: 20px;
   background-color: white;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-  width: 200px; /* Ajuste del tamaño del desplegable */
+  width: 200px;
 }
 
 .language-selector select:hover {
@@ -110,9 +109,9 @@
   outline: none;
 }
 
-/* Media query para pantallas más grandes */
 .accesibility-dark-mode {
   margin-top: 0.5em;
+  border-bottom: 1px solid green;
 }
 
 @media only screen and (min-width: 768px) {
@@ -141,9 +140,8 @@
     text-align: center;
   }
 
-  /* Estilos para el selector de idioma en pantallas grandes */
   .language-selector select {
     font-size: 22px;
-    width: 250px; /* Ajuste para pantallas más grandes */
+    width: 250px;
   }
 }

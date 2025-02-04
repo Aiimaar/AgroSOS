@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import "./inside-a-plot-comp.css";
 import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
-
 const InsideAPlotComp = ({ plotId }) => {
   const { t, i18n } = useTranslation(); // Accedemos a las funciones de i18next
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ const InsideAPlotComp = ({ plotId }) => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [i18n.language]);
+  }, []); // Remover dependencia de i18n.language
 
   const fetchData = async (plotId, token) => {
     try {
@@ -118,6 +117,12 @@ const InsideAPlotComp = ({ plotId }) => {
       setNewTask("");
       localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     }
+  };
+
+  const handleRemoveTask = (taskToRemove) => {
+    const updatedTasks = tasks.filter((task) => task !== taskToRemove);
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   const calculateAverage = (sensorType) => {
@@ -216,29 +221,48 @@ const InsideAPlotComp = ({ plotId }) => {
             />
           </div>
         ) : (
-          <p className="no-crops" aria-live="polite">{t("no_crop_in_plot")}</p>
+          <p className="no-crops" aria-live="polite">
+            {t("no_crop_in_plot")}
+          </p>
         )}
       </section>
 
       <section id="inside-a-plot-comp-global">
         <div id="inside-a-plot-comp-left">
           <div className="inside-a-plot-comp-left">
-            <section className="evolution-section" aria-labelledby="evolution-section-title">
-              <h3 id="evolution-section-title">{t("temperature_humidity_evolution")}</h3>
+            <section
+              className="evolution-section"
+              aria-labelledby="evolution-section-title"
+            >
+              <h3 id="evolution-section-title">
+                {t("temperature_humidity_evolution")}
+              </h3>
               <EvolutionGraph plotId={plotId} />
             </section>
           </div>
 
           <div className="inside-a-plot-comp-left">
-            <section className="tasks-section" aria-labelledby="tasks-section-title">
+            <section
+              className="tasks-section"
+              aria-labelledby="tasks-section-title"
+            >
               <h3 id="tasks-section-title">{t("tasks")}</h3>
               <ul className="task-list" aria-live="polite">
                 {tasks.map((task, index) => (
-                  <li key={index}>{task}</li>
+                  <li
+                    key={index}
+                    onClick={() => handleRemoveTask(task)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {task}
+                  </li>
                 ))}
               </ul>
+
               <div className="task-input">
-                <label htmlFor="new-task-input">Añadir tarea completada:</label>
+                <label htmlFor="new-task-input">
+                  {t("add_completed_task")}
+                </label>
                 <input
                   id="new-task-input"
                   type="text"
@@ -256,19 +280,32 @@ const InsideAPlotComp = ({ plotId }) => {
 
         <div id="inside-a-plot-comp-right">
           <div className="inside-a-plot-comp-right">
-            <section className="climate-section" aria-labelledby="climate-section-title">
+            <section
+              className="climate-section"
+              aria-labelledby="climate-section-title"
+            >
               <h3 id="climate-section-title">{t("climate")}</h3>
               {sensorValues.length > 0 ? (
                 <div className="climate-stats" aria-live="polite">
-                  {["temperature", "soil_temperature", "humidity", "soil_humidity"].map((sensorType) => {
+                  {[
+                    "temperature",
+                    "soil_temperature",
+                    "humidity",
+                    "soil_humidity",
+                  ].map((sensorType) => {
                     const averageValue = calculateAverage(sensorType);
                     if (averageValue !== null) {
                       return (
-                        <div key={sensorType} aria-label={`Valor promedio de ${getSensorLabel(sensorType)}`}>
+                        <div
+                          key={sensorType}
+                          aria-label={`Valor promedio de ${getSensorLabel(
+                            sensorType
+                          )}`}
+                        >
                           <p>
                             {sensorType.includes("temperature")
                               ? `${averageValue.toFixed(0)}°C`
-                              : `${averageValue.toFixed(0)}%`} {" "}
+                              : `${averageValue.toFixed(0)}%`}{" "}
                             <span>{getSensorLabel(sensorType)}</span>
                           </p>
                         </div>
@@ -284,9 +321,15 @@ const InsideAPlotComp = ({ plotId }) => {
           </div>
 
           <div className="inside-a-plot-comp-right">
-            <section className="irrigation-frecuency-section" aria-labelledby="irrigation-section-title">
+            <section
+              className="irrigation-frecuency-section"
+              aria-labelledby="irrigation-section-title"
+            >
               <div id="irrigation-frecuency-component">
-                <h3 id="irrigation-section-title" className="irrigation-frecuency-title">
+                <h3
+                  id="irrigation-section-title"
+                  className="irrigation-frecuency-title"
+                >
                   {t("irrigation_frequency")}
                 </h3>
                 <p className="irrigation-frecuency-p">{t("irrigation_days")}</p>
@@ -332,9 +375,14 @@ const InsideAPlotComp = ({ plotId }) => {
                 </div>
 
                 {isClockPopupVisible && (
-                  <div className="clock-popup" id="clock-popup" role="dialog" aria-labelledby="clock-popup-title">
+                  <div
+                    className="clock-popup"
+                    id="clock-popup"
+                    role="dialog"
+                    aria-labelledby="clock-popup-title"
+                  >
                     <div className="clock-popup-content">
-                      <h3 id="clock-popup-title">Seleccionar hora</h3>
+                      <h3 id="clock-popup-title">{t("Select_time")}</h3>
                       <ReactClock
                         value={clockValue}
                         onChange={(value) => {
@@ -352,7 +400,9 @@ const InsideAPlotComp = ({ plotId }) => {
                         size={200}
                         renderNumbers={true}
                       />
-                      <label htmlFor="manual-time-input">Introduce la hora manualmente:</label>
+                      <label htmlFor="manual-time-input">
+                        Introduce la hora manualmente:
+                      </label>
                       <input
                         id="manual-time-input"
                         type="text"
@@ -385,13 +435,22 @@ const InsideAPlotComp = ({ plotId }) => {
           </div>
 
           <div className="inside-a-plot-comp-left">
-            <section className="inside-a-plot-actions-section" aria-labelledby="actions-section-title">
+            <section
+              className="inside-a-plot-actions-section"
+              aria-labelledby="actions-section-title"
+            >
               <h3 id="actions-section-title">{t("actions")}</h3>
               <div className="inside-a-plot-actions-buttons-container">
-                <button className="inside-a-plot-action-button" aria-label="Activar riego">
+                <button
+                  className="inside-a-plot-action-button"
+                  aria-label="Activar riego"
+                >
                   {t("activate_irrigation")}
                 </button>
-                <button className="inside-a-plot-action-button" aria-label="Desactivar riego">
+                <button
+                  className="inside-a-plot-action-button"
+                  aria-label="Desactivar riego"
+                >
                   {t("deactivate_irrigation")}
                 </button>
               </div>

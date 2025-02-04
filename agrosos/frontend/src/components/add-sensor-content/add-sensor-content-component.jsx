@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "./add-sensor-content-component.css";
 import lock from "./icon_lock_locked_.png";
-import { useDarkMode } from '../../context/DarkModeContext'; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import { useDarkMode } from '../../context/DarkModeContext'; // Ajusta la ruta según tu estructura de archivos
 
 function AddSensor() {
+    const { t } = useTranslation(); // Hook de traducción
     const [searchParams] = useSearchParams();
     const sensorName = searchParams.get("name");
     const [sensorCode, setSensorCode] = useState("");
     const navigate = useNavigate();
     const token = localStorage.getItem("authToken");
     const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(""); // Estado para mensajes de éxito
-    const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
+    const [successMessage, setSuccessMessage] = useState(""); 
+    const { darkMode } = useDarkMode();
 
     const sensorNames = {
         "Temperatura": "temperature",
@@ -32,7 +34,7 @@ function AddSensor() {
         const plotId = localStorage.getItem("selectedPlotId");
 
         if (!plotId) {
-            setError("No se ha seleccionado ningún terreno.");
+            setError(t("error_no_plot_selected"));
             return;
         }
 
@@ -57,12 +59,11 @@ function AddSensor() {
                     return;
                 }
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Error al agregar sensor");
+                throw new Error(errorData.message || t("error_linking_sensor"));
             }
             setSensorCode("");
-            setSuccessMessage(`Sensor "${sensorName}" con código "${sensorCode}" enlazado con éxito.`); //Mensaje de éxito
-            setTimeout(() => setSuccessMessage(""), 5000); // Limpia el mensaje después de 5 segundos
-            //navigate("/sensor-enla"); No es necesario navegar automáticamente a enlazados, ya se muestra el mensaje de éxito.
+            setSuccessMessage(t("sensor_linked_success", { sensorName, sensorCode }));
+            setTimeout(() => setSuccessMessage(""), 5000);
         } catch (error) {
             console.error("Error al agregar sensor:", error);
             setError(error.message);
@@ -72,11 +73,11 @@ function AddSensor() {
     return (
         <div className={`container-add-sensor ${darkMode ? 'dark-mode' : ''}`}>
             <div className="form-add-sensor">
-                <h1 className="sensor-form-title" aria-live="polite">Enlazar sensor</h1>
+                <h1 className="sensor-form-title" aria-live="polite">{t("link_sensor_title")}</h1>
                 <form className="sensor-form" onSubmit={handleSubmit} aria-labelledby="sensor-form-title">
                     <div className="form-group-sensor-name">
                         <label htmlFor="sensor-name-input" className="label-sensor-name">
-                            Nombre del sensor
+                            {t("sensor_name_label")}
                         </label>
                         <div className="sensor-input-container">
                             <input
@@ -88,22 +89,21 @@ function AddSensor() {
                                 aria-readonly="true"
                                 aria-describedby="sensor-name-description"
                             />
-                            {/* Añadido texto alternativo descriptivo */}
-                            <img src={lock} alt="Icono de candado que indica que el nombre del sensor está bloqueado para edición" className="lock-icon" />
+                            <img src={lock} alt={t("sensor_name_locked_description")} className="lock-icon" />
                         </div>
                         <span id="sensor-name-description" className="sr-only">
-                            Este campo está bloqueado y solo muestra el nombre del sensor.
+                            {t("sensor_name_locked_description")}
                         </span>
                     </div>
                     <div className="form-group-sensor-code">
                         <label htmlFor="sensor-code-input" className="label-sensor-code">
-                            Código del sensor a enlazar
+                            {t("sensor_code_label")}
                         </label>
                         <input
                             type="number"
                             id="sensor-code-input"
                             className="input-sensor-code"
-                            placeholder="Ingrese el código"
+                            placeholder={t("sensor_code_placeholder")}
                             value={sensorCode}
                             onChange={(e) => setSensorCode(e.target.value)}
                             aria-required="true"
@@ -112,15 +112,14 @@ function AddSensor() {
                         />
                         {error && <p id="sensor-code-error" className="error-message">{error}</p>}
                     </div>
-                    {error && <p className="error-message">{error}</p>}
-                    {successMessage && <p className="sensor-success-message">{successMessage}</p>} {/*Muestra mensaje de éxito*/}
+                    {successMessage && <p className="sensor-success-message">{successMessage}</p>}
                     <div className="add-sensor-content-buttons">
-                        <button type="submit" className="btn-enla" aria-label="Enlazar sensor">
-                            Enlazar
+                        <button type="submit" className="btn-enla" aria-label={t("link_sensor_button")}>
+                            {t("link_sensor_button")}
                         </button>
                         <Link to="/sensors">
-                            <button className="btn-back" aria-label="Volver a la lista de sensores">
-                                Volver
+                            <button className="btn-back" aria-label={t("back_to_sensors_button")}>
+                                {t("back_to_sensors_button")}
                             </button>
                         </Link>
                     </div>
