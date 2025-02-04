@@ -22,6 +22,7 @@ import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';
 import authViewRoutes from './routes/views-routes/authViewRoutes.js';
 import userListViewsRoutes from './routes/views-routes/userListViewsRoutes.js';
 import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
+import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js';
 import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
 
 // WebSockets
@@ -39,6 +40,10 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
+
+app.get("/api/status", (req, res) => {
+  res.status(200).json({ message: "API funcionando" });
+});
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -92,6 +97,14 @@ app.use((err, req, res, next) => {
   res.status(500).send('Error en el servidor');
 });
 
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  });
+}
+
+export default app;
 // **Configuración de WebSockets**
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
