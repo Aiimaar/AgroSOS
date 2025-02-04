@@ -104,7 +104,6 @@ if (process.env.NODE_ENV !== "test") {
   });
 }
 
-export default app;
 // **Configuración de WebSockets**
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
@@ -184,7 +183,4 @@ setInterval(() => {
   console.log('📢 Notificación enviada:', notification);
 }, 3600000); // Se envía una alerta cada hora (3600000 ms)
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
-});
+export default app;
