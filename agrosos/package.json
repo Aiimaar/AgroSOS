@@ -28,7 +28,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "express-session": "^1.18.1",
     "i18next": "^24.2.1",
     "jsonwebtoken": "^9.0.2",
@@ -43,7 +43,8 @@
     "react-router-dom": "^6.28.0",
     "sequelize": "^6.37.5",
     "sqlite3": "^5.1.7",
-    "store": "^2.0.12"
+    "store": "^2.0.12",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
