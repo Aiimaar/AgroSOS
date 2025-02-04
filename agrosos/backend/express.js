@@ -22,6 +22,7 @@ import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';
 import authViewRoutes from './routes/views-routes/authViewRoutes.js';
 import userListViewsRoutes from './routes/views-routes/userListViewsRoutes.js';
 import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
+import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js';
 import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
 
 // WebSockets
