@@ -81,7 +81,7 @@ app.use('/api/irrigation_schedule', irrigationScheduleRoutes);
 // Configura rutas de vistas
 app.use('/views/auth', authViewRoutes);
 app.use('/views/userList', isAuthenticated, userListViewsRoutes);
-app.use('/views/rules', rulesRoutes);
+app.use('/views/rules', isAuthenticated, rulesViewsRoutes);
 app.use('/views/plot-list', isAuthenticated, plotListViewsRoutes);
 app.use('/views/create-plot', isAuthenticated, createPlotViewRoute);
 
