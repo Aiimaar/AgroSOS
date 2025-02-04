@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../context/DarkModeContext";
 import { useTranslation } from "react-i18next";
 import { useWebSocket } from "../../context/WebSocketContext"; 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./notifications-component.css";
 
 function NotificationsComponent() {
