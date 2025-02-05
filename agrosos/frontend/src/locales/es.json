@@ -394,5 +394,7 @@
   "login": "Iniciar Sesión",
   "login_error": "Error en el inicio de sesión. Intenta de nuevo más tarde.",
   "no_account": "¿Aún no tienes cuenta?",
-  "create_account": "Crear cuenta"
+  "create_account": "Crear cuenta",
+
+  "disable_animation": "Desactivar animación"
 }

@@ -396,5 +396,7 @@
   "login": "Log In",
   "login_error": "Login failed. Please try again later.",
   "no_account": "Don't have an account yet?",
-  "create_account": "Create Account"
+  "create_account": "Create Account",
+
+  "disable_animation": "Disable animation"
 }
