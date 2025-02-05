@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   backend:
     build:
@@ -6,39 +7,32 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - SESSION_SECRET=${SESSION_SECRET}
-      - JWT_SECRET=${JWT_SECRET}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - ADMIN_USER=${ADMIN_USER}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - DB_HOST=db
-      - PORT=3000
-      - NODE_ENV=${NODE_ENV}
     depends_on:
       - db
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE_DEV}
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD_DEV}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_DEV}
+      SESSION_SECRET: ${SESSION_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
     volumes:
-      - ./backend:/app # Cambia esta línea
+      - ./backend:/app
       - /app/node_modules
-    networks:
-      - agrosos-network
+    restart: always
 
   db:
     image: mysql:8.0
+    restart: always
+    ports:
+      - "3306:3306"
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_DEV}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_DEV}
     volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - agrosos-network
+      - mysql_data:/var/lib/mysql
 
 volumes:
-  db_data:
-
-networks:
-  agrosos-network:
-    driver: bridge
+  mysql_data:
