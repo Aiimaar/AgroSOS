@@ -4,7 +4,9 @@ import en from "./locales/en.json";  // Archivo de traducción en inglés
 import es from "./locales/es.json";  // Archivo de traducción en español
 
 // Detectar el idioma desde localStorage o usar uno por defecto
-const storedLanguage = localStorage.getItem('language') || 'es'; // 'es' como idioma por defecto
+const storedLanguage =
+  typeof localStorage !== "undefined" ? localStorage.getItem("language") || "es" : "es";
+ // 'es' como idioma por defecto
 
 i18n
   .use(initReactI18next)
