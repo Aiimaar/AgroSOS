@@ -1,124 +1,209 @@
-/* global jest */
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useTranslation } from "react-i18next";
-import { useDarkMode } from "../../context/DarkModeContext";
+import { describe, it, vi, beforeEach, afterEach } from "vitest";
 import ExistingRulesComponent from "./existing-rules-component";
+import { MemoryRouter, useNavigate } from "react-router-dom";
+import { DarkModeProvider } from "../../context/DarkModeContext";
+import { I18nextProvider } from "react-i18next";
+import i18n from "../../i18n"; // Importa tu configuración de i18n
+import axios from "axios";
 
-// Mockear useNavigate
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useNavigate: jest.fn(),
-}));
-
-// Mockear axios
-jest.mock("axios");
-
-// Mockear useTranslation
-jest.mock("react-i18next", () => ({
-  useTranslation: jest.fn(),
-}));
-
-// Mockear useDarkMode
-jest.mock("../../context/DarkModeContext", () => ({
-  useDarkMode: jest.fn(),
-}));
+vi.mock("axios");
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: vi.fn(),
+  };
+});
 
 describe("ExistingRulesComponent", () => {
-  const mockNavigate = jest.fn();
-  const mockT = jest.fn((key) => key); // Función mock simple para useTranslation
+  const mockRules = [
+    {
+      id: 1,
+      name: "Rule 1",
+      crop_id: "1",
+      rule_info: JSON.stringify({
+        AND: [
+          {
+            conditions: [{ type: "temperature", operator: ">", value: 25 }],
+            actions: ["action1"],
+            sensors: [{ type: "temperature_sensor" }],
+          },
+        ],
+      }),
+    },
+    {
+      id: 2,
+      name: "Rule 2",
+      crop_id: "2",
+      rule_info: JSON.stringify({
+        AND: [
+          {
+            conditions: [{ type: "humidity", operator: "<", value: 60 }],
+            actions: ["action2"],
+            sensors: [{ type: "humidity_sensor" }],
+          },
+        ],
+      }),
+    },
+  ];
+
+  const mockCrops = [
+    { id: 1, name: "Crop 1" },
+    { id: 2, name: "Crop 2" },
+  ];
+
+  const darkModeValue = {
+    darkMode: false,
+    toggleDarkMode: vi.fn(),
+  };
+
+  const renderComponent = () => {
+    render(
+      <MemoryRouter>
+        <DarkModeProvider value={darkModeValue}>
+          <I18nextProvider i18n={i18n}>
+            <ExistingRulesComponent />
+          </I18nextProvider>
+        </DarkModeProvider>
+      </MemoryRouter>
+    );
+  };
 
   beforeEach(() => {
-    useNavigate.mockReturnValue(mockNavigate);
-    useTranslation.mockReturnValue({ t: mockT });
-    useDarkMode.mockReturnValue({ darkMode: false });
-    axios.create.mockReturnThis(); // Asegura que axios.create() devuelve la instancia mockeada
+    vi.clearAllMocks();
+    localStorage.setItem("authToken", "mockToken");
 
-    // Mockear localStorage
-    global.localStorage = {
-      getItem: jest.fn().mockReturnValue("dummy-token"),
-    };
+    axios.create.mockReturnValue({
+      get: vi.fn().mockImplementation((url) => {
+        if (url === "/rules") {
+          return Promise.resolve({ data: mockRules });
+        } else if (url === "/crops") {
+          return Promise.resolve({ data: mockCrops });
+        }
+        return Promise.reject(new Error("Not found"));
+      }),
+      delete: vi.fn().mockResolvedValue({}),
+    });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    localStorage.clear();
   });
 
-  // Test 1: Renderizar el componente y verificar el título
-  test("renders without crashing and displays title", async () => {
-    axios.get
-      .mockResolvedValueOnce({ data: [] })
-      .mockResolvedValueOnce({ data: [] }); // Mock para rules y crops
-    render(<ExistingRulesComponent />);
-    await waitFor(() => expect(screen.getByText("rules")).toBeInTheDocument());
+  it("renders the list of rules", async () => {
+    renderComponent();
+    expect(await screen.findByText("Rule 1")).toBeInTheDocument();
+    expect(await screen.findByText("Rule 2")).toBeInTheDocument();
+    expect(await screen.findByText("Crop 1")).toBeInTheDocument();
+    expect(await screen.findByText("Crop 2")).toBeInTheDocument();
   });
 
-  // Test 2: Comportamiento cuando no hay reglas existentes
-  test("displays no rules message when there are no rules", async () => {
-    axios.get
-      .mockResolvedValueOnce({ data: [] })
-      .mockResolvedValueOnce({ data: [] }); // Mock para rules y crops
-    render(<ExistingRulesComponent />);
-    await waitFor(() =>
-      expect(screen.getByText("no_rules_message_add")).toBeInTheDocument()
-    );
+  it("renders 'No rules' message and navigates to add rule page on add button click", async () => {
+    const mockedNavigate = vi.fn();
+    useNavigate.mockReturnValue(mockedNavigate);
+
+    axios.create.mockReturnValueOnce({
+      get: vi.fn().mockImplementation((url) => {
+        if (url === "/rules") {
+          return Promise.resolve({ data: [] });
+        } else if (url === "/crops") {
+          return Promise.resolve({ data: mockCrops });
+        }
+        return Promise.reject(new Error("Not found"));
+      }),
+      delete: vi.fn().mockResolvedValue({}),
+    });
+
+    renderComponent();
+    expect(await screen.findByText("Añadir regla")).toBeInTheDocument();
+    const addButton = await screen.findByRole("button", { name: /Añadir una nueva regla/i });
+    fireEvent.click(addButton);
+
+    await waitFor(() => {
+      expect(mockedNavigate).toHaveBeenCalledWith("/add-rule");
+    });
   });
 
-  // Test 3: Comportamiento al hacer clic en el botón de agregar regla
-  test("navigates to add rule page when add rule button is clicked", async () => {
-    axios.get
-      .mockResolvedValueOnce({ data: [] })
-      .mockResolvedValueOnce({ data: [] }); // Mock para rules y crops
-    render(<ExistingRulesComponent />);
-    await waitFor(() =>
-      fireEvent.click(screen.getByLabelText("add_rule_button_label"))
-    );
-    expect(mockNavigate).toHaveBeenCalledWith("/add-rule");
+  it("opens and closes the delete confirmation modal", async () => {
+    renderComponent();
+
+    const deleteButtons = await screen.findAllByRole("button", { name: /Eliminar regla/i });
+    fireEvent.click(deleteButtons[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText(/¿Estás seguro de que deseas eliminar esta regla\?/i)).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole("button", { name: /Cancelar/i });
+    fireEvent.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText(/¿Estás seguro de que deseas eliminar esta regla\?/i)).not.toBeInTheDocument();
+    });
   });
 
-  // Test 4: Comportamiento al hacer clic en el botón de editar regla
-  test("navigates to edit rule page when edit button is clicked", async () => {
-    const mockRules = [
-      { id: 1, name: "Rule 1", rule_info: "{}", crop_id: "1" },
-    ];
-    const mockCrops = [{ id: 1, name: "Crop 1" }];
-    axios.get
-      .mockResolvedValueOnce({ data: mockRules })
-      .mockResolvedValueOnce({ data: mockCrops });
-    render(<ExistingRulesComponent />);
-    await waitFor(() => fireEvent.click(screen.getByLabelText("edit_rule")));
-    expect(mockNavigate).toHaveBeenCalledWith("/edit-rule/1");
+  it("deletes a rule when confirmed", async () => {
+    const mockDelete = vi.fn().mockResolvedValue({});
+    axios.create.mockReturnValue({
+      get: vi.fn().mockImplementation((url) => {
+        if (url === "/rules") {
+          return Promise.resolve({ data: mockRules });
+        } else if (url === "/crops") {
+          return Promise.resolve({ data: mockCrops });
+        }
+        return Promise.reject(new Error("Not found"));
+      }),
+      delete: mockDelete,
+    });
+
+    renderComponent();
+
+    const deleteButtons = await screen.findAllByRole("button", { name: /Eliminar regla/i });
+    fireEvent.click(deleteButtons[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText(/¿Estás seguro de que deseas eliminar esta regla\?/i)).toBeInTheDocument();
+    });
+
+    const confirmButton = screen.getByRole("button", { name: /Aceptar/i });
+    fireEvent.click(confirmButton);
+
+    await waitFor(() => {
+      expect(mockDelete).toHaveBeenCalledWith(`/rules/1`);
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText("Rule 1")).not.toBeInTheDocument();
+    });
   });
 
-  // Test 5: Abrir modal de confirmación al eliminar una regla
-  test("opens confirmation modal when delete button is clicked", async () => {
-    const mockRules = [
-      { id: 1, name: "Rule 1", rule_info: "{}", crop_id: "1" },
-    ];
-    const mockCrops = [{ id: 1, name: "Crop 1" }];
-    axios.get
-      .mockResolvedValueOnce({ data: mockRules })
-      .mockResolvedValueOnce({ data: mockCrops });
-    render(<ExistingRulesComponent />);
-    await waitFor(() => fireEvent.click(screen.getByLabelText("delete_rule")));
-    expect(screen.getByText("confirm_delete_rule")).toBeInTheDocument();
+  it("navigates to edit rule page on edit button click", async () => {
+    const mockedNavigate = vi.fn();
+    useNavigate.mockReturnValue(mockedNavigate);
+
+    renderComponent();
+
+    const editButtons = await screen.findAllByRole("button", { name: /Editar Regla/i });
+    fireEvent.click(editButtons[0]);
+
+    await waitFor(() => {
+      expect(mockedNavigate).toHaveBeenCalledWith(`/edit-rule/${mockRules[0].id}`);
+    });
   });
 
-  // Test 6: Comportamiento al confirmar la eliminación de una regla
-  test("deletes a rule when delete is confirmed", async () => {
-    const mockRules = [
-      { id: 1, name: "Rule 1", rule_info: "{}", crop_id: "1" },
-    ];
-    const mockCrops = [{ id: 1, name: "Crop 1" }];
-    axios.get
-      .mockResolvedValueOnce({ data: mockRules })
-      .mockResolvedValueOnce({ data: mockCrops });
-    axios.delete.mockResolvedValueOnce();
-    render(<ExistingRulesComponent />);
-    await waitFor(() => fireEvent.click(screen.getByLabelText("delete_rule")));
-    fireEvent.click(screen.getByText("accept"));
-    await waitFor(() => expect(axios.delete).toHaveBeenCalledWith("/rules/1"));
+  it("navigates to settings page on back button click", async () => {
+    const mockedNavigate = vi.fn();
+    useNavigate.mockReturnValue(mockedNavigate);
+
+    renderComponent();
+
+    const backButton = await screen.findByRole("button", { name: /Flecha para volver atrás/i });
+    fireEvent.click(backButton);
+
+    await waitFor(() => {
+      expect(mockedNavigate).toHaveBeenCalledWith("/settings");
+    });
   });
 });
