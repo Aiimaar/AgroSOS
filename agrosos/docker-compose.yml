@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -9,13 +7,14 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       NODE_ENV: development
       DB_HOST: db
       MYSQL_DATABASE: ${MYSQL_DATABASE_DEV}
       MYSQL_USER: root
       MYSQL_PASSWORD: ${MYSQL_PASSWORD_DEV}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_DEV}
       SESSION_SECRET: ${SESSION_SECRET}
       JWT_SECRET: ${JWT_SECRET}
     volumes:
@@ -28,11 +27,10 @@ services:
     restart: always
     ports:
       - "3306:3306"
+    env_file:
+      - .env
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE_DEV}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_DEV}
     volumes:
       - mysql_data:/var/lib/mysql
-
-volumes:
-  mysql_data:
