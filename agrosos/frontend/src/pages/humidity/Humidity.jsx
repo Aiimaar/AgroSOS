@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Header from "../../components/header/header";
 import HumidityComponent from "../../components/humidity-component/humidity-component";
 

@@ -32,8 +32,6 @@ import subscriptionRoutes from './routes/subscriptionRoutes.js';
 // WebSockets
 import http from 'http';
 
-dotenv.config();
-
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +50,12 @@ app.get("/api/status", (req, res) => {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/', express.static(path.join(__dirname, 'public')));
+dotenv.config();
 
 // Configurar almacenamiento de sesiones con Sequelize
 const SequelizeSessionStore = SequelizeStore(session.Store);
@@ -181,7 +185,7 @@ setInterval(() => {
   });
 
   console.log('📢 Notificación enviada:', notification);
-}, 3600000); // Se envía una alerta cada hora (3600000 ms)
+}, 360000); // Se envía una alerta cada hora (3600000 ms)
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
