@@ -17,7 +17,6 @@ body {
   gap: 1.5em;
   width: 90%;
   height: auto;
-  height: 76vh;
   max-width: 400px;
   justify-content: center;
   align-items: center;
@@ -28,6 +27,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .dark-mode .create-plot-form {
+  height: 95vw;
   background-color: #444; /* Fondo oscuro para el modo oscuro */
   color: white; /* Texto claro para el modo oscuro */
 }
@@ -114,8 +114,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 150px;
+  width: 50vw;
+  height: 15vh;
   border: 2px dashed #ccc;
   border-radius: 12px;
   background-color: #f7f7f7;
@@ -127,12 +127,11 @@ body {
 }
 .dark-mode .create-plot-upload-container {
   background-color: #444; /* Fondo más oscuro para el modo oscuro */
-  border: 1px solid rgb(122, 122, 122); /* Borde más oscuro para el modo oscuro */
   color: #ccc; /* Texto más claro para el modo oscuro */
 }
 .create-plot-upload-container img {
   width: 40%;
-  height: auto;
+  height: 6vh;
   object-fit: contain;
   margin-bottom: 0.5em;
   opacity: 0.7;
@@ -191,11 +190,21 @@ body {
   border: 1px solid #5ea71e;
   outline: none;
 }
+
 .create-plot-image-preview-container {
-  width: 100%;
+  object-fit: contain;
+  max-width: 25vw;
+  width: auto;
+  height: 20vh;
   padding: 10px;
   text-align: center;
 }
+
+.create-plot-image-preview-container p{
+  margin-top: -2em;
+  font-size: 12px;
+}
+
 .image-preview {
   margin-top: 1em;
   border-radius: 5px;
@@ -218,7 +227,7 @@ body {
 
   .create-plot-upload-container {
     width: 100%;
-    max-width: 40vw;
+    max-width: 30vw;
   }
 
   .create-plot-upload-container img {
