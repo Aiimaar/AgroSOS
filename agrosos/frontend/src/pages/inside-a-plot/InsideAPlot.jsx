@@ -1,3 +1,4 @@
+import React from "react";
 import ActualPlotComp from "../../components/actual-plot-comp/actual-plot-comp";
 import CropsMenuComponent from "../../components/crops-menu/crops-menu-component";
 import SensorHeaderGrey from "../../components/header-grey-component/header-grey-component";

@@ -22,6 +22,7 @@ import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';
 import authViewRoutes from './routes/views-routes/authViewRoutes.js';
 import userListViewsRoutes from './routes/views-routes/userListViewsRoutes.js';
 import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
+import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js'
 import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
 
 // WebSockets
@@ -169,7 +170,7 @@ setInterval(() => {
   });
 
   console.log('📢 Notificación enviada:', notification);
-}, 3600000); // Se envía una alerta cada hora (3600000 ms)
+}, 1000); // Se envía una alerta cada hora (3600000 ms)
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
