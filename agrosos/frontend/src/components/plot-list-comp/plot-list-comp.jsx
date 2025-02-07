@@ -12,7 +12,6 @@ import AddPlotComponent from "../add-plot-component/add-plot-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useDarkMode } from "../../context/DarkModeContext";
-import { motion, AnimatePresence } from "framer-motion";
 
 function PlotListComp() {
   const { t, i18n } = useTranslation(); // Obtén las funciones de traducción
@@ -215,18 +214,11 @@ function PlotListComp() {
       ) : (
         <>
           {showDeleteModal && (
-            <div
-              role="delete-modal"
-              className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}
-            >
+            <div role="delete-modal" className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
               <div className="plot-list-delete-modal">
                 <h3>{t("confirm_delete_plot")}</h3>
                 <div className="modal-actions">
-                  <button
-                    role="button"
-                    type="submit"
-                    onClick={handleDeletePlot}
-                  >
+                  <button role="button" type="submit" onClick={handleDeletePlot}>
                     {t("delete")}
                   </button>
                   <button role="button" type="button" onClick={cancelDelete}>
@@ -279,83 +271,95 @@ function PlotListComp() {
           </div>
           <div className="plot-list-container">
             {errorMessage && (
-              <p role="alert" className="plot-list-error-message">
-                {errorMessage}
-              </p>
+              <p role="alert" className="plot-list-error-message">{errorMessage}</p>
             )}
             <div className="plot-list">
-              <AnimatePresence>
-                {plots.map((plot) => (
-                  <motion.div
-                    key={plot.id}
-                    className="plot-card"
-                    tabIndex="0"
-                    role="button"
-                    onClick={() => handlePlotClick(plot.id, plot.name)}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                  >
-                    {plot.image ? (
-                      <img
-                        src={`http://localhost:3000/uploads/${plot.image}`}
-                        alt={`${t("plot_image")} ${plot.name}`}
-                        className="plot-image"
-                      />
-                    ) : plot.color ? (
-                      <div className="plot-image" />
-                    ) : (
-                      <img
-                        src={assignDefaultImage(plot.id)}
-                        alt={`${t("default_plot_image")} ${plot.name}`}
-                        className="plot-image"
-                      />
-                    )}
-                    <div className="terrain-name">{plot.name}</div>
-                    <div className="card-footer">
-                      <div className="plot-list-actions">
-                        <div
-                          className="plot-list-button plot-list-edit-button"
-                          onClick={(e) => {
+              {plots.map((plot) => (
+                <div
+                  key={plot.id}
+                  className="plot-card"
+                  tabIndex="0"
+                  role="button"
+                  onClick={() => handlePlotClick(plot.id, plot.name)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handlePlotClick(plot.id, plot.name);
+                  }}
+                  style={{ backgroundColor: plot.color || "transparent" }}
+                >
+                  {plot.image ? (
+                    <img
+                      src={`http://localhost:3000/uploads/${plot.image}`}
+                      alt={`${t("plot_image")} ${plot.name}`}
+                      className="plot-image"
+                    />
+                  ) : plot.color ? (
+                    <div className="plot-image" />
+                  ) : (
+                    <img
+                      src={assignDefaultImage(plot.id)}
+                      alt={`${t("default_plot_image")} ${plot.name}`}
+                      className="plot-image"
+                    />
+                  )}
+                  <div className="terrain-name">{plot.name}</div>
+                  <div className="card-footer">
+                    <div className="plot-list-actions">
+                      <div
+                        className="plot-list-button plot-list-edit-button"
+                        tabIndex="0"
+                        role="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEditPlot(plot);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
                             e.stopPropagation();
                             handleEditPlot(plot);
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faPen} />
-                        </div>
-                        <div
-                          className="plot-list-button plot-list-delete-button"
-                          onClick={(e) => {
+                          }
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faPen} />
+                      </div>
+                      <div
+                        className="plot-list-button plot-list-delete-button"
+                        tabIndex="0"
+                        role="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          confirmDeletePlot(plot.id);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
                             e.stopPropagation();
                             confirmDeletePlot(plot.id);
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faTrash} />
-                        </div>
-                      </div>
-                      <div className="plot-list-info">
-                        <div className="plot-list-info-item">
-                          <span role="img" aria-label="temperature">
-                            🌡️
-                          </span>
-                          <span>
-                            {sensorAverages[plot.id]?.temperature || "--"}°C
-                          </span>
-                        </div>
-                        <div className="plot-list-info-item">
-                          <span role="img" aria-label="humidity">
-                            💧
-                          </span>
-                          <span>
-                            {sensorAverages[plot.id]?.humidity || "--"}%
-                          </span>
-                        </div>
+                          }
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
                       </div>
                     </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                    <div className="plot-list-info">
+                      <div className="plot-list-info-item">
+                        <span role="img" aria-label="temperature">
+                          🌡️
+                        </span>
+                        <span>
+                          {sensorAverages[plot.id]?.temperature || "--"}°C
+                        </span>
+                      </div>
+                      <div className="plot-list-info-item">
+                        <span role="img" aria-label="humidity">
+                          💧
+                        </span>
+                        <span>
+                          {sensorAverages[plot.id]?.humidity || "--"}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </>

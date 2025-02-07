@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import ActualPlotComp from "../../components/actual-plot-comp/actual-plot-comp";
 import SensorHeaderGrey from "../../components/header-grey-component/header-grey-component";
 import Header from "../../components/header/header";

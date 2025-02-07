@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Header from "../../components/header/header";
 import SettingsComponent from "../../components/settings-comp/settings-component";
 
