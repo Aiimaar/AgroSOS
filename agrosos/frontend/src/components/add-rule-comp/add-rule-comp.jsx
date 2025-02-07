@@ -255,15 +255,21 @@ const AddRuleComp = () => {
   };
 
   return (
-    <div className="add-rule-form-container">
-      <h2 className="add-rule-form-title">{t("add_rule")}</h2>
+    <div className="add-rule-container-all">
+    <div className={`add-rule-form-container ${darkMode ? "dark-mode" : ""}`}>
+      <h2 className={`add-rule-form-title ${darkMode ? "dark-mode-text" : ""}`}>
+        {t("add_rule")}
+      </h2>
 
-      <label className="add-rule-label" htmlFor="add-rule-crop">
+      <label
+        className={`add-rule-label ${darkMode ? "dark-mode-text" : ""}`}
+        htmlFor="add-rule-crop"
+      >
         {t("crop_2")}
       </label>
       <select
         id="add-rule-crop"
-        className="add-rule-select"
+        className={`add-rule-select ${darkMode ? "dark-mode-select" : ""}`}
         value={cropId}
         onChange={(e) => {
           const selectedCropId = e.target.value;
@@ -284,12 +290,15 @@ const AddRuleComp = () => {
         ))}
       </select>
 
-      <label className="add-rule-label" htmlFor="add-rule-sensor">
+      <label
+        className={`add-rule-label ${darkMode ? "dark-mode-text" : ""}`}
+        htmlFor="add-rule-sensor"
+      >
         Sensor:
       </label>
       <select
         id="add-rule-sensor"
-        className="add-rule-select"
+        className={`add-rule-select ${darkMode ? "dark-mode-select" : ""}`}
         value={sensorType}
         onChange={(e) => setSensorType(e.target.value)}
         aria-label="Selecciona un tipo de sensor"
@@ -306,14 +315,18 @@ const AddRuleComp = () => {
 
       {/* Condiciones y botones para cada tipo de sensor */}
       {sensorType === "Temperature" && (
-        <div className="add-rule-conditions">
-          <h3>Condiciones de Temperatura</h3>
+        <div className={`add-rule-conditions ${darkMode ? "dark-mode" : ""}`}>
+          <h3 className={darkMode ? "dark-mode-text" : ""}>
+            Condiciones de Temperatura
+          </h3>
           <ul>
             {temperatureConditions.map((cond, index) => (
-              <li key={index}>
+              <li key={index} className={darkMode ? "dark-mode-text" : ""}>
                 {cond.operator} {cond.value}°C
                 <button
-                  className="delete-condition-button"
+                  className={`delete-condition-button ${
+                    darkMode ? "dark-mode-button" : ""
+                  }`}
                   onClick={() => handleDeleteCondition("temperature", index)}
                   aria-label="Eliminar condición de temperatura"
                 >
@@ -323,7 +336,9 @@ const AddRuleComp = () => {
             ))}
           </ul>
           <button
-            className="add-rule-conditions-button"
+            className={`add-rule-conditions-button ${
+              darkMode ? "dark-mode-button" : ""
+            }`}
             onClick={() => navigate("/temperature")}
             aria-label="Añadir condición de temperatura"
           >
@@ -333,14 +348,18 @@ const AddRuleComp = () => {
       )}
 
       {sensorType === "Humedad" && (
-        <div className="add-rule-conditions">
-          <h3>Condiciones de Humedad</h3>
+        <div className={`add-rule-conditions ${darkMode ? "dark-mode" : ""}`}>
+          <h3 className={darkMode ? "dark-mode-text" : ""}>
+            Condiciones de Humedad
+          </h3>
           <ul>
             {humidityConditions.map((cond, index) => (
-              <li key={index}>
+              <li key={index} className={darkMode ? "dark-mode-text" : ""}>
                 {cond.operator} {cond.value}%
                 <button
-                  className="delete-condition-button"
+                  className={`delete-condition-button ${
+                    darkMode ? "dark-mode-button" : ""
+                  }`}
                   onClick={() => handleDeleteCondition("humidity", index)}
                   aria-label="Eliminar condición de humedad"
                 >
@@ -350,7 +369,9 @@ const AddRuleComp = () => {
             ))}
           </ul>
           <button
-            className="add-rule-conditions-button"
+            className={`add-rule-conditions-button ${
+              darkMode ? "dark-mode-button" : ""
+            }`}
             onClick={() => navigate("/humidity")}
             aria-label="Añadir condición de humedad"
           >
@@ -360,14 +381,18 @@ const AddRuleComp = () => {
       )}
 
       {sensorType === "Temperatura del terreno" && (
-        <div className="add-rule-conditions">
-          <h3>Condiciones de Temperatura del terreno</h3>
+        <div className={`add-rule-conditions ${darkMode ? "dark-mode" : ""}`}>
+          <h3 className={darkMode ? "dark-mode-text" : ""}>
+            Condiciones de Temperatura del terreno
+          </h3>
           <ul>
             {soilTemperatureConditions.map((cond, index) => (
-              <li key={index}>
+              <li key={index} className={darkMode ? "dark-mode-text" : ""}>
                 {cond.operator} {cond.value}°C
                 <button
-                  className="delete-condition-button"
+                  className={`delete-condition-button ${
+                    darkMode ? "dark-mode-button" : ""
+                  }`}
                   onClick={() =>
                     handleDeleteCondition("soilTemperature", index)
                   }
@@ -379,7 +404,9 @@ const AddRuleComp = () => {
             ))}
           </ul>
           <button
-            className="add-rule-conditions-button"
+            className={`add-rule-conditions-button ${
+              darkMode ? "dark-mode-button" : ""
+            }`}
             onClick={() => navigate("/soil-temperature")}
             aria-label="Añadir condición de temperatura del terreno"
           >
@@ -389,14 +416,18 @@ const AddRuleComp = () => {
       )}
 
       {sensorType === "Humedad del terreno" && (
-        <div className="add-rule-conditions">
-          <h3>Condiciones de Humedad del terreno</h3>
+        <div className={`add-rule-conditions ${darkMode ? "dark-mode" : ""}`}>
+          <h3 className={darkMode ? "dark-mode-text" : ""}>
+            Condiciones de Humedad del terreno
+          </h3>
           <ul>
             {soilHumidityConditions.map((cond, index) => (
-              <li key={index}>
+              <li key={index} className={darkMode ? "dark-mode-text" : ""}>
                 {cond.operator} {cond.value}%
                 <button
-                  className="delete-condition-button"
+                  className={`delete-condition-button ${
+                    darkMode ? "dark-mode-button" : ""
+                  }`}
                   onClick={() => handleDeleteCondition("soilHumidity", index)}
                   aria-label="Eliminar condición de humedad del terreno"
                 >
@@ -406,7 +437,9 @@ const AddRuleComp = () => {
             ))}
           </ul>
           <button
-            className="add-rule-conditions-button"
+            className={`add-rule-conditions-button ${
+              darkMode ? "dark-mode-button" : ""
+            }`}
             onClick={() => navigate("/soil-humidity")}
             aria-label="Añadir condición de humedad del terreno"
           >
@@ -415,12 +448,15 @@ const AddRuleComp = () => {
         </div>
       )}
 
-      <label className="add-rule-label" htmlFor="add-rule-actuator">
+      <label
+        className={`add-rule-label ${darkMode ? "dark-mode-text" : ""}`}
+        htmlFor="add-rule-actuator"
+      >
         Actuador:
       </label>
       <select
         id="add-rule-actuator"
-        className="add-rule-select"
+        className={`add-rule-select ${darkMode ? "dark-mode-select" : ""}`}
         value={actuatorType}
         onChange={handleActuatorChange}
         aria-label="Selecciona un actuador"
@@ -438,12 +474,15 @@ const AddRuleComp = () => {
 
       {availableActions.length > 0 && (
         <div>
-          <label className="add-rule-label" htmlFor="add-rule-actions">
+          <label
+            className={`add-rule-label ${darkMode ? "dark-mode-text" : ""}`}
+            htmlFor="add-rule-actions"
+          >
             Acción:
           </label>
           <select
             id="add-rule-actions"
-            className="add-rule-select"
+            className={`add-rule-select ${darkMode ? "dark-mode-select" : ""}`}
             value={selectedAction}
             onChange={(e) => setSelectedAction(e.target.value)}
             aria-label="Selecciona una acción"
@@ -459,12 +498,15 @@ const AddRuleComp = () => {
       )}
 
       <button
-        className="add-rule-form-submit-button"
+        className={`add-rule-form-submit-button ${
+          darkMode ? "dark-mode-button" : ""
+        }`}
         onClick={handleAddRule}
         aria-label={t("add_rule_button")}
       >
         {t("add_rule_button")}
       </button>
+    </div>
     </div>
   );
 };
