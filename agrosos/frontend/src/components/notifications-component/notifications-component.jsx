@@ -1,3 +1,4 @@
+import React from 'react';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import alert from "./Ellipse17.png";

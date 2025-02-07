@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDarkMode } from "../../context/DarkModeContext";
+import React from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 

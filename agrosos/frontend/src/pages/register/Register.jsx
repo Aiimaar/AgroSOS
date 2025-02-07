@@ -1,3 +1,4 @@
+import React from 'react';
 import HeaderImageOnly from "../../components/header-image-only/header-image-only";
 import RegisterFormComp from "../../components/register-form-comp/register-form-comp";
 
