@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import SequelizeStore from 'connect-session-sequelize';
 import { isAuthenticated } from './middleware/isAuthenticated.js';
+import webPush from 'web-push';
 
 // Importar rutas
 import plotsRoutes from './routes/plotsRoutes.js';
@@ -22,13 +23,14 @@ import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';
 import authViewRoutes from './routes/views-routes/authViewRoutes.js';
 import userListViewsRoutes from './routes/views-routes/userListViewsRoutes.js';
 import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
-import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js';
+import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js'
 import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
+
+ // Ruta de suscripción
+// import subscriptionRoutes from './routes/subscriptionRoutes.js';
 
 // WebSockets
 import http from 'http';
-
-dotenv.config();
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -48,6 +50,12 @@ app.get("/api/status", (req, res) => {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/', express.static(path.join(__dirname, 'public')));
+dotenv.config();
 
 // Configurar almacenamiento de sesiones con Sequelize
 const SequelizeSessionStore = SequelizeStore(session.Store);
@@ -90,19 +98,15 @@ app.use('/views/rules', isAuthenticated, rulesViewsRoutes);
 app.use('/views/plot-list', isAuthenticated, plotListViewsRoutes);
 app.use('/views/create-plot', isAuthenticated, createPlotViewRoute);
 
+// Ruta de suscripción
+// app.use('/api/subscriptions', subscriptionRoutes);
+
 // Manejo de errores
 app.use((req, res) => res.status(404).send('Página no encontrada'));
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Error en el servidor');
 });
-
-if (process.env.NODE_ENV !== "test") {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-  });
-}
 
 // **Configuración de WebSockets**
 const server = http.createServer(app);
@@ -181,6 +185,11 @@ setInterval(() => {
   });
 
   console.log('📢 Notificación enviada:', notification);
-}, 3600000); // Se envía una alerta cada hora (3600000 ms)
+}, 360000); // Se envía una alerta cada hora (3600000 ms)
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
+});
 
 export default app;
