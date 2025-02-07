@@ -13,7 +13,8 @@
         "test:coverage": "vitest --coverage",
         "test:frontend": "vitest",
         "test:backend": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --testTimeout=10000",
-        "pretest": "cross-env NODE_ENV=test npm run db:reset"
+        "pretest": "cross-env NODE_ENV=test npm run db:reset",
+        "start": "node express.js"
     },
     "dependencies": {
         "@faker-js/faker": "^9.4.0",

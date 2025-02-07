@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'; 
 import CropsListComponent from "../../components/crops-list/crops-list-component";
 import InsideAPlotFooter from "../../components/inside-a-plot-footer-comp/inside-a-plot-footer-comp"
 import Header from "../../components/header/header";

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import HeaderImageOnly from "../../components/header-image-only/header-image-only";
 import LoginFormComp from "../../components/login-form-comp/login-fom-comp";
 
