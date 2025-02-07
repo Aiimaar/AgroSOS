@@ -1,4 +1,4 @@
-import { WebSocketServer, WebSocket } from 'ws'; // Asegúrate de importar WebSocket
+import { WebSocketServer, WebSocket } from 'ws';
 import express from 'express';
 import cors from 'cors';
 import sequelize from './db.js';
@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import SequelizeStore from 'connect-session-sequelize';
 import { isAuthenticated } from './middleware/isAuthenticated.js';
+import webPush from 'web-push';
 
 // Importar rutas
 import plotsRoutes from './routes/plotsRoutes.js';
@@ -24,6 +25,7 @@ import userListViewsRoutes from './routes/views-routes/userListViewsRoutes.js';
 import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
 import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js';
 import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
+import subscriptionRoutes from './routes/subscriptionRoutes.js'; // Ruta de suscripción
 
 // WebSockets
 import http from 'http';
@@ -90,6 +92,9 @@ app.use('/views/rules', isAuthenticated, rulesViewsRoutes);
 app.use('/views/plot-list', isAuthenticated, plotListViewsRoutes);
 app.use('/views/create-plot', isAuthenticated, createPlotViewRoute);
 
+// Ruta de suscripción (ya configurada)
+app.use('/api/subscriptions', subscriptionRoutes);
+
 // Manejo de errores
 app.use((req, res) => res.status(404).send('Página no encontrada'));
 app.use((err, req, res, next) => {
@@ -112,6 +117,8 @@ wss.on('connection', (ws) => {
   console.log('🔵 Cliente WebSocket conectado');
 
   // Enviar un mensaje de bienvenida al cliente
+  ws.send(JSON.stringify({ type: 'welcome', message: '¡Bienvenido al servidor WebSocket!' }));
+
   ws.on('message', (message) => {
     try {
       const data = JSON.parse(message);
@@ -131,6 +138,14 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('🔴 Cliente WebSocket desconectado');
   });
+
+  ws.onerror = (error) => {
+    console.error('⚠️ Error en WebSocket:', error);
+  };
+});
+
+wss.on('error', (error) => {
+  console.error('⚠️ Error en el servidor WebSocket:', error);
 });
 
 // **Simulación de Notificaciones en Tiempo Real**
