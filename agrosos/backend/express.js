@@ -1,4 +1,4 @@
-import { WebSocketServer, WebSocket } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws'; // Asegúrate de importar WebSocket
 import express from 'express';
 import cors from 'cors';
 import sequelize from './db.js';
@@ -23,9 +23,11 @@ import irrigationScheduleRoutes from './routes/irrigationScheduleRoutes.js';
 import authViewRoutes from './routes/views-routes/authViewRoutes.js';
 import userListViewsRoutes from './routes/views-routes/userListViewsRoutes.js';
 import plotListViewsRoutes from './routes/views-routes/plotListViewsRoutes.js';
-import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js';
+import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js'
 import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
-import subscriptionRoutes from './routes/subscriptionRoutes.js'; // Ruta de suscripción
+
+ // Ruta de suscripción
+import subscriptionRoutes from './routes/subscriptionRoutes.js';
 
 // WebSockets
 import http from 'http';
@@ -92,7 +94,7 @@ app.use('/views/rules', isAuthenticated, rulesViewsRoutes);
 app.use('/views/plot-list', isAuthenticated, plotListViewsRoutes);
 app.use('/views/create-plot', isAuthenticated, createPlotViewRoute);
 
-// Ruta de suscripción (ya configurada)
+// Ruta de suscripción
 app.use('/api/subscriptions', subscriptionRoutes);
 
 // Manejo de errores
@@ -102,13 +104,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Error en el servidor');
 });
 
-if (process.env.NODE_ENV !== "test") {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-  });
-}
-
 // **Configuración de WebSockets**
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
@@ -117,8 +112,6 @@ wss.on('connection', (ws) => {
   console.log('🔵 Cliente WebSocket conectado');
 
   // Enviar un mensaje de bienvenida al cliente
-  ws.send(JSON.stringify({ type: 'welcome', message: '¡Bienvenido al servidor WebSocket!' }));
-
   ws.on('message', (message) => {
     try {
       const data = JSON.parse(message);
@@ -138,14 +131,6 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('🔴 Cliente WebSocket desconectado');
   });
-
-  ws.onerror = (error) => {
-    console.error('⚠️ Error en WebSocket:', error);
-  };
-});
-
-wss.on('error', (error) => {
-  console.error('⚠️ Error en el servidor WebSocket:', error);
 });
 
 // **Simulación de Notificaciones en Tiempo Real**
@@ -188,7 +173,7 @@ setInterval(() => {
       break;
   }
 
-  // Enviar la notificación a todos los clientes conectados
+  // Enviar la notificación a todos los clientes conectados 
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(notification));
@@ -197,5 +182,10 @@ setInterval(() => {
 
   console.log('📢 Notificación enviada:', notification);
 }, 3600000); // Se envía una alerta cada hora (3600000 ms)
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
+});
 
 export default app;
