@@ -4,11 +4,11 @@ export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   console.log('Authorization Header:', authHeader);
 
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = authHeader && authHeader.split(' ')[1];  // Extrae el token del encabezado
   console.log('Token:', token);
 
   if (!token) {
-    return res.status(401).json({ error: "Token no proporcionado." });
+    return res.status(401).json({ message: 'Token no proporcionado o inválido' });
   }
 
   try {
@@ -17,6 +17,6 @@ export const authenticateToken = (req, res, next) => {
     next();
   } catch (err) {
     console.error("Error al autenticar token:", err);
-    res.status(403).json({ error: "Token inválido." });
+    res.status(403).json({ message: 'Token no proporcionado o inválido' });
   }
 };
