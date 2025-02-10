@@ -139,13 +139,18 @@ const UserList = () => {
   };
 
   const handleDelete = (userId) => {
+    const token = localStorage.getItem("authToken");
+  
     axios
-      .delete(`http://localhost:3000/api/users/${userId}`)
+      .delete(`http://localhost:3000/api/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
       .then(() => {
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
       })
       .catch((error) => console.error("Error al eliminar:", error));
   };
+  
 
   const handleCreateSubmit = async (newUser) => {
     try {
