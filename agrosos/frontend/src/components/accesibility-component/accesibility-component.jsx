@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDarkMode } from "../../context/DarkModeContext";
 import bulbasur from "./bulbasur.gif";
@@ -63,13 +64,13 @@ function AccesibilityComponent() {
   return (
     <div id="container-accesibility" className={darkMode ? "dark-mode" : ""}>
       <div className="arrow-container">
-        <button
-          className="accesibility-arrow"
-          onClick={() => navigate(-1)}
-          aria-label="Volver"
+        <Link
+          to="/plot-list"
+          className={`accesibility-arrow ${darkMode ? "dark-mode-link" : ""}`}
+          aria-label={t("back_to_plot_list")}
         >
           <FontAwesomeIcon icon={faArrowLeft} aria-hidden="true" />
-        </button>
+        </Link>
       </div>
       <h1 id="accesibility-title" className="accesibility-text">
         {t("accessibility")}
