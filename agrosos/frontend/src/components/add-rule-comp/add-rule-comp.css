@@ -1,4 +1,4 @@
-#add-rule-container-all{
+.add-rule-container-all{
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -10,13 +10,14 @@
   height: auto;
   width: 90vw;
   max-width: 90vw;
+  height: auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
   margin: 8em auto;
 }
+
 
 .dark-mode .add-rule-form-container {
   background-color: #444;
