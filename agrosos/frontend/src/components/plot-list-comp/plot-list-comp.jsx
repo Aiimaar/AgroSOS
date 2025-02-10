@@ -14,7 +14,8 @@ import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useDarkMode } from "../../context/DarkModeContext";
 
 function PlotListComp() {
-  const { t, i18n } = useTranslation(); // Obtén las funciones de traducción
+  const { t, i18n } = useTranslation();
+  const [showNotificationPrompt, setShowNotificationPrompt] = useState(false);
   const [plots, setPlots] = useState([]);
   const [sensorAverages, setSensorAverages] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -23,11 +24,10 @@ function PlotListComp() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [plotToDelete, setPlotToDelete] = useState(null);
   const navigate = useNavigate();
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode } = useDarkMode();
 
   const defaultImages = [fondo1, fondo2, fondo3, fondo4, fondo5];
   const imageMap = {};
-
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -47,6 +47,16 @@ function PlotListComp() {
   }, [i18n.language]);
 
   useEffect(() => {
+    // Verifica si el usuario se ha registrado por primera vez
+    const isFirstTime = localStorage.getItem("firstTime") === "true";
+    console.log("¿Es la primera vez que el usuario se registra?", isFirstTime);
+
+    if (isFirstTime) {
+      setShowNotificationPrompt(true);
+    }
+  }, []);
+
+  useEffect(() => {
     if (showDeleteModal || editPlot) {
       document.body.classList.add("no-scroll");
     } else {
@@ -56,6 +66,14 @@ function PlotListComp() {
       document.body.classList.remove("no-scroll");
     };
   }, [showDeleteModal, editPlot]);
+
+  useEffect(() => {
+    // Verificar si el usuario ha creado un terreno por primera vez
+    if (localStorage.getItem("hasCreatedPlot")) {
+      setShowNotificationPrompt(true);
+      localStorage.removeItem("hasCreatedPlot"); // Eliminar para que no vuelva a aparecer
+    }
+  }, []);
 
   const fetchData = async () => {
     const token = localStorage.getItem("authToken");
@@ -131,6 +149,22 @@ function PlotListComp() {
       imageMap[id] = defaultImages[randomIndex];
     }
     return imageMap[id];
+  };
+
+  const handleEnableNotifications = async () => {
+    if ("Notification" in window) {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        new Notification("Notificaciones activadas. ¡Gracias!");
+      }
+    }
+    setShowNotificationPrompt(false);
+    localStorage.removeItem("firstTime");
+  };
+
+  const handleDismissNotifications = () => {
+    setShowNotificationPrompt(false);
+    localStorage.removeItem("firstTime");
   };
 
   const handleDeletePlot = async () => {
@@ -209,16 +243,31 @@ function PlotListComp() {
 
   return (
     <>
+      {showNotificationPrompt && (
+        <div className="notification-modal">
+          <p>{t("enable_notifications_question")}</p>
+          <button onClick={handleEnableNotifications}>{t("yes_enable")}</button>
+          <button onClick={handleDismissNotifications}>{t("no_thanks")}</button>
+        </div>
+      )}
+
       {plots.length === 0 ? (
         <AddPlotComponent />
       ) : (
         <>
           {showDeleteModal && (
-            <div role="delete-modal" className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
+            <div
+              role="delete-modal"
+              className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}
+            >
               <div className="plot-list-delete-modal">
                 <h3>{t("confirm_delete_plot")}</h3>
                 <div className="modal-actions">
-                  <button role="button" type="submit" onClick={handleDeletePlot}>
+                  <button
+                    role="button"
+                    type="submit"
+                    onClick={handleDeletePlot}
+                  >
                     {t("delete")}
                   </button>
                   <button role="button" type="button" onClick={cancelDelete}>
@@ -271,7 +320,9 @@ function PlotListComp() {
           </div>
           <div className="plot-list-container">
             {errorMessage && (
-              <p role="alert" className="plot-list-error-message">{errorMessage}</p>
+              <p role="alert" className="plot-list-error-message">
+                {errorMessage}
+              </p>
             )}
             <div className="plot-list">
               {plots.map((plot) => (
