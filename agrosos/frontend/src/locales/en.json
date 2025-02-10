@@ -398,5 +398,8 @@
   "no_account": "Don't have an account yet?",
   "create_account": "Create Account",
 
-  "disable_animation": "Disable animation"
+  "disable_animation": "Disable animation",
+  "enable_notifications_question": "Do you want to receive web notifications?",
+  "yes_enable":"Yes, activate them.",
+  "no_thanks":"No, thanks."
 }

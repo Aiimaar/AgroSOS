@@ -5,6 +5,56 @@ html {
   box-sizing: border-box;
 }
 
+.notification-modal {
+  position: fixed;
+  top: 17%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  z-index: 1000;
+  max-width: 300px;
+  width: 90%;
+}
+
+.notification-modal p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.notification-modal button {
+  background-color: #5ea71e;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.notification-modal button:hover {
+  background-color: #0056b3;
+}
+
+.notification-modal button:last-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+.notification-modal button:last-child:hover {
+  background-color: #999;
+}
+
+/* Estilos para deshabilitar el scroll cuando el modal está abierto */
+.no-scroll {
+  overflow: hidden;
+}
+
 .plot-list-welcome {
   margin-top: 110px;
   margin-left: 20px;
