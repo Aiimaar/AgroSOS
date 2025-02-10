@@ -29,7 +29,7 @@
 }
 
 .dark-mode #notifications-component-container {
-  background-color: #2c2c2c;
+  background-color: #333;
   color: white;
 }
 
@@ -127,6 +127,8 @@
 }
 
 .notifications-component-button-arrow {
+  margin-top: 2em;
+  margin-bottom: 1em;
   background: none;
   border: none;
   font-size: 22px;
