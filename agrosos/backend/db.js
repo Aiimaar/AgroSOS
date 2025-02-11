@@ -19,13 +19,11 @@
 
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize('agrosos', 'root', '1234', {
-
+const sequelize = new Sequelize('agrosos', 'root', 'VICJB7m5', {
   host: 'localhost',
   dialect: 'mysql',
   logging: false,
 });
-
 // const sequelize = new Sequelize(
 //     process.env.MYSQL_DATABASE,  // Usa variables de entorno
 //     process.env.MYSQL_USER,     // Usa variables de entorno
@@ -36,7 +34,6 @@ const sequelize = new Sequelize('agrosos', 'root', '1234', {
 //         logging: false,
 //     }
 // );
-
 
 sequelize.authenticate()
   .then(() => console.log('Conexión exitosa a MySQL con Sequelize'))
