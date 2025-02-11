@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../context/DarkModeContext";
 import { useTranslation } from "react-i18next";
-import { useWebSocket } from "../../context/WebSocketContext"; 
+import { useWebSocket } from "../../context/WebSocketContext";
 import React, { useEffect, useState } from "react";
 import "./notifications-component.css";
 
@@ -15,7 +15,9 @@ function NotificationsComponent() {
 
   const [notifications, setNotifications] = useState([]);
 
+  // Manejar las notificaciones entrantes de WebSocket y WebPush
   useEffect(() => {
+    // Primero, manejamos las notificaciones de WebSocket
     if (messages.length > 0) {
       const newMessage = messages[messages.length - 1];
 
@@ -48,6 +50,44 @@ function NotificationsComponent() {
         }
       });
     }
+
+    // También debemos manejar las notificaciones push (WebPush) si es necesario
+    // Si la notificación viene de un service worker o WebPush
+    const handlePushNotification = (event) => {
+      const data = event.data ? event.data.json() : {};
+
+      const title = data.title || "Notificación";
+      const body = data.body || "Tienes una nueva notificación.";
+
+      const notification = {
+        type: "push",
+        message: body,
+      };
+
+      setNotifications((prevNotifications) => {
+        const isDuplicate = prevNotifications.some(
+          (existingNotification) =>
+            existingNotification.message === notification.message
+        );
+
+        if (!isDuplicate) {
+          return [...prevNotifications, notification];
+        } else {
+          return prevNotifications;
+        }
+      });
+    };
+
+    // Registra el evento de Push en el service worker
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.addEventListener('push', handlePushNotification);
+    }
+
+    return () => {
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.removeEventListener('push', handlePushNotification);
+      }
+    };
   }, [messages]);
 
   const handleNotificationClick = (message) => {

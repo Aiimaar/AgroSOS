@@ -9,6 +9,7 @@ import session from 'express-session';
 import SequelizeStore from 'connect-session-sequelize';
 import { isAuthenticated } from './middleware/isAuthenticated.js';
 import webPush from 'web-push';
+import { sendNotificationToSubscriptionName } from "./controllers/subscriptionController.js";
 
 // Importar rutas
 import plotsRoutes from './routes/plotsRoutes.js';
@@ -186,6 +187,13 @@ setInterval(() => {
 
   console.log('📢 Notificación enviada:', notification);
 }, 360000); // Se envía una alerta cada hora (3600000 ms)
+
+// Enviar notificaciones cada 30 segundos
+setInterval(async () => {
+  console.log("⏳ Enviando notificaciones automáticas...");
+  await sendNotificationToSubscriptionName();
+}, 10000); // 30 segundos
+
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
