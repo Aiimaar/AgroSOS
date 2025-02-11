@@ -1,32 +1,55 @@
 import axios from 'axios';
 
-// const API = "http://localhost:8080/api/subscriptions";
-const API = process.env.REACT_APP_API_URL;
-
+const API = 'http://localhost:3000/api/subscriptions';
+const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
 
 async function regSw() {
-  if ('serviceWorker' in navigator) {
-    let url = process.env.PUBLIC_URL + '/sw.js';
-    const reg = await navigator.serviceWorker.register(url, { scope: '/' });
+  if ("serviceWorker" in navigator) {
+    const reg = await navigator.serviceWorker.register("/service-worker.js", { scope: "/" });
     return reg;
   }
-  throw Error('serviceworker not supported');
+  throw new Error("serviceworker not supported");
 }
 
 async function subscribe(serviceWorkerReg, subscriptionName) {
-  let subscription = await serviceWorkerReg.pushManager.getSubscription();
-  if (subscription === null) {
-    subscription = await serviceWorkerReg.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: process.env.REACT_APP_PUBLIC_KEY
-      //applicationServerKey: 'BOP1vbXrhHeb_sbD-2GieGRqd82oqmRg05w1t9WMz-Fk3Myi3FqmgsgsrvuRyI6r-owsIPLsK9JS-temIlRfHQc',
-      // TODO: Public VAPID key should only be in .env
+  try {
+    console.log("🔑 Clave Pública en Frontend:", import.meta.env.VITE_PUBLIC_KEY);
+
+    let subscription = await serviceWorkerReg.pushManager.getSubscription();
+    if (subscription === null) {
+      subscription = await serviceWorkerReg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(PUBLIC_KEY),
+      });
+    }
+
+    console.log("🚀 Enviando suscripción al backend:", {
+      subscriptionName,
+      subscription,
     });
-    axios.post(`${API}/subscribe`, { subscriptionName: subscriptionName, subscription: subscription });
+
+    const response = await axios.post(`${API}/subscribe`, { subscriptionName, subscription });
+    
+    console.log("✅ Respuesta del backend:", response.data);
+  } catch (error) {
+    console.error("❌ Error al suscribirse:", error.response ? error.response.data : error);
   }
 }
 
-export {
-  regSw,
-  subscribe,
-};
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding)
+    .replace(/-/g, "+")
+    .replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; i++) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+export { regSw, subscribe };

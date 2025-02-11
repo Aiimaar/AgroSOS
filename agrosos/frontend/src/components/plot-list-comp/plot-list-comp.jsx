@@ -12,6 +12,7 @@ import AddPlotComponent from "../add-plot-component/add-plot-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useDarkMode } from "../../context/DarkModeContext";
+import { regSw, subscribe } from "../../services/subscriptionService";
 
 function PlotListComp() {
   const { t, i18n } = useTranslation();
@@ -155,7 +156,15 @@ function PlotListComp() {
     if ("Notification" in window) {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
-        new Notification("Notificaciones activadas. ¡Gracias!");
+        try {
+          const registration = await regSw(); // Registra el service worker
+          console.log("Datos antes de suscribir");
+          console.log(registration, userId);
+          await subscribe(registration, userId); // Suscribe al usuario con su ID
+          new Notification("Notificaciones activadas. ¡Gracias!");
+        } catch (error) {
+          console.error("Error al suscribirse a las notificaciones:", error);
+        }
       }
     }
     setShowNotificationPrompt(false);

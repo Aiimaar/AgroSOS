@@ -1,12 +1,26 @@
 import Subscription from '../models/subscriptionModel.js'; // Ajusta la ruta según tu estructura
 import webPush from 'web-push';
+import dotenv from 'dotenv';
+
+dotenv.config(); // Cargar variables de entorno
+
+console.log("🔑 Clave Pública en Backend:", process.env.PUBLIC_KEY);
+console.log("🔐 Clave Privada en Backend:", process.env.PRIVATE_KEY);
+
+
+// Configurar las claves VAPID correctamente
+webPush.setVapidDetails(
+  'mailto:myemail@example.com', 
+  process.env.PUBLIC_KEY, 
+  process.env.PRIVATE_KEY
+);
 
 // Crear una nueva suscripción
 export const create = async (req, res) => {
   try {
     const { subscription, subscriptionName } = req.body;
 
-    console.log("Datos recibidos:", req.body);
+    console.log("📝 Datos recibidos en el backend:", req.body);
 
     if (!subscription || !subscription.endpoint) {
       return res.status(400).json({ message: "Faltan datos de suscripción" });
@@ -19,20 +33,15 @@ export const create = async (req, res) => {
       subscriptionName
     });
 
-    console.log("Nueva suscripción creada:", newSubscription);
-
-    // Notificar a todas las suscripciones
-    const subscriptionsInDB = await Subscription.findAll();
-    for (const s of subscriptionsInDB) {
-      await sendNotification(s, `Nueva suscripción`, `${subscriptionName} ahora está suscrito`);
-    }
-
+    console.log("✅ Suscripción guardada en la base de datos:", newSubscription);
+    
     res.status(201).json({ message: "Suscripción creada", subscription: newSubscription });
   } catch (error) {
-    console.error("Error al crear suscripción:", error);
+    console.error("❌ Error al crear suscripción:", error);
     res.status(500).json({ message: "Error al crear suscripción", error });
   }
 };
+
 
 // Obtener todas las suscripciones
 export const findAll = async (req, res) => {
@@ -49,24 +58,31 @@ export const findAll = async (req, res) => {
 // Enviar notificación a un grupo de suscriptores por nombre
 export const sendNotificationToSubscriptionName = async (req, res) => {
   try {
-    const { subscriptionName, notificationMessage } = req.body;
-
-    if (!subscriptionName || !notificationMessage) {
-      return res.status(400).json({ message: "Faltan datos" });
+    // Obtener todas las suscripciones
+    const subscriptions = await Subscription.findAll();
+    
+    if (subscriptions.length === 0) {
+      console.log("⚠️ No hay suscriptores para enviar notificaciones.");
+      return;
     }
 
-    console.log("Enviando notificación a suscripción:", subscriptionName);
+    console.log(`📢 Enviando notificaciones a ${subscriptions.length} suscriptores...`);
 
-    const subscriptionsInDB = await Subscription.findAll({ where: { subscriptionName } });
+    // Mensaje de la notificación
+    const payload = JSON.stringify({
+      title: "📢 Notificación Automática",
+      description: "¡Hola! Esta es una notificación enviada automáticamente.",
+      image: "https://cdn2.vectorstock.com/i/thumb-large/94/66/emoji-smile-icon-symbol-smiley-face-vector-26119466.jpg",
+    });
 
-    for (const s of subscriptionsInDB) {
-      await sendNotification(s, `Para ${subscriptionName}`, notificationMessage);
+    // Enviar la notificación a cada suscriptor
+    for (const subscription of subscriptions) {
+      await sendNotification(subscription, payload);
     }
 
-    res.json({ message: "Notificación enviada" });
+    console.log("✅ Notificaciones enviadas con éxito.");
   } catch (error) {
-    console.error("Error al enviar notificación:", error);
-    res.status(500).json({ message: "Error al enviar notificación", error });
+    console.error("❌ Error al enviar notificaciones automáticas:", error);
   }
 };
 
@@ -114,22 +130,13 @@ const sendNotification = async (subscription, title, description) => {
     };
 
     const payload = JSON.stringify({
-      title,
-      description,
-      image: 'https://cdn2.vectorstock.com/i/thumb-large/94/66/emoji-smile-icon-symbol-smiley-face-vector-26119466.jpg',
+      title,          // Título de la notificación
+      description,  // Descripción de la notificación
     });
 
-    const options = {
-      vapidDetails: {
-        subject: 'mailto:myemail@example.com',
-        publicKey: process.env.PUBLIC_KEY,
-        privateKey: process.env.PRIVATE_KEY,
-      },
-    };
-
-    await webPush.sendNotification(subscriptionData, payload, options);
-    console.log(`Notificación enviada a ${subscription.endpoint}`);
+    await webPush.sendNotification(subscriptionData, payload);
+    console.log(`✅ Notificación enviada a ${subscription.endpoint}`);
   } catch (error) {
-    console.error("Error al enviar notificación:", error);
+    console.error("❌ Error al enviar notificación:", error);
   }
 };
