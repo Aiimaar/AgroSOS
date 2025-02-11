@@ -9,6 +9,7 @@
         "lint": "eslint .",
         "preview": "vite preview",
         "test": "jest",
+        "gen_vapid_keys": "web-push generate-vapid-keys [--json]",
         "test:watch": "vitest --watch",
         "test:coverage": "vitest --coverage",
         "test:frontend": "vitest",

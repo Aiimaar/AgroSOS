@@ -9,6 +9,7 @@ import session from 'express-session';
 import SequelizeStore from 'connect-session-sequelize';
 import { isAuthenticated } from './middleware/isAuthenticated.js';
 import webPush from 'web-push';
+import { sendNotificationToSubscriptionName } from "./controllers/subscriptionController.js";
 
 // Importar rutas
 import plotsRoutes from './routes/plotsRoutes.js';
@@ -27,7 +28,7 @@ import rulesViewsRoutes from './routes/views-routes/rulesViewsRoutes.js'
 import createPlotViewRoute from './routes/views-routes/createPlotViewRoute.js';
 
  // Ruta de suscripción
-// import subscriptionRoutes from './routes/subscriptionRoutes.js';
+import subscriptionRoutes from './routes/subscriptionRoutes.js';
 
 // WebSockets
 import http from 'http';
@@ -99,7 +100,7 @@ app.use('/views/plot-list', isAuthenticated, plotListViewsRoutes);
 app.use('/views/create-plot', isAuthenticated, createPlotViewRoute);
 
 // Ruta de suscripción
-// app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
 
 // Manejo de errores
 app.use((req, res) => res.status(404).send('Página no encontrada'));
@@ -177,7 +178,7 @@ setInterval(() => {
       break;
   }
 
-  // Enviar la notificación a todos los clientes conectados
+  // Enviar la notificación a todos los clientes conectados 
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(notification));
@@ -186,6 +187,13 @@ setInterval(() => {
 
   console.log('📢 Notificación enviada:', notification);
 }, 360000); // Se envía una alerta cada hora (3600000 ms)
+
+// Enviar notificaciones cada 30 segundos
+setInterval(async () => {
+  console.log("⏳ Enviando notificaciones automáticas...");
+  await sendNotificationToSubscriptionName();
+}, 10000); // 30 segundos
+
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

@@ -396,5 +396,8 @@
   "no_account": "¿Aún no tienes cuenta?",
   "create_account": "Crear cuenta",
 
-  "disable_animation": "Desactivar animación"
+  "disable_animation": "Desactivar animación",
+  "enable_notifications_question": "¿Quieres recibir notificaciones web?",
+  "yes_enable":"Sí, activarlas.",
+  "no_thanks":"No, gracias."
 }
