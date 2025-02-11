@@ -19,9 +19,7 @@ function deletePlot() {
         throw new Error("No se pudo eliminar el terreno");
       }
       // Eliminar el elemento del DOM si la respuesta es correcta
-      document
-        .querySelector(`.plot-card[data-id="${plotToDelete}"]`)
-        .remove();
+      document.querySelector(`.plot-card[data-id="${plotToDelete}"]`).remove();
       cancelDelete();
     })
     .catch((error) => {
@@ -43,9 +41,7 @@ function cancelDelete() {
 function updatePlot(plotId) {
   plotToEdit = plotId;
 
-  const plotCard = document.querySelector(
-    `.plot-card[data-id="${plotId}"]`
-  );
+  const plotCard = document.querySelector(`.plot-card[data-id="${plotId}"]`);
   if (!plotCard) {
     console.error("No se encontró el terreno con ID:", plotId);
     return;
@@ -69,39 +65,37 @@ function cancelEdit() {
   document.getElementById("edit-modal").classList.remove("visible");
 }
 
-document
-  .getElementById("edit-form")
-  .addEventListener("submit", (event) => {
-    event.preventDefault();
+document.getElementById("edit-form").addEventListener("submit", (event) => {
+  event.preventDefault();
 
-    const updatedName = document.getElementById("edit-name").value;
-    const updatedSize = document.getElementById("edit-size").value;
+  const updatedName = document.getElementById("edit-name").value;
+  const updatedSize = document.getElementById("edit-size").value;
 
-    fetch(`/api/plots/${plotToEdit}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: updatedName, size: updatedSize }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            console.error("Error en la respuesta del servidor:", response);
-            throw new Error("Error al actualizar el terreno");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const plotCard = document.querySelector(
-            `.plot-card[data-id="${plotToEdit}"]`
-          );
-          plotCard.querySelector(".terrain-name").textContent = updatedName;
-          plotCard.setAttribute("data-size", updatedSize);
-      
-          cancelEdit();
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("No se pudo actualizar el terreno.");
-        });
-  });
+  fetch(`/api/plots/${plotToEdit}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: updatedName, size: updatedSize }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.error("Error en la respuesta del servidor:", response);
+        throw new Error("Error al actualizar el terreno");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const plotCard = document.querySelector(
+        `.plot-card[data-id="${plotToEdit}"]`
+      );
+      plotCard.querySelector(".terrain-name").textContent = updatedName;
+      plotCard.setAttribute("data-size", updatedSize);
+
+      cancelEdit();
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("No se pudo actualizar el terreno.");
+    });
+});

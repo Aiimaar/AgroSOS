@@ -7,11 +7,10 @@ dotenv.config(); // Cargar variables de entorno
 console.log("🔑 Clave Pública en Backend:", process.env.PUBLIC_KEY);
 console.log("🔐 Clave Privada en Backend:", process.env.PRIVATE_KEY);
 
-
 // Configurar las claves VAPID correctamente
 webPush.setVapidDetails(
-  'mailto:myemail@example.com', 
-  process.env.PUBLIC_KEY, 
+  'mailto:myemail@example.com',
+  process.env.PUBLIC_KEY,
   process.env.PRIVATE_KEY
 );
 
@@ -34,14 +33,13 @@ export const create = async (req, res) => {
     });
 
     console.log("✅ Suscripción guardada en la base de datos:", newSubscription);
-    
+
     res.status(201).json({ message: "Suscripción creada", subscription: newSubscription });
   } catch (error) {
     console.error("❌ Error al crear suscripción:", error);
     res.status(500).json({ message: "Error al crear suscripción", error });
   }
 };
-
 
 // Obtener todas las suscripciones
 export const findAll = async (req, res) => {
@@ -55,29 +53,24 @@ export const findAll = async (req, res) => {
   }
 };
 
-// Enviar notificación a un grupo de suscriptores por nombre
-export const sendNotificationToSubscriptionName = async (req, res) => {
+// Enviar notificación a todos los suscriptores
+export const sendNotificationToSubscriptionName = async () => {
   try {
-    // Obtener todas las suscripciones
     const subscriptions = await Subscription.findAll();
-    
+
     if (subscriptions.length === 0) {
       console.log("⚠️ No hay suscriptores para enviar notificaciones.");
-      return;
+      return;  // O simplemente salir sin hacer nada
     }
 
     console.log(`📢 Enviando notificaciones a ${subscriptions.length} suscriptores...`);
 
-    // Mensaje de la notificación
-    const payload = JSON.stringify({
-      title: "📢 Notificación Automática",
-      description: "¡Hola! Esta es una notificación enviada automáticamente.",
-      image: "https://cdn2.vectorstock.com/i/thumb-large/94/66/emoji-smile-icon-symbol-smiley-face-vector-26119466.jpg",
-    });
+    const title = "📢 Notificación Automática";
+    const description = "¡Hola! Esta es una notificación enviada automáticamente.";
+    const image = "https://cdn2.vectorstock.com/i/thumb-large/94/66/emoji-smile-icon-symbol-smiley-face-vector-26119466.jpg";
 
-    // Enviar la notificación a cada suscriptor
     for (const subscription of subscriptions) {
-      await sendNotification(subscription, payload);
+      await sendNotification(subscription, title, description, image);
     }
 
     console.log("✅ Notificaciones enviadas con éxito.");
@@ -85,6 +78,7 @@ export const sendNotificationToSubscriptionName = async (req, res) => {
     console.error("❌ Error al enviar notificaciones automáticas:", error);
   }
 };
+
 
 // Eliminar una suscripción por endpoint
 export const deleteByEndpoint = async (req, res) => {
@@ -105,23 +99,27 @@ export const deleteByEndpoint = async (req, res) => {
 
     await Subscription.destroy({ where: { id: subscriptionToDelete.id } });
 
-    console.log("Suscripción eliminada:", subscriptionToDelete);
+    console.log("🗑️ Suscripción eliminada:", subscriptionToDelete);
 
     // Notificar a los demás suscriptores
     const subscriptionsInDB = await Subscription.findAll();
     for (const s of subscriptionsInDB) {
-      await sendNotification(s, `Suscripción eliminada`, `Se eliminó una suscripción a ${subscriptionToDelete.subscriptionName}`);
+      await sendNotification(
+        s,
+        "🔔 Suscripción Eliminada",
+        `Se eliminó una suscripción a ${subscriptionToDelete.subscriptionName}`
+      );
     }
 
     res.json({ message: "Suscripción eliminada" });
   } catch (error) {
-    console.error("Error al eliminar suscripción:", error);
+    console.error("❌ Error al eliminar suscripción:", error);
     res.status(500).json({ message: "Error al eliminar suscripción", error });
   }
 };
 
 // Función auxiliar para enviar notificaciones
-const sendNotification = async (subscription, title, description) => {
+const sendNotification = async (subscription, title, description, image) => {
   try {
     const subscriptionData = {
       endpoint: subscription.endpoint,
@@ -129,11 +127,7 @@ const sendNotification = async (subscription, title, description) => {
       keys: JSON.parse(subscription.keys),
     };
 
-    const payload = JSON.stringify({
-      title: title,          // Título de la notificación
-      description: description,  // Descripción de la notificación
-      image: 'https://cdn2.vectorstock.com/i/thumb-large/94/66/emoji-smile-icon-symbol-smiley-face-vector-26119466.jpg', // Imagen del icono
-    });
+    const payload = JSON.stringify({ title, description, image });
 
     await webPush.sendNotification(subscriptionData, payload);
     console.log(`✅ Notificación enviada a ${subscription.endpoint}`);
