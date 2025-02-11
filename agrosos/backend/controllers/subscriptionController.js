@@ -130,8 +130,9 @@ const sendNotification = async (subscription, title, description) => {
     };
 
     const payload = JSON.stringify({
-      title,          // Título de la notificación
-      description,  // Descripción de la notificación
+      title: title,          // Título de la notificación
+      description: description,  // Descripción de la notificación
+      image: 'https://cdn2.vectorstock.com/i/thumb-large/94/66/emoji-smile-icon-symbol-smiley-face-vector-26119466.jpg', // Imagen del icono
     });
 
     await webPush.sendNotification(subscriptionData, payload);
