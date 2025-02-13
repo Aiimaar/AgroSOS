@@ -27,7 +27,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .dark-mode .create-plot-form {
-  height: 95vw;
+  height:95vh;
   background-color: #444; /* Fondo oscuro para el modo oscuro */
   color: white; /* Texto claro para el modo oscuro */
 }
@@ -76,6 +76,7 @@ body {
   gap: 1em;
   margin-top: 1em;
 }
+
 .create-plot-submit-button,
 .create-plot-cancel-button {
   width: 48%;

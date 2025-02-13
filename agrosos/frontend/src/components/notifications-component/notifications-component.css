@@ -23,8 +23,8 @@
 }
 
 .dark-mode .notifications-component-button-arrow {
+  background-color: #333;
   color: white; /* Texto claro en modo oscuro */
-  background-color: #555; /* Fondo oscuro */
 }
 
 .notifications-component-notification {

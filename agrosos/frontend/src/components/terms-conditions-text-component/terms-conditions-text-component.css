@@ -3,6 +3,7 @@
 .terms-condition-text-container {
   padding-top: 15%;
   flex-direction: column;
+  height: auto;
   width: 70vw;
   margin: 2em auto;
   text-align: justify;

@@ -16,7 +16,7 @@
 .sensor-enla-button-arrow {
   align-self: flex-start;
   margin-left: 1em;
-  margin-top: -10em;
+  margin-top: -17em;
   margin-bottom: 1em;
   border: none;
   background-color: transparent;
@@ -26,8 +26,8 @@
 
 /* Estilos para el modo oscuro */
 .dark-mode .sensor-enla-button-arrow {
+  margin-top: -17em;
   color: white; /* Texto claro en modo oscuro */
-  background-color: #555; /* Fondo oscuro */
 }
 
 .enla-title {

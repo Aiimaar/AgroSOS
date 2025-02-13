@@ -141,7 +141,8 @@
 }
 
 .actuator-success-message {
-  margin-top: 1em;
+  color: white;
+  margin-bottom: 1em;
 }
 
 .btn-enla-actuator {

@@ -5,13 +5,13 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useDarkMode } from '../../context/DarkModeContext';
+import { useDarkMode } from "../../context/DarkModeContext";
 
 function SettingsComponent() {
-  const { t, i18n } = useTranslation();  
+  const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const role = localStorage.getItem("role");  // Obtener el role del localStorage
-  const { darkMode } = useDarkMode();  // Usar el modo oscuro desde el contexto
+  const role = localStorage.getItem("role"); // Obtener el role del localStorage
+  const { darkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
   const navigate = useNavigate();
 
   // Recuperar el idioma preferido desde localStorage
@@ -22,7 +22,9 @@ function SettingsComponent() {
       console.log("Idioma recuperado desde localStorage:", savedLanguage); // Log de idioma
       i18n.changeLanguage(savedLanguage); // Cambiar el idioma de la aplicación
     } else {
-      console.log("No se encontró idioma en localStorage, usando idioma por defecto.");
+      console.log(
+        "No se encontró idioma en localStorage, usando idioma por defecto."
+      );
       i18n.changeLanguage("es"); // Si no hay idioma guardado, usar español por defecto
     }
 
@@ -34,11 +36,14 @@ function SettingsComponent() {
   }
 
   return (
-    <div id="container-settings" className={darkMode ? 'dark-mode' : ''}>
-      <button className="settings-arrow-container" onClick={() => navigate("/plot-list")}>
+    <div id="container-settings" className={darkMode ? "dark-mode" : ""}>
+      <button
+        className="settings-arrow-container"
+        onClick={() => navigate("/plot-list")}
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
-        
+
       <h1 className="settings-text">{t("settings")}</h1>
       <div className="settings-container-elements">
         <Link to="/notifications" aria-label={t("go_to_alerts_notifications")}>
@@ -47,8 +52,14 @@ function SettingsComponent() {
           </div>
         </Link>
 
-        <div className="settings-export" role="region" aria-labelledby="export-settings-title">
-          <p id="export-settings-title" className="settings-p">{t("export_land")}</p>
+        <div
+          className="settings-export"
+          role="region"
+          aria-labelledby="export-settings-title"
+        >
+          <p id="export-settings-title" className="settings-p">
+            {t("export_land")}
+          </p>
           <div className="settings-ex" aria-label={t("export_options")}>
             <p className="settings-subp">{t("csv")}</p>
             <p className="settings-sub">|</p>
@@ -56,11 +67,21 @@ function SettingsComponent() {
           </div>
         </div>
 
-        <div className="settings-actu" role="button" tabIndex="0" aria-label={t("check_updates")}>
+        <div
+          className="settings-actu"
+          role="button"
+          tabIndex="0"
+          aria-label={t("check_updates")}
+        >
           <p className="settings-p">{t("check_updates")}</p>
         </div>
 
-        <div className="settings-help" role="button" tabIndex="0" aria-label={t("help_support")}>
+        <div
+          className="settings-help"
+          role="button"
+          tabIndex="0"
+          aria-label={t("help_support")}
+        >
           <p className="settings-p">{t("help_support")}</p>
         </div>
 
