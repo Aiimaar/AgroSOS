@@ -100,7 +100,7 @@ body {
 
 /* Estilos para el modo oscuro */
 .dark-mode .button-enla {
-  background-color: green; /* Fondo diferente en modo oscuro */
+  background-color: #43a047; /* Fondo diferente en modo oscuro */
   color: black; /* Texto oscuro para que se vea bien */
 }
 

@@ -102,7 +102,7 @@ body {
 }
 .dark-mode .create-plot-submit-button,
 .dark-mode .create-plot-cancel-button {
-  background-color: green; /* Fondo más oscuro para el modo oscuro */
+  background-color: #43a047; /* Fondo más oscuro para el modo oscuro */
   color: #ccc; /* Texto más claro para el modo oscuro */
 }
 .create-plot-form-group {

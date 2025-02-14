@@ -436,7 +436,7 @@
 /* Estilos para el modo oscuro */
 .dark-mode .select-time-button {
   background-color: #43a047; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .select-time-container {
@@ -474,7 +474,7 @@
 /* Estilos para el modo oscuro */
 .dark-mode .select-time-main-button-selected {
   background-color: #388e3c; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .inside-a-plot-error-message {
@@ -498,7 +498,7 @@
 /* Estilos para el modo oscuro */
 .dark-mode .select-time-main-button-unselected {
   background-color: #388e3c; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .select-time-main-button:hover {
@@ -536,7 +536,7 @@
 /* Estilos para el modo oscuro */
 .dark-mode .irrigation-frecuency-pro {
   background-color: #388e3c; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .irrigation-frecuency-pro:hover {
