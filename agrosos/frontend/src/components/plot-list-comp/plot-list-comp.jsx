@@ -32,23 +32,20 @@ function PlotListComp() {
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    // Obtener el idioma del localStorage y establecerlo
     const savedLanguage = localStorage.getItem("language");
     if (savedLanguage && savedLanguage !== i18n.language) {
       i18n.changeLanguage(savedLanguage);
     }
     fetchData();
-    console.log("Idioma actual al cargar el componente:", i18n.language); // Verificar idioma al cargar
+    console.log("Idioma actual al cargar el componente:", i18n.language);
   }, []);
 
   useEffect(() => {
-    console.log("Idioma actualizado:", i18n.language); // Detectar cambios en el idioma
-    // Guardar el idioma en localStorage cuando cambie
+    console.log("Idioma actualizado:", i18n.language);
     localStorage.setItem("language", i18n.language);
   }, [i18n.language]);
 
   useEffect(() => {
-    // Verifica si el usuario se ha registrado por primera vez
     const isFirstTime = localStorage.getItem("firstTime") === "true";
     console.log("¿Es la primera vez que el usuario se registra?", isFirstTime);
 
@@ -69,10 +66,9 @@ function PlotListComp() {
   }, [showDeleteModal, editPlot]);
 
   useEffect(() => {
-    // Verificar si el usuario ha creado un terreno por primera vez
     if (localStorage.getItem("hasCreatedPlot")) {
       setShowNotificationPrompt(true);
-      localStorage.removeItem("hasCreatedPlot"); // Eliminar para que no vuelva a aparecer
+      localStorage.removeItem("hasCreatedPlot");
     }
   }, []);
 
@@ -157,10 +153,10 @@ function PlotListComp() {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
         try {
-          const registration = await regSw(); // Registra el service worker
+          const registration = await regSw(); 
           console.log("Datos antes de suscribir");
           console.log(registration, userId);
-          await subscribe(registration, userId); // Suscribe al usuario con su ID
+          await subscribe(registration, userId); 
           new Notification("Notificaciones activadas. ¡Gracias!");
         } catch (error) {
           console.error("Error al suscribirse a las notificaciones:", error);
@@ -246,7 +242,7 @@ function PlotListComp() {
   const handlePlotClick = (plotId, plotName) => {
     localStorage.setItem("selectedPlotId", plotId);
     localStorage.setItem("selectedPlotName", plotName);
-    console.log("Plot selected:", { plotId, plotName }); // Agrega este log
+    console.log("Plot selected:", { plotId, plotName }); 
     navigate("/inside-a-plot");
   };
 

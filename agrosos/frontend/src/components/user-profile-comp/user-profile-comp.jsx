@@ -24,20 +24,24 @@ const UserProfileComp = () => {
       try {
         const userId = localStorage.getItem("userId");
         const token = localStorage.getItem("authToken");
-
+  
         if (!userId || !token) {
           console.error("Faltan credenciales de autenticación.");
           return;
         }
-
+  
         const response = await axios.get(`${API_URL}/api/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
+  
+        console.log("Datos del usuario obtenidos:", response.data);  // Aquí verificamos la respuesta
+        console.log("Datos de la imagen obtenidos:", response.data.profile_image);  // Aquí verificamos la respuesta
+  
+        // Aquí solo asignamos la URL completa que ya viene desde el backend
         setUserData({
           name: response.data.name || "",
           email: response.data.email || "",
-          profile_image: response.data.profile_image || "",
+          profile_image: response.data.profile_image ? `${response.data.profile_image}` : "/default-profile.png", // Añadimos la URL completa aquí
         });
       } catch (error) {
         console.error("Error al obtener los datos del usuario:", error);
@@ -57,18 +61,40 @@ const UserProfileComp = () => {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
 
-      const updatedData = { ...userData, [editingField]: fieldValue };
+      // Log para verificar los datos que se están enviando
+      console.log("Datos a guardar:", { name: fieldValue, email: fieldValue, imageFile });
 
-      await axios.put(`${API_URL}/api/users/${userId}`, updatedData, {
-        headers: { Authorization: `Bearer ${token}` },
+      const formData = new FormData();
+
+      // Si la imagen está seleccionada, se añade al FormData
+      if (isImageSelected && imageFile) {
+        formData.append("profile_image", imageFile);
+      }
+
+      if (editingField === "name") {
+        formData.append("name", fieldValue);
+      } else if (editingField === "email") {
+        formData.append("email", fieldValue);
+      }
+
+      const response = await axios.put(`${API_URL}/api/users/${userId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data", // Indicamos que estamos enviando un formulario con archivos
+        },
       });
 
-      setUserData(updatedData);
+      console.log("Respuesta de la actualización:", response.data); // Verificación de la respuesta
+
+      setUserData(prev => ({
+        ...prev,
+        [editingField]: fieldValue,
+      }));
+
       setIsModalOpen(false);
       setEditingField(null);
     } catch (error) {
       console.error("Error al guardar los datos:", error);
-      alert("Error al guardar los cambios.");
     }
   };
 
@@ -83,23 +109,33 @@ const UserProfileComp = () => {
   const handleImageUpload = async () => {
     const formData = new FormData();
     formData.append("profile_image", imageFile);
-
+  
     try {
+      console.log("Subiendo imagen:", imageFile);  // Verificar qué imagen está seleccionada
+  
       setIsUploading(true);
-
+  
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("authToken");
-
+  
       const response = await axios.put(`${API_URL}/api/users/${userId}`, formData, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
       });
-
-      setUserData((prev) => ({ ...prev, profile_image: response.data.profile_image }));
+  
+      console.log("Respuesta al subir la imagen:", response.data);  // Verificación de la respuesta
+  
+      // Asegurarse de que la respuesta tenga la propiedad `profile_image`, si no, usaremos una URL predeterminada
+      const newProfileImage = response.data.profile_image ? `${API_URL}/uploads/${response.data.profile_image}?${new Date().getTime()}` : '/default-profile.png';
+  
+      setUserData((prev) => ({
+        ...prev,
+        profile_image: newProfileImage,
+      }));
+  
       setImageFile(null);
       setIsImageSelected(false);
     } catch (error) {
       console.error("Error al subir la imagen:", error);
-      alert("No se pudo subir la imagen.");
     } finally {
       setIsUploading(false);
     }

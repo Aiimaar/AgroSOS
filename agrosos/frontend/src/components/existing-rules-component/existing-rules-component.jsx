@@ -43,7 +43,6 @@ function ExistingRulesComponent() {
       .catch((error) => {
         console.error("Error al obtener las reglas:", error);
         if (error.response && error.response.status === 401) {
-          alert(t("session_expired"));
           navigate("/login");
         }
       });
@@ -140,10 +139,8 @@ function ExistingRulesComponent() {
       .catch((error) => {
         console.error("Error al eliminar la regla:", error);
         if (error.response && error.response.status === 401) {
-          alert(t("session_expired"));
           navigate("/login");
         } else {
-          alert(t("error_deleting_rule"));
         }
       });
   };

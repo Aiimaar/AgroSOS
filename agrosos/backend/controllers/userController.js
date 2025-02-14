@@ -62,21 +62,19 @@ export const createUser = async (req, res) => {
 };
 
 
-
-// En el controlador userController.js
 export const updateUser = async (req, res) => {
   try {
     const userId = req.user.id;  // Obtener el userId desde req.user, que proviene del token
-    const { name, email, language, ...extraFields } = req.body; // Extraer solo los campos permitidos
+    const { name, email, language, role, ...extraFields } = req.body; // Extraer 'role' junto con los otros campos
 
     // Verificar si se envían campos no permitidos
     if (Object.keys(extraFields).length > 0) {
       return res.status(400).json({
-        message: "Solo se permite actualizar 'name', 'email' y 'language'.",
+        message: "Solo se permite actualizar 'name', 'email', 'language' y 'role'.",
       });
     }
 
-    // Verificar si 'name', 'email' o 'language' existen y no están vacíos
+    // Verificar si 'name', 'email', 'language' o 'role' existen y no están vacíos
     if (name !== undefined && name.trim() === "") {
       return res.status(400).json({
         message: "El campo 'name' no puede estar vacío.",
@@ -93,6 +91,13 @@ export const updateUser = async (req, res) => {
       });
     }
 
+    // Agregar validación para el campo 'role' (ahora con los roles válidos: Farmer, Admin, Technician)
+    if (role !== undefined && !['Farmer', 'Admin', 'Technician'].includes(role)) {
+      return res.status(400).json({
+        message: "El valor de 'role' no es válido. Debe ser 'Farmer', 'Admin' o 'Technician'.",
+      });
+    }
+
     // Obtener el usuario existente usando el userId del token
     const existingUser = await User.findByPk(userId);
 
@@ -100,13 +105,14 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "Usuario no encontrado." });
     }
 
-    // Actualizar los campos proporcionados: 'name', 'email' y 'language'
+    // Actualizar los campos proporcionados: 'name', 'email', 'language', 'role'
     const updatedFields = {};
     if (name !== undefined) updatedFields.name = name;
     if (email !== undefined) updatedFields.email = email;
     if (language !== undefined) updatedFields.language = language;
+    if (role !== undefined) updatedFields.role = role;
 
-    // Actualizamos solo los campos permitidos (name, email, language)
+    // Actualizamos solo los campos permitidos (name, email, language, role)
     const updatedUser = await existingUser.update(updatedFields);
 
     // Responder con los datos actualizados
@@ -115,6 +121,7 @@ export const updateUser = async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       language: updatedUser.language,
+      role: updatedUser.role,  // Devolver el 'role' actualizado
     });
   } catch (error) {
     console.error("Error al actualizar el usuario:", error.message);
