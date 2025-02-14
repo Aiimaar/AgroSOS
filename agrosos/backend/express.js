@@ -192,7 +192,7 @@ setInterval(() => {
 setInterval(async () => {
   console.log("⏳ Enviando notificaciones automáticas...");
   await sendNotificationToSubscriptionName();
-}, 10000); // 30 segundos
+}, 360000); // 30 segundos
 
 
 const PORT = process.env.PORT || 3000;
