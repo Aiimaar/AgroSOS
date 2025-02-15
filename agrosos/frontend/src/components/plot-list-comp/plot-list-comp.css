@@ -5,12 +5,64 @@ html {
   box-sizing: border-box;
 }
 
+.notification-modal {
+  position: fixed;
+  top: 17%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  z-index: 1000;
+  max-width: 300px;
+  width: 90%;
+}
+
+.notification-modal p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.notification-modal button {
+  background-color: #5ea71e;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.notification-modal button:hover {
+  background-color: #0056b3;
+}
+
+.notification-modal button:last-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+.notification-modal button:last-child:hover {
+  background-color: #999;
+}
+
+/* Estilos para deshabilitar el scroll cuando el modal está abierto */
+.no-scroll {
+  overflow: hidden;
+}
+
 .plot-list-welcome {
   margin-top: 110px;
   margin-left: 20px;
 }
 
 .plot-list {
+  margin-top: -8em;
+  height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -24,15 +76,27 @@ html {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  margin-top: -14em;
+  height: auto;
   margin-bottom: 80px;
+  overflow-y: visible;
+  position: relative;
 }
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-container {
   background-color: #333; /* Fondo oscuro */
   color: white; /* Texto claro */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .plot-card {
@@ -43,6 +107,19 @@ html {
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
+  background-color: white;
+  transition: transform 0.9s ease, box-shadow 0.9s ease;
+  animation: fadeInUp 0.7s ease-out;
+}
+
+.plot-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .plot-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
 }
 
 .plot-card:focus {

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./register-form-comp.css";
-import { useDarkMode } from "../../context/DarkModeContext"; // Asegúrate de ajustar la ruta según tu estructura de archivos
-import { useTranslation } from 'react-i18next';  // Importar useTranslation
+import { useDarkMode } from "../../context/DarkModeContext"; 
+import { useTranslation } from 'react-i18next';  
 
 const RegisterFormComp = ({ onRegister }) => {
-  const { t } = useTranslation();  // Usar el hook useTranslation para acceder a las traducciones
+  const { t } = useTranslation();  
 
   const [name, setName] = useState("");
   const [role, setRole] = useState("Farmer");
@@ -17,13 +17,13 @@ const RegisterFormComp = ({ onRegister }) => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const navigate = useNavigate();
-  const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
+  const { darkMode } = useDarkMode(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setErrorMessage(t('passwordsDoNotMatch'));  // Usar traducción para mensaje de error
+      setErrorMessage(t('passwordsDoNotMatch'));
       return;
     }
 
@@ -37,9 +37,10 @@ const RegisterFormComp = ({ onRegister }) => {
 
       const { token } = response.data;
       localStorage.setItem("authToken", token);
+      localStorage.setItem("firstTime", "true"); // Guardar el flag de primera vez
 
       setErrorMessage("");
-      setSuccessMessage(t('registrationSuccessful'));  // Usar traducción para mensaje de éxito
+      setSuccessMessage(t('registrationSuccessful'));
 
       setName("");
       setEmail("");
@@ -53,18 +54,18 @@ const RegisterFormComp = ({ onRegister }) => {
       navigate("/login");
     } catch (error) {
       console.error("Error during registration:", error);
-      setErrorMessage(t('registrationError'));  // Usar traducción para mensaje de error
+      setErrorMessage(t('registrationError'));
     }
   };
 
   return (
     <div className={`register-form-container ${darkMode ? 'dark-mode' : ''}`} aria-labelledby="register-form-title">
       <form onSubmit={handleSubmit} className="register-form" aria-describedby="form-instructions">
-        <h1 id="register-form-title">{t('register')}</h1>  {/* Usar traducción para el título */}
+        <h1 id="register-form-title">{t('register')}</h1>  
         <p id="form-instructions">
-          {t('formInstructions')}  {/* Usar traducción para las instrucciones */}
+          {t('formInstructions')}  
         </p>
-        <label htmlFor="name-input">{t('name2')}</label>  {/* Usar traducción para el label */}
+        <label htmlFor="name-input">{t('name2')}</label>  
         <input
           id="name-input"
           type="text"
@@ -74,7 +75,7 @@ const RegisterFormComp = ({ onRegister }) => {
           required
           aria-required="true"
         />
-        <label htmlFor="email-input">{t('email')}</label>  {/* Usar traducción para el label */}
+        <label htmlFor="email-input">{t('email')}</label>  
         <input
           id="email-input"
           type="email"
@@ -84,7 +85,7 @@ const RegisterFormComp = ({ onRegister }) => {
           required
           aria-required="true"
         />
-        <label htmlFor="password-input">{t('password')}</label>  {/* Usar traducción para el label */}
+        <label htmlFor="password-input">{t('password')}</label>  
         <input
           id="password-input"
           type="password"
@@ -94,7 +95,7 @@ const RegisterFormComp = ({ onRegister }) => {
           required
           aria-required="true"
         />
-        <label htmlFor="confirm-password-input">{t('confirmPassword')}</label>  {/* Usar traducción para el label */}
+        <label htmlFor="confirm-password-input">{t('confirmPassword')}</label>  
         <input
           id="confirm-password-input"
           type="password"
@@ -105,29 +106,17 @@ const RegisterFormComp = ({ onRegister }) => {
           aria-required="true"
         />
         {errorMessage && (
-          <p
-            className="register-form-error-message"
-            role="alert"
-            aria-live="assertive"
-          >
+          <p className="register-form-error-message" role="alert" aria-live="assertive">
             {errorMessage}
           </p>
         )}
         {successMessage && (
-          <p
-            className="register-form-success-message"
-            role="status"
-            aria-live="polite"
-          >
+          <p className="register-form-success-message" role="status" aria-live="polite">
             {successMessage}
           </p>
         )}
-        <button
-          type="submit"
-          className="register-form-submit-button"
-          aria-label={t('createAccount')}
-        >
-          {t('createAccount')}  {/* Usar traducción para el botón */}
+        <button type="submit" className="register-form-submit-button" aria-label={t('createAccount')}>
+          {t('createAccount')}  
         </button>
       </form>
     </div>

@@ -1,4 +1,6 @@
+/* Estilos para el contenedor principal */
 #container-accesibility {
+  margin-top: 4em; /* Aumenté el margen superior para evitar corte por el header */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,8 +14,8 @@
   color: #fff;
 }
 
+/* Contenedor del botón de retroceso */
 .arrow-container {
-  margin-top: -10em;
   align-self: flex-start;
   margin-left: 2em;
 }
@@ -41,14 +43,15 @@
   outline: 2px solid #007acc;
 }
 
-#container-accesibility.dark-mode .accesibility-p {
-  color: #fff;
+/* Estilos para los textos */
+.accesibility-text {
+  margin-top: 1em;
+  margin-bottom: 3em;
+  text-align: center;
 }
 
-.accesibility-text {
-  margin-top: 0.5em;
-  margin-bottom: 5em;
-  text-align: center;
+.dark-mode .accesibility-p {
+  color: white;
 }
 
 .accesibility-p {
@@ -73,8 +76,13 @@
   margin-top: 10px;
 }
 
+.dark-mode #language-select{
+  background-color: #333;
+  color: white;
+}
+
 .language-selector {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -114,6 +122,100 @@
   border-bottom: 1px solid green;
 }
 
+/* Estilos para el contenedor del Pokémon */
+.pokemon-container {
+  width: 100vw;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animación por defecto para Bulbasaur */
+.moving-image {
+  width: 200px;
+  height: auto;
+  position: absolute;
+  left: 100vw;
+  animation: correrPokemon 3s ease-in-out infinite;
+}
+
+/* Desactiva la animación si está deshabilitada */
+.no-animations .moving-image {
+  animation: none;
+}
+
+/* Animación para mover la imagen de derecha a izquierda */
+@keyframes correrPokemon {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(-25vw) translateY(-10px);
+  }
+  50% {
+    transform: translateX(-50vw) translateY(0);
+  }
+  75% {
+    transform: translateX(-75vw) translateY(-10px);
+  }
+  100% {
+    transform: translateX(-120vw) translateY(0);
+  }
+}
+
+/* Estilos para el toggle de animaciones */
+.toggle-animations {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Estilos para el label y checkbox */
+.toggle-animations label {
+  font-size: 16px;
+  color: #4caf50;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Estilos para el checkbox */
+.toggle-animations input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  border: 2px solid #4caf50;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  position: relative;
+}
+
+/* Estilo cuando el checkbox está marcado */
+.toggle-animations input[type="checkbox"]:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+/* Estilo para el checkmark */
+.toggle-animations input[type="checkbox"]:checked::before {
+  content: '✔';
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Media query para pantallas más grandes */
 @media only screen and (min-width: 768px) {
   .arrow-container {
     align-self: flex-start;
