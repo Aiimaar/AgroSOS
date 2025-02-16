@@ -61,25 +61,18 @@ html {
 }
 
 .plot-list {
-  margin-top: -8em;
-  height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 
 .plot-list-container {
-  padding: auto;
+  margin-top: 2em;
   display: flex;
-  margin: auto;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   width: 100%;
-  height: auto;
-  margin-bottom: 80px;
-  overflow-y: visible;
-  position: relative;
+  box-sizing: border-box;
 }
 
 /* Estilos para el modo oscuro */
