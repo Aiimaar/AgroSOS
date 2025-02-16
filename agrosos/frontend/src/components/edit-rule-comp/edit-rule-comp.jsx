@@ -42,14 +42,14 @@ const EditRuleComp = () => {
   });
 
   const actuatorActionMap = {
-    Riego: [t("activate_irrigation"), t("deactivate_irrigation")],
-    Ventilación: [t("activate_ventilation"), t("deactivate_ventilation")],
-    "Cobertura de cultivos": [
+    [t("irrigation")]: [t("activate_irrigation"), t("deactivate_irrigation")],
+    [t("ventilation")]: [t("activate_ventilation"), t("deactivate_ventilation")],
+    [t("crop_coverage")]: [
       t("cover_crops_semi_transparent"),
       t("cover_crops_opaque"),
       t("uncover_crops"),
     ],
-    "Apertura de ventanas": [t("open_windows"), t("close_windows")],
+    [t("window_opening")]: [t("open_windows"), t("close_windows")],
   };
 
   const token = localStorage.getItem("authToken");
@@ -206,11 +206,9 @@ const EditRuleComp = () => {
         }
       );
 
-      alert(t("rule_updated_successfully"));
       navigate("/rules");
     } catch (error) {
       console.error("Error updating rule:", error);
-      alert(t("error_updating_rule"));
     }
   };
 

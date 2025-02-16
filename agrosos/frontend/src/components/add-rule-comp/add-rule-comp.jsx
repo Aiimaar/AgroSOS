@@ -76,10 +76,8 @@ const AddRuleComp = () => {
       } catch (error) {
         console.error("Error fetching crops:", error);
         if (error.response && error.response.status === 401) {
-          alert("No autorizado. Por favor, inicia sesión.");
           navigate("/login");
         } else {
-          alert("No se pudieron cargar los cultivos.");
         }
       }
     };
@@ -163,7 +161,6 @@ const AddRuleComp = () => {
       !actuatorType ||
       !selectedAction
     ) {
-      alert("Por favor, completa todos los campos antes de añadir la regla.");
       return;
     }
 
@@ -247,10 +244,8 @@ const AddRuleComp = () => {
       sessionStorage.removeItem("soilHumidityConditions");
       localStorage.removeItem("cropName");
 
-      alert("Regla añadida con éxito.");
     } catch (error) {
       console.error("Error al añadir la regla:", error);
-      alert("Hubo un problema al añadir la regla.");
     }
   };
 

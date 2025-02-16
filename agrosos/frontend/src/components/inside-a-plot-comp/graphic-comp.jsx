@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next"; // Importamos useTranslation
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -24,6 +25,7 @@ ChartJS.register(
 
 const EvolutionGraph = () => {
   const [data, setData] = useState(null);
+  const { t, i18n } = useTranslation();
   const { darkMode, toggleDarkMode } = useDarkMode(); // Usar el modo oscuro desde el contexto
 
   useEffect(() => {
@@ -100,7 +102,7 @@ const EvolutionGraph = () => {
           labels: hours,
           datasets: [
             {
-              label: "Temperatura (°C)",
+              label: t("Temperature"),
               data: temperatureValues,
               borderColor: "red",
               pointBorderColor: "red",
@@ -112,7 +114,7 @@ const EvolutionGraph = () => {
               z: 0,
             },
             {
-              label: "Humedad (%)",
+              label: t("Humidity"),
               data: humidityValues,
               borderColor: "blue",
               pointBorderColor: "blue",
@@ -124,7 +126,7 @@ const EvolutionGraph = () => {
               z: 0,
             },
             {
-              label: "Puntos Óptimos",
+              label: t("Optimal_points"),
               data: optimalPoints,
               borderColor: "green",
               pointBackgroundColor: "green",
@@ -203,7 +205,7 @@ const EvolutionGraph = () => {
       {data ? (
         <Line data={data} options={options} />
       ) : (
-        <p>No hay sensores registrados.</p>
+        <p>{t("no_registered_sensors")}</p>
       )}
     </div>
   );

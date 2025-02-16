@@ -126,7 +126,7 @@
   "irrigation_schedule_error": "Error scheduling irrigation.",
   "plot_id_not_defined": "Plot ID not defined.",
   "activate_irrigation": "Activate irrigation",
-  "deactivate_irrigation": "Deactivate irrigation",
+  "deactivate_irrigation": "Desactivate irrigation",
   "actions": "Actions",
   "crop_in_plot": "Crops in the plot",
 
@@ -401,5 +401,12 @@
   "disable_animation": "Disable animation",
   "enable_notifications_question": "Do you want to receive web notifications?",
   "yes_enable":"Yes, activate them.",
-  "no_thanks":"No, thanks."
+  "no_thanks":"No, thanks.",
+  "no_registered_sensors":"No registered sensors.",
+  "Entering_the_time_manually:":"Entering the time manually:",
+  "Temperature":"Temperature (°C)",
+  "Humidity":"Humidity (%)",
+  "Optimal_points":"Optimal points",
+  "humidity_conditions": "Humidity conditions",
+  "crop_coverage":"Crop coverage"
 }

@@ -92,8 +92,8 @@
 }
 
 .dark-mode .advices-page .advice-card {
-  background-color: green; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  background-color: #43a047; /* Fondo diferente en modo oscuro */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .advices-page .advice-card:hover {
