@@ -110,7 +110,7 @@ function NotificationsComponent() {
     <div id="notifications-component-container" className={darkMode ? 'dark-mode' : ''}>
       <button
         className="notifications-component-button-arrow"
-        onClick={() => navigate("/plot-list")}
+        onClick={() => navigate("/settings")}
         aria-label={t("back_to_plot_list")}
       >
         <FontAwesomeIcon icon={faArrowLeft} />

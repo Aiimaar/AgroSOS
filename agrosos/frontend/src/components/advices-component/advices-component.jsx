@@ -22,7 +22,7 @@ function AdvicesComponent() {
         {/* Botón de retroceso */}
         <button
           className="back-button"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/plot-list")}
           aria-label={t("back_button_label")}
         >
           <FontAwesomeIcon icon={faArrowLeft} />

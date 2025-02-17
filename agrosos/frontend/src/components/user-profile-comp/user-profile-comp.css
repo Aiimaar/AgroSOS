@@ -43,7 +43,7 @@
 /* Estilos del contenedor del ícono de la cámara */
 .camera-icon {
   font-size: 25px;  /* Aumentado el tamaño del ícono */
-  color: green;
+  color: #43a047;
   position: absolute;
   bottom: 5px;
   right: 5px;
@@ -57,12 +57,12 @@
 }
 
 .dark-mode .camera-icon {
-  background-color: green; /* Fondo más oscuro para el ícono de la cámara */
-  color: #ccc; /* Texto más claro para el modo oscuro */
+  background-color: #43a047; /* Fondo más oscuro para el ícono de la cámara */
+  color: #ffffff; /* Texto más claro para el modo oscuro */
 }
 
 .upload-button {
-  background-color: green;
+  background-color: #43a047;
   color: white;
   border: none;
   border-radius: 4px;
@@ -91,7 +91,7 @@ label {
 }
 
 .dark-mode label {
-  color: #ccc; /* Color más claro para las etiquetas en modo oscuro */
+  color: #ffffff; /* Color más claro para las etiquetas en modo oscuro */
 }
 
 .input-container {
@@ -113,7 +113,7 @@ label {
 
 .dark-mode .input-field {
   border-bottom: 1px solid green; /* Color diferente para el borde en modo oscuro */
-  color: #ccc; /* Texto más claro en modo oscuro */
+  color: #ffffff; /* Texto más claro en modo oscuro */
 }
 
 .input-field[readonly] {
@@ -131,7 +131,7 @@ label {
 }
 
 .dark-mode .user-profile-comp-edit-field-button {
-  color: #ccc; /* Texto más claro para el botón de edición en modo oscuro */
+  color: #ffffff; /* Texto más claro para el botón de edición en modo oscuro */
 }
 
 #user-profile-comp-buttons {
@@ -158,7 +158,7 @@ label {
 .logout-button {
   margin-top: 30px;
   padding: 10px 20px;
-  background-color: green;
+  background-color: #43a047;
   color: white;
   border: none;
   border-radius: 20px;
@@ -170,14 +170,14 @@ label {
 }
 
 .dark-mode .logout-button {
-  background-color: green; /* Fondo más oscuro para el botón de cerrar sesión en modo oscuro */
-  color: #ccc; /* Texto más claro en modo oscuro */
+  background-color: #43a047; /* Fondo más oscuro para el botón de cerrar sesión en modo oscuro */
+  color: #ffffff; /* Texto más claro en modo oscuro */
 }
 
 .go-back-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: green;
+  background-color: #43a047;
   color: white;
   border: none;
   border-radius: 20px;
@@ -189,8 +189,8 @@ label {
 }
 
 .dark-mode .go-back-button {
-  background-color: green; /* Fondo más oscuro para el botón de volver en modo oscuro */
-  color: #ccc; /* Texto más claro en modo oscuro */
+  background-color: #43a047; /* Fondo más oscuro para el botón de volver en modo oscuro */
+  color: #ffffff; /* Texto más claro en modo oscuro */
 }
 
 /* Modal styles */
@@ -236,7 +236,7 @@ label {
 }
 
 .dark-mode .modal h3 {
-  color: #ddd; /* Texto más claro para el encabezado en modo oscuro */
+  color: #ffffff; /* Texto más claro para el encabezado en modo oscuro */
 }
 
 .modal-input {
@@ -251,7 +251,7 @@ label {
 .dark-mode .modal-input {
   border: 1px solid green; /* Color diferente para el borde */
   background-color: #333; /* Fondo más oscuro para el input */
-  color: #ccc; /* Texto más claro */
+  color: #ffffff; /* Texto más claro */
 }
 
 .modal-buttons {
@@ -272,13 +272,13 @@ label {
 }
 
 .modal-save-button {
-  background-color: green;
+  background-color: #43a047;
   color: white;
 }
 
 .dark-mode .modal-save-button {
   background-color: #2e7d32; /* Fondo más oscuro para el botón */
-  color: #ccc; /* Texto más claro */
+  color: #ffffff; /* Texto más claro */
 }
 
 .modal-save-button:hover {
@@ -292,7 +292,7 @@ label {
 
 .dark-mode .modal-cancel-button {
   background-color: #555; /* Fondo más oscuro para el botón */
-  color: #ccc; /* Texto más claro */
+  color: #ffffff; /* Texto más claro */
 }
 
 .modal-cancel-button:hover {

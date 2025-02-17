@@ -19,6 +19,7 @@
 
 /* Estilos para el botón de retroceso */
 .existing-rule-back-button {
+  margin-top: 3.5em;
   align-self: flex-start;
   background-color: transparent;
   border: none;

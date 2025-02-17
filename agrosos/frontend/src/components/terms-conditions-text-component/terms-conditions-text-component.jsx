@@ -38,7 +38,7 @@ function TermsConditionText() {
     >
       <button
         className="terms-back-button"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/plot-list")}
         aria-label="Volver"
       >
         <FontAwesomeIcon icon={faArrowLeft} />
