@@ -47,7 +47,6 @@ const InsideAPlotComp = ({ plotId }) => {
     console.log("Idioma actual:", i18n.language);
 
     if (!token) {
-      alert(t("no_valid_token"));
       navigate("/login");
       return;
     }
@@ -102,7 +101,6 @@ const InsideAPlotComp = ({ plotId }) => {
     } catch (error) {
       console.error("Error al obtener datos:", error);
       if (error.response && error.response.status === 401) {
-        alert(t("session_expired"));
         navigate("/login");
       } else {
         setError(t("data_load_error"));
@@ -157,7 +155,6 @@ const InsideAPlotComp = ({ plotId }) => {
 
   const handleProgramarRiego = async () => {
     if (!localPlotId) {
-      alert(t("plot_id_not_defined"));
       return;
     }
 
@@ -186,13 +183,10 @@ const InsideAPlotComp = ({ plotId }) => {
         );
 
         console.log("Programación de riego guardada:", response.data);
-        alert(t("irrigation_scheduled_success"));
       } catch (error) {
         console.error("Error al guardar la programación de riego:", error);
-        alert(t("irrigation_schedule_error"));
       }
     } else {
-      alert(t("select_day_and_time"));
     }
   };
 
@@ -404,7 +398,7 @@ const InsideAPlotComp = ({ plotId }) => {
                         renderNumbers={true}
                       />
                       <label htmlFor="manual-time-input">
-                        Introduce la hora manualmente:
+                        {t("Entering_the_time_manually:")}
                       </label>
                       <input
                         id="manual-time-input"

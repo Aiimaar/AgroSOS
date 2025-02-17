@@ -1,3 +1,4 @@
+import React from 'react';
 import "./sensor-header-component.css";
 import headerGrey from "./image.png";
 import headerGreyBold from "./image-bold.png";

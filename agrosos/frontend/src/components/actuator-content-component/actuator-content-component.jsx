@@ -46,7 +46,7 @@ function ActuatorContentComponent() {
       <h2 id="actuator-list" className="sr-only">
         Lista de actuadores
       </h2>
-      <div className="actuatorList">
+      <div className="actuatorList" role="list" aria-label="Lista de actuadores">
         {actuators.map((actuator) => (
           <div className="list" key={actuator.name} role="listitem">
             <img

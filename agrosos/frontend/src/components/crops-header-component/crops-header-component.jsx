@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTranslation } from "react-i18next"; // Importamos el hook useTranslation
 import "./crops-header-component.css";
 import headerGrey from "./image.png";

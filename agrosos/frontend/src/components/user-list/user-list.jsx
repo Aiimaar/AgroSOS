@@ -85,62 +85,55 @@ const UserList = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    let formData = { ...currentUser };
+  
+    // Verificar el estado actual de los datos de usuario
+    console.log("Datos de usuario a enviar:", currentUser);
+    console.log("Imagen seleccionada:", imageFile);
+  
+    let formData = new FormData();
+  
+    // Añadir todos los campos del usuario a FormData
+    formData.append("name", currentUser.name);
+    formData.append("email", currentUser.email);
+    formData.append("role", currentUser.role);
+  
+    // Agregar la imagen solo si se seleccionó una
     if (imageFile) {
-      const form = new FormData();
-      form.append("profile_image", imageFile);
-
-      try {
-        const response = await axios.put(
-          `http://localhost:3000/api/users/${currentUser.id}`,
-          form,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-            },
-          }
-        );
-
-        const updatedUser = response.data;
-        setUsers((prevUsers) =>
-          prevUsers.map((user) =>
-            user.id === updatedUser.id ? updatedUser : user
-          )
-        );
-        closeModal();
-      } catch (error) {
-        console.error("Error al subir la imagen:", error);
-      }
-    } else {
-      try {
-        const response = await axios.put(
-          `http://localhost:3000/api/users/${currentUser.id}`,
-          currentUser,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-            },
-          }
-        );
-
-        const updatedUser = response.data;
-        setUsers((prevUsers) =>
-          prevUsers.map((user) =>
-            user.id === updatedUser.id ? updatedUser : user
-          )
-        );
-        closeModal();
-      } catch (error) {
-        console.error("Error al guardar:", error);
-      }
+      formData.append("profile_image", imageFile);
+    }
+  
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/api/users/${currentUser.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Muy importante para enviar datos binarios
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+  
+      const updatedUser = response.data;
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === updatedUser.id ? updatedUser : user
+        )
+      );
+      closeModal();
+    } catch (error) {
+      console.error("Error al guardar:", error.response ? error.response.data : error.message);
     }
   };
+  
 
   const handleDelete = (userId) => {
+    const token = localStorage.getItem("authToken");
+
     axios
-      .delete(`http://localhost:3000/api/users/${userId}`)
+      .delete(`http://localhost:3000/api/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then(() => {
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
       })
@@ -170,8 +163,12 @@ const UserList = () => {
   };
 
   return (
-    <div className={`user-list-container ${darkMode ? 'dark-mode' : ''}`}>
-      <button className="user-list-back-button" onClick={() => navigate(-1)}>
+    <div className={`user-list-container ${darkMode ? "dark-mode" : ""}`}>
+      <button
+        aria-label="Flecha para volver atrás"
+        className="user-list-back-button"
+        onClick={() => navigate(-1)}
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </button>
       <h1 className="user-list-title" id="user-list-title">
@@ -192,7 +189,9 @@ const UserList = () => {
               <div className="user-list-details">
                 <div className="user-list-avatar">
                   <img
-                    src={user.profile_image ? user.profile_image : defaultAvatar}
+                    src={
+                      user.profile_image ? user.profile_image : defaultAvatar
+                    }
                     alt={
                       user.name
                         ? `${user.name} avatar`
@@ -233,7 +232,7 @@ const UserList = () => {
           </div>
         ))}
       </div>
-  
+
       <div className="user-list-arrow-buttons">
         {currentPage > 1 ? (
           <button
@@ -246,7 +245,7 @@ const UserList = () => {
         ) : (
           <div style={{ width: "40px" }}></div>
         )}
-  
+
         {indexOfLastUser < users.length && (
           <button
             className="user-list-arrow-button user-list-arrow-right"
@@ -257,18 +256,19 @@ const UserList = () => {
           </button>
         )}
       </div>
-  
+
       {isCreatePopupOpen && (
-        <div className={`modal-overlay ${darkMode ? 'dark-mode' : ''}`}>
+        <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
           <CreateUserPopup
+            darkMode={darkMode} // Pasa el estado darkMode como prop
             onSubmit={handleCreateSubmit}
             onClose={() => setIsCreatePopupOpen(false)}
           />
         </div>
       )}
-  
+
       {isModalOpen && (
-        <div className={`modal-overlay ${darkMode ? 'dark-mode' : ''}`}>
+        <div className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
           <div className="popup-container">
             <h2>Editar Usuario</h2>
             <form onSubmit={handleSave}>
@@ -310,7 +310,11 @@ const UserList = () => {
                 required
                 aria-label="Correo electrónico del usuario"
               />
-              <button type="submit" id="popup-save" aria-label="Guardar cambios">
+              <button
+                type="submit"
+                id="popup-save"
+                aria-label="Guardar cambios"
+              >
                 Guardar
               </button>
               <button
@@ -326,10 +330,10 @@ const UserList = () => {
         </div>
       )}
     </div>
-  );  
+  );
 };
 
-const CreateUserPopup = ({ onSubmit, onClose }) => {
+const CreateUserPopup = ({ onSubmit, onClose, darkMode }) => {
   const [name, setName] = useState("");
   const [role, setRole] = useState("Farmer");
   const [email, setEmail] = useState("");
@@ -349,7 +353,7 @@ const CreateUserPopup = ({ onSubmit, onClose }) => {
   };
 
   return (
-    <div className={`popup-container ${darkMode ? 'dark-mode' : ''}`}>
+    <div className={`popup-container ${darkMode ? "dark-mode" : ""}`}>
       <h2>Crear Usuario</h2>
       <form onSubmit={handleSubmit}>
         <input

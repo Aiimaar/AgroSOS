@@ -38,7 +38,6 @@ const CropsListComponent = () => {
   const handleCropClick = async (cropId) => {
     const selectedPlotId = localStorage.getItem("selectedPlotId");
     if (!selectedPlotId) {
-      alert("No hay un terreno seleccionado.");
       return;
     }
 
@@ -58,10 +57,8 @@ const CropsListComponent = () => {
         }
       );
       console.log("Cultivo asignado con éxito:", response.data);
-      alert("Cultivo asignado con éxito."); // Confirmación de éxito
     } catch (error) {
       console.error("Error al asignar el cultivo al terreno", error);
-      alert("Hubo un error al asignar el cultivo.");
     }
   };
 

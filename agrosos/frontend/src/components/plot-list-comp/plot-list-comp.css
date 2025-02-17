@@ -5,6 +5,56 @@ html {
   box-sizing: border-box;
 }
 
+.notification-modal {
+  position: fixed;
+  top: 17%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  z-index: 1000;
+  max-width: 300px;
+  width: 90%;
+}
+
+.notification-modal p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.notification-modal button {
+  background-color: #5ea71e;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.notification-modal button:hover {
+  background-color: #0056b3;
+}
+
+.notification-modal button:last-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+.notification-modal button:last-child:hover {
+  background-color: #999;
+}
+
+/* Estilos para deshabilitar el scroll cuando el modal está abierto */
+.no-scroll {
+  overflow: hidden;
+}
+
 .plot-list-welcome {
   margin-top: 110px;
   margin-left: 20px;
@@ -17,22 +67,32 @@ html {
 }
 
 .plot-list-container {
-  padding: auto;
+  margin-top: 2em;
   display: flex;
-  margin: auto;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   width: 100%;
-  height: 100vh;
-  margin-top: -14em;
-  margin-bottom: 80px;
+  box-sizing: border-box;
 }
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-container {
-  background-color: #333; /* Fondo oscuro */
-  color: white; /* Texto claro */
+  background-color: #333;
+  /* Fondo oscuro */
+  color: white;
+  /* Texto claro */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .plot-card {
@@ -43,6 +103,19 @@ html {
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
+  background-color: white;
+  transition: transform 0.9s ease, box-shadow 0.9s ease;
+  animation: fadeInUp 0.7s ease-out;
+}
+
+.plot-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .plot-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
 }
 
 .plot-card:focus {
@@ -58,7 +131,8 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-card {
-  background-color: #444; /* Fondo oscuro */
+  background-color: #444;
+  /* Fondo oscuro */
 }
 
 .terrain-name {
@@ -75,8 +149,8 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .terrain-name {
-  background-color: rgba(255, 255, 255, 0.1); /* Fondo claro */
-  color: #ccc; /* Texto claro */
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
 }
 
 .card-footer {
@@ -95,8 +169,10 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .card-footer {
-  background-color: rgba(0, 0, 0, 0.3); /* Fondo oscuro */
-  color: white; /* Texto claro */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Fondo oscuro */
+  color: white;
+  /* Texto claro */
 }
 
 .plot-list-actions {
@@ -118,12 +194,14 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-button {
-  background-color: #555; /* Fondo oscuro */
-  color: white; /* Texto claro */
+  background-color: #555;
+  /* Fondo oscuro */
+  color: white;
+  /* Texto claro */
 }
 
 .plot-list-button svg {
-  font-size: 13px; 
+  font-size: 13px;
 }
 
 .plot-list-edit-button {
@@ -132,7 +210,8 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-edit-button {
-  background-color: #555; /* Fondo oscuro */
+  background-color: #555;
+  /* Fondo oscuro */
 }
 
 .plot-list-delete-button {
@@ -143,9 +222,12 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-delete-button {
-  background-color: #444; /* Fondo oscuro */
-  color: white; /* Texto claro */
-  border: 1px solid #777; /* Borde claro */
+  background-color: #444;
+  /* Fondo oscuro */
+  color: white;
+  /* Texto claro */
+  border: 1px solid #777;
+  /* Borde claro */
 }
 
 .plot-list-info {
@@ -157,7 +239,8 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-info {
-  color: white; /* Texto claro */
+  color: white;
+  /* Texto claro */
 }
 
 .plot-list-info-item {
@@ -173,8 +256,10 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-info-item {
-  background-color: rgba(255, 255, 255, 0.3); /* Fondo claro */
-  color: #fff; /* Texto claro */
+  background-color: rgba(255, 255, 255, 0.3);
+  /* Fondo claro */
+  color: #fff;
+  /* Texto claro */
 }
 
 .plot-list-edit-modal,
@@ -195,8 +280,10 @@ html {
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-edit-modal,
 .dark-mode .plot-list-delete-modal {
-  background: #555; /* Fondo oscuro */
-  color: white; /* Texto claro */
+  background: #555;
+  /* Fondo oscuro */
+  color: white;
+  /* Texto claro */
 }
 
 .plot-list-edit-modal h3 {
@@ -208,7 +295,8 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-edit-modal h3 {
-  color: white; /* Texto claro */
+  color: white;
+  /* Texto claro */
 }
 
 .plot-list-edit-modal form {
@@ -227,7 +315,8 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-edit-modal label {
-  color: #ccc; /* Texto claro */
+  color: #ccc;
+  /* Texto claro */
 }
 
 .plot-list-edit-modal input {
@@ -242,9 +331,12 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-edit-modal input {
-  background-color: #666; /* Fondo oscuro */
-  color: white; /* Texto claro */
-  border: 1px solid #999; /* Borde claro */
+  background-color: #666;
+  /* Fondo oscuro */
+  color: white;
+  /* Texto claro */
+  border: 1px solid #999;
+  /* Borde claro */
 }
 
 .plot-list-edit-modal input:focus {
@@ -255,7 +347,8 @@ html {
 
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-edit-modal input:focus {
-  border-color: #77a3d3; /* Borde diferente en modo oscuro */
+  border-color: #77a3d3;
+  /* Borde diferente en modo oscuro */
 }
 
 .plot-list-edit-modal button {
@@ -317,13 +410,16 @@ html {
 /* Estilos para el modo oscuro */
 .dark-mode .plot-list-edit-modal button[type="button"],
 .dark-mode .plot-list-delete-modal button[type="button"] {
-  background-color: #777; /* Fondo diferente en modo oscuro */
-  color: white; /* Texto claro */
+  background-color: #777;
+  /* Fondo diferente en modo oscuro */
+  color: white;
+  /* Texto claro */
 }
 
 .dark-mode .plot-list-edit-modal button[type="button"]:hover,
 .dark-mode .plot-list-delete-modal button[type="button"]:hover {
-  background-color: #666; /* Fondo diferente en modo oscuro */
+  background-color: #666;
+  /* Fondo diferente en modo oscuro */
 }
 
 @media only screen and (min-width: 768px) {
@@ -331,17 +427,21 @@ html {
     margin-top: 3em;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     box-sizing: border-box;
   }
+
   .plot-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
     gap: 45px;
+    margin-top: 1em;
+    height: 0vh;
   }
+
   .plot-card {
     min-width: 250px;
     height: 180px;
@@ -349,11 +449,15 @@ html {
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
+    transition: transform 0.9s ease, box-shadow 0.9s ease;
+    animation: fadeInUp 0.7s ease-out;
   }
+
   .plot-list-welcome {
     text-align: center;
   }
+
   .menu-icon {
     display: none;
   }
@@ -361,72 +465,72 @@ html {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-.dark-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2000;
-}
+  .dark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+  }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5000;
-}
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+  }
 
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
-  text-align: center;
-}
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+  }
 
-.modal-actions button {
-  margin: 5px;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  .modal-actions button {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-.modal-actions button:first-child {
-  background-color: red;
-  color: white;
-}
+  .modal-actions button:first-child {
+    background-color: red;
+    color: white;
+  }
 
-.modal-actions button:last-child {
-  background-color: gray;
-  color: white;
-}
+  .modal-actions button:last-child {
+    background-color: gray;
+    color: white;
+  }
 
-.no-scroll {
-  overflow: hidden;
-}
+  .no-scroll {
+    overflow: hidden;
+  }
 
-.plot-list-error-message {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(255, 0, 0, 0.8);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  z-index: 5000;
-  font-size: 14px;
-  text-align: center;
-  max-width: 80%;
-}
+  .plot-list-error-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 5000;
+    font-size: 14px;
+    text-align: center;
+    max-width: 80%;
+  }
 }

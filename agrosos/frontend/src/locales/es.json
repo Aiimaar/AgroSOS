@@ -95,6 +95,7 @@
   "default_plot_image": "Imagen predeterminada del terreno",
   "error_message_loading_plots": "Error al cargar los terrenos. Por favor, intenta nuevamente más tarde.",
   "plot_list": "Lista de terrenos",
+  "add_plot": "Crear un terreno",
 
   "monday": "Lunes",
   "tuesday": "Martes",
@@ -393,5 +394,18 @@
   "login": "Iniciar Sesión",
   "login_error": "Error en el inicio de sesión. Intenta de nuevo más tarde.",
   "no_account": "¿Aún no tienes cuenta?",
-  "create_account": "Crear cuenta"
+  "create_account": "Crear cuenta",
+
+  "disable_animation": "Desactivar animación",
+  "enable_notifications_question": "¿Quieres recibir notificaciones web?",
+  "yes_enable":"Sí, activarlas.",
+  "no_thanks":"No, gracias.",
+  "no_registered_sensors":"No hay sensores registrados",
+  "Entering_the_time_manually:":"Ingresa la hora manualmente:",
+  "Temperature":"Temperatura (°C)",
+  "Humidity":"Humedad (%)",
+  "Optimal_points":"Puntos óptimos",
+  "humidity_conditions": "Condiciones de humedad",
+  "crop_coverage":"Cobertura de cultivos"
 }
+

@@ -1,22 +1,25 @@
+/* public/css/view-rules.css */
+
 /* Estilos para el contenedor principal */
 #existing-rules-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh; /* Asegura que el contenedor ocupe al menos toda la altura de la pantalla */
   align-items: center;
   margin: 0 auto;
-  justify-content: center;
   padding: 20px;
+  box-sizing: border-box; /* Incluye el padding en el ancho y alto total */
 }
 
 /* Estilos para el modo oscuro */
 .dark-mode #existing-rules-container {
-  background-color: #333; /* Fondo oscuro */
-  color: white; /* Texto claro */
+  background-color: #333;
+  color: white;
 }
 
 /* Estilos para el botón de retroceso */
 .existing-rule-back-button {
+  margin-top: 3.5em;
   align-self: flex-start;
   background-color: transparent;
   border: none;
@@ -24,15 +27,15 @@
   font-size: 20px;
   cursor: pointer;
   margin-bottom: 20px;
+  color: #333; /* Color de texto accesible */
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .existing-rule-back-button {
-  color: white; /* Texto claro */
+  color: white;
 }
 
 .existing-rule-back-button:focus {
-  outline: 2px solid #FFD700; /* Indicador de enfoque accesible */
+  outline: 2px solid #FFD700;
 }
 
 /* Estilos para el encabezado */
@@ -46,12 +49,11 @@
   font-size: 24px;
   font-weight: bold;
   display: flex;
-  color: #333; /* Color de texto accesible */
+  color: #333;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .existing-rule-title {
-  color: white; /* Texto claro */
+  color: white;
 }
 
 .icon-list {
@@ -59,17 +61,18 @@
   color: #555;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .icon-list {
-  color: white; /* Texto claro */
+  color: white;
 }
 
 /* Estilos para las tarjetas de reglas */
 .existing-rule-cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
   justify-items: center;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 1200px; /* Ancho máximo para evitar que se estire demasiado */
 }
 
 .existing-rule-card {
@@ -85,12 +88,12 @@
   width: 100%;
   max-width: 320px;
   position: relative;
+  box-sizing: border-box;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .existing-rule-card {
-  background-color: #3b873e; /* Fondo oscuro */
-  color: white; /* Texto claro */
+  background-color: #3b873e;
+  color: white;
 }
 
 .existing-rule-card:focus-within {
@@ -104,9 +107,8 @@
   font-size: 1rem;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .existing-rule-card-info p {
-  color: white; /* Texto claro */
+  color: white;
 }
 
 /* Estilos para los botones de acción */
@@ -133,11 +135,10 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .existing-rule-edit-button,
 .dark-mode .existing-rule-delete-button {
-  background-color: #245525; /* Fondo oscuro */
-  color: white; /* Texto claro */
+  background-color: #245525;
+  color: white;
 }
 
 .existing-rule-edit-button:hover,
@@ -145,11 +146,10 @@
   background-color: #e0e0e0;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .existing-rule-edit-button:hover,
 .dark-mode .existing-rule-delete-button:hover {
-  background-color: #777; /* Fondo diferente en modo oscuro */
-  color: white; /* Texto claro */
+  background-color: #777;
+  color: white;
 }
 
 .existing-rule-edit-button:focus,
@@ -158,75 +158,6 @@
   transform: scale(1.1);
 }
 
-/* Modal */
-.existing-rule-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Estilos para el modo oscuro */
-.dark-mode .existing-rule-modal-overlay {
-  background-color: rgba(255, 255, 255, 0.1); /* Fondo claro en modo oscuro */
-}
-
-.existing-rule-modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-  max-width: 90%;
-  text-align: center;
-}
-
-/* Estilos para el modo oscuro */
-.dark-mode .existing-rule-modal-content {
-  background-color: #444; /* Fondo oscuro */
-  color: white; /* Texto claro */
-}
-
-.existing-rule-modal-button {
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.existing-rule-modal-confirm {
-  background-color: #3b873e;
-  color: #fff;
-  border: 1px solid #2a5e28;
-}
-
-/* Estilos para el modo oscuro */
-.dark-mode .existing-rule-modal-confirm {
-  background-color: #77a3d3; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro */
-}
-
-.existing-rule-modal-cancel {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-/* Estilos para el modo oscuro */
-.dark-mode .existing-rule-modal-cancel {
-  background-color: #777; /* Fondo diferente en modo oscuro */
-  color: white; /* Texto claro */
-}
-
-.existing-rule-modal-button:focus {
-  outline: 2px solid #FFD700;
-}
 
 .add-rule-button,
 .add-rule-button-circle {
@@ -243,14 +174,15 @@
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  bottom: 20px; /* Distancia desde la parte inferior */
+  right: 20px; /* Distancia desde la derecha */
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .add-rule-button,
 .dark-mode .add-rule-button-circle {
-  background-color: #3b873e; /* Fondo oscuro */
-  color: white; /* Texto claro */
-  border: 2px solid #000000; /* Borde diferente en modo oscuro */
+  background-color: #3b873e;
+  color: white;
+  border: 2px solid #000000;
 }
 
 .add-rule-button:hover,
@@ -259,11 +191,10 @@
   color: #fff;
 }
 
-/* Estilos para el modo oscuro */
 .dark-mode .add-rule-button:hover,
 .dark-mode .add-rule-button-circle:hover {
-  background-color: 3b873e; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro */
+  background-color: 3b873e;
+  color: black;
 }
 
 .add-rule-button:focus,
@@ -276,9 +207,27 @@
 .no-rules-message {
   text-align: center;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Estilos para el modo oscuro */
+.no-rules-message h2 {
+  margin-bottom: 1em;
+}
+
 .dark-mode .no-rules-message {
-  color: white; /* Texto claro */
+  color: white;
+}
+
+/*Media queries para responsive design*/
+@media (max-width: 768px) {
+  .existing-rule-cards-container {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ajusta el ancho mínimo en pantallas más pequeñas */
+  }
+  .existing-rule-card {
+      height: auto; /* Permite que la tarjeta crezca verticalmente según el contenido */
+      min-height: 220px;
+      max-width: 90%;
+  }
 }

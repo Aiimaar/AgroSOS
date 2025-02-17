@@ -12,9 +12,11 @@ import AddPlotComponent from "../add-plot-component/add-plot-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 import { useDarkMode } from "../../context/DarkModeContext";
+import { regSw, subscribe } from "../../services/subscriptionService";
 
 function PlotListComp() {
-  const { t, i18n } = useTranslation(); // Obtén las funciones de traducción
+  const { t, i18n } = useTranslation();
+  const [showNotificationPrompt, setShowNotificationPrompt] = useState(false);
   const [plots, setPlots] = useState([]);
   const [sensorAverages, setSensorAverages] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -23,28 +25,34 @@ function PlotListComp() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [plotToDelete, setPlotToDelete] = useState(null);
   const navigate = useNavigate();
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode } = useDarkMode();
 
   const defaultImages = [fondo1, fondo2, fondo3, fondo4, fondo5];
   const imageMap = {};
-
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    // Obtener el idioma del localStorage y establecerlo
     const savedLanguage = localStorage.getItem("language");
     if (savedLanguage && savedLanguage !== i18n.language) {
       i18n.changeLanguage(savedLanguage);
     }
     fetchData();
-    console.log("Idioma actual al cargar el componente:", i18n.language); // Verificar idioma al cargar
+    console.log("Idioma actual al cargar el componente:", i18n.language);
   }, []);
 
   useEffect(() => {
-    console.log("Idioma actualizado:", i18n.language); // Detectar cambios en el idioma
-    // Guardar el idioma en localStorage cuando cambie
+    console.log("Idioma actualizado:", i18n.language);
     localStorage.setItem("language", i18n.language);
   }, [i18n.language]);
+
+  useEffect(() => {
+    const isFirstTime = localStorage.getItem("firstTime") === "true";
+    console.log("¿Es la primera vez que el usuario se registra?", isFirstTime);
+
+    if (isFirstTime) {
+      setShowNotificationPrompt(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (showDeleteModal || editPlot) {
@@ -56,6 +64,13 @@ function PlotListComp() {
       document.body.classList.remove("no-scroll");
     };
   }, [showDeleteModal, editPlot]);
+
+  useEffect(() => {
+    if (localStorage.getItem("hasCreatedPlot")) {
+      setShowNotificationPrompt(true);
+      localStorage.removeItem("hasCreatedPlot");
+    }
+  }, []);
 
   const fetchData = async () => {
     const token = localStorage.getItem("authToken");
@@ -133,6 +148,30 @@ function PlotListComp() {
     return imageMap[id];
   };
 
+  const handleEnableNotifications = async () => {
+    if ("Notification" in window) {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        try {
+          const registration = await regSw(); 
+          console.log("Datos antes de suscribir");
+          console.log(registration, userId);
+          await subscribe(registration, userId); 
+          new Notification("Notificaciones activadas. ¡Gracias!");
+        } catch (error) {
+          console.error("Error al suscribirse a las notificaciones:", error);
+        }
+      }
+    }
+    setShowNotificationPrompt(false);
+    localStorage.removeItem("firstTime");
+  };
+
+  const handleDismissNotifications = () => {
+    setShowNotificationPrompt(false);
+    localStorage.removeItem("firstTime");
+  };
+
   const handleDeletePlot = async () => {
     const token = localStorage.getItem("authToken");
     try {
@@ -203,22 +242,37 @@ function PlotListComp() {
   const handlePlotClick = (plotId, plotName) => {
     localStorage.setItem("selectedPlotId", plotId);
     localStorage.setItem("selectedPlotName", plotName);
-    console.log("Plot selected:", { plotId, plotName }); // Agrega este log
+    console.log("Plot selected:", { plotId, plotName }); 
     navigate("/inside-a-plot");
   };
 
   return (
     <>
+      {showNotificationPrompt && (
+        <div className="notification-modal">
+          <p>{t("enable_notifications_question")}</p>
+          <button onClick={handleEnableNotifications}>{t("yes_enable")}</button>
+          <button onClick={handleDismissNotifications}>{t("no_thanks")}</button>
+        </div>
+      )}
+
       {plots.length === 0 ? (
         <AddPlotComponent />
       ) : (
         <>
           {showDeleteModal && (
-            <div role="delete-modal" className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}>
+            <div
+              role="delete-modal"
+              className={`modal-overlay ${darkMode ? "dark-mode" : ""}`}
+            >
               <div className="plot-list-delete-modal">
                 <h3>{t("confirm_delete_plot")}</h3>
                 <div className="modal-actions">
-                  <button role="button" type="submit" onClick={handleDeletePlot}>
+                  <button
+                    role="button"
+                    type="submit"
+                    onClick={handleDeletePlot}
+                  >
                     {t("delete")}
                   </button>
                   <button role="button" type="button" onClick={cancelDelete}>
@@ -271,7 +325,9 @@ function PlotListComp() {
           </div>
           <div className="plot-list-container">
             {errorMessage && (
-              <p role="alert" className="plot-list-error-message">{errorMessage}</p>
+              <p role="alert" className="plot-list-error-message">
+                {errorMessage}
+              </p>
             )}
             <div className="plot-list">
               {plots.map((plot) => (

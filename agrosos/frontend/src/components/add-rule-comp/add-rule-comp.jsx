@@ -1,22 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useTranslation } from "react-i18next";  // <-- IMPORTANTE: importar useTranslation
+import { useTranslation } from "react-i18next"; // <-- IMPORTANTE: importar useTranslation
 import "./add-rule-comp.css";
 import { useDarkMode } from "../../context/DarkModeContext";
 
 const AddRuleComp = () => {
-  const { t, i18n } = useTranslation();  // <-- IMPORTANTE: obtener t e i18n
+  const { t, i18n } = useTranslation(); // <-- IMPORTANTE: obtener t e i18n
   const [cropId, setCropId] = useState(sessionStorage.getItem("cropId") || "");
   const [crops, setCrops] = useState([]);
-  const [sensorType, setSensorType] = useState(sessionStorage.getItem("sensorType") || "");
-  const [actuatorType, setActuatorType] = useState(sessionStorage.getItem("actuatorType") || "");
+  const [sensorType, setSensorType] = useState(
+    sessionStorage.getItem("sensorType") || ""
+  );
+  const [actuatorType, setActuatorType] = useState(
+    sessionStorage.getItem("actuatorType") || ""
+  );
   const [availableActions, setAvailableActions] = useState([]);
-  const [selectedAction, setSelectedAction] = useState(sessionStorage.getItem("selectedAction") || "");
-  const [temperatureConditions, setTemperatureConditions] = useState(JSON.parse(sessionStorage.getItem("temperatureConditions")) || []);
-  const [humidityConditions, setHumidityConditions] = useState(JSON.parse(sessionStorage.getItem("humidityConditions")) || []);
-  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || []);
-  const [soilHumidityConditions, setSoilHumidityConditions] = useState(JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || []);
+  const [selectedAction, setSelectedAction] = useState(
+    sessionStorage.getItem("selectedAction") || ""
+  );
+  const [temperatureConditions, setTemperatureConditions] = useState(
+    JSON.parse(sessionStorage.getItem("temperatureConditions")) || []
+  );
+  const [humidityConditions, setHumidityConditions] = useState(
+    JSON.parse(sessionStorage.getItem("humidityConditions")) || []
+  );
+  const [soilTemperatureConditions, setSoilTemperatureConditions] = useState(
+    JSON.parse(sessionStorage.getItem("soilTemperatureConditions")) || []
+  );
+  const [soilHumidityConditions, setSoilHumidityConditions] = useState(
+    JSON.parse(sessionStorage.getItem("soilHumidityConditions")) || []
+  );
   const [ruleNumber, setRuleNumber] = useState(1);
   const navigate = useNavigate();
   const technicianId = localStorage.getItem("userId");
@@ -24,21 +38,20 @@ const AddRuleComp = () => {
   const { darkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
-      const storedLanguage = localStorage.getItem("language");
-      i18n.changeLanguage(storedLanguage || "es"); // Usa español por defecto
+    const storedLanguage = localStorage.getItem("language");
+    i18n.changeLanguage(storedLanguage || "es"); // Usa español por defecto
   }, []);
 
   const actuatorActionMap = {
     Riego: [t("activate_irrigation"), t("deactivate_irrigation")],
     Ventilación: [t("activate_ventilation"), t("deactivate_ventilation")],
     "Cobertura de cultivos": [
-        t("cover_crops_with_translucent_tarp"),
-        t("cover_crops_with_opaque_tarp"),
-        t("uncover_crops"),
+      t("cover_crops_with_translucent_tarp"),
+      t("cover_crops_with_opaque_tarp"),
+      t("uncover_crops"),
     ],
     "Apertura de ventanas": [t("open_windows"), t("close_windows")],
   };
-
 
   useEffect(() => {
     // Recuperar el idioma del localStorage
@@ -63,10 +76,8 @@ const AddRuleComp = () => {
       } catch (error) {
         console.error("Error fetching crops:", error);
         if (error.response && error.response.status === 401) {
-          alert("No autorizado. Por favor, inicia sesión.");
           navigate("/login");
         } else {
-          alert("No se pudieron cargar los cultivos.");
         }
       }
     };
@@ -150,7 +161,6 @@ const AddRuleComp = () => {
       !actuatorType ||
       !selectedAction
     ) {
-      alert("Por favor, completa todos los campos antes de añadir la regla.");
       return;
     }
 
@@ -163,23 +173,23 @@ const AddRuleComp = () => {
           conditions: [
             ...temperatureConditions.map((cond) => ({
               type: "temperature",
-              value: cond.temperature,
-              operator: cond.comparison,
+              value: cond.value, // <-- Acceder a la propiedad 'value'
+              operator: cond.operator,
             })),
             ...humidityConditions.map((cond) => ({
               type: "humidity",
-              value: cond.humidity,
-              operator: cond.comparison,
+              value: cond.value, // <-- Acceder a la propiedad 'value'
+              operator: cond.operator,
             })),
             ...soilTemperatureConditions.map((cond) => ({
               type: "soilTemperature",
-              value: cond.soilTemperature,
-              operator: cond.comparison,
+              value: cond.value, // <-- Acceder a la propiedad 'value'
+              operator: cond.operator,
             })),
             ...soilHumidityConditions.map((cond) => ({
               type: "soilHumidity",
-              value: cond.soilHumidity,
-              operator: cond.comparison,
+              value: cond.value, // <-- Acceder a la propiedad 'value'
+              operator: cond.operator,
             })),
           ],
           actions: [selectedAction],
@@ -190,6 +200,14 @@ const AddRuleComp = () => {
     };
 
     try {
+      console.log("Información de la regla que se va a enviar:", {
+        // <-- console.log añadido
+        name: ruleName,
+        crop_id: cropId,
+        technician_id: technicianId,
+        rule_info: JSON.stringify(ruleInfo),
+      });
+
       await axios.post(
         "http://localhost:3000/api/rules",
         {
@@ -226,23 +244,27 @@ const AddRuleComp = () => {
       sessionStorage.removeItem("soilHumidityConditions");
       localStorage.removeItem("cropName");
 
-      alert("Regla añadida con éxito.");
     } catch (error) {
       console.error("Error al añadir la regla:", error);
-      alert("Hubo un problema al añadir la regla.");
     }
   };
 
   return (
-    <div className="add-rule-form-container">
-      <h2 className="add-rule-form-title">{t("add_rule")}</h2>
+    <div className="add-rule-container-all">
+    <div className={`add-rule-form-container ${darkMode ? "dark-mode" : ""}`}>
+      <h2 className={`add-rule-form-title ${darkMode ? "dark-mode-text" : ""}`}>
+        {t("add_rule")}
+      </h2>
 
-      <label className="add-rule-label" htmlFor="add-rule-crop">
-      {t("crop_2")}
+      <label
+        className={`add-rule-label ${darkMode ? "dark-mode-text" : ""}`}
+        htmlFor="add-rule-crop"
+      >
+        {t("crop_2")}
       </label>
       <select
         id="add-rule-crop"
-        className="add-rule-select"
+        className={`add-rule-select ${darkMode ? "dark-mode-select" : ""}`}
         value={cropId}
         onChange={(e) => {
           const selectedCropId = e.target.value;
@@ -263,33 +285,43 @@ const AddRuleComp = () => {
         ))}
       </select>
 
-      <label className="add-rule-label" htmlFor="add-rule-sensor">
+      <label
+        className={`add-rule-label ${darkMode ? "dark-mode-text" : ""}`}
+        htmlFor="add-rule-sensor"
+      >
         Sensor:
       </label>
       <select
         id="add-rule-sensor"
-        className="add-rule-select"
+        className={`add-rule-select ${darkMode ? "dark-mode-select" : ""}`}
         value={sensorType}
         onChange={(e) => setSensorType(e.target.value)}
         aria-label="Selecciona un tipo de sensor"
       >
         <option value="">{t("select_sensor_option")}</option>
-        <option value="Temperature">{t("temperature_sensor")}</option>
-        <option value="Humidity">{t("humidity_sensor")}</option>
-        <option value="SoilTemperature">{t("soil_temperature_sensor")}</option>
-        <option value="SoilHumidity">{t("soil_humidity_sensor")}</option>
+        <option value="Temperature">{t("temperature_sensor")}</option>{" "}
+        {/* Valor corregido */}
+        <option value="Humedad">{t("humidity_sensor")}</option>
+        <option value="Temperatura del terreno">
+          {t("soil_temperature_sensor")}
+        </option>
+        <option value="Humedad del terreno">{t("soil_humidity_sensor")}</option>
       </select>
 
       {/* Condiciones y botones para cada tipo de sensor */}
-      {sensorType === "Temperatura" && (
-        <div className="add-rule-conditions">
-          <h3>Condiciones de Temperatura</h3>
+      {sensorType === "Temperature" && (
+        <div className={`add-rule-conditions ${darkMode ? "dark-mode" : ""}`}>
+          <h3 className={darkMode ? "dark-mode-text" : ""}>
+            Condiciones de Temperatura
+          </h3>
           <ul>
             {temperatureConditions.map((cond, index) => (
-              <li key={index}>
+              <li key={index} className={darkMode ? "dark-mode-text" : ""}>
                 {cond.operator} {cond.value}°C
                 <button
-                  className="delete-condition-button"
+                  className={`delete-condition-button ${
+                    darkMode ? "dark-mode-button" : ""
+                  }`}
                   onClick={() => handleDeleteCondition("temperature", index)}
                   aria-label="Eliminar condición de temperatura"
                 >
@@ -299,7 +331,9 @@ const AddRuleComp = () => {
             ))}
           </ul>
           <button
-            className="add-rule-conditions-button"
+            className={`add-rule-conditions-button ${
+              darkMode ? "dark-mode-button" : ""
+            }`}
             onClick={() => navigate("/temperature")}
             aria-label="Añadir condición de temperatura"
           >
@@ -309,14 +343,18 @@ const AddRuleComp = () => {
       )}
 
       {sensorType === "Humedad" && (
-        <div className="add-rule-conditions">
-          <h3>Condiciones de Humedad</h3>
+        <div className={`add-rule-conditions ${darkMode ? "dark-mode" : ""}`}>
+          <h3 className={darkMode ? "dark-mode-text" : ""}>
+            Condiciones de Humedad
+          </h3>
           <ul>
             {humidityConditions.map((cond, index) => (
-              <li key={index}>
+              <li key={index} className={darkMode ? "dark-mode-text" : ""}>
                 {cond.operator} {cond.value}%
                 <button
-                  className="delete-condition-button"
+                  className={`delete-condition-button ${
+                    darkMode ? "dark-mode-button" : ""
+                  }`}
                   onClick={() => handleDeleteCondition("humidity", index)}
                   aria-label="Eliminar condición de humedad"
                 >
@@ -326,7 +364,9 @@ const AddRuleComp = () => {
             ))}
           </ul>
           <button
-            className="add-rule-conditions-button"
+            className={`add-rule-conditions-button ${
+              darkMode ? "dark-mode-button" : ""
+            }`}
             onClick={() => navigate("/humidity")}
             aria-label="Añadir condición de humedad"
           >
@@ -336,14 +376,18 @@ const AddRuleComp = () => {
       )}
 
       {sensorType === "Temperatura del terreno" && (
-        <div className="add-rule-conditions">
-          <h3>Condiciones de Temperatura del terreno</h3>
+        <div className={`add-rule-conditions ${darkMode ? "dark-mode" : ""}`}>
+          <h3 className={darkMode ? "dark-mode-text" : ""}>
+            Condiciones de Temperatura del terreno
+          </h3>
           <ul>
             {soilTemperatureConditions.map((cond, index) => (
-              <li key={index}>
+              <li key={index} className={darkMode ? "dark-mode-text" : ""}>
                 {cond.operator} {cond.value}°C
                 <button
-                  className="delete-condition-button"
+                  className={`delete-condition-button ${
+                    darkMode ? "dark-mode-button" : ""
+                  }`}
                   onClick={() =>
                     handleDeleteCondition("soilTemperature", index)
                   }
@@ -355,7 +399,9 @@ const AddRuleComp = () => {
             ))}
           </ul>
           <button
-            className="add-rule-conditions-button"
+            className={`add-rule-conditions-button ${
+              darkMode ? "dark-mode-button" : ""
+            }`}
             onClick={() => navigate("/soil-temperature")}
             aria-label="Añadir condición de temperatura del terreno"
           >
@@ -365,14 +411,18 @@ const AddRuleComp = () => {
       )}
 
       {sensorType === "Humedad del terreno" && (
-        <div className="add-rule-conditions">
-          <h3>Condiciones de Humedad del terreno</h3>
+        <div className={`add-rule-conditions ${darkMode ? "dark-mode" : ""}`}>
+          <h3 className={darkMode ? "dark-mode-text" : ""}>
+            Condiciones de Humedad del terreno
+          </h3>
           <ul>
             {soilHumidityConditions.map((cond, index) => (
-              <li key={index}>
+              <li key={index} className={darkMode ? "dark-mode-text" : ""}>
                 {cond.operator} {cond.value}%
                 <button
-                  className="delete-condition-button"
+                  className={`delete-condition-button ${
+                    darkMode ? "dark-mode-button" : ""
+                  }`}
                   onClick={() => handleDeleteCondition("soilHumidity", index)}
                   aria-label="Eliminar condición de humedad del terreno"
                 >
@@ -382,7 +432,9 @@ const AddRuleComp = () => {
             ))}
           </ul>
           <button
-            className="add-rule-conditions-button"
+            className={`add-rule-conditions-button ${
+              darkMode ? "dark-mode-button" : ""
+            }`}
             onClick={() => navigate("/soil-humidity")}
             aria-label="Añadir condición de humedad del terreno"
           >
@@ -391,12 +443,15 @@ const AddRuleComp = () => {
         </div>
       )}
 
-      <label className="add-rule-label" htmlFor="add-rule-actuator">
+      <label
+        className={`add-rule-label ${darkMode ? "dark-mode-text" : ""}`}
+        htmlFor="add-rule-actuator"
+      >
         Actuador:
       </label>
       <select
         id="add-rule-actuator"
-        className="add-rule-select"
+        className={`add-rule-select ${darkMode ? "dark-mode-select" : ""}`}
         value={actuatorType}
         onChange={handleActuatorChange}
         aria-label="Selecciona un actuador"
@@ -414,12 +469,15 @@ const AddRuleComp = () => {
 
       {availableActions.length > 0 && (
         <div>
-          <label className="add-rule-label" htmlFor="add-rule-actions">
+          <label
+            className={`add-rule-label ${darkMode ? "dark-mode-text" : ""}`}
+            htmlFor="add-rule-actions"
+          >
             Acción:
           </label>
           <select
             id="add-rule-actions"
-            className="add-rule-select"
+            className={`add-rule-select ${darkMode ? "dark-mode-select" : ""}`}
             value={selectedAction}
             onChange={(e) => setSelectedAction(e.target.value)}
             aria-label="Selecciona una acción"
@@ -435,12 +493,15 @@ const AddRuleComp = () => {
       )}
 
       <button
-        className="add-rule-form-submit-button"
+        className={`add-rule-form-submit-button ${
+          darkMode ? "dark-mode-button" : ""
+        }`}
         onClick={handleAddRule}
         aria-label={t("add_rule_button")}
       >
         {t("add_rule_button")}
       </button>
+    </div>
     </div>
   );
 };

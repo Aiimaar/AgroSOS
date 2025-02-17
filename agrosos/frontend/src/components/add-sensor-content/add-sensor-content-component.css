@@ -125,7 +125,7 @@
 /* Estilos para el modo oscuro */
 .dark-mode .input-sensor-name:focus,
 .dark-mode .input-sensor-code:focus {
-  border-color: green; /* Borde diferente en modo oscuro */
+  border-color: #43a047; /* Borde diferente en modo oscuro */
 }
 
 .add-sensor-content-buttons {
@@ -149,7 +149,7 @@
 
 /* Estilos para el modo oscuro */
 .dark-mode .btn-back {
-  background-color: green; /* Fondo diferente en modo oscuro */
+  background-color: #43a047; /* Fondo diferente en modo oscuro */
   color: black; /* Texto oscuro para que se vea bien */
 }
 
@@ -168,7 +168,7 @@
 }
 
 .dark-mode .btn-enla {
-  background-color: green; /* Fondo diferente en modo oscuro */
+  background-color: #43a047; /* Fondo diferente en modo oscuro */
   color: black; /* Texto oscuro para que se vea bien */
 }
 

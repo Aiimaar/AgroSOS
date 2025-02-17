@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDarkMode } from "../../context/DarkModeContext";
+import bulbasur from "./bulbasur.gif";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -16,6 +18,7 @@ function AccesibilityComponent() {
   const [language, setLanguage] = useState(
     localStorage.getItem("language") || "es"
   );
+  const [animationsEnabled, setAnimationsEnabled] = useState(false); // Animaciones desactivadas por defecto
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -61,13 +64,13 @@ function AccesibilityComponent() {
   return (
     <div id="container-accesibility" className={darkMode ? "dark-mode" : ""}>
       <div className="arrow-container">
-        <button
-          className="accesibility-arrow"
-          onClick={() => navigate(-1)}
-          aria-label="Volver"
+        <Link
+          to="/plot-list"
+          className={`accesibility-arrow ${darkMode ? "dark-mode-link" : ""}`}
+          aria-label={t("back_to_plot_list")}
         >
           <FontAwesomeIcon icon={faArrowLeft} aria-hidden="true" />
-        </button>
+        </Link>
       </div>
       <h1 id="accesibility-title" className="accesibility-text">
         {t("accessibility")}
@@ -96,6 +99,28 @@ function AccesibilityComponent() {
           <option value="es">{t("spanish")}</option>
           <option value="en">{t("english")}</option>
         </select>
+      </div>
+
+      {/* Agregamos el toggle para activar/desactivar animaciones */}
+      <div className="toggle-animations">
+        <label htmlFor="animations-toggle">
+          <input
+            type="checkbox"
+            id="animations-toggle"
+            checked={!animationsEnabled} // Invertir la lógica
+            onChange={() => setAnimationsEnabled(!animationsEnabled)} // Invertir el estado
+          />
+          {t("disable_animation")}
+        </label>
+      </div>
+
+      {/* Contenedor para la imagen de Bulbasaur */}
+      <div
+        className={`pokemon-container ${
+          animationsEnabled ? "" : "no-animations"
+        }`}
+      >
+        <img className="moving-image" src={bulbasur} alt="Bulbasur" />
       </div>
     </div>
   );

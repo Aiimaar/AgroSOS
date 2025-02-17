@@ -1,3 +1,14 @@
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .plot-details {
   display: flex;
   flex-direction: column;
@@ -22,11 +33,11 @@
   padding: 15px;
   align-self: flex-start;
   flex-direction: column;
+  animation: slideInFromLeft 0.5s ease; /* Animación */
 }
 
 .evolution-section,
 .climate-section,
-.actions-section,
 .irrigation-frecuency-section,
 .tasks-section {
   background-color: #f8f2ee;
@@ -35,6 +46,7 @@
   width: 100%;
   padding: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideInFromLeft 0.5s ease; /* Animación */
 }
 
 /* Estilos para el modo oscuro */
@@ -143,6 +155,7 @@
   padding: 15px;
   margin-bottom: 20px;
   height: 15vh;
+  animation: slideInFromLeft 0.5s ease; /* Animación agregada aquí */
 }
 
 /* Estilos para el modo oscuro */
@@ -366,24 +379,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s ease; /* Mantener la animación fadeIn para el popup */
 }
 
 /* Estilos para el modo oscuro */
 .dark-mode .clock-popup-content {
   background-color: #555; /* Fondo oscuro */
   color: white; /* Texto claro */
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .clock-popup-content .react-clock {
@@ -433,8 +435,8 @@
 
 /* Estilos para el modo oscuro */
 .dark-mode .select-time-button {
-  background-color: #3b873e; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  background-color: #43a047; /* Fondo diferente en modo oscuro */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .select-time-container {
@@ -472,7 +474,7 @@
 /* Estilos para el modo oscuro */
 .dark-mode .select-time-main-button-selected {
   background-color: #388e3c; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .inside-a-plot-error-message {
@@ -497,7 +499,7 @@
 /* Estilos para el modo oscuro */
 .dark-mode .select-time-main-button-unselected {
   background-color: #388e3c; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .select-time-main-button:hover {
@@ -535,7 +537,7 @@
 /* Estilos para el modo oscuro */
 .dark-mode .irrigation-frecuency-pro {
   background-color: #388e3c; /* Fondo diferente en modo oscuro */
-  color: black; /* Texto oscuro para que se vea bien */
+  color: rgb(255, 255, 255); /* Texto oscuro para que se vea bien */
 }
 
 .irrigation-frecuency-pro:hover {
@@ -556,7 +558,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-  } 
+  }
 
   .inside-a-plot-comp-right {
     display: flex;

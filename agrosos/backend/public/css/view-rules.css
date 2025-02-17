@@ -1,0 +1,270 @@
+/* public/css/view-rules.css */
+
+/* Estilos para el contenedor principal */
+#view-existing-rules-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que el contenedor ocupe al menos toda la altura de la pantalla */
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box; /* Incluye el padding en el ancho y alto total */
+}
+
+/* Estilos para el botón de retroceso */
+.view-existing-rule-back-button {
+  align-self: flex-start;
+  background-color: transparent;
+  border: none;
+  margin-left: 1em;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: #333; /* Color de texto accesible */
+}
+
+.view-existing-rule-back-button:focus {
+  outline: 2px solid #FFD700;
+}
+
+/* Estilos para el encabezado */
+.view-existing-rule-header {
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.view-existing-rule-title {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  color: #333;
+}
+
+/* Estilos para las tarjetas de reglas */
+.view-existing-rule-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  justify-items: center;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 1200px; /* Ancho máximo para evitar que se estire demasiado */
+}
+
+.view-existing-rule-card {
+  background-color: #3b873e;
+  color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Cambiar de space-between a flex-start */
+  height: auto; /* Permitir que la tarjeta crezca según el contenido */
+  width: 100%;
+  max-width: 320px;
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: 60px; /* Aseguramos que haya suficiente espacio para los botones */
+}
+
+.view-existing-rule-card:focus-within {
+  outline: 2px solid #FFD700;
+}
+
+/* Información de la tarjeta */
+.view-existing-rule-card-info p {
+  margin: 5px 0;
+  color: #fff;
+  font-size: 1rem;
+}
+
+/* Estilos para los botones de acción */
+.view-existing-rule-card-actions {
+  display: flex;
+  justify-content: center; /* Alineación central */
+  position: absolute;
+  bottom: 10px;
+  left: 50%; /* Posicionamiento desde el centro horizontal */
+  transform: translateX(-50%); /* Ajuste para centrar */
+  gap: 10px;
+  width: auto; /* Elimina el ancho completo */
+  padding: 0; /* Elimina el padding */
+  box-sizing: border-box;
+}
+
+.view-existing-rule-edit-button,
+.view-existing-rule-delete-button {
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: #333;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-existing-rule-edit-button:hover,
+.view-existing-rule-delete-button:hover {
+  background-color: #e0e0e0;
+}
+
+.view-existing-rule-edit-button:focus,
+.view-existing-rule-delete-button:focus {
+  outline: 2px solid #FFD700;
+  transform: scale(1.1);
+}
+
+/* Botón para agregar regla */
+.view-add-rule-button,
+.view-add-rule-button-circle {
+  margin-top: 2em;
+  background-color: #fff;
+  color: #3b873e;
+  font-size: 1.5rem;
+  width: 50px;
+  align-items: center;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #3b873e;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: fixed; /* Posicionamiento fijo */
+  bottom: 20px; /* Distancia desde la parte inferior */
+  right: 20px; /* Distancia desde la derecha */
+}
+
+.view-add-rule-button:hover,
+.view-add-rule-button-circle:hover {
+  background-color: #3b873e;
+  color: #fff;
+}
+
+.view-add-rule-button:focus,
+.view-add-rule-button-circle:focus {
+  outline: 2px solid #FFD700;
+  transform: scale(1.1);
+}
+
+/* Mensaje sin reglas */
+.view-no-rules-message {
+  text-align: center;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.view-no-rules-message h2 {
+  margin-bottom: 1em;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Estilos para el modal */
+#view-existing-rule-modal-overlay {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que el modal esté encima de todo el contenido */
+}
+
+.view-existing-rule-modal-content {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50vw;
+  justify-content: center;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.view-existing-rule-modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.view-existing-rule-modal-button {
+  background-color: #3b873e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.view-existing-rule-modal-button:hover {
+  background-color: #2d6a2c;
+}
+
+.view-existing-rule-modal-cancel {
+  background-color: #f44336; /* Color rojo para cancelar */
+}
+
+.view-existing-rule-modal-cancel:hover {
+  background-color: #d32f2f;
+}
+
+/* Agrega un efecto de desvanecimiento al abrir y cerrar el modal */
+#view-existing-rule-modal-overlay {
+  transition: opacity 0.3s ease;
+}
+
+/*Media queries para responsive design*/
+@media (max-width: 768px) {
+  .view-existing-rule-cards-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ajusta el ancho mínimo en pantallas más pequeñas */
+  }
+  .view-existing-rule-card {
+    height: auto; /* Permite que la tarjeta crezca verticalmente según el contenido */
+    min-height: 220px;
+    max-width: 90%;
+  }
+}
