@@ -532,6 +532,54 @@ This structure ensures clarity, maintainability, and scalability for both backen
 
 ---
 
+# 🚀 Approach 2
+
+In this project, we have integrated various technologies and tools to create an efficient, scalable, and modern application. Here’s a summary of what we used:
+
+## 🛠️ Tools & Technologies
+
+### 🐳 Docker Deployment
+
+To facilitate deployment and ensure a consistent environment, we use Docker. 
+Follow these steps to run the application with Docker:
+
+- Make sure you have Docker installed on your machine.
+   
+- Build and run the containers with the following command:
+  ```bash
+  docker-compose up --build -d
+  ```
+- Access the application in your browser at http://localhost:3000.
+
+  If you need to stop containers, use:
+  ```bash
+  docker-compose down -d o -b
+  ```
+  <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### 🌐 **Views with EJS**
+We use **EJS** for dynamic frontend views. This templating engine allows us to embed data directly into HTML in a simple and flexible way, enhancing the user experience.
+
+### 🧪 **Testing in Frontend & Backend**
+
+- **Vitest** 🔬: We use **Vitest** for unit and integration testing in the frontend, ensuring everything works as expected in a fast and efficient manner.  
+
+- **Supertest** ✅: In the backend, we use **Supertest** to perform functional testing on our APIs, guaranteeing correct responses and expected system behavior.
+
+### ✨ **Animations**
+We added a visual touch to the application with **animations** in different parts of the UI. Technologies like **CSS Animations** and **JavaScript** help make the experience more engaging and dynamic.
+
+### 🔗 **Websockets**
+With **Websockets**, we establish real-time communication between the client and the server. This enables instant updates and smoother interactions, such as live chats or real-time status updates.
+
+### 📲 **Web-Push Notifications**
+We implemented **push notifications** to keep users informed even when they are not actively using the app. This ensures they receive important updates instantly.
+
+### 🗃️ **Seeders & Migrations**
+We manage the database using **Seeders** and **Migrations**, which help keep the database structure organized and easily updatable as the project evolves. This is crucial for handling test data and maintaining a well-structured system.
+
+---
+
 ### 🌐 System Design Comparison
 
 The project adopts the **Enfoque 1** architecture, utilizing separate frontend and backend technologies. In contrast, **Enfoque 2** integrates server-side rendering tools like Laravel Blade. The decision to use Enfoque 1 enables:
@@ -615,7 +663,7 @@ Meet the talented individuals behind **AgroSOS**:
 
 ### 👨‍💻 **Bob Dylan**
    - **Role:** Full Stack Developer
-   - **Description:** simply bob dylan
+   - **Description:** without further ado, bob dylan
    - 🌍 **Location:** Las Palmas de Gran Canaria, Spain
    - 🐙 **GitHub:** [Bob Dylan GitHub](https://github.com/Deathvks)
 

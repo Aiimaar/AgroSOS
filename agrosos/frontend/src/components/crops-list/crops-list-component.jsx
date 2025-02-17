@@ -65,52 +65,55 @@ const CropsListComponent = () => {
   return (
     <div className={`crops-list ${darkMode ? 'dark-mode' : ''}`}>
       {error && <p className="error-message">{error}</p>}
-      {crops.map((crop) => (
-        <div
-          className="crop-item"
-          key={crop.id}
-          onClick={() => handleCropClick(crop.id)}
-          role="listitem"
-          aria-labelledby={`crop-title-${crop.id}`}
-        >
-          <div className="crop-content">
-            <div className="crop-image-container">
-              <img
-                src={`http://localhost:3000/uploads/${crop.crop_image}`}
-                alt={`Imagen del cultivo de ${crop.name}`} // Añadido texto alternativo con el nombre del cultivo
-                className="crop-list-comp-image"
-                aria-describedby={`crop-description-${crop.id}`}
-              />
-              <button
-                className="info-icon"
-                onClick={() => navigate("/crop-details")}
-                aria-label={`Ver detalles de ${crop.name}`}
-              >
-                i
-              </button>
+      {/* Añadimos el rol="list" al contenedor */}
+      <div role="list">
+        {crops.map((crop) => (
+          <div
+            className="crop-item"
+            key={crop.id}
+            onClick={() => handleCropClick(crop.id)}
+            role="listitem"
+            aria-labelledby={`crop-title-${crop.id}`}
+          >
+            <div className="crop-content">
+              <div className="crop-image-container">
+                <img
+                  src={`http://localhost:3000/uploads/${crop.crop_image}`}
+                  alt={`Imagen del cultivo de ${crop.name}`}
+                  className="crop-list-comp-image"
+                  aria-describedby={`crop-description-${crop.id}`}
+                />
+                <button
+                  className="info-icon"
+                  onClick={() => navigate("/crop-details")}
+                  aria-label={`Ver detalles de ${crop.name}`}
+                >
+                  i
+                </button>
+              </div>
+              <div className="crop-text">
+                <p
+                  id={`crop-title-${crop.id}`}
+                  className="harvest-title"
+                  aria-hidden="true"
+                >
+                  {crop.name}
+                </p>
+                <p
+                  id={`crop-description-${crop.id}`}
+                  className="harvest-subtitle"
+                  aria-hidden="true"
+                >
+                  {crop.start_month} - {crop.end_month}
+                </p>
+              </div>
             </div>
-            <div className="crop-text">
-              <p
-                id={`crop-title-${crop.id}`}
-                className="harvest-title"
-                aria-hidden="true"
-              >
-                {crop.name}
-              </p>
-              <p
-                id={`crop-description-${crop.id}`}
-                className="harvest-subtitle"
-                aria-hidden="true"
-              >
-                {crop.start_month} - {crop.end_month}
-              </p>
-            </div>
+            <div className="divider" />
           </div>
-          <div className="divider" />
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  );
+  );  
 };
 
 export default CropsListComponent;

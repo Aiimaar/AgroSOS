@@ -332,8 +332,12 @@ const InsideAPlotComp = ({ plotId }) => {
                     <div
                       key={day.name}
                       className="irrigation-frecuency-day"
-                      role="listitem"
-                      aria-selected={selectedDays.includes(day.name)}
+                      role="listitem" // Change this to listitem
+                      tabIndex={0} // Keep this for keyboard navigation
+                      onClick={() => handleClick(day.name)}
+                      onKeyDown={(e) =>
+                        e.key === "Enter" && handleClick(day.name)
+                      } // Supports keyboard
                     >
                       <FontAwesomeIcon
                         icon={faCalendarDays}
@@ -341,8 +345,7 @@ const InsideAPlotComp = ({ plotId }) => {
                         className={`irrigation-frecuency-calendar-icon ${
                           selectedDays.includes(day.name) ? "selected" : ""
                         }`}
-                        onClick={() => handleClick(day.name)}
-                        aria-label={`Seleccionar día ${day.label}`}
+                        aria-hidden="true"
                       />
                       <span className="irrigation-frecuency-day-label">
                         {day.label}
