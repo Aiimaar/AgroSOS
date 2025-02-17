@@ -8,20 +8,13 @@ import { useDarkMode } from '../../context/DarkModeContext'; // Ajusta la ruta s
 function AddSensor() {
     const { t } = useTranslation(); // Hook de traducción
     const [searchParams] = useSearchParams();
-    const sensorName = searchParams.get("name");
+    const sensorName = searchParams.get("name");  // Obtiene el nombre del sensor desde la URL
     const [sensorCode, setSensorCode] = useState("");
     const navigate = useNavigate();
     const token = localStorage.getItem("authToken");
     const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(""); 
+    const [successMessage, setSuccessMessage] = useState("");
     const { darkMode } = useDarkMode();
-
-    const sensorNames = {
-        "Temperatura": "temperature",
-        "Humedad": "humidity",
-        "Temperatura de terreno": "soil_temperature",
-        "Humedad del terreno": "soil_humidity"
-    };
 
     useEffect(() => {
         if (!token) {
@@ -38,6 +31,19 @@ function AddSensor() {
             return;
         }
 
+        // --- Traducción y validación del tipo de sensor ---
+        let sensorType = "";
+        if (sensorName) {
+             sensorType = t(sensorName, { returnObjects: true });  //Usa t() para obtener la key
+        }
+
+
+        if (!sensorType || typeof sensorType !== 'string') {
+            setError(t("error_invalid_sensor_type")); // Mensaje de error más específico
+            return;
+        }
+        // --- Fin de la traducción y validación ---
+
         try {
             const response = await fetch('http://localhost:3000/api/sensors', {
                 method: 'POST',
@@ -46,7 +52,7 @@ function AddSensor() {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    type: sensorNames[sensorName],
+                    type: sensorType,  // Usa la key traducida
                     code: Number(sensorCode),
                     plot_id: Number(plotId)
                 }),
@@ -59,7 +65,10 @@ function AddSensor() {
                     return;
                 }
                 const errorData = await response.json();
-                throw new Error(errorData.message || t("error_linking_sensor"));
+                // --- Mejor manejo de errores del servidor ---
+                const errorMessage = errorData.message || t("error_linking_sensor");
+                throw new Error(`${t("server_error")}: ${response.status} - ${errorMessage}`);
+                // --- Fin del mejor manejo de errores ---
             }
             setSensorCode("");
             setSuccessMessage(t("sensor_linked_success", { sensorName, sensorCode }));

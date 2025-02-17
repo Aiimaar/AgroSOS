@@ -47,7 +47,7 @@ function TermsConditionText() {
         {t("terms_conditions_title")}
       </h1>
       <p className="terms-condition-text-paragraph">
-        {t("last_update")} {lastUpdateDate}. {t("welcome_to_app")} FieldFlow.{" "}
+        {t("last_update")} {lastUpdateDate}. {t("welcome_to_app")} AgroSOS.{" "}
         {t("terms_conditions")} ({t("terms")}). {t("accept_terms")}
       </p>
       <div className="terms-condition-text-section" aria-labelledby="section-1">

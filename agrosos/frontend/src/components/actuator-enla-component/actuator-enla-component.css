@@ -8,8 +8,7 @@
   max-width: 600px; 
   justify-content: center;
   padding: 20px;
-  border-radius: 8px;
-  background-color: #f9f9f9; 
+  border-radius: 8px; 
 }
 
 .dark-mode #actuator-enla-container {
@@ -21,7 +20,7 @@
 .actuator-enla-button-arrow {
   align-self: flex-start;
   margin-left: 1em;
-  margin-top: -20em;
+  margin-top: -25em;
   margin-bottom: 1em;
   border: none;
   background-color: transparent;
@@ -31,6 +30,7 @@
 
 .dark-mode .actuator-enla-button-arrow {
   color: white;
+  margin-top: -28em;
 }
 
 .enla-title {
@@ -59,7 +59,8 @@
   justify-content: space-between;
   border-radius: 12px;
   padding: 15px 20px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  border: 1px solid white;
 }
 
 .dark-mode .actuator-item {

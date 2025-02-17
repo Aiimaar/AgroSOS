@@ -13,10 +13,19 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.dark-mode .create-crop-form {
+  background-color: #444;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
 .create-crop-form-title {
   text-align: center;
   font-size: 1.5em;
   color: #333333;
+}
+
+.dark-mode .create-crop-form-title {
+  color: #ffffff;
 }
 
 .create-crop-form-label {
@@ -24,6 +33,13 @@
   font-size: 14px;
   margin-bottom: 0.5em;
   color: #555555;
+}
+
+.dark-mode .create-crop-form-input,
+.dark-mode .create-crop-form-textarea,
+.dark-mode .create-crop-form-select {
+  border: 1px solid #8a8a8a;
+  background-color: #333;
 }
 
 .create-crop-form-input,
@@ -36,6 +52,12 @@
   border-radius: 12px;
   background-color: #f9f9f9;
   transition: border 0.3s ease;
+}
+
+.dark-mode .create-crop-form-input,
+.dark-mode .create-crop-form-textarea,
+.dark-mode .create-crop-form-select {
+  color: white;
 }
 
 .create-crop-form-input:focus,
@@ -71,7 +93,7 @@
 }
 
 .create-crop-cancel-button {
-  background-color: #7f8679;
+  background-color: #5ea71e;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -100,6 +122,10 @@ p {
   text-align: center;
   transition: border-color 0.3s ease;
   cursor: pointer;
+}
+
+.dark-mode .create-crop-upload-container {
+  background-color: #333;
 }
 
 /* Estilo para cuando el contenedor de subir imagenes tiene el foco */

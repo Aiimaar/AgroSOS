@@ -70,7 +70,7 @@ const actuatorController = {
     } catch (error) {
       res.status(500).json({ error: 'Error deleting actuator', details: error.message });
     }
-  },
+  }
 };
 
 export default actuatorController;

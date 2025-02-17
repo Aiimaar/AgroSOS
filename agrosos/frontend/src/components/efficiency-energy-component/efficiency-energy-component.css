@@ -8,7 +8,7 @@
 }
 
 .efficiency-back-button {
-  margin-top: 4em;
+  margin-top: 6em;
   font-size: 20px;
   background: none;
   border: none;
@@ -18,6 +18,10 @@
   left: 30px;
   z-index: 1;
   outline: none; /* Elimina el contorno predeterminado */
+}
+
+.dark-mode .efficiency-back-button {
+  color: #ffffff;
 }
 
 .efficiency-back-button:focus {
@@ -43,13 +47,24 @@
   max-width: 800px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   font-size: 1.1em;
+  margin-top: 3em;
   line-height: 1.6;
   text-align: center;
+}
+
+.dark-mode .efficiency-energy-txt {
+  background-color: #444;
+  color: #ffffff;
+  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
 }
 
 .efficiency-energy-header h2 {
   font-size: 2em;
   color: #000000;
+}
+
+.dark-mode .efficiency-energy-header h2 {
+  color: #ffffff;
 }
 
 .efficiency-energy-txt h3 {
@@ -59,11 +74,19 @@
   font-weight: bold;
 }
 
+.dark-mode .efficiency-energy-txt h3 {
+  color: #ffffff;
+}
+
 .efficiency-energy-txt p {
   font-size: 1.1em;
   line-height: 1.6;
   color: #555;
   margin-bottom: 20px;
+}
+
+.dark-mode .efficiency-energy-txt p {
+  color: #c4c4c4;
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {

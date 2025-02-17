@@ -107,7 +107,10 @@ function NotificationsComponent() {
   };
 
   return (
-    <div id="notifications-component-container" className={darkMode ? 'dark-mode' : ''}>
+    <div
+      id="notifications-component-container"
+      className={darkMode ? "dark-mode" : ""}
+    >
       <button
         className="notifications-component-button-arrow"
         onClick={() => navigate("/settings")}

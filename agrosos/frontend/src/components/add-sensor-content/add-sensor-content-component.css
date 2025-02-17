@@ -100,6 +100,7 @@
 
 /* Estilos para el modo oscuro */
 .dark-mode .sensor-success-message {
+  margin-bottom: 1em;
   color: #ccc; /* Texto claro en modo oscuro */
 }
 
@@ -113,7 +114,7 @@
 
 /* Estilos para el modo oscuro */
 .dark-mode .lock-icon {
-  color: #ccc; /* Icono claro en modo oscuro */
+  color: #ffffff; /* Icono claro en modo oscuro */
 }
 
 .input-sensor-name:focus,
