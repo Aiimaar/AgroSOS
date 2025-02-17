@@ -663,7 +663,7 @@ Meet the talented individuals behind **AgroSOS**:
 
 ### 👨‍💻 **Bob Dylan**
    - **Role:** Full Stack Developer
-   - **Description:** simply bob dylan
+   - **Description:** without further ado, bob dylan
    - 🌍 **Location:** Las Palmas de Gran Canaria, Spain
    - 🐙 **GitHub:** [Bob Dylan GitHub](https://github.com/Deathvks)
 
