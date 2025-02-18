@@ -92,6 +92,7 @@ describe("ExistingRulesComponent", () => {
     localStorage.clear();
   });
 
+  // Test para verificar que se renderiza la lista de reglas correctamente
   it("renders the list of rules", async () => {
     renderComponent();
     expect(await screen.findByText("Rule 1")).toBeInTheDocument();
@@ -100,6 +101,7 @@ describe("ExistingRulesComponent", () => {
     expect(await screen.findByText("Crop 2")).toBeInTheDocument();
   });
 
+  // Test para verificar que se muestra el mensaje "No rules" y la navegación funciona
   it("renders 'No rules' message and navigates to add rule page on add button click", async () => {
     const mockedNavigate = vi.fn();
     useNavigate.mockReturnValue(mockedNavigate);
@@ -126,6 +128,7 @@ describe("ExistingRulesComponent", () => {
     });
   });
 
+  // Test para abrir y cerrar el modal de confirmación de eliminación
   it("opens and closes the delete confirmation modal", async () => {
     renderComponent();
 
@@ -144,6 +147,7 @@ describe("ExistingRulesComponent", () => {
     });
   });
 
+  // Test para verificar que se puede eliminar una regla
   it("deletes a rule when confirmed", async () => {
     const mockDelete = vi.fn().mockResolvedValue({});
     axios.create.mockReturnValue({
@@ -179,6 +183,7 @@ describe("ExistingRulesComponent", () => {
     });
   });
 
+  // Prueba que al hacer clic en el botón de editar, la navegación se realice correctamente
   it("navigates to edit rule page on edit button click", async () => {
     const mockedNavigate = vi.fn();
     useNavigate.mockReturnValue(mockedNavigate);
@@ -193,6 +198,7 @@ describe("ExistingRulesComponent", () => {
     });
   });
 
+  // Prueba que al hacer clic en el botón de volver atrás, la navegación lleve a la página de configuración
   it("navigates to settings page on back button click", async () => {
     const mockedNavigate = vi.fn();
     useNavigate.mockReturnValue(mockedNavigate);
